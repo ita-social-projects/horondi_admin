@@ -124,10 +124,7 @@ const OrderItem = ({ id }) => {
           />
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
-          <Products
-            data={{ items: values.items }}
-            setFieldValue={setFieldValue}
-          />
+          <Products data={values} setFieldValue={setFieldValue} />
         </TabPanel>
         <TabPanel value={tabValue} index={4}>
           <Delivery

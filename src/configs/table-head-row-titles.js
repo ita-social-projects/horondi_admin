@@ -72,7 +72,16 @@ const tableHeadRowTitles = {
     ]
   },
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
-  orderProductTitles: ['№', 'Назва', 'Кількість', 'Розмір', 'Ціна', 'Деталі'],
+  orderProductTitles: [
+    '№',
+    'Назва',
+    'Кількість',
+    'Розмір',
+    'Ціна',
+    'Ціна зі знижкою',
+    'Знижка',
+    'Деталі'
+  ],
   comments: {
     commentPageTitles: [
       'Дата',

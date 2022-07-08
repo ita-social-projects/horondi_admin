@@ -22,7 +22,10 @@ export const registeredUserPropTypes = {
 
 export const productsPropTypes = {
   data: PropTypes.shape({
-    items: PropTypes.arrayOf(PropTypes.object)
+    items: PropTypes.arrayOf(PropTypes.object),
+    itemsPriceWithDiscount: PropTypes.arrayOf(PropTypes.number),
+    promoCodeId: PropTypes.string,
+    itemsDiscount: PropTypes.arrayOf(PropTypes.number)
   }),
   setFieldValue: PropTypes.func.isRequired
 };
@@ -73,7 +76,9 @@ const itemPropType = PropTypes.shape({
 
 export const addProductFormPropTypes = {
   items: PropTypes.arrayOf(itemPropType),
-  setFieldValue: PropTypes.func.isRequired
+  setFieldValue: PropTypes.func.isRequired,
+  promoCode: PropTypes.objectOf(PropTypes.object),
+  setPricesWithDiscount: PropTypes.func.isRequired
 };
 
 export const editProductFormPropTypes = {
@@ -129,7 +134,8 @@ export const newOrder = (order) => ({
   items: items(order),
   paymentMethod: order.paymentMethod,
   userComment: order.userComment,
-  isPaid: order.isPaid
+  isPaid: order.isPaid,
+  promoCodeId: order.promoCodeId
 });
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
@@ -323,7 +329,10 @@ export const setFormValues = (selectedOrder) => {
     paymentMethod: selectedOrder.paymentMethod,
     isPaid: selectedOrder.isPaid,
     recipient: selectedOrder.recipient,
+    itemsPriceWithDiscount: selectedOrder.itemsPriceWithDiscount,
+    itemsDiscount: selectedOrder.itemsDiscount,
     user_id: selectedOrder.user_id,
+    promoCodeId: selectedOrder.promoCodeId,
     delivery: {
       sentBy,
       courier: {
@@ -365,7 +374,16 @@ export const setFormValues = (selectedOrder) => {
   };
 };
 
-export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
+export const mergeProducts = (
+  selectedProduct,
+  size,
+  quantity,
+  orderItems,
+  category,
+  setPricesWithDiscount,
+  promoCode,
+  setDiscounts
+) => {
   const index = orderItems.findIndex(
     (item) =>
       item.product._id === selectedProduct._id &&
@@ -374,12 +392,30 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
   if (index !== -1) {
     const newItem = { ...orderItems[index] };
     newItem.quantity += quantity;
+    setPricesWithDiscount((prev) => [
+      ...prev.slice(0, index),
+      calculateItemsPriceWithDiscount(
+        promoCode,
+        newItem.quantity,
+        category,
+        size.price
+      ),
+      ...prev.slice(index + 1)
+    ]);
     return [
       ...orderItems.slice(0, index),
       newItem,
       ...orderItems.slice(index + 1)
     ];
   }
+  setPricesWithDiscount((prev) => [
+    ...prev,
+    calculateItemsPriceWithDiscount(promoCode, quantity, category, size.price)
+  ]);
+  setDiscounts((prev) => [
+    ...prev,
+    calculateDiscountsForProducts(promoCode, category)
+  ]);
   return [
     ...orderItems,
     {
@@ -418,4 +454,37 @@ export const paymentStatusFilterObj = () => {
   });
 
   return arrToFilter;
+};
+
+export const calculateItemsPriceWithDiscount = (
+  promoCode,
+  quantity,
+  category,
+  price
+) => {
+  if (Object.keys(promoCode).length) {
+    const { discount, categories } = promoCode.getPromoCodeById;
+    const isAllowCategory = categories.find(
+      (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
+    );
+    if (isAllowCategory) {
+      return Math.round(price - (price / 100) * discount) * quantity;
+    }
+    return price * quantity;
+  }
+  return price * quantity;
+};
+
+export const calculateDiscountsForProducts = (promoCode, category) => {
+  if (Object.keys(promoCode).length) {
+    const { discount, categories } = promoCode.getPromoCodeById;
+    const isAllowCategory = categories.find(
+      (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
+    );
+    if (isAllowCategory) {
+      return discount;
+    }
+    return 0;
+  }
+  return 0;
 };

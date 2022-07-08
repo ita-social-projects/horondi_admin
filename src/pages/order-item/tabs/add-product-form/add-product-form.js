@@ -21,16 +21,26 @@ import {
   addProductFormPropTypes
 } from '../../../../utils/order';
 
-const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
+const AddProductForm = ({
+  items,
+  setFieldValue,
+  setSizeItems,
+  setPricesWithDiscount,
+  promoCode,
+  setDiscounts
+}) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
   const { productLabels, productAdditionalInfo } = configs;
   const dispatch = useDispatch();
-  const { products, loading, sizes } = useSelector(({ Products }) => ({
-    products: Products.products,
-    loading: Products.loading,
-    sizes: Products.selectedProduct.sizes
-  }));
+  const { products, loading, sizes, category } = useSelector(
+    ({ Products }) => ({
+      products: Products.products,
+      loading: Products.loading,
+      sizes: Products.selectedProduct.sizes,
+      category: Products.selectedProduct.category
+    })
+  );
   const [productInput, setProductInput] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [size, setSize] = useState({ id: '', name: '', price: {} });
@@ -66,7 +76,16 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
     setQuantity(1);
     setFieldValue(
       inputName.itemsName,
-      mergeProducts(selectedProduct, size, quantity, items)
+      mergeProducts(
+        selectedProduct,
+        size,
+        quantity,
+        items,
+        category,
+        setPricesWithDiscount,
+        promoCode,
+        setDiscounts
+      )
     );
   };
 
@@ -75,6 +94,7 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
   return (
     <div>
       <Autocomplete
+        data-testid='autocomplete'
         onInputChange={(e, value) => {
           setProductInput(value);
         }}
@@ -109,13 +129,15 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
       <div className={styles.quantity}>
         {productLabels.quantity}
         <Button
+          data-testid='decrement'
           onClick={() => setQuantity((prev) => prev - 1)}
           disabled={quantity <= 1}
         >
           <RemoveIcon />
         </Button>
-        <h3>{quantity}</h3>
+        <h3 data-testid='quantity'>{quantity}</h3>
         <Button
+          data-testid='increment'
           onClick={() => setQuantity((prev) => prev + 1)}
           disabled={!selectedProduct}
         >
@@ -133,9 +155,10 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
         </Select>
       </div>
       <Button
+        data-testid='add-btn'
         variant={materialUiConstants.contained}
         color={materialUiConstants.primary}
-        disabled={!selectedProduct}
+        disabled={!selectedProduct || loading}
         className={styles.addBtn}
         onClick={addProductHandler}
       >
@@ -146,7 +169,8 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
 };
 
 AddProductForm.defaultProps = {
-  items: []
+  items: [],
+  promoCode: {}
 };
 
 AddProductForm.propTypes = addProductFormPropTypes;
