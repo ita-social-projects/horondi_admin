@@ -24,6 +24,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import routes from '../../configs/routes';
 
 import { dateRangePickerCustomStyles } from '../filter-search-sort/filter-by-date/filter-by-date.styles';
+import { passThemeStatus } from '../../utils/passThemeStatus';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
@@ -39,6 +40,8 @@ const NavBar = () => {
     darkMode: Theme.darkMode,
     sideMenuStatus: Theme.sideMenuStatus
   }));
+
+  passThemeStatus(darkMode);
 
   const { isAuth } = useSelector(({ Auth }) => ({
     isAuth: Auth.isAuth

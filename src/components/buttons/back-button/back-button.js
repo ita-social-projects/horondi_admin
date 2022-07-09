@@ -3,10 +3,10 @@ import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
 import buttonTitles from '../../../configs/button-titles';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { useStyles } from './back-button.styles';
+import { getThemeStatus } from '../../../utils/passThemeStatus';
 
 const {
   primary,
@@ -18,10 +18,7 @@ const BackButton = ({ type, variant, color, pathBack, ...props }) => {
   const { GO_BACK_TITLE } = buttonTitles;
   const styles = useStyles();
   const history = useHistory();
-
-  const { darkMode } = useSelector(({ Theme }) => ({
-    darkMode: Theme.darkMode
-  }));
+  const darkMode = getThemeStatus();
 
   const backButtonHandler = () => {
     history.push(pathBack);
@@ -31,7 +28,7 @@ const BackButton = ({ type, variant, color, pathBack, ...props }) => {
     <Button
       className={styles.button}
       type={type}
-      color={darkMode ? primary.light : color}
+      color={darkMode === true ? primary.light : color}
       variant={variant}
       onClick={backButtonHandler}
       data-cy='back-btn'
