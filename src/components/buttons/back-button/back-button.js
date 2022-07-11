@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 
 import buttonTitles from '../../../configs/button-titles';
 import materialUiConstants from '../../../configs/material-ui-constants';
+import { useStyles } from './back-button.styles';
+import { getThemeStatus } from '../../../utils/passThemeStatus';
 
 const {
   primary,
@@ -14,8 +16,9 @@ const {
 
 const BackButton = ({ type, variant, color, pathBack, ...props }) => {
   const { GO_BACK_TITLE } = buttonTitles;
-
+  const styles = useStyles();
   const history = useHistory();
+  const darkMode = getThemeStatus();
 
   const backButtonHandler = () => {
     history.push(pathBack);
@@ -23,8 +26,9 @@ const BackButton = ({ type, variant, color, pathBack, ...props }) => {
 
   return (
     <Button
+      className={styles.button}
       type={type}
-      color={color}
+      color={darkMode === true ? primary.light : color}
       variant={variant}
       onClick={backButtonHandler}
       data-cy='back-btn'
