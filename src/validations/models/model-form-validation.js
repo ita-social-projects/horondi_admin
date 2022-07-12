@@ -26,6 +26,6 @@ export const modelValidationSchema = Yup.object().shape({
     .min(2, MIN_LENGTH_MESSAGE)
     .required(ERROR_MESSAGE),
   priority: Yup.number().required(ERROR_MESSAGE),
-  category: Yup.string().required(ERROR_MESSAGE),
-  sizes: Yup.string().required(ERROR_MESSAGE)
+  category: Yup.string().required(ERROR_MESSAGE)
+  // sizes: Yup.string().required(ERROR_MESSAGE)
 });

@@ -49,7 +49,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   };
 
   useEffect(() => {
-    dispatch(getSizes({ limit: null }));
+    // dispatch(getSizes({ limit: null }));
 
     dispatch(getCategories({}));
   }, [dispatch]);

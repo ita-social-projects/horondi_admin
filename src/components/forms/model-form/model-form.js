@@ -65,16 +65,17 @@ const ModelForm = ({ model, id, isEdit }) => {
     useModelHandlers();
 
   useEffect(() => {
-    dispatch(getSizes({ limit: null }));
+    // dispatch(getSizes({ limit: null }));
 
     dispatch(getCategories({}));
   }, [dispatch]);
 
-  const { sizesList } = useSelector(sizesSelectorWithPagination);
+  // const { sizesList } = useSelector(sizesSelectorWithPagination);
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
   }));
 
+  const initialSizes = model.sizes;
   const [sizes, setSizes] = useState(model.sizes || []);
   const [category, setCategory] = useState(model.category._id || '');
   const {
@@ -126,7 +127,7 @@ const ModelForm = ({ model, id, isEdit }) => {
   const onTagsChange = (_, value) => {
     setFieldValue(
       'sizes',
-      value.map((size) => size._id)
+      value.map((size) => size)
     );
     setSizes(value);
   };
@@ -259,35 +260,35 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
-          <Paper>
-            <Autocomplete
-              id={labelsEn.tagsFilled}
-              className={styles.autoComplete}
-              multiple
-              freeSolo
-              options={sizesList}
-              getOptionLabel={(option) =>
-                `${option.modelId.name[0].value} | ${option.name}`
-              }
-              defaultValue={sizes}
-              onChange={onTagsChange}
-              onBlur={handleBlur}
-              error={touched['tags-filled'] && !!errors.priority}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant={materialUiConstants.outlined}
-                  label={chooseSizes.title}
-                  placeholder={chooseSizes.inputTitle}
-                  margin={labelsEn.normal}
-                  fullWidth
-                />
+          {isEdit && (
+            <Paper>
+              <Autocomplete
+                id={labelsEn.tagsFilled}
+                className={styles.autoComplete}
+                multiple
+                freeSolo
+                options={initialSizes}
+                getOptionLabel={(option) => `${option.name}`}
+                defaultValue={sizes}
+                onChange={onTagsChange}
+                onBlur={handleBlur}
+                error={touched['tags-filled'] && !!errors.priority}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant={materialUiConstants.outlined}
+                    label={chooseSizes.title}
+                    placeholder={chooseSizes.inputTitle}
+                    margin={labelsEn.normal}
+                    fullWidth
+                  />
+                )}
+              />
+              {touched['tags-filled'] && errors.sizes && (
+                <div className={styles.inputError}>{errors.sizes}</div>
               )}
-            />
-            {touched['tags-filled'] && errors.sizes && (
-              <div className={styles.inputError}>{errors.sizes}</div>
-            )}
-          </Paper>
+            </Paper>
+          )}
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel

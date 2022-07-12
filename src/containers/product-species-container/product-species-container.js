@@ -72,11 +72,16 @@ const ProductSpeciesContainer = ({
 
   const sizesOptions = useMemo(
     () =>
-      map(sizes, (size) => (
-        <MenuItem value={size._id} key={size.name}>
-          {size.name}
-        </MenuItem>
-      )),
+      map(
+        sizes,
+        (
+          size // marked
+        ) => (
+          <MenuItem value={size._id} key={size.name}>
+            {size.name}
+          </MenuItem>
+        )
+      ),
     [sizes]
   );
 
