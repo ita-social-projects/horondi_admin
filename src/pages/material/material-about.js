@@ -62,7 +62,7 @@ const MaterialAbout = ({ currentType }) => {
   const aboutMaterialItems = materialsData.items
     ? materialsData.items.map(({ _id, title, text, image }) => (
         <TableContainerRow
-          image={`${IMG_URL}${image.small}`}
+          image={`${IMG_URL}${image?.small}`}
           key={_id}
           title={title}
           text={ReactHtmlParser(text[0].value)}

@@ -6,8 +6,7 @@ export const getInitialValuesForMaterialsAdd = () => ({
   uaTitle: '',
   enTitle: '',
   uaText: '',
-  enText: '',
-  img: ''
+  enText: ''
 });
 
 export const setVariablesForMaterialsAdd = (values, currentType) => ({
