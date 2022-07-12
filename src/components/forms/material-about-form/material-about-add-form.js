@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './material-about-add-form.styles';
-import EditingButtonsPanel from '../../editing-buttons-panel';
+import { BackButton, SaveButton } from '../../buttons';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import LoadingBar from '../../loading-bar';
@@ -20,6 +20,7 @@ import {
   showSuccessSnackbar,
   showErrorSnackbar
 } from '../../../redux/snackbar/snackbar.actions';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import { config } from '../../../configs';
 
 const MaterialAboutAddForm = ({ currentType }) => {
@@ -32,8 +33,9 @@ const MaterialAboutAddForm = ({ currentType }) => {
   const { ERROR_BOUNDARY_STATUS } = config.errorStatuses;
   const { pathToAboutMaterialsMain, pathToAboutMaterialsBottom } =
     config.routes;
-  const { languages } = config;
+  const { languages, materialUiConstants } = config;
   const { titleInput, textInput, img } = config.labels.materialAbout;
+  const { SAVE_TITLE } = config.buttonTitles;
 
   const pathToAboutMaterials =
     currentType === 'main'
@@ -105,20 +107,33 @@ const MaterialAboutAddForm = ({ currentType }) => {
     }
   };
 
+  const unblock = useUnsavedChangesHandler(values);
+
   if (materialAboutLoading) {
     return <LoadingBar />;
   }
 
   return (
     <div className={styles.container}>
-      <EditingButtonsPanel
-        pathBack={pathToAboutMaterials}
-        submitForm={submitForm}
-        values={values}
-        errors={errors}
-        dirty={dirty}
-        isValid={isValid}
-      />
+      <div className={styles.buttonContainer}>
+        <Grid container spacing={2} className={styles.fixedButtons}>
+          <Grid item className={styles.button}>
+            <BackButton pathBack={pathToAboutMaterials} />
+          </Grid>
+          <Grid item className={styles.button}>
+            <SaveButton
+              data-cy='save-btn'
+              title={SAVE_TITLE}
+              type={materialUiConstants.types.submit}
+              values={values}
+              errors={errors}
+              onClickHandler={submitForm}
+              unblockFunction={unblock}
+              disabled={!dirty || !isValid}
+            />
+          </Grid>
+        </Grid>
+      </div>
       <form>
         <Grid container spacing={1}>
           <Grid item xs={12}>

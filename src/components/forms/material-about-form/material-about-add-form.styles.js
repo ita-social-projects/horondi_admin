@@ -21,5 +21,17 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: '10px'
+  },
+  buttonContainer: {
+    position: 'relative',
+    width: '100%',
+    height: '60px',
+    marginTop: '50px'
+  },
+  fixedButtons: {
+    position: 'fixed',
+    height: '60px',
+    zIndex: 1001,
+    backgroundColor: theme.palette.bodyColor
   }
 }));

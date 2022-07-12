@@ -64,8 +64,6 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
     values,
     errors,
     touched,
-    dirty,
-    isValid,
     handleChange,
     handleBlur,
     setFieldValue,
@@ -106,8 +104,6 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
         submitForm={submitForm}
         values={values}
         errors={errors}
-        dirty={dirty}
-        isValid={isValid}
       />
       <form>
         <Grid container spacing={1}>
