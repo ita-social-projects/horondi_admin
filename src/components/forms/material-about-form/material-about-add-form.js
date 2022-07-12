@@ -34,7 +34,7 @@ const MaterialAboutAddForm = ({ currentType }) => {
   const { pathToAboutMaterialsMain, pathToAboutMaterialsBottom } =
     config.routes;
   const { languages, materialUiConstants } = config;
-  const { titleInput, textInput, img } = config.labels.materialAbout;
+  const { titleInput, textInput, imgTitle } = config.labels.materialAbout;
   const { SAVE_TITLE } = config.buttonTitles;
 
   const pathToAboutMaterials =
@@ -100,7 +100,7 @@ const MaterialAboutAddForm = ({ currentType }) => {
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFieldValue(img, event.target.result);
+        setFieldValue('img', event.target.result);
       };
       reader.readAsDataURL(files[0]);
       setUpload(files[0]);
@@ -135,27 +135,23 @@ const MaterialAboutAddForm = ({ currentType }) => {
         </Grid>
       </div>
       <form>
-        <Grid container spacing={1}>
+        <Grid container>
           <Grid item xs={12}>
             {languages.map((lang) => (
               <LanguagePanel
+                key={lang}
                 lang={lang}
                 inputOptions={inputOptions}
-                key={lang}
               />
             ))}
           </Grid>
           <Grid item xs={12}>
-            <Typography className={styles.title} variant='h5'>
-              {img.toUpperCase()}
-            </Typography>
+            <div className={styles.imgTitle}>{imgTitle}</div>
             <Paper className={styles.paper}>
-              <div className={styles.imageUploadContainer}>
-                <ImageUploadContainer
-                  handler={handleImageLoad}
-                  src={values.img}
-                />
-              </div>
+              <ImageUploadContainer
+                src={values.img}
+                handler={handleImageLoad}
+              />
             </Paper>
           </Grid>
         </Grid>

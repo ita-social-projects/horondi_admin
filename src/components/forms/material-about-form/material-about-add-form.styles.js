@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
-    height: '100%',
     maxWidth: '100%'
   },
   container: {
@@ -12,15 +11,9 @@ export const useStyles = makeStyles((theme) => ({
     position: 'relative',
     paddingTop: '20px'
   },
-  title: {
+  imgTitle: {
     color: '#3f51b5',
     padding: '5px'
-  },
-  imageUploadContainer: {
-    padding: '15px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px'
   },
   buttonContainer: {
     position: 'relative',

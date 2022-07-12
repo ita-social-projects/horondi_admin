@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
+import { ThemeProvider } from '@material-ui/styles';
+import { theme } from '../../../app/app-theme/app.theme';
 import MaterialAboutAddForm from '../material-about-add-form';
 import {
   mockMaterialAboutBlock,
@@ -17,9 +19,6 @@ const mockOnEditorChange = jest.fn();
 const dispatch = jest.fn();
 
 jest.mock('react-redux');
-jest.mock('../material-about-add-form.styles', () => ({
-  useStyles: () => ({})
-}));
 jest.mock('../../../../utils/use-success-snackbar', () => ({
   __esModule: true,
   default: () => ({
@@ -44,6 +43,7 @@ jest.mock('../../../editor', () => ({
   }
 }));
 
+const themeValue = theme('light');
 const fileReader = new FileReaderMock();
 jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
@@ -56,7 +56,9 @@ describe('MaterialAboutAddForm component tests, ', () => {
     component = mount(
       <BrowserRouter>
         <MockedProvider mocks={mockMaterialAboutBlock} addTypename={false}>
-          <MaterialAboutAddForm currentType='bottom' />
+          <ThemeProvider theme={themeValue}>
+            <MaterialAboutAddForm currentType='bottom' />
+          </ThemeProvider>
         </MockedProvider>
       </BrowserRouter>
     );

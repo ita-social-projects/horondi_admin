@@ -3,6 +3,7 @@ import { config } from '../configs';
 const { languages } = config;
 
 export const getInitialValuesForMaterialsAdd = () => ({
+  img: '',
   uaTitle: '',
   enTitle: '',
   uaText: '',

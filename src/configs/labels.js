@@ -791,7 +791,7 @@ const labels = {
     chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   },
   materialAbout: {
-    img: 'img',
+    imgTitle: 'Фото',
     titleInput: {
       label: {
         ua: 'Заголовок',
