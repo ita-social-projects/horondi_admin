@@ -9,3 +9,19 @@ export const DELETE_MATERIALS_BLOCK = gql`
     }
   }
 `;
+
+export const ADD_MATERIALS_BLOCK = gql`
+  mutation ($materialsBlock: MaterialsBlockInput!, $image: Upload!) {
+    addMaterialsBlock(materialsBlock: $materialsBlock, image: $image) {
+      ... on MaterialsBlock {
+        _id
+        text {
+          lang
+          value
+        }
+        title
+        type
+      }
+    }
+  }
+`;

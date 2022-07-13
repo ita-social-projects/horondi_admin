@@ -7,7 +7,9 @@ export const GET_ALL_MATERIALS_BLOCKS = gql`
         _id
         title
         type
-        image
+        image {
+          small
+        }
         text {
           lang
           value
@@ -26,7 +28,9 @@ export const GET_MATERIALS_BLOCKS_BY_TYPE = gql`
         _id
         title
         type
-        image
+        image {
+          small
+        }
         text {
           lang
           value

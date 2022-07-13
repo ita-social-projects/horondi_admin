@@ -1,10 +1,13 @@
 import React from 'react';
-import { useCommonStyles } from '../common.styles';
+import PropTypes from 'prop-types';
+import MaterialAboutAddForm from '../../components/forms/material-about-form';
 
-const MaterialAboutAdd = () => {
-  const common = useCommonStyles();
+const MaterialAboutAdd = ({ currentType }) => (
+  <MaterialAboutAddForm currentType={currentType} />
+);
 
-  return <div className={common.container} />;
+MaterialAboutAdd.propTypes = {
+  currentType: PropTypes.string.isRequired
 };
 
 export default MaterialAboutAdd;
