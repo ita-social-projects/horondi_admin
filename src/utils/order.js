@@ -374,7 +374,7 @@ export const setFormValues = (selectedOrder) => {
   };
 };
 
-export const mergeProducts = function (
+export const mergeProducts = (
   selectedProduct,
   size,
   quantity,
@@ -383,7 +383,7 @@ export const mergeProducts = function (
   setPricesWithDiscount,
   promoCode,
   setDiscounts
-) {
+) => {
   const index = orderItems.findIndex(
     (item) =>
       item.product._id === selectedProduct._id &&
