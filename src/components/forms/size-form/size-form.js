@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   TextField,
   Grid,
@@ -6,7 +6,7 @@ import {
   Typography,
   MenuItem
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,8 +14,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { useFormik } from 'formik';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { uniqueId } from 'lodash';
 import { useCommonStyles } from '../../../pages/common.styles';
-import { BackButton, SaveButton } from '../../buttons';
+import { SaveButton } from '../../buttons';
+import DeleteButton from '../../buttons/delete-button';
 import LoadingBar from '../../loading-bar';
 import {
   createSize,
@@ -29,48 +31,42 @@ import {
 } from '../../../utils/additionalPrice-helper';
 import { formSchema } from '../../../validations/sizes/size-form-validation';
 import { useStyles } from './size-form.styles';
-import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
-import { getModels } from '../../../redux/model/model.actions';
-import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
-
 import Tooltip from '../../tooltip';
 import { sizes } from '../../../configs/tooltip-titles';
 
+const { DELETE_TITLE } = config.buttonTitles;
+
 const {
-  MODEL_EXPLANATION,
   RELATIVE_PRICE_EXPLANATION,
   PRICE_EXPLANATION,
   PRICE_EXPLANATION_DESCRIPTION
 } = sizes;
 
-const { selectTitle, modelTitle, convertationTitle } =
+const { selectTitle, convertationTitle, sizeAdd, sizeEdit } =
   config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
 const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
-const { pathToSizes } = config.routes;
 
-function SizeForm({ id, size }) {
+function SizeForm({ size, onSizeSubmit, onSizeDelete, isEdit }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
-  const dispatch = useDispatch();
 
   const { loading } = useSelector(sizesSelectorWithPagination);
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
-  const { list } = useSelector(modelSelectorWithPagination);
 
   const {
     values,
     handleChange,
     handleSubmit,
+    resetForm,
     errors,
     touched,
     dirty,
@@ -83,25 +79,15 @@ function SizeForm({ id, size }) {
     initialValues: getSizeInitialValues(size),
     onSubmit: (data) => {
       const newSize = createSize(data);
-      if (id) {
-        const updatedSize = createSize(data);
-        dispatch(
-          updateSize({
-            id,
-            updatedSize
-          })
-        );
-        return;
+      newSize._id = isEdit ? size._id : uniqueId('size_');
+      onSizeSubmit(newSize);
+      if (!isEdit) {
+        resetForm();
       }
-      dispatch(addSize(newSize));
     }
   });
 
   const unblock = useUnsavedChangesHandler(values);
-  useEffect(() => {
-    dispatch(getModels());
-    dispatch(getCurrencies());
-  }, []);
 
   const checkboxes = [
     {
@@ -115,10 +101,6 @@ function SizeForm({ id, size }) {
     }
   ];
 
-  const preventEventHandler = (e) => {
-    e.preventDefault();
-  };
-
   if (loading) {
     return <LoadingBar />;
   }
@@ -127,9 +109,16 @@ function SizeForm({ id, size }) {
       <div className={styles.buttonsWrapper}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
-            <Grid item className={styles.button}>
-              <BackButton pathBack={pathToSizes} />
-            </Grid>
+            {isEdit && (
+              <Grid item className={styles.button}>
+                <DeleteButton
+                  data-cy='size-delete-btn'
+                  onClickHandler={() => onSizeDelete(size._id)}
+                >
+                  {DELETE_TITLE}
+                </DeleteButton>
+              </Grid>
+            )}
             <Grid item className={styles.button}>
               <SaveButton
                 onClickHandler={handleSubmit}
@@ -149,14 +138,9 @@ function SizeForm({ id, size }) {
         variant={materialUiConstants.typographyVariantH1}
         className={commonStyles.sizeTitle}
       >
-        {id
-          ? config.titles.sizesTitles.sizeEdit
-          : config.titles.sizesTitles.sizeAdd}
+        {isEdit ? sizeEdit : sizeAdd}
       </Typography>
-      <form
-        className={styles.sizeForm}
-        onSubmit={(e) => preventEventHandler(e)}
-      >
+      <div className={styles.sizeForm}>
         <Grid item xs={12}>
           <div className={styles.wrapper}>
             <div className={styles.contentWrapper}>
@@ -215,41 +199,6 @@ function SizeForm({ id, size }) {
               </Paper>
             </div>
             <div className={styles.contentWrapper}>
-              <Paper className={`${styles.sizeItemAdd}`}>
-                <FormControl
-                  variant={materialUiConstants.outlined}
-                  className={`${styles.formControl} 
-                ${styles.purposeSelect} ${styles.withTooltip}`}
-                >
-                  <InputLabel
-                    htmlFor={materialUiConstants.outlinedAgeNativeSimple}
-                  >
-                    {modelTitle}
-                  </InputLabel>
-                  <Select
-                    data-cy={labels.en.modelName}
-                    id={labels.en.modelName}
-                    name={labels.en.modelName}
-                    value={values.modelId}
-                    onChange={(e) =>
-                      setFieldValue(labels.en.modelName, e.target.value)
-                    }
-                    onBlur={handleBlur}
-                    label={modelTitle}
-                    error={touched.modelId && !!errors.modelId}
-                  >
-                    {list?.map((value) => (
-                      <MenuItem key={value._id} value={value._id}>
-                        {value?.name[0]?.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <Tooltip title={MODEL_EXPLANATION} />
-                  {touched.modelId && errors.modelId && (
-                    <div className={styles.inputError}>{errors.modelId}</div>
-                  )}
-                </FormControl>
-              </Paper>
               <Paper className={styles.sizeItemAdd}>
                 <FormControl component='fieldset'>
                   <RadioGroup
@@ -327,7 +276,7 @@ function SizeForm({ id, size }) {
             </div>
           </div>
         </Grid>
-      </form>
+      </div>
     </div>
   );
 }

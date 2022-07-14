@@ -96,7 +96,7 @@ SaveButton.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   values: PropTypes.objectOf(PropTypes.any),
-  errors: PropTypes.objectOf(PropTypes.object)
+  errors: PropTypes.objectOf(PropTypes.string)
 };
 
 SaveButton.defaultProps = {

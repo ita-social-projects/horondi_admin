@@ -180,7 +180,9 @@ export const sizeErrorMessages = {
   MAX_WEIGHT_MESSAGE_SIZE: `Не більше 5 кг`,
   MIN_WEIGHT_MESSAGE_SIZE: `Не менше 0.1 кг`,
   NO_NUMBER_TYPE_MESSAGE: `Повинно містити число`,
-  NO_STRING_TYPE_MESSAGE: `Повинно містити букви`
+  NO_STRING_TYPE_MESSAGE: `Повинно містити букви`,
+  NO_SIZES_PROVIDED: `Потрібно додати хоча б один розмір`,
+  SIZE_ALREADY_EXISTS: `Розмір з такою назвою вже існує`
 };
 
 export const colorErrorMessages = {

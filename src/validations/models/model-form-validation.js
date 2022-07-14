@@ -5,6 +5,7 @@ const { NO_STRING_TYPE_MESSAGE } = config.modelErrorMessages;
 
 const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, UA_NAME_MESSAGE, EN_NAME_MESSAGE } =
   config.commonErrorMessages;
+const { NO_SIZES_PROVIDED } = config.sizeErrorMessages;
 
 export const modelValidationSchema = Yup.object().shape({
   enDescription: Yup.string()
@@ -26,6 +27,14 @@ export const modelValidationSchema = Yup.object().shape({
     .min(2, MIN_LENGTH_MESSAGE)
     .required(ERROR_MESSAGE),
   priority: Yup.number().required(ERROR_MESSAGE),
-  category: Yup.string().required(ERROR_MESSAGE)
-  // sizes: Yup.string().required(ERROR_MESSAGE)
+  category: Yup.string().required(ERROR_MESSAGE),
+  sizes: Yup.array()
+    // .test("unique", SIZE_ALREADY_EXISTS, (sizes) => {
+    //   const sizeNames = sizes.map(size => size.name);
+    //   const duplicates = sizeNames.filter((value, idx, self) => {
+    //     return self.indexOf(value) !== idx;
+    //   });
+    //   return duplicates.length === 0;
+    // })
+    .required(NO_SIZES_PROVIDED)
 });

@@ -92,6 +92,7 @@ export const getModelById = async (id) => {
             }
           }
           sizes {
+            _id
             name
             heightInCm
             widthInCm
