@@ -40,7 +40,7 @@ const Products = ({ data, setFieldValue }) => {
       dispatch(closeDialog());
       setFieldValue(
         inputName.itemsName,
-        items.filter((item, index) => index !== indexItem)
+        items.filter((_item, index) => index !== indexItem)
       );
       pricesWithDiscount.splice(indexItem, 1);
       discounts.splice(indexItem, 1);

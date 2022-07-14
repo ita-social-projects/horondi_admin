@@ -224,7 +224,7 @@ const ConstructorPage = ({ match }) => {
       }
     : {};
 
-  const handleTabsChange = (event, newValue) => {
+  const handleTabsChange = (_event, newValue) => {
     dispatch(setConstructorTabs(newValue));
     if (!constructorTabs) {
       dispatch(

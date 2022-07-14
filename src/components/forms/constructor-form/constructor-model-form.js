@@ -44,7 +44,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
 
   const { createConstructor } = useConstructorHandlers();
 
-  const handleChange = (panel) => (event, isExpanded) => {
+  const handleChange = (panel) => (_event, isExpanded) => {
     setExpanded(isExpanded ? panel : '');
   };
 

@@ -38,7 +38,7 @@ const OrderItem = ({ id }) => {
     id && dispatch(getOrder(id));
   }, [dispatch, id]);
 
-  const handleTabChange = (e, newValue) => {
+  const handleTabChange = (_e, newValue) => {
     setTabValue(newValue);
   };
 

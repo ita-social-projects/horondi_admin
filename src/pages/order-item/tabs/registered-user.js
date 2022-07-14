@@ -32,7 +32,7 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
     loading: Users.userLoading
   }));
 
-  const onUserChange = (e, user) => {
+  const onUserChange = (_e, user) => {
     setFieldValue(inputName.userId, user?._id);
     setId(user?._id);
   };

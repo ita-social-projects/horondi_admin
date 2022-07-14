@@ -12,7 +12,7 @@ const useHomePageSlideHandlers = () => {
     imageUrl: ''
   });
 
-  const handleTabsChange = (event, newValue) => {
+  const handleTabsChange = (_event, newValue) => {
     setTabsValue(newValue);
   };
 

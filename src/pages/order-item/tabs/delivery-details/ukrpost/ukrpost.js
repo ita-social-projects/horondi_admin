@@ -79,13 +79,13 @@ const UkrPost = ({ values, setFieldValue }) => {
       <h3 className={styles.ukrPostTitle}>{deliveryTitles.ukrPost}</h3>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          onInputChange={(_e, value) => {
             setRegion(value);
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
           onFocus={() => setRegionFocus(true)}
           onBlur={() => setRegionFocus(false)}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handleRegion(
               value,
               setFieldValue,
@@ -119,13 +119,13 @@ const UkrPost = ({ values, setFieldValue }) => {
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          onInputChange={(_e, value) => {
             setDistrict(value);
           }}
           onFocus={() => setDistrictFocus(true)}
           onBlur={() => setDistrictFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handleDistrict(value, setFieldValue, setCity, setPostOffice);
           }}
           disabled={!values.regionId}
@@ -157,13 +157,13 @@ const UkrPost = ({ values, setFieldValue }) => {
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          onInputChange={(_e, value) => {
             setCity(value);
           }}
           onFocus={() => setCityFocus(true)}
           onBlur={() => setCityFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneCity}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handleCity(value, setFieldValue, setPostOffice);
           }}
           disabled={!values.districtId}
@@ -191,11 +191,11 @@ const UkrPost = ({ values, setFieldValue }) => {
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          onInputChange={(_e, value) => {
             setPostOffice(value);
           }}
           noOptionsText={deliveryAdditionalInfo.noOneDepartment}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handlePostOffice(value, setPostOffice, setFieldValue);
           }}
           onFocus={() => setDepartmentFocus(true)}

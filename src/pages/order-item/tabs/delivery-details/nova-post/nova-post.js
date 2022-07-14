@@ -52,12 +52,12 @@ const NovaPost = ({ setFieldValue, values }) => {
           <Autocomplete
             onFocus={() => setCityFocus(true)}
             onBlur={() => setCityFocus(false)}
-            onInputChange={(e, value) => {
+            onInputChange={(_e, value) => {
               setInputValue(value);
               getPostCities(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneCity}
-            onChange={(event, value) => {
+            onChange={(_event, value) => {
               if (value) {
                 setSelectedCity(value.description);
                 setFieldValue(inputName.novaPost.city, value.description);
@@ -94,11 +94,11 @@ const NovaPost = ({ setFieldValue, values }) => {
       <div className={styles.novaPostData}>
         <div className={styles.selectorInfo}>
           <Autocomplete
-            onInputChange={(event, value) => {
+            onInputChange={(_event, value) => {
               setWarehouse(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneDepartment}
-            onChange={(event, value) => {
+            onChange={(_event, value) => {
               if (value) {
                 setFieldValue(
                   inputName.novaPost.courierOffice,

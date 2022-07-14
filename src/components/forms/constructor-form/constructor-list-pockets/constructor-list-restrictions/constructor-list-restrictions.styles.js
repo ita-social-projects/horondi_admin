@@ -5,7 +5,7 @@ const flexRow = {
   flexDirection: 'row'
 };
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   hide: {
     display: 'none'
   },

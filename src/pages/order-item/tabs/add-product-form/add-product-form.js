@@ -95,13 +95,13 @@ const AddProductForm = ({
     <div>
       <Autocomplete
         data-testid='autocomplete'
-        onInputChange={(e, value) => {
+        onInputChange={(_e, value) => {
           setProductInput(value);
         }}
         noOptionsText={productAdditionalInfo.noOneProduct}
         options={products}
         getOptionLabel={(option) => option?.name[0]?.value}
-        onChange={(e, value) => {
+        onChange={(_e, value) => {
           if (value) {
             setSelectedProduct(value);
           } else {

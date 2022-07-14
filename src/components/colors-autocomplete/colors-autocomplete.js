@@ -82,7 +82,7 @@ const ColorsAutocomplete = ({
           placeholder={mainLabel}
         />
       )}
-      onChange={(e, value) => {
+      onChange={(_e, value) => {
         handleChange(value);
       }}
     />

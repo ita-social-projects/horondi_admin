@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import { useFormik } from 'formik';
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './material-about-add-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
