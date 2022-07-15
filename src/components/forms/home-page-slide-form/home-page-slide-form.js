@@ -212,7 +212,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             )}
           </Paper>
         </Grid>
-        {languages.map((lang, index) => (
+        {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
       </form>

@@ -1,7 +1,7 @@
 export const backUseEffectHandler = (
   back,
   setBackFn,
-  setConstImgFn,
+  _setConstImgFn,
   imagePrefix
 ) => {
   if (back?.images.thumbnail) {
