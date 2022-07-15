@@ -31,6 +31,7 @@ import {
 } from '../../../utils/model-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import SizeFormAccordion from '../size-form/size-form-accordion';
+import { sizeDefaultProps } from '../../../utils/size-helpers';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -307,6 +308,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               onChange={handleExpandedChange(sizeAdd)}
               isExpanded={sizeFormExpanded === sizeAdd}
               sizeUtils={sizeUtils}
+              size={sizeDefaultProps.size}
             />
           </Grid>
         </Grid>

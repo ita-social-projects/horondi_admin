@@ -65,6 +65,7 @@ export const sizeDefaultProps = {
     volumeInLiters: '',
     weightInKg: '',
     available: '',
+    additionalPriceType: 'ABSOLUTE',
     additionalPrice: 0
   },
   sizeUtils: {

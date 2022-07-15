@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TextField,
   Grid,
@@ -61,6 +61,7 @@ function SizeForm({ size, sizeUtils, isEdit }) {
   const { loading } = useSelector(sizesSelectorWithPagination);
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
 
+  const [initSize, setInitSize] = useState(getSizeInitialValues(size));
   const { onSizeSubmit, onSizeDelete, sizesAdded } = sizeUtils;
 
   const {
@@ -76,15 +77,15 @@ function SizeForm({ size, sizeUtils, isEdit }) {
     handleBlur
   } = useFormik({
     validateOnBlur: true,
+    enableReinitialize: isEdit,
     validationSchema: formSchema,
-    initialValues: getSizeInitialValues(size),
+    initialValues: initSize,
     onSubmit: (data) => {
       const newSize = createSize(data);
       newSize._id = isEdit ? size._id : uniqueId('size_');
       onSizeSubmit(newSize);
-      if (!isEdit) {
-        resetForm();
-      }
+      if (isEdit) setInitSize(getSizeInitialValues(newSize));
+      resetForm();
     }
   });
 
