@@ -17,7 +17,7 @@ export const createSize = (data) => ({
 });
 
 export const getSizeInitialValues = (size) => ({
-  name: size.name || 'M',
+  name: size.name || '',
   heightInCm: size.heightInCm || '',
   widthInCm: size.widthInCm || '',
   depthInCm: size.depthInCm || '',
@@ -48,8 +48,11 @@ export const sizePropTypes = {
       })
     )
   }),
-  onSizeSubmit: PropTypes.func,
-  onSizeDelete: PropTypes.func,
+  sizeUtils: PropTypes.shape({
+    onSizeSubmit: PropTypes.func,
+    onSizeDelete: PropTypes.func,
+    sizesAdded: PropTypes.arrayOf(PropTypes.string)
+  }),
   isEdit: PropTypes.bool
 };
 export const sizeDefaultProps = {
@@ -64,8 +67,11 @@ export const sizeDefaultProps = {
     available: '',
     additionalPrice: 0
   },
-  onSizeSubmit: null,
-  onSizeDelete: null,
+  sizeUtils: {
+    onSizeSubmit: null,
+    onSizeDelete: null,
+    sizesAdded: []
+  },
   isSizeEdit: false
 };
 

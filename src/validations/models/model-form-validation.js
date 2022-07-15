@@ -28,13 +28,5 @@ export const modelValidationSchema = Yup.object().shape({
     .required(ERROR_MESSAGE),
   priority: Yup.number().required(ERROR_MESSAGE),
   category: Yup.string().required(ERROR_MESSAGE),
-  sizes: Yup.array()
-    // .test("unique", SIZE_ALREADY_EXISTS, (sizes) => {
-    //   const sizeNames = sizes.map(size => size.name);
-    //   const duplicates = sizeNames.filter((value, idx, self) => {
-    //     return self.indexOf(value) !== idx;
-    //   });
-    //   return duplicates.length === 0;
-    // })
-    .required(NO_SIZES_PROVIDED)
+  sizes: Yup.array().required(NO_SIZES_PROVIDED)
 });

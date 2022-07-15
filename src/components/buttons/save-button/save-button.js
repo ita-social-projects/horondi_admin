@@ -37,6 +37,7 @@ const SaveButton = ({
   errors,
   values,
   unblockFunction,
+  confirmOn,
   ...props
 }) => {
   const error = !!Object.keys(errors).length;
@@ -67,14 +68,16 @@ const SaveButton = ({
       color={color}
       type={type}
       onClick={() => {
-        saveButtonHandler(
-          unblockFunction,
-          onClickHandler,
-          dispatch,
-          openSuccessSnackbar,
-          SAVE_MESSAGE,
-          SAVE_CHANGES
-        );
+        !confirmOn
+          ? onClickHandler()
+          : saveButtonHandler(
+              unblockFunction,
+              onClickHandler,
+              dispatch,
+              openSuccessSnackbar,
+              SAVE_MESSAGE,
+              SAVE_CHANGES
+            );
         setTimeout(() => {
           if (!error) {
             setDisabled(true);
@@ -96,7 +99,8 @@ SaveButton.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   values: PropTypes.objectOf(PropTypes.any),
-  errors: PropTypes.objectOf(PropTypes.string)
+  errors: PropTypes.objectOf(PropTypes.string),
+  confirmOn: PropTypes.bool
 };
 
 SaveButton.defaultProps = {
@@ -104,7 +108,8 @@ SaveButton.defaultProps = {
   errors: {},
   values: {},
   onClickHandler: noop,
-  unblockFunction: noop
+  unblockFunction: noop,
+  confirmOn: true
 };
 
 export default SaveButton;

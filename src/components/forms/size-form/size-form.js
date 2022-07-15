@@ -34,9 +34,8 @@ import { useStyles } from './size-form.styles';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
-import purposeEnum from '../../../configs/sizes-enum';
+import sizesEnum from '../../../configs/sizes-enum';
 
-import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import Tooltip from '../../tooltip';
 import { sizes } from '../../../configs/tooltip-titles';
 
@@ -55,12 +54,14 @@ const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 
-function SizeForm({ size, onSizeSubmit, onSizeDelete, isEdit }) {
+function SizeForm({ size, sizeUtils, isEdit }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
   const { loading } = useSelector(sizesSelectorWithPagination);
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+
+  const { onSizeSubmit, onSizeDelete, sizesAdded } = sizeUtils;
 
   const {
     values,
@@ -87,8 +88,6 @@ function SizeForm({ size, onSizeSubmit, onSizeDelete, isEdit }) {
     }
   });
 
-  const unblock = useUnsavedChangesHandler(values);
-
   const checkboxes = [
     {
       id: 'avaliable',
@@ -100,6 +99,14 @@ function SizeForm({ size, onSizeSubmit, onSizeDelete, isEdit }) {
       handler: () => setFieldValue(labels.en.available, !values.available)
     }
   ];
+
+  const availableSizes = Object.values(sizesEnum).filter((sizeName) => {
+    const sizeAddedCondition = !sizesAdded.includes(sizeName);
+    if (isEdit) {
+      return sizeName === size.name || sizeAddedCondition;
+    }
+    return sizeAddedCondition;
+  });
 
   if (loading) {
     return <LoadingBar />;
@@ -122,10 +129,10 @@ function SizeForm({ size, onSizeSubmit, onSizeDelete, isEdit }) {
             <Grid item className={styles.button}>
               <SaveButton
                 onClickHandler={handleSubmit}
-                unblockFunction={unblock}
                 data-cy={materialUiConstants.save}
                 type={materialUiConstants.types.submit}
                 title={config.buttonTitles.SAVE_SIZE_TITLE}
+                confirmOn={false}
                 values={values}
                 errors={errors}
                 disabled={!dirty || !isValid}
@@ -189,7 +196,7 @@ function SizeForm({ size, onSizeSubmit, onSizeDelete, isEdit }) {
                     }
                     label={selectTitle}
                   >
-                    {Object.values(purposeEnum).map((value) => (
+                    {availableSizes.map((value) => (
                       <MenuItem key={value} value={value}>
                         {value}
                       </MenuItem>

@@ -14,8 +14,7 @@ import { config } from '../../../../configs';
 const SizeFormAccordion = ({
   isExpanded,
   onChange,
-  onSizeSubmit,
-  onSizeDelete,
+  sizeUtils,
   isSizeEdit,
   size
 }) => (
@@ -32,12 +31,7 @@ const SizeFormAccordion = ({
       </Typography>
     </AccordionSummary>
     <AccordionDetails>
-      <SizeForm
-        isEdit={isSizeEdit}
-        size={size}
-        onSizeDelete={onSizeDelete}
-        onSizeSubmit={onSizeSubmit}
-      />
+      <SizeForm isEdit={isSizeEdit} size={size} sizeUtils={sizeUtils} />
     </AccordionDetails>
   </Accordion>
 );
@@ -45,8 +39,11 @@ const SizeFormAccordion = ({
 SizeFormAccordion.propTypes = {
   isExpanded: PropTypes.bool,
   onChange: PropTypes.func,
-  onSizeSubmit: PropTypes.func,
-  onSizeDelete: PropTypes.func,
+  sizeUtils: PropTypes.shape({
+    onSizeSubmit: PropTypes.func,
+    onSizeDelete: PropTypes.func,
+    sizesAdded: PropTypes.arrayOf(PropTypes.string)
+  }),
   isSizeEdit: PropTypes.bool,
   size: PropTypes.shape(sizeFormAccordionPropTypes)
 };
@@ -54,8 +51,11 @@ SizeFormAccordion.propTypes = {
 SizeFormAccordion.defaultProps = {
   isExpanded: true,
   onChange: null,
-  onSizeSubmit: null,
-  onSizeDelete: null,
+  sizeUtils: {
+    onSizeSubmit: null,
+    onSizeDelete: null,
+    sizesAdded: []
+  },
   isSizeEdit: false,
   size: {}
 };

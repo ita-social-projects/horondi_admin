@@ -54,7 +54,7 @@ const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const checkIsEdit = (checkCondition) => checkCondition ? model.sizes : [];
+  const checkIsEdit = (checkCondition) => (checkCondition ? model.sizes : []);
 
   const { createModel, setUpload, upload, modelImage, setModelImage } =
     useModelHandlers();
@@ -69,6 +69,9 @@ const ModelForm = ({ model, id, isEdit }) => {
   }));
 
   const [sizes, setSizes] = useState(model.sizes || []);
+  const [sizesTouched, setSizesTouched] = useState(false);
+  const sizesAdded = sizes.map((size) => size.name);
+
   const [category, setCategory] = useState(model.category._id || '');
   const {
     values,
@@ -119,14 +122,21 @@ const ModelForm = ({ model, id, isEdit }) => {
         return currentSizes.map((size, idx) =>
           idx === sizeIdx ? newSize : size
         );
-      } 
-        return [...currentSizes, newSize];
-      
+      }
+      return [...currentSizes, newSize];
     });
   };
 
   const onSizeDelete = (sizeIdToDelete) => {
-    setSizes((currentSizes) => currentSizes.filter((size) => size._id !== sizeIdToDelete));
+    setSizes((currentSizes) =>
+      currentSizes.filter((size) => size._id !== sizeIdToDelete)
+    );
+  };
+
+  const sizeUtils = {
+    onSizeSubmit,
+    onSizeDelete,
+    sizesAdded
   };
 
   useEffect(() => {
@@ -137,6 +147,9 @@ const ModelForm = ({ model, id, isEdit }) => {
   const [sizeFormExpanded, setSizeFormExpanded] = useState('');
 
   const handleExpandedChange = (sizeForm) => (event, isExpanded) => {
+    if (sizeFormExpanded === sizeAdd) {
+      setSizesTouched(true);
+    }
     setSizeFormExpanded(isExpanded ? sizeForm : '');
   };
 
@@ -277,7 +290,7 @@ const ModelForm = ({ model, id, isEdit }) => {
           </Paper>
 
           <Grid item xs={12}>
-            {errors.sizes && (
+            {sizesTouched && errors.sizes && (
               <div className={styles.inputError}>{errors.sizes}</div>
             )}
             {sizes.map((size) => (
@@ -287,14 +300,13 @@ const ModelForm = ({ model, id, isEdit }) => {
                 isExpanded={sizeFormExpanded === size._id}
                 onChange={handleExpandedChange(size._id)}
                 isSizeEdit
-                onSizeSubmit={onSizeSubmit}
-                onSizeDelete={onSizeDelete}
+                sizeUtils={sizeUtils}
               />
             ))}
             <SizeFormAccordion
-              onSizeSubmit={onSizeSubmit}
               onChange={handleExpandedChange(sizeAdd)}
               isExpanded={sizeFormExpanded === sizeAdd}
+              sizeUtils={sizeUtils}
             />
           </Grid>
         </Grid>
