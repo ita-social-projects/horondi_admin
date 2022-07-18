@@ -1,11 +1,11 @@
 import React from 'react';
 import * as redux from 'react-redux';
 import { Paper, TextField, Select, Button } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import LanguagePanel from '../../language-panel';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { BackButton, SaveButton } from '../../../buttons';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
+import { theme } from '../../../app/app-theme/app.theme';
 
 import ModelForm from '../index';
 import {
@@ -21,6 +21,7 @@ import {
   files,
   target
 } from './model-form.variables';
+import SizeFormAccordion from '../../size-form/size-form-accordion/size-form-accordion';
 
 React.useLayoutEffect = React.useEffect;
 
@@ -98,8 +99,8 @@ describe('Model-form tests', () => {
     expect(mockUseEffect).toHaveBeenCalledTimes(2);
   });
 
-  it(' should call useSelector twice', () => {
-    expect(mockUseSelector).toHaveBeenCalledTimes(2);
+  it(' should call useSelector once', () => {
+    expect(mockUseSelector).toHaveBeenCalledTimes(1);
   });
 
   it(' should call useDispatch once', () => {
@@ -126,6 +127,10 @@ describe('Model-form tests', () => {
 
   it('should find 2 Language panels', () => {
     expect(wrapper.find(LanguagePanel)).toHaveLength(2);
+  });
+
+  it('should render SizeFormAccordions for adding a size and updating existing one', () => {
+    expect(wrapper.find(SizeFormAccordion)).toHaveLength(2);
   });
 
   it('should find Image Container', () => {
@@ -161,12 +166,6 @@ describe('Model-form tests', () => {
     expect(mockSetFieldValue).toHaveBeenCalledWith('category', 'accessories');
   });
 
-  it('should call setFieldValue for Autocomplete', () => {
-    const list = Sizes.list.map((size) => size._id);
-    wrapper.find(Autocomplete).simulate('change', {}, Sizes.list);
-    expect(mockSetFieldValue).toHaveBeenCalledWith('sizes', list);
-  });
-
   it('should call setFieldValue for first checkbox', () => {
     wrapper.find('CheckboxOptions').at(0).props().options[0].handler();
     expect(mockSetFieldValue).toHaveBeenCalledWith('show', false);
@@ -189,18 +188,6 @@ describe('Model-form tests', () => {
     fileReader.onload(target);
     expect(fileReader.readAsDataURL).toHaveBeenCalled();
     expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
-  });
-
-  it('should coverage getOptionLabel in Autocomplete', () => {
-    const label = wrapper.find(Autocomplete).props();
-    label.getOptionLabel(Sizes.list[0]);
-    expect(label).toBeDefined();
-  });
-
-  it('should coverage renderInput in AutoComplete', () => {
-    const label = wrapper.find(Autocomplete).props();
-    label.renderInput(Sizes.list[0]);
-    expect(label).toBeDefined();
   });
 
   it('expect braches', () => {

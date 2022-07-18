@@ -18,7 +18,6 @@ import { uniqueId } from 'lodash';
 import { useCommonStyles } from '../../../pages/common.styles';
 import { SaveButton } from '../../buttons';
 import DeleteButton from '../../buttons/delete-button';
-import LoadingBar from '../../loading-bar';
 import {
   createSize,
   getSizeInitialValues,
@@ -31,7 +30,6 @@ import {
 } from '../../../utils/additionalPrice-helper';
 import { formSchema } from '../../../validations/sizes/size-form-validation';
 import { useStyles } from './size-form.styles';
-import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import sizesEnum from '../../../configs/sizes-enum';
@@ -58,7 +56,6 @@ function SizeForm({ size, sizeUtils, isEdit }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
-  const { loading } = useSelector(sizesSelectorWithPagination);
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
 
   const [initSize, setInitSize] = useState(getSizeInitialValues(size));
@@ -109,11 +106,11 @@ function SizeForm({ size, sizeUtils, isEdit }) {
     return sizeAddedCondition;
   });
 
-  if (loading) {
-    return <LoadingBar />;
-  }
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      data-testid={`size-form${size._id || ''}`}
+    >
       <div className={styles.buttonsWrapper}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>

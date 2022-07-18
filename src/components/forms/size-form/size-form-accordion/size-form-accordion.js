@@ -11,6 +11,8 @@ import { sizeFormAccordionPropTypes } from '../../../../utils/size-helpers';
 import SizeForm from '..';
 import { config } from '../../../../configs';
 
+const { sizeAdd, sizeEdit } = config.titles.sizesTitles;
+
 const SizeFormAccordion = ({
   isExpanded,
   onChange,
@@ -25,9 +27,7 @@ const SizeFormAccordion = ({
       id={`size-form${size._id || ''}`}
     >
       <Typography>
-        {isSizeEdit
-          ? `${config.titles.sizesTitles.sizeEdit} '${size.name}'`
-          : config.titles.sizesTitles.sizeAdd}
+        {isSizeEdit ? `${sizeEdit} | '${size.name}'` : sizeAdd}
       </Typography>
     </AccordionSummary>
     <AccordionDetails>

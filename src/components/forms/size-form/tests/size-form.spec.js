@@ -1,26 +1,12 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { MenuItem } from '@material-ui/core';
 
-import { BackButton, SaveButton } from '../../../buttons';
-import LoadingBar from '../../../loading-bar';
+import { SaveButton } from '../../../buttons';
+import DeleteButton from '../../../buttons/delete-button';
 import SizeForm from '../index';
 import { sizeList, id, size } from './size-form.variables';
-import { config } from '../../../../configs';
 import { sizeDefaultProps } from '../../../../utils/size-helpers';
 
-const labels = config.labels.sizeLabels;
-
-const mockAddSize = jest.fn();
-const mockUpdateSize = jest.fn();
-
-jest.mock('../../../../redux/sizes/sizes.actions', () => ({
-  __esModule: true,
-  default: () => ({
-    addSize: mockAddSize,
-    updateSize: mockUpdateSize
-  })
-}));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 const mockSetFieldValue = jest.fn();
@@ -55,44 +41,13 @@ describe('Size form tests', () => {
     mockUseSelector.mockClear();
   });
 
-  it('Should render LoadingBar', () => {
-    mockUseSelector.mockReturnValue({ loading: true });
-    wrapper = shallow(<SizeForm />);
-    expect(wrapper.exists(LoadingBar)).toBe(true);
-  });
-
-  it('Should render BackButton and SaveButton components', () => {
-    expect(wrapper.exists(BackButton)).toBe(true);
+  it('Should render a SaveButton component', () => {
     expect(wrapper.exists(SaveButton)).toBe(true);
   });
 
-  it('Should render unique Model', () => {
-    expect(wrapper.find('#modelId').find(MenuItem).length).toBe(3);
-  });
-
-  it('Should simulate onchange click event on Select', () => {
-    const selectValue = 'Гаманець шкіряний з гобеленом';
-
-    wrapper
-      .find('#modelId')
-      .props()
-      .onChange({
-        target: {
-          value: selectValue,
-          name: labels.en.modelName
-        }
-      });
-
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
-
-    const sizeValue = 'XXL';
-
-    wrapper
-      .find('#name')
-      .props()
-      .onChange({ target: { value: sizeValue, name: labels.en.name } });
-
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(2);
+  it("Should render a DeleteButton component if in 'edit' mode", () => {
+    wrapper = shallow(<SizeForm isEdit />);
+    expect(wrapper.exists(DeleteButton)).toBe(true);
   });
 
   it('Checkbox', () => {
@@ -100,13 +55,6 @@ describe('Size form tests', () => {
     const checkbox = wrapper.find('label input[type="checkbox"]');
     checkbox.props().onChange({ target: { checked: true } });
     expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
-  });
-
-  it('Should simulate onsubmit on Form', () => {
-    const preventDefault = () => {};
-    const mockedEvent = { preventDefault };
-    wrapper.find('form').props().onSubmit(mockedEvent);
-    expect(mockSubmit).toHaveBeenCalledTimes(0);
   });
 
   it('Should have default props', () => {
