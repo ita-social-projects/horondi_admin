@@ -141,13 +141,15 @@ const ModelForm = ({ model, id, isEdit }) => {
   };
 
   useEffect(() => {
-    const updatedSizes = sizes.map(({ _id, ...size }) => _id.includes('size_') ? size : { _id, ...size });
+    const updatedSizes = sizes.map(({ _id, ...size }) =>
+      _id.includes('size_') ? size : { _id, ...size }
+    );
     setFieldValue('sizes', updatedSizes);
   }, [sizes, setFieldValue]);
 
   const [sizeFormExpanded, setSizeFormExpanded] = useState('');
 
-  const handleExpandedChange = (sizeForm) => (event, isExpanded) => {
+  const handleExpandedChange = (sizeForm) => (_event, isExpanded) => {
     if (sizeFormExpanded === sizeAdd) {
       setSizesTouched(true);
     }

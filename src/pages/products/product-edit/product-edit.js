@@ -30,12 +30,7 @@ const ProductEdit = ({ id }) => {
     };
   }, [id, dispatch]);
 
-  if (
-    loading ||
-    !product.name ||
-    !product.name[0].value ||
-    !product.sizes.length
-  ) {
+  if (loading || !product.name || !product.name[0].value) {
     return <LoadingBar />;
   }
 

@@ -16,21 +16,23 @@ export const createSize = (data) => ({
     data.additionalPriceType === 'RELATIVE' ? +data.additionalPrice : null
 });
 
-export const getSizeInitialValues = (size) => ({
-  name: size.name || '',
-  heightInCm: size.heightInCm || '',
-  widthInCm: size.widthInCm || '',
-  depthInCm: size.depthInCm || '',
-  volumeInLiters: size.volumeInLiters || '',
-  weightInKg: size.weightInKg || '',
-  available: size.available || false,
-  additionalPriceType: size.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
-  additionalPrice: size.absolutePrice
+export const getSizeInitialValues = (size) => {
+  const priceType = size.absolutePrice
     ? size.absolutePrice
-    : size.relativePrice
-    ? size.relativePrice
-    : ''
-});
+    : size.relativePrice;
+
+  return {
+    name: size.name || '',
+    heightInCm: size.heightInCm || '',
+    widthInCm: size.widthInCm || '',
+    depthInCm: size.depthInCm || '',
+    volumeInLiters: size.volumeInLiters || '',
+    weightInKg: size.weightInKg || '',
+    available: size.available || false,
+    additionalPriceType: size.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
+    additionalPrice: priceType || ''
+  };
+};
 
 export const sizePropTypes = {
   size: PropTypes.shape({
