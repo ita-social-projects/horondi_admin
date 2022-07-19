@@ -109,9 +109,6 @@ describe('Model-form tests', () => {
   it('should find buttons', () => {
     expect(wrapper.find(BackButton)).toHaveLength(1);
     expect(wrapper.find(SaveButton)).toHaveLength(1);
-    if (mockIsEdit) {
-      expect(wrapper.find(Button)).toHaveLength(1);
-    }
   });
 
   it('should find checkboxes', () => {
@@ -155,10 +152,6 @@ describe('Model-form tests', () => {
     jest.spyOn(event, 'preventDefault');
     wrapper.find('form').simulate('submit', event);
     expect(event.preventDefault).toBeCalled();
-  });
-  it('should call handle constructor', () => {
-    wrapper.find(Button).at(0).simulate('click');
-    expect(mockUseDispatch).toHaveBeenCalledTimes(1);
   });
 
   it('should call setFieldValue select', () => {
