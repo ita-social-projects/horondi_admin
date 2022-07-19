@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 import { noop } from 'lodash';
 import { handleMenuItem } from '../../utils/handle-menu-item';
-import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './materials-container.styles';
 
 const MaterialsContainer = ({
