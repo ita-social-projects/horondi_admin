@@ -60,9 +60,6 @@ import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
 import NewsDetails from '../pages/news/news-details/news-details';
 import NewsAdd from '../pages/news/news-add/news-add';
-import ConstructorPage from '../pages/model/constructor/constructor-page';
-import ConstructorAdd from '../pages/model/constructor/constructor-add';
-import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 import ReplyCommentEdit from '../pages/comments/comment-edit/replyComments/reply-comment-edit';
 import History from '../pages/history';
@@ -381,24 +378,9 @@ const Routes = ({ validatorMethods }) => {
             component={SlideDetails}
           />
           <Route
-            path={routes.pathToConstructor}
-            exact
-            component={ConstructorPage}
-          />
-          <Route
-            path={routes.pathToAddConstructor}
-            exact
-            component={ConstructorAdd}
-          />
-          <Route
             path={routes.pathToEditConstructor}
             exact
             component={constructorEdit}
-          />
-          <Route
-            path={routes.pathToConstructorDetails}
-            exact
-            component={ConstructorDetails}
           />
           <Route
             path={routes.pathToCommentsEdit}
