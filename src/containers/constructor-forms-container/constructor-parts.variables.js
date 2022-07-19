@@ -1,46 +1,78 @@
 import PropTypes from 'prop-types';
 
-export const constructorObject = {
-  _id: '',
-  name: [
-    {
-      value: ''
+export const getDefaultPart = (optionType) => {
+  const constructorObject = {
+    _id: '',
+    name: [
+      {
+        value: ''
+      },
+      {
+        value: ''
+      }
+    ],
+    optionType,
+    images: {
+      thumbnail: ''
     },
-    {
-      value: ''
-    }
-  ],
-  images: {
-    thumbnail: ''
-  },
-  features: {
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
+    absolutePrice: ' ',
+    relativePrice: null,
+    available: false
+  };
+
+  switch (optionType) {
+    case 'STRAPS':
+    case 'CLOSURES':
+    case 'POCKETS':
+      constructorObject.features = {
+        color: {
+          _id: '',
+          name: [
+            {
+              value: ''
+            },
+            {
+              value: ''
+            }
+          ]
         }
-      ]
-    },
-    color: {
-      name: [
-        {
-          value: ''
+      };
+      break;
+
+    case 'BOTTOM':
+    case 'BASICS':
+    case 'BACKS':
+      constructorObject.features = {
+        material: {
+          _id: '',
+          name: [
+            {
+              value: ''
+            },
+            {
+              value: ''
+            }
+          ]
         },
-        {
-          value: ''
+        color: {
+          _id: '',
+          name: [
+            {
+              value: ''
+            },
+            {
+              value: ''
+            }
+          ]
         }
-      ]
-    }
-  },
-  additionalPrice: [
-    { value: null, type: 'ABSOLUTE_PRICE', currency: '' },
-    { value: null, type: 'ABSOLUTE_PRICE', currencsy: '' }
-  ],
-  available: false,
-  customizable: false
+      };
+      break;
+
+    default:
+      break;
+  }
+
+  return constructorObject;
 };
 
 const valueShape = PropTypes.shape({

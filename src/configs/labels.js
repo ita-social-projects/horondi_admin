@@ -92,12 +92,12 @@ const labels = {
     }
   },
   header: {
-    name: mapToLanguages("І'мя", 'Name'),
+    name: mapToLanguages("Ім'я", 'Name'),
     link: 'Посилання',
     priority: 'Пріорітет'
   },
   userDetails: {
-    userFirstName: "І'мя",
+    userFirstName: "Ім'я",
     userLastName: 'Прізвище',
     email: 'Емейл',
     phoneNumber: 'Номер телефону',
@@ -117,7 +117,7 @@ const labels = {
     avatarText: 'Фото',
     constructorImgText: 'Фото для конструктора',
     form: {
-      name: mapToLanguages("І'мя", 'Name'),
+      name: mapToLanguages("Ім'я", 'Name'),
       description: mapToLanguages('Опис', 'Description')
     },
     patternName: {
@@ -150,7 +150,7 @@ const labels = {
     enterPrice: 'Додаткова ціна (USD):',
     additionalPriceLabel: 'Введіть додаткову ціну',
     form: {
-      name: mapToLanguages("І'мя", 'Name')
+      name: mapToLanguages("Ім'я", 'Name')
     },
     basicName: {
       ua: 'Назва основи',
@@ -188,7 +188,7 @@ const labels = {
     },
     additionalPrice: 'Введіть додаткову ціну',
     form: {
-      name: mapToLanguages("І'мя", 'Name')
+      name: mapToLanguages("Ім'я", 'Name')
     },
     backName: {
       ua: 'Назва спинки',
@@ -217,7 +217,7 @@ const labels = {
     enterPrice: 'Додаткова ціна (USD):',
     additionalPriceLabel: 'Введіть додаткову ціну',
     form: {
-      name: mapToLanguages("І'мя", 'Name')
+      name: mapToLanguages("Ім'я", 'Name')
     },
     bottomName: {
       ua: 'Назва низу',

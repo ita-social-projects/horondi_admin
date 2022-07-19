@@ -71,6 +71,7 @@ export const getBottomById = async (id) => {
       query ($id: ID!){
         getBottomById(id: $id) {
             ... on Bottom {
+                _id
                 name {
                   lang
                   value
@@ -206,7 +207,7 @@ export const updateBottom = async (payload) => {
                 }
               }
             }
-            images{
+            images {
                 thumbnail
                 medium
                 small

@@ -2,18 +2,15 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Grid } from '@material-ui/core';
-import * as Yup from 'yup';
-import { find } from 'lodash';
 import { BackButton, SaveButton } from '../../components/buttons';
-import { checkInitialValue } from '../../utils/check-initial-values';
 import { config } from '../../configs';
 import { useStyles } from '../../components/forms/common.styles';
 import LoadingBar from '../../components/loading-bar';
 
 // TODO: investigate redux actions
 import { addBottom, updateBottom } from '../../redux/bottom/bottom.actions';
-import { selectProductDetails } from '../../redux/selectors/products.selectors';
-import { getProductDetails } from '../../redux/products/products.actions';
+import { materialSelector } from '../../redux/selectors/material.selectors';
+import { getMaterialsByPurpose } from '../../redux/material/material.actions';
 
 import CheckboxOptions from '../../components/checkbox-options';
 import LanguagePanel from '../../components/forms/language-panel';
@@ -21,13 +18,14 @@ import ImageUploadPreviewContainer from '../image-upload-container/image-upload-
 import {
   bottomUseEffectHandler,
   bottomFormOnSubmit,
-  getBottomInitialValues,
-  setBottomColorsHandler
+  getPartInitialValues,
+  setBottomColorsHandler,
+  getValidationSchema
 } from './constructor-part-utils';
 import MaterialsContainer from '../materials-container';
 import useBottomHandlers from './use-constructor-forms-container-handler';
 import {
-  constructorObject,
+  getDefaultPart,
   defaultProps,
   constructorObjectPropsTypes,
   defaultPropTypes,
@@ -49,76 +47,36 @@ const labels = {
   additionalPriceType,
   convertationTitle
 };
-const map = require('lodash/map');
-
-const { BOTTOM_UA_NAME_MESSAGE, PHOTO_NOT_PROVIDED, BOTTOM_EN_NAME_MESSAGE } =
-  config.bottomErrorMessages;
-
-const {
-  ERROR_ENGLISH_AND_DIGITS_ONLY,
-  MIN_LENGTH_MESSAGE,
-  MAX_LENGTH_MESSAGE,
-  PRICE_ERROR,
-  ERROR_MESSAGE
-} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
-const {
-  languages,
-  formRegExp: { enNameCreation, uaNameCreation, backMaterial, backColor },
-  imagePrefix
-} = config;
+const { languages, imagePrefix } = config;
 const { pathToBottoms } = config.routes;
 
-const ConstructorFormsContainer = ({ bottom, id, edit }) => {
+const ConstructorFormsContainer = ({ part, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const {
-    details: { materials },
-    loading
-  } = useSelector(selectProductDetails);
+  const { materialsByPurpose, loading } = useSelector(materialSelector);
+  const materials = materialsByPurpose?.bottom || [];
 
-  const { createBottom, setUpload, upload, setBottomImage, color, setColor } =
-    useBottomHandlers();
+  const {
+    createPart,
+    setPartUpload,
+    partUpload,
+    setPartImage,
+    partImage,
+    colors,
+    setColors
+  } = useBottomHandlers();
 
   useEffect(() => {
-    dispatch(getProductDetails());
+    dispatch(getMaterialsByPurpose(['BOTTOM']));
   }, []);
 
   useEffect(() => {
-    bottomUseEffectHandler(bottom, setBottomImage, imagePrefix);
-  }, [dispatch, bottom]);
-
-  const bottomValidationSchema = Yup.object().shape({
-    uaName: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .max(50, MAX_LENGTH_MESSAGE)
-      .required(ERROR_MESSAGE)
-      .matches(uaNameCreation, BOTTOM_UA_NAME_MESSAGE),
-    enName: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .max(50, MAX_LENGTH_MESSAGE)
-      .required(ERROR_MESSAGE)
-      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
-    material: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(ERROR_MESSAGE),
-    color: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .matches(backColor, ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(ERROR_MESSAGE),
-    additionalPriceType: Yup.string(),
-    additionalPrice: Yup.string()
-      .required(ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
-      .nullable(),
-    available: Yup.boolean(),
-    customizable: Yup.boolean(),
-    bottomImage: Yup.string().required(PHOTO_NOT_PROVIDED)
-  });
+    bottomUseEffectHandler(part, setPartImage, imagePrefix);
+  }, [dispatch, part]);
 
   const {
     values,
@@ -131,12 +89,12 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
     isValid,
     setFieldValue
   } = useFormik({
-    validationSchema: bottomValidationSchema,
-    initialValues: getBottomInitialValues(edit, IMG_URL, bottom),
+    validationSchema: getValidationSchema('BOTTOM'),
+    initialValues: getPartInitialValues(edit, IMG_URL, part),
 
     onSubmit: () => {
-      const newBottom = createBottom(values);
-      const editAndUpload = edit && upload instanceof File;
+      const newPart = createPart(values);
+      const editAndUpload = edit && partUpload instanceof File;
       if (editAndUpload || edit) {
         bottomFormOnSubmit(
           editAndUpload,
@@ -144,21 +102,21 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
           updateBottom,
           {
             id,
-            bottom: newBottom,
-            image: upload
+            bottom: newPart,
+            image: partUpload
           },
           edit,
           {
             id,
-            bottom: newBottom
+            bottom: newPart
           }
         );
         return;
       }
       dispatch(
         addBottom({
-          bottom: newBottom,
-          image: upload
+          bottom: newPart,
+          image: partUpload
         })
       );
     }
@@ -167,7 +125,7 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
   const unblock = useUnsavedChangesHandler(values);
 
   useEffect(() => {
-    setBottomColorsHandler(values, setColor, find, materials);
+    setBottomColorsHandler(values, setColors, materials);
   }, [materials, values.material]);
 
   const checkboxes = [
@@ -186,11 +144,11 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFieldValue('bottomImage', event.target.result);
-        setBottomImage(event.target.result);
+        setFieldValue('image', event.target.result);
+        setPartImage(event.target.result);
       };
       reader.readAsDataURL(files[0]);
-      setUpload(files[0]);
+      setPartUpload(files[0]);
     }
   };
 
@@ -204,15 +162,14 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
     values,
     inputs
   };
+  const languagesPanel = languages.map((lang) => (
+    <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+  ));
 
   const imageUploadBottomInputsId = {
     bottomImageInput: 'bottomImageInput'
   };
 
-  const valueEquality = checkInitialValue(
-    getBottomInitialValues(edit, IMG_URL, bottom),
-    values
-  );
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -226,7 +183,7 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton initial={!valueEquality} pathBack={pathToBottoms} />
+                <BackButton pathBack={pathToBottoms} />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton
@@ -253,7 +210,7 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
                       handler={handleImageLoad}
-                      src={values.bottomImage}
+                      src={partImage}
                       id={imageUploadBottomInputsId.bottomImageInput}
                     />
                     {touched.bottomImage && errors.bottomImage && (
@@ -267,21 +224,18 @@ const ConstructorFormsContainer = ({ bottom, id, edit }) => {
             </Paper>
           </Grid>
           <MaterialsContainer
-            material={materials?.bottom}
-            color={color}
+            material={materials}
+            color={colors}
             values={values}
             errors={errors}
             touched={touched}
             handleChange={handleChange}
             handleBlur={handleBlur}
-            handleSubmit={handleSubmit}
             setFieldValue={setFieldValue}
             materialLabels={materialLabels}
           />
 
-          {map(languages, (lang) => (
-            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-          ))}
+          {languagesPanel}
 
           <AdditionalPriceContainer
             values={values}
@@ -304,12 +258,12 @@ valuesPropTypes.touched.bottomImage = imagePropTypes;
 
 ConstructorFormsContainer.propTypes = {
   ...defaultPropTypes,
-  bottom: constructorObjectPropsTypes.element,
+  part: constructorObjectPropsTypes.element,
   ...valuesPropTypes
 };
 
 ConstructorFormsContainer.defaultProps = {
-  bottom: constructorObject,
+  part: getDefaultPart('BOTTOM'),
   ...defaultProps
 };
 

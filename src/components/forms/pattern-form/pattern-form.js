@@ -79,7 +79,6 @@ const { pathToPatterns } = config.routes;
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { materialsByPurpose, loading } = useSelector(materialSelector);
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
   const { list } = useSelector(modelSelectorWithPagination);
   const {
@@ -95,10 +94,13 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   } = usePatternHandlers();
 
   useEffect(() => {
-    dispatch(getMaterialsByPurpose());
+    // TODO: Parameters have to be constants
+    dispatch(getMaterialsByPurpose(['PATTERN']));
     dispatch(getModels());
     dispatch(getCurrencies());
   }, []);
+  const { materialsByPurpose, loading } = useSelector(materialSelector);
+  const materials = materialsByPurpose?.pattern || [];
 
   useEffect(() => {
     patternUseEffectHandler(
@@ -346,7 +348,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 >
-                  {materialsByPurpose.map(({ _id, name }) => (
+                  {materials.map(({ _id, name }) => (
                     <MenuItem key={_id} value={_id}>
                       {name[0].value}
                     </MenuItem>

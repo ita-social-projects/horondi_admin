@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import BottomForm from '../../../components/forms/bottom-form';
+import ConstructorFormsContainer from '../../../containers/constructor-forms-container/constructor-forms-container';
 import { getBottom } from '../../../redux/bottom/bottom.actions';
 import { useCommonStyles } from '../../common.styles';
 import { bottomSelector } from '../../../redux/selectors/bottom.selectors';
@@ -26,7 +26,9 @@ const BottomEdit = ({ match }) => {
 
   return (
     <div className={common.detailsContainer}>
-      {bottom !== null ? <BottomForm id={id} edit bottom={bottom} /> : null}
+      {bottom !== null ? (
+        <ConstructorFormsContainer id={id} edit part={bottom} />
+      ) : null}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 import { noop } from 'lodash';
 import { handleMenuItem } from '../../utils/handle-menu-item';
-import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './materials-container.styles';
 
 const MaterialsContainer = ({
@@ -14,12 +13,10 @@ const MaterialsContainer = ({
   touched,
   handleBlur,
   handleChange,
-  handleSubmit,
   setFieldValue,
   toggleFieldsChanged,
   materialLabels
 }) => {
-  const sharedStyles = useSharedStyles();
   const styles = useStyles();
   const handleSelectChange = (e) => {
     setFieldValue(materialLabels[1].name, '');
@@ -37,28 +34,24 @@ const MaterialsContainer = ({
   const options = [materialOptions, colorOptions];
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className={sharedStyles.container}>
-        <Grid container spacing={1} justify='flex-start'>
-          {materialLabels.map(({ label, name, required }, idx) => (
-            <FormControl className={styles.formControl} key={label}>
-              <InputLabel htmlFor={label}>
-                {`${label}${required ? '*' : ''}`}
-              </InputLabel>
-              <Select
-                name={name}
-                error={touched[name] && !!errors[name]}
-                value={values[name]}
-                onChange={handleSelectChange}
-                onBlur={handleBlur}
-              >
-                {options[idx]}
-              </Select>
-            </FormControl>
-          ))}
-        </Grid>
-      </form>
-    </>
+    <Grid container spacing={1} justify='flex-start'>
+      {materialLabels.map(({ label, name, required }, idx) => (
+        <FormControl className={styles.formControl} key={label}>
+          <InputLabel htmlFor={label}>
+            {`${label}${required ? '*' : ''}`}
+          </InputLabel>
+          <Select
+            name={name}
+            error={touched[name] && !!errors[name]}
+            value={values[name]}
+            onChange={handleSelectChange}
+            onBlur={handleBlur}
+          >
+            {options[idx]}
+          </Select>
+        </FormControl>
+      ))}
+    </Grid>
   );
 };
 
@@ -67,7 +60,6 @@ MaterialsContainer.propTypes = {
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func,
   material: PropTypes.arrayOf(PropTypes.object).isRequired,

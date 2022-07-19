@@ -4,48 +4,67 @@ import { config } from '../../configs';
 const { languages } = config;
 
 const useBottomHandlers = () => {
-  const [color, setColor] = useState([]);
-  const [bottomImage, setBottomImage] = useState('');
-  const [upload, setUpload] = useState({});
-  const [imageName, setImageName] = useState('');
+  const [colors, setColors] = useState([]);
+  const [partImage, setPartImage] = useState('');
+  const [partUpload, setPartUpload] = useState({});
 
-  const createBottom = (values) => ({
-    name: [
-      {
-        lang: languages[0],
-        value: values.uaName
-      },
-      {
-        lang: languages[1],
-        value: values.enName
-      }
-    ],
-    features: {
-      material: values.material,
-      color: values.color
-    },
-    available: values.available,
-    absolutePrice:
-      values.additionalPriceType === 'ABSOLUTE'
-        ? +values.additionalPrice
-        : null,
-    relativePrice:
-      values.additionalPriceType === 'RELATIVE'
-        ? +values.additionalPrice
-        : null,
-    optionType: 'BOTTOM'
-  });
+  const createPart = (values) => {
+    const part = {
+      name: [
+        {
+          lang: languages[0],
+          value: values.uaName
+        },
+        {
+          lang: languages[1],
+          value: values.enName
+        }
+      ],
+      available: values.available,
+      absolutePrice:
+        values.additionalPriceType === 'ABSOLUTE'
+          ? +values.additionalPrice
+          : null,
+      relativePrice:
+        values.additionalPriceType === 'RELATIVE'
+          ? +values.additionalPrice
+          : null,
+      optionType: values.optionType
+    };
+
+    switch (values.optionType) {
+      case 'STRAPS':
+      case 'CLOSURES':
+      case 'POCKETS':
+        part.features = {
+          color: values.color
+        };
+        break;
+
+      case 'BOTTOM':
+      case 'BASICS':
+      case 'BACKS':
+        part.features = {
+          material: values.material,
+          color: values.color
+        };
+        break;
+
+      default:
+        break;
+    }
+
+    return part;
+  };
 
   return {
-    color,
-    setColor,
-    bottomImage,
-    setBottomImage,
-    createBottom,
-    upload,
-    setUpload,
-    imageName,
-    setImageName
+    colors,
+    setColors,
+    partImage,
+    setPartImage,
+    createPart,
+    partUpload,
+    setPartUpload
   };
 };
 
