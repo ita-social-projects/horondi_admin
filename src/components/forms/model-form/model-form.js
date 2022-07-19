@@ -8,11 +8,9 @@ import {
   Grid,
   Select,
   FormControl,
-  InputLabel,
-  Button
+  InputLabel
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { push } from 'connected-react-router';
 
 import useModelHandlers from '../../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
