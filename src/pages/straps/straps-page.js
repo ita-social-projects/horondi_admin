@@ -16,6 +16,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useStrapFilters from '../../hooks/filters/use-strap-filters';
+import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
 const labels = config.labels.strapsPageLabel;
@@ -64,7 +65,7 @@ const StrapsPage = () => {
       image={strap?.images?.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
       name={strap?.name[0]?.value}
       color={strap?.features?.color?.name[0]?.value}
-      additionalPrice={strap?.absolutePrice}
+      additionalPrice={constructorItemPrice(strap)}
       available={strap.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         strapsDeleteHandler(strap._id);

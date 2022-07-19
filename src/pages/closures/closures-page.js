@@ -19,6 +19,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import FilterNavbar from '../../components/filter-search-sort';
 import useClosureFilters from '../../hooks/filters/use-closure-filters';
+import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
 const labels = config.labels.closuresPageLabel;
@@ -67,7 +68,7 @@ const ClosuresPage = () => {
         closure?.images?.thumbnail ? IMG_URL + closure.images.thumbnail : ''
       }
       name={closure?.name[0]?.value}
-      additionalPrice={closure?.absolutePrice}
+      additionalPrice={constructorItemPrice(closure)}
       available={closure.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         closuresDeleteHandler(closure._id);

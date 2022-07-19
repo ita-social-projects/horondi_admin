@@ -14,12 +14,10 @@ const MaterialsContainer = ({
   touched,
   handleBlur,
   handleChange,
-  handleSubmit,
   setFieldValue,
   toggleFieldsChanged,
   materialLabels
 }) => {
-  const sharedStyles = useSharedStyles();
   const styles = useStyles();
   const handleSelectChange = (e) => {
     setFieldValue(materialLabels[1].name, '');
@@ -38,26 +36,24 @@ const MaterialsContainer = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className={sharedStyles.container}>
-        <Grid container spacing={1} xs={12} justify='flex-start'>
-          {materialLabels.map(({ label, name, required }, idx) => (
-            <FormControl className={styles.formControl} key={label}>
-              <InputLabel htmlFor={label}>
-                {`${label}${required ? '*' : ''}`}
-              </InputLabel>
-              <Select
-                name={name}
-                error={touched[name] && !!errors[name]}
-                value={values[name]}
-                onChange={handleSelectChange}
-                onBlur={handleBlur}
-              >
-                {options[idx]}
-              </Select>
-            </FormControl>
-          ))}
-        </Grid>
-      </form>
+      <Grid container spacing={1} xs={12} justify='flex-start'>
+        {materialLabels.map(({ label, name, required }, idx) => (
+          <FormControl className={styles.formControl} key={label}>
+            <InputLabel htmlFor={label}>
+              {`${label}${required ? '*' : ''}`}
+            </InputLabel>
+            <Select
+              name={name}
+              error={touched[name] && !!errors[name]}
+              value={values[name]}
+              onChange={handleSelectChange}
+              onBlur={handleBlur}
+            >
+              {options[idx]}
+            </Select>
+          </FormControl>
+        ))}
+      </Grid>
     </>
   );
 };
@@ -67,7 +63,6 @@ MaterialsContainer.propTypes = {
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func,
   material: PropTypes.arrayOf(PropTypes.object).isRequired,
