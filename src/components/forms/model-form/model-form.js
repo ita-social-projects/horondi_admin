@@ -30,6 +30,7 @@ import {
   loadHelper
 } from '../../../utils/model-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useSizeHandlers from '../../../hooks/model-form/use-size-handlers';
 import SizeFormAccordion from '../size-form/size-form-accordion';
 import { sizeDefaultProps } from '../../../utils/size-helpers';
 
@@ -69,7 +70,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     categories: Categories.categories
   }));
 
-  const [sizes, setSizes] = useState(model.sizes || []);
+  const { sizes, onSizeSubmit, onSizeDelete } = useSizeHandlers(model.sizes);
+
   const [sizesTouched, setSizesTouched] = useState(false);
   const sizesAdded = sizes.map((size) => size.name);
 
@@ -112,27 +114,6 @@ const ModelForm = ({ model, id, isEdit }) => {
       dispatch(showErrorSnackbar(PHOTO_NOT_PROVIDED));
     }
   });
-
-  const onSizeSubmit = (newSize) => {
-    setSizes((currentSizes) => {
-      const sizeIdx = currentSizes.findIndex(
-        (size) => newSize._id && size._id === newSize._id
-      );
-
-      if (sizeIdx >= 0) {
-        return currentSizes.map((size, idx) =>
-          idx === sizeIdx ? newSize : size
-        );
-      }
-      return [...currentSizes, newSize];
-    });
-  };
-
-  const onSizeDelete = (sizeIdToDelete) => {
-    setSizes((currentSizes) =>
-      currentSizes.filter((size) => size._id !== sizeIdToDelete)
-    );
-  };
 
   const sizeUtils = {
     onSizeSubmit,
