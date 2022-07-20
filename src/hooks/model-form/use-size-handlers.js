@@ -1,20 +1,17 @@
 import { useState } from 'react';
 
-const useSizeHandlers = (defaultSizes) => {
-  const [sizes, setSizes] = useState(defaultSizes || []);
+const useSizeHandlers = (initialSizes) => {
+  const [sizes, setSizes] = useState(initialSizes || []);
 
   const onSizeSubmit = (newSize) => {
     setSizes((currentSizes) => {
-      const sizeIdx = currentSizes.findIndex(
-        (size) => newSize._id && size._id === newSize._id
-      );
-
-      if (sizeIdx >= 0) {
-        return currentSizes.map((size, idx) =>
-          idx === sizeIdx ? newSize : size
-        );
+      if (newSize._id.includes('size_')) {
+        return [...currentSizes, newSize];
       }
-      return [...currentSizes, newSize];
+
+      return currentSizes.map((size) =>
+        size._id === newSize._id ? newSize : size
+      );
     });
   };
 
