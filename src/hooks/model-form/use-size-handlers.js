@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { config } from '../../configs';
 
-const useSizeHandlers = (initialSizes, setFieldValue) => {
+const { sizeAdd } = config.titles.sizesTitles;
+
+const useSizeHandlers = (initialSizes) => {
   const [sizes, setSizes] = useState(initialSizes || []);
+  const [sizesTouched, setSizesTouched] = useState(false);
+  const [sizeFormExpanded, setSizeFormExpanded] = useState('');
 
   const onSizeSubmit = (newSize) => {
     setSizes((currentSizes) => {
@@ -21,17 +26,20 @@ const useSizeHandlers = (initialSizes, setFieldValue) => {
     );
   };
 
-  useEffect(() => {
-    const updatedSizes = sizes.map(({ _id, ...size }) =>
-      _id.includes('size_') ? size : { _id, ...size }
-    );
-    setFieldValue('sizes', updatedSizes);
-  }, [sizes, setFieldValue]);
+  const handleExpandedChange = (sizeFormId) => (_event, isExpanded) => {
+    if (sizeFormExpanded === sizeAdd) {
+      setSizesTouched(true);
+    }
+    setSizeFormExpanded(isExpanded ? sizeFormId : '');
+  };
 
   return {
     sizes,
     onSizeSubmit,
-    onSizeDelete
+    onSizeDelete,
+    sizesTouched,
+    sizeFormExpanded,
+    handleExpandedChange
   };
 };
 

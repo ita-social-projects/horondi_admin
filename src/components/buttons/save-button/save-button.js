@@ -62,28 +62,30 @@ const SaveButton = ({
 
   const { SAVE_MESSAGE, SAVE_CHANGES } = messages;
 
+  const onClickCallback = () => {
+    !confirmOn
+      ? onClickHandler()
+      : saveButtonHandler(
+          unblockFunction,
+          onClickHandler,
+          dispatch,
+          openSuccessSnackbar,
+          SAVE_MESSAGE,
+          SAVE_CHANGES
+        );
+    setTimeout(() => {
+      if (!error) {
+        setDisabled(true);
+      }
+    }, 10);
+  };
+
   return (
     <Button
       variant='contained'
       color={color}
       type={type}
-      onClick={() => {
-        !confirmOn
-          ? onClickHandler()
-          : saveButtonHandler(
-              unblockFunction,
-              onClickHandler,
-              dispatch,
-              openSuccessSnackbar,
-              SAVE_MESSAGE,
-              SAVE_CHANGES
-            );
-        setTimeout(() => {
-          if (!error) {
-            setDisabled(true);
-          }
-        }, 10);
-      }}
+      onClick={onClickCallback}
       disabled={disabled}
       {...props}
     >

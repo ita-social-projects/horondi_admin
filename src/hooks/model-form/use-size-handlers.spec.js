@@ -1,6 +1,6 @@
-import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useSizeHandlers from './use-size-handlers';
+import { config } from '../../configs';
 import {
   sizeToUpdate,
   update,
@@ -8,15 +8,11 @@ import {
   newSize
 } from './use-size-handlers.variables';
 
+const { sizeAdd } = config.titles.sizesTitles;
+
 describe('useSizeHandlers hook test', () => {
-  const mockUseEffect = jest.spyOn(React, 'useEffect');
-
-  beforeEach(() => {
-    mockUseEffect.mockImplementation(() => jest.fn());
-  });
-
   it('Should add a size to the sizes state variable', () => {
-    const { result } = renderHook(() => useSizeHandlers(initialSizes, null));
+    const { result } = renderHook(() => useSizeHandlers(initialSizes));
 
     act(() => {
       result.current.onSizeSubmit(newSize);
@@ -25,18 +21,8 @@ describe('useSizeHandlers hook test', () => {
     expect(result.current.sizes[1]).toEqual(newSize);
   });
 
-  it('Should call useEffect after the size addition', () => {
-    const { result } = renderHook(() => useSizeHandlers(initialSizes, null));
-
-    act(() => {
-      result.current.onSizeSubmit(newSize);
-    });
-
-    expect(mockUseEffect).toHaveBeenCalledTimes(2);
-  });
-
   it('Should update a size in the sizes state variable', () => {
-    const { result } = renderHook(() => useSizeHandlers(initialSizes, null));
+    const { result } = renderHook(() => useSizeHandlers(initialSizes));
 
     act(() => {
       result.current.onSizeSubmit({
@@ -49,12 +35,40 @@ describe('useSizeHandlers hook test', () => {
   });
 
   it('Should delete a size from the sizes state variable', () => {
-    const { result } = renderHook(() => useSizeHandlers(initialSizes, null));
+    const { result } = renderHook(() => useSizeHandlers(initialSizes));
 
     act(() => {
       result.current.onSizeDelete(sizeToUpdate._id);
     });
 
     expect(result.current.sizes).toEqual([]);
+  });
+
+  it('Should set state accordingly when an accordion is expanded', () => {
+    const { result } = renderHook(() => useSizeHandlers(initialSizes));
+    const { _id: sizeFormId } = initialSizes[0];
+
+    act(() => {
+      const expand = result.current.handleExpandedChange(sizeFormId);
+      expand(null, true);
+    });
+
+    expect(result.current.sizeFormExpanded).toBe(sizeFormId);
+  });
+
+  it("Should set 'sizes' field as touched on accordion expansion", () => {
+    const { result } = renderHook(() => useSizeHandlers([]));
+
+    act(() => {
+      const expand = result.current.handleExpandedChange(sizeAdd);
+      expand(null, true);
+    });
+
+    act(() => {
+      const expand = result.current.handleExpandedChange('');
+      expand(null, false);
+    });
+
+    expect(result.current.sizesTouched).toBe(true);
   });
 });

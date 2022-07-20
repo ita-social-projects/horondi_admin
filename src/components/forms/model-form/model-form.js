@@ -70,6 +70,16 @@ const ModelForm = ({ model, id, isEdit }) => {
     categories: Categories.categories
   }));
 
+  const {
+    sizes,
+    onSizeSubmit,
+    onSizeDelete,
+    sizesTouched,
+    sizeFormExpanded,
+    handleExpandedChange
+  } = useSizeHandlers(model.sizes);
+  const sizesAdded = sizes.map((size) => size.name);
+
   const [category, setCategory] = useState(model.category._id || '');
   const {
     values,
@@ -110,27 +120,18 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
-  const { sizes, onSizeSubmit, onSizeDelete } = useSizeHandlers(
-    model.sizes,
-    setFieldValue
-  );
-  const [sizesTouched, setSizesTouched] = useState(false);
-  const sizesAdded = sizes.map((size) => size.name);
-
   const sizeUtils = {
     onSizeSubmit,
     onSizeDelete,
     sizesAdded
   };
 
-  const [sizeFormExpanded, setSizeFormExpanded] = useState('');
-
-  const handleExpandedChange = (sizeForm) => (_event, isExpanded) => {
-    if (sizeFormExpanded === sizeAdd) {
-      setSizesTouched(true);
-    }
-    setSizeFormExpanded(isExpanded ? sizeForm : '');
-  };
+  useEffect(() => {
+    const updatedSizes = sizes.map(({ _id, ...size }) =>
+      _id.includes('size_') ? size : { _id, ...size }
+    );
+    setFieldValue('sizes', updatedSizes);
+  }, [sizes, setFieldValue]);
 
   const unblock = useUnsavedChangesHandler(values);
 

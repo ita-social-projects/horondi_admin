@@ -1,11 +1,10 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { Paper, TextField, Select, Button } from '@material-ui/core';
+import { Paper, TextField, Select } from '@material-ui/core';
 import LanguagePanel from '../../language-panel';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { BackButton, SaveButton } from '../../../buttons';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
-import { theme } from '../../../app/app-theme/app.theme';
 
 import ModelForm from '../index';
 import {
@@ -95,8 +94,8 @@ describe('Model-form tests', () => {
     expect(wrapper.exists('form')).toBe(true);
   });
 
-  it(' should call useEffect three times', () => {
-    expect(mockUseEffect).toHaveBeenCalledTimes(3);
+  it(' should call useEffect 2 times', () => {
+    expect(mockUseEffect).toHaveBeenCalledTimes(2);
   });
 
   it(' should call useSelector once', () => {
