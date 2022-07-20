@@ -8,11 +8,9 @@ import {
   Grid,
   Select,
   FormControl,
-  InputLabel,
-  Button
+  InputLabel
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { push } from 'connected-react-router';
 
 import useModelHandlers from '../../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
@@ -157,9 +155,6 @@ const ModelForm = ({ model, id, isEdit }) => {
       setUpload(files[0]);
     }
   };
-  const handleConstructor = () => {
-    dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
-  };
 
   const inputs = [
     { label: name, name: labelsEn.name },
@@ -202,18 +197,6 @@ const ModelForm = ({ model, id, isEdit }) => {
                 unblockFunction={unblock}
                 disabled={!dirty || !isValid}
               />
-            </Grid>
-            <Grid item className={styles.button}>
-              {isEdit ? (
-                <Button
-                  data-cy={labelsEn.constructor}
-                  onClick={handleConstructor}
-                  color={materialUiConstants.secondary}
-                  variant={materialUiConstants.contained}
-                >
-                  {MODEL_CONSTRUCTOR}
-                </Button>
-              ) : null}
             </Grid>
           </Grid>
         </div>
