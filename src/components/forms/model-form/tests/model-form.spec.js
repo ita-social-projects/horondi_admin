@@ -95,8 +95,8 @@ describe('Model-form tests', () => {
     expect(wrapper.exists('form')).toBe(true);
   });
 
-  it(' should call useEffect two times', () => {
-    expect(mockUseEffect).toHaveBeenCalledTimes(2);
+  it(' should call useEffect three times', () => {
+    expect(mockUseEffect).toHaveBeenCalledTimes(3);
   });
 
   it(' should call useSelector once', () => {
