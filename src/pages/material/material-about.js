@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -26,6 +26,7 @@ const { CREATE_MATERIAL_TITLE_BLOCK } = buttonTitles;
 
 const MaterialAbout = ({ currentType }) => {
   const styles = useStyles();
+  const history = useHistory();
   const common = useCommonStyles();
   const dispatch = useDispatch();
   const { data, refetch, loading } = useQuery(GET_MATERIALS_BLOCKS_BY_TYPE, {
@@ -62,12 +63,14 @@ const MaterialAbout = ({ currentType }) => {
   const aboutMaterialItems = materialsData.items
     ? materialsData.items.map(({ _id, title, text, image }) => (
         <TableContainerRow
-          image={`${IMG_URL}${image?.small}`}
+          image={`${IMG_URL}${image?.thumbnail}`}
           key={_id}
           title={title}
           text={ReactHtmlParser(text[0].value)}
           deleteHandler={() => openDeleteModalHandler(_id)}
-          editHandler={() => null}
+          editHandler={() => {
+            history.push(`/about-materials-${currentType}/${_id}`);
+          }}
         />
       ))
     : null;

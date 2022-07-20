@@ -8,7 +8,7 @@ export const GET_ALL_MATERIALS_BLOCKS = gql`
         title
         type
         image {
-          small
+          thumbnail
         }
         text {
           lang
@@ -29,7 +29,7 @@ export const GET_MATERIALS_BLOCKS_BY_TYPE = gql`
         title
         type
         image {
-          small
+          thumbnail
         }
         text {
           lang
@@ -38,6 +38,26 @@ export const GET_MATERIALS_BLOCKS_BY_TYPE = gql`
         translationsKey
       }
       count
+    }
+  }
+`;
+
+export const GET_MATERIALS_BLOCK_BY_ID = gql`
+  query ($id: ID!) {
+    getMaterialsBlockById(id: $id) {
+      ... on MaterialsBlock {
+        _id
+        title
+        type
+        text {
+          lang
+          value
+        }
+        image {
+          small
+        }
+        translationsKey
+      }
     }
   }
 `;

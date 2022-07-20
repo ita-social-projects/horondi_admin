@@ -69,6 +69,8 @@ const routes = {
   pathToAboutMaterialsBottomAdd: '/about-materials-bottom/add',
   pathToAboutMaterialsMain: '/about-materials-main',
   pathToAboutMaterialsBottom: '/about-materials-bottom',
+  pathToAboutMaterialsMainDetails: '/about-materials-main/:id',
+  pathToAboutMaterialsBottomDetails: '/about-materials-bottom/:id',
   pathToHomePageSlides: '/home-page-slides',
   pathToAddHomePageSlide: '/home-page-slides/add',
   pathToHomePageSlideDetail: '/home-page-slides/:id',
