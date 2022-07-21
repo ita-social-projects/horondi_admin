@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useDispatch } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,18 +23,23 @@ const dispatch = jest.fn();
 useDispatch.mockImplementation(() => dispatch);
 
 describe('MaterialAbout component tests, ', () => {
-  it('Should have table field "Текст"', async () => {
+  beforeEach(() => {
     render(
       <BrowserRouter>
         <MockedProvider mocks={mockMaterialBlock} addTypename={false}>
-          <MaterialAbout />
+          <MaterialAbout currentType={mockCurrentType} />
         </MockedProvider>
       </BrowserRouter>
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+  it('Should have table field "Дії"', async () => {
+    const textElement = await screen.findByText(/Дії/i);
+    expect(textElement).toBeInTheDocument();
+  });
 
-    const input = screen.getByText(/Текст/i);
-
-    expect(input).toBeInTheDocument();
+  it('Should handle delete action', async () => {
+    const button = await screen.findByTestId('del_btn');
+    fireEvent.click(button);
+    expect(mockSnackBar).toHaveBeenCalledTimes(1);
   });
 });
