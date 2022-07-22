@@ -1,3 +1,3 @@
-import MaterialAboutForm from './material-about-add-form';
+import MaterialAboutForm from './material-about-form';
 
 export default MaterialAboutForm;

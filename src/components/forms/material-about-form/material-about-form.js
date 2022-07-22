@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { useFormik } from 'formik';
 import { Grid, Paper } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useStyles } from './material-about-add-form.styles';
+import { useStyles } from './material-about-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
