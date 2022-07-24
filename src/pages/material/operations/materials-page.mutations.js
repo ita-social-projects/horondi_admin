@@ -25,3 +25,23 @@ export const ADD_MATERIALS_BLOCK = gql`
     }
   }
 `;
+
+export const UPDATE_MATERIALS_BLOCK = gql`
+  mutation ($id: ID!, $materialsBlock: MaterialsBlockInput!, $image: Upload) {
+    updateMaterialsBlock(
+      id: $id
+      materialsBlock: $materialsBlock
+      image: $image
+    ) {
+      ... on MaterialsBlock {
+        _id
+        title
+        type
+        text {
+          lang
+          value
+        }
+      }
+    }
+  }
+`;

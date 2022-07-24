@@ -1,16 +1,20 @@
 import { config } from '../configs';
 
-const { languages } = config;
+const { languages, IMG_URL } = config;
 
-export const getInitialValuesForMaterialsAdd = () => ({
-  img: '',
-  uaTitle: '',
-  enTitle: '',
-  uaText: '',
-  enText: ''
+export const getInitialValuesForMaterialsBlock = ({
+  title = '',
+  text,
+  image
+}) => ({
+  img: image ? IMG_URL + image?.small : '',
+  uaTitle: title,
+  enTitle: title,
+  uaText: text ? text[0]?.value : '',
+  enText: text ? text[1]?.value : ''
 });
 
-export const setVariablesForMaterialsAdd = (values, currentType) => ({
+export const setVariablesForMaterialsBlock = (values, currentType) => ({
   type: currentType,
   title: values.uaTitle,
   text: [

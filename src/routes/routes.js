@@ -95,6 +95,7 @@ import PromoCodeEdit from '../pages/promo-code/promo-code-edit/promo-code-edit';
 import PromoCodePage from '../pages/promo-code/promo-code-page';
 import MaterialAboutAdd from '../pages/material/material-about-add';
 import MaterialAbout from '../pages/material/material-about';
+import MaterialAboutDetails from '../pages/material/material-about-details';
 import CertificatesPage from '../pages/certificates';
 
 const { routes } = config;
@@ -204,6 +205,16 @@ const Routes = ({ validatorMethods }) => {
             render={(props) => (
               <MaterialAboutAdd {...props} currentType='bottom' />
             )}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsMainDetails}
+            exact
+            render={(props) => <MaterialAboutDetails {...props} />}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsBottomDetails}
+            exact
+            render={(props) => <MaterialAboutDetails {...props} />}
           />
           <Route
             path={routes.pathToCreateCertificates}

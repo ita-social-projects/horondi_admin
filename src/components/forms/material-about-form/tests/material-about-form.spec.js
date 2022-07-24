@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from '../../../app/app-theme/app.theme';
-import MaterialAboutAddForm from '../material-about-add-form';
+import MaterialAboutForm from '../material-about-form';
 import {
   mockMaterialAboutBlock,
   target,
   files
-} from './material-about-add-form.variables';
+} from './material-about-form.variables';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 
@@ -49,7 +49,7 @@ jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 useDispatch.mockImplementation(() => dispatch);
 
-describe('MaterialAboutAddForm component tests, ', () => {
+describe('MaterialAboutForm component tests, ', () => {
   let component;
 
   beforeEach(() => {
@@ -57,7 +57,7 @@ describe('MaterialAboutAddForm component tests, ', () => {
       <BrowserRouter>
         <MockedProvider mocks={mockMaterialAboutBlock} addTypename={false}>
           <ThemeProvider theme={themeValue}>
-            <MaterialAboutAddForm currentType='bottom' />
+            <MaterialAboutForm currentType='bottom' />
           </ThemeProvider>
         </MockedProvider>
       </BrowserRouter>

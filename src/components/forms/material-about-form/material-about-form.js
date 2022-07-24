@@ -5,16 +5,19 @@ import { useMutation } from '@apollo/client';
 import { useFormik } from 'formik';
 import { Grid, Paper } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useStyles } from './material-about-add-form.styles';
+import { useStyles } from './material-about-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import LoadingBar from '../../loading-bar';
 import { validationSchema } from '../../../validations/material-about/material-about-validation';
-import { ADD_MATERIALS_BLOCK } from '../../../pages/material/operations/materials-page.mutations';
 import {
-  getInitialValuesForMaterialsAdd,
-  setVariablesForMaterialsAdd
+  ADD_MATERIALS_BLOCK,
+  UPDATE_MATERIALS_BLOCK
+} from '../../../pages/material/operations/materials-page.mutations';
+import {
+  getInitialValuesForMaterialsBlock,
+  setVariablesForMaterialsBlock
 } from '../../../utils/material-about';
 import {
   showSuccessSnackbar,
@@ -23,7 +26,7 @@ import {
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import { config } from '../../../configs';
 
-const MaterialAboutAddForm = ({ currentType }) => {
+const MaterialAboutForm = ({ currentType, selectedBlock, editMode }) => {
   const [upload, setUpload] = useState();
   const history = useHistory();
   const styles = useStyles();
@@ -42,27 +45,24 @@ const MaterialAboutAddForm = ({ currentType }) => {
       ? pathToAboutMaterialsMain
       : pathToAboutMaterialsBottom;
 
-  const [
-    addMaterialAboutBlock,
-    { error: materialAboutError, loading: materialAboutLoading }
-  ] = useMutation(ADD_MATERIALS_BLOCK, {
-    onCompleted: (data) => {
-      if (data?.addMaterialAboutBlock?.message || materialAboutError) {
-        dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
-      } else {
+  const MUTATION = editMode ? UPDATE_MATERIALS_BLOCK : ADD_MATERIALS_BLOCK;
+
+  const [addMaterialAboutBlock, { loading: materialAboutLoading }] =
+    useMutation(MUTATION, {
+      onCompleted: () => {
         dispatch(showSuccessSnackbar(SUCCESS_UPDATE_STATUS));
         history.push(pathToAboutMaterials);
+      },
+      onError: () => {
+        dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
       }
-    },
-    onError: () => {
-      dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
-    }
-  });
+    });
 
   const onSubmit = async () => {
     addMaterialAboutBlock({
       variables: {
-        materialsBlock: setVariablesForMaterialsAdd(values, currentType),
+        ...(editMode && { id: selectedBlock._id }),
+        materialsBlock: setVariablesForMaterialsBlock(values, currentType),
         image: upload
       }
     });
@@ -79,7 +79,7 @@ const MaterialAboutAddForm = ({ currentType }) => {
     isValid,
     submitForm
   } = useFormik({
-    initialValues: getInitialValuesForMaterialsAdd(),
+    initialValues: getInitialValuesForMaterialsBlock(selectedBlock),
     validationSchema,
     onSubmit
   });
@@ -160,8 +160,29 @@ const MaterialAboutAddForm = ({ currentType }) => {
   );
 };
 
-MaterialAboutAddForm.propTypes = {
-  currentType: PropTypes.string.isRequired
+const blockShape = PropTypes.shape({
+  _id: PropTypes.string,
+  title: PropTypes.string,
+  type: PropTypes.string,
+  text: PropTypes.arrayOf(
+    PropTypes.shape({
+      lang: PropTypes.string,
+      value: PropTypes.string
+    })
+  ),
+  image: PropTypes.shape({
+    small: PropTypes.string
+  })
+});
+
+MaterialAboutForm.propTypes = {
+  currentType: PropTypes.string.isRequired,
+  selectedBlock: blockShape,
+  editMode: PropTypes.bool
+};
+MaterialAboutForm.defaultProps = {
+  selectedBlock: {},
+  editMode: false
 };
 
-export default MaterialAboutAddForm;
+export default MaterialAboutForm;
