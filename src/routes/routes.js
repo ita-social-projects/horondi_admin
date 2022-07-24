@@ -33,9 +33,6 @@ import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import PatternPage from '../pages/pattern';
 import Comments from '../pages/comments/comments';
-import Sizes from '../pages/sizes/sizes';
-import SizeAdd from '../pages/sizes/sizes-add/size-add';
-import SizeEdit from '../pages/sizes/sizes-edit/size-edit';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
@@ -331,13 +328,6 @@ const Routes = ({ validatorMethods }) => {
           />
           <Route path={routes.pathToCategories} exact component={Categories} />
           <Route path={routes.pathToComments} exact component={Comments} />
-          <Route path={routes.pathToSizes} exact component={Sizes} />
-          <Route path={routes.pathToAddSize} exact component={SizeAdd} />
-          <Route
-            path={routes.pathToEditSize}
-            exact
-            render={({ match }) => <SizeEdit id={match.params.id} />}
-          />
 
           <Route
             path={routes.pathToRegisterAdmin}

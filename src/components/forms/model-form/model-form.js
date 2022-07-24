@@ -10,7 +10,6 @@ import {
   FormControl,
   InputLabel
 } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import useModelHandlers from '../../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
@@ -21,10 +20,9 @@ import CheckboxOptions from '../../checkbox-options';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../../redux/categories/categories.actions';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import LanguagePanel from '../language-panel';
 import { modelValidationSchema } from '../../../validations/models/model-form-validation';
-import { getSizes } from '../../../redux/sizes/sizes.actions';
-import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import {
   useFormikInitialValues,
   modelFormOnSubmit,
@@ -32,6 +30,9 @@ import {
   loadHelper
 } from '../../../utils/model-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useSizeHandlers from '../../../hooks/model-form/use-size-handlers';
+import SizeFormAccordion from '../size-form/size-form-accordion';
+import { sizeDefaultProps } from '../../../utils/size-helpers';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -44,38 +45,41 @@ const {
   description,
   avatarText,
   priority,
-  labelsEn,
-  chooseSizes
+  labelsEn
 } = config.labels.model;
 const { IMG_URL } = config;
 const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
 const { pathToModels } = config.routes;
+const { sizeAdd } = config.titles.sizesTitles;
 
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const checkIsEdit = (checkCondition) => {
-    if (checkCondition) {
-      return model.sizes.map((item) => item._id);
-    }
-  };
+  const checkIsEdit = (checkCondition) => (checkCondition ? model.sizes : []);
 
   const { createModel, setUpload, upload, modelImage, setModelImage } =
     useModelHandlers();
 
   useEffect(() => {
-    dispatch(getSizes({ limit: null }));
-
     dispatch(getCategories({}));
+    dispatch(getCurrencies());
   }, [dispatch]);
 
-  const { sizesList } = useSelector(sizesSelectorWithPagination);
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
   }));
 
-  const [sizes, setSizes] = useState(model.sizes || []);
+  const {
+    sizes,
+    onSizeSubmit,
+    onSizeDelete,
+    sizesTouched,
+    sizeFormExpanded,
+    handleExpandedChange
+  } = useSizeHandlers(model.sizes);
+  const sizesAdded = sizes.map((size) => size.name);
+
   const [category, setCategory] = useState(model.category._id || '');
   const {
     values,
@@ -116,19 +120,24 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
+  const sizeUtils = {
+    onSizeSubmit,
+    onSizeDelete,
+    sizesAdded
+  };
+
+  useEffect(() => {
+    const updatedSizes = sizes.map(({ _id, ...size }) =>
+      _id.includes('size_') ? size : { _id, ...size }
+    );
+    setFieldValue('sizes', updatedSizes);
+  }, [sizes, setFieldValue]);
+
   const unblock = useUnsavedChangesHandler(values);
 
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
     setCategory(event.target.value);
-  };
-
-  const onTagsChange = (_, value) => {
-    setFieldValue(
-      'sizes',
-      value.map((size) => size._id)
-    );
-    setSizes(value);
   };
 
   const checkboxes = (checkBoxName, label) => [
@@ -259,35 +268,28 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
-          <Paper>
-            <Autocomplete
-              id={labelsEn.tagsFilled}
-              className={styles.autoComplete}
-              multiple
-              freeSolo
-              options={sizesList}
-              getOptionLabel={(option) =>
-                `${option.modelId.name[0].value} | ${option.name}`
-              }
-              defaultValue={sizes}
-              onChange={onTagsChange}
-              onBlur={handleBlur}
-              error={touched['tags-filled'] && !!errors.priority}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant={materialUiConstants.outlined}
-                  label={chooseSizes.title}
-                  placeholder={chooseSizes.inputTitle}
-                  margin={labelsEn.normal}
-                  fullWidth
-                />
-              )}
-            />
-            {touched['tags-filled'] && errors.sizes && (
+
+          <Grid item xs={12}>
+            {sizesTouched && errors.sizes && (
               <div className={styles.inputError}>{errors.sizes}</div>
             )}
-          </Paper>
+            {sizes.map((size) => (
+              <SizeFormAccordion
+                key={size._id}
+                size={size}
+                isExpanded={sizeFormExpanded === size._id}
+                onChange={handleExpandedChange(size._id)}
+                isSizeEdit
+                sizeUtils={sizeUtils}
+              />
+            ))}
+            <SizeFormAccordion
+              onChange={handleExpandedChange(sizeAdd)}
+              isExpanded={sizeFormExpanded === sizeAdd}
+              sizeUtils={sizeUtils}
+              size={sizeDefaultProps.size}
+            />
+          </Grid>
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel
