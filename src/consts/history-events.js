@@ -13,6 +13,7 @@ export const historyEvents = {
     COLOR_EVENT: 'Колір',
     HEADER_EVENT: 'Посилання',
     MATERIAL_EVENT: 'Матеріал',
+    MATERIAL_ABOUT_EVENT: 'Про матеріал',
     MODEL_EVENT: 'Модель',
     NEWS_EVENT: 'Новина',
     PATTERN_EVENT: 'Гобелен',

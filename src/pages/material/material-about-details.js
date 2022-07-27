@@ -7,14 +7,14 @@ import { GET_MATERIALS_BLOCK_BY_ID } from './operations/materials-page.queries';
 
 const MaterialAboutDetails = () => {
   const { id } = useParams();
-  const { data, loading } = useQuery(GET_MATERIALS_BLOCK_BY_ID, {
+  const { data, error, loading } = useQuery(GET_MATERIALS_BLOCK_BY_ID, {
     variables: { id },
     fetchPolicy: 'no-cache'
   });
 
   const materialsBlock = data?.getMaterialsBlockById;
 
-  if (loading) {
+  if (loading || error) {
     return <LoadingBar />;
   }
 
