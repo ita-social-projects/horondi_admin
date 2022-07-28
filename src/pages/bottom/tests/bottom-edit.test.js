@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import { shallow } from 'enzyme';
-import BottomForm from '../../../components/forms/bottom-form';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
 import constructorElementsMockStore from '../../constructorElementsMockStore';
 import BottomEdit from '../bottom-edit';
 
@@ -38,7 +38,7 @@ describe('Bottom-page render tests', () => {
   });
 
   test(`Should render nothing when bottom is null`, () => {
-    expect(wrapper.exists(BottomForm)).toBe(false);
+    expect(wrapper.exists(ConstructorFormContainer)).toBe(false);
   });
 
   test('useSelector hook should be called', () => {
