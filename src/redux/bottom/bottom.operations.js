@@ -30,7 +30,7 @@ export const getAllBottoms = async (limit, skip, filter) => {
                 }
               }
             }
-            images{
+            images {
                 thumbnail
                 medium
                 small
@@ -92,7 +92,7 @@ export const getBottomById = async (id) => {
                     }
                   }
                 }
-                images{
+                images {
                     thumbnail
                     medium
                     small
@@ -206,7 +206,7 @@ export const updateBottom = async (payload) => {
                 }
               }
             }
-            images{
+            images {
                 thumbnail
                 medium
                 small
