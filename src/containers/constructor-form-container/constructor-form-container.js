@@ -17,7 +17,7 @@ import AdditionalPriceContainer from '../additional-price-container';
 import { materialSelector } from '../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../redux/material/material.actions';
 
-import useConstructorFormHandlers from '../../utils/use-constructor-form';
+import useConstructorFormHandlers from '../../utils/use-constructor-for-handlers';
 import {
   getDefaultPartItem,
   getCheckboxOptions,
