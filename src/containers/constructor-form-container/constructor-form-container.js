@@ -108,8 +108,6 @@ const ConstructorFormContainer = ({
         actionPayload.id = id;
         if (editAndUpload) {
           actionPayload.image = partItemUpload;
-          dispatch(dispatchAction(actionPayload));
-          return;
         }
         dispatch(dispatchAction(actionPayload));
         return;
