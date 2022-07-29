@@ -48,6 +48,9 @@ const {
   additionalPriceType
 } = config.labels.pattern;
 const { materialUiConstants } = config;
+const { constructorItemsKeys } = config;
+const puprose = constructorItemsKeys.pattern.toUpperCase();
+
 const map = require('lodash/map');
 
 const {
@@ -94,7 +97,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   } = usePatternHandlers();
 
   useEffect(() => {
-    dispatch(getMaterialsByPurpose(['PATTERN']));
+    dispatch(getMaterialsByPurpose([puprose]));
     dispatch(getModels());
     dispatch(getCurrencies());
   }, []);

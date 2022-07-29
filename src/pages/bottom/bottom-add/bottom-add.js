@@ -11,8 +11,8 @@ const BottomAdd = () => {
   const common = useCommonStyles();
   const { loading } = useSelector(bottomSelector);
   const { pathToBottoms } = config.routes;
-
-  const partItemKey = 'bottom';
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.bottom;
 
   if (loading) {
     return <LoadingBar />;

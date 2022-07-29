@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
-import { getBottom , updateBottom } from '../../../redux/bottom/bottom.actions';
+import { getBottom, updateBottom } from '../../../redux/bottom/bottom.actions';
 import { useCommonStyles } from '../../common.styles';
 import { bottomSelector } from '../../../redux/selectors/bottom.selectors';
 import LoadingBar from '../../../components/loading-bar';
@@ -17,7 +17,8 @@ const BottomEdit = ({ match }) => {
   const { bottom, loading } = useSelector(bottomSelector);
 
   const { pathToBottoms } = config.routes;
-  const partKey = 'bottom';
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.bottom;
 
   useEffect(() => {
     dispatch(getBottom(id));
@@ -34,7 +35,7 @@ const BottomEdit = ({ match }) => {
           id={id}
           edit
           part={bottom}
-          partItemKey={partKey}
+          partItemKey={partItemKey}
           pathBack={pathToBottoms}
           dispatchAction={updateBottom}
         />
