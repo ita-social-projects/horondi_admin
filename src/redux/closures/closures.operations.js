@@ -20,7 +20,6 @@ export const getAllClosures = async (limit, skip, filter) => {
           absolutePrice
           relativePrice
           available
-          customizable
         }
         count
       }

@@ -141,6 +141,78 @@ const labels = {
       relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
   },
+  // TODO: Constrtuctor start
+
+  constructorItemLabels: {
+    availableLabel: 'Доступний',
+    uploadLabel: 'Фото',
+    additionalPriceContainer: {
+      enterPrice: 'Додаткова ціна (USDT):',
+      additionalPrice: mapToLanguages(
+        'Додаткова ціна (USD)',
+        'Additional price (USD)'
+      ),
+      additionalPriceType: {
+        absolutePrice: mapToLanguages(
+          'Абсолютна ціна (USD)',
+          'Absolute price (USD)'
+        ),
+        relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+      },
+      convertationTitle: 'Відповідна ціна в UAH'
+    },
+    constructorItems: {
+      bottom: {
+        featuresLabels: [
+          {
+            label: 'Матеріал низу',
+            name: 'material',
+            required: false,
+            validation: 'string'
+          },
+          {
+            label: 'Колір низу',
+            name: 'color',
+            required: false,
+            validation: 'string'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва низу',
+          en: 'Bottom name'
+        }
+      }
+    }
+  },
+  bottom: {
+    image: 'Фото низу',
+    material: 'Матеріал',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("Ім'я", 'Name')
+    },
+    bottomName: {
+      ua: 'Назва низу',
+      en: 'Bottom name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для низу',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір низу',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
+  },
   basics: {
     image: 'Фото основи',
     material: 'Матеріал',
@@ -209,35 +281,96 @@ const labels = {
       }
     ]
   },
-  bottom: {
-    image: 'Фото низу',
-    material: 'Матеріал',
+  strapsPageLabel: {
+    strapsHeader: 'straps-header',
+    strapsTable: 'sideStrapsTable',
+    strapsName: {
+      ua: 'Назва ремінця',
+      en: 'Strap name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     available: 'Доступний',
     avatarText: 'Фото',
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну',
-    form: {
-      name: mapToLanguages("Ім'я", 'Name')
-    },
-    bottomName: {
-      ua: 'Назва низу',
-      en: 'Bottom name'
-    },
-    materialLabels: [
-      {
-        label: 'Матеріал для низу',
-        name: 'material',
-        required: false,
-        validation: 'string'
-      },
-      {
-        label: 'Колір низу',
-        name: 'color',
-        required: false,
-        validation: 'string'
-      }
-    ]
+    chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   },
+  pocketsPageLabel: {
+    pocketsHeader: 'pockets-header',
+    pocketsTable: 'sidePocketsTable',
+    pocketsName: {
+      ua: 'Назва кишені',
+      en: 'Pocket name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    avaliable: 'Доступний',
+    avatarText: 'Фото',
+    labelsRestriction: 'restriction',
+    labelIdAut: 'labelIdAut',
+    normal: 'normal',
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
+  },
+  closuresPageLabel: {
+    closuresHeader: 'closures-header',
+    closuresTable: 'sideClosuresTable',
+    closuresName: {
+      ua: 'Назва замочка',
+      en: 'Closure name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
+  },
+  positionPageLabel: {
+    positionHeader: 'position-header',
+    positionTable: 'positionTable',
+    available: 'Доступно',
+    positionName: {
+      ua: 'Позиція',
+      en: 'Position'
+    }
+  },
+  basicsPageLabel: {
+    basicsHeader: 'basics-header',
+    basicsTable: 'sideBasicsTable',
+    basicsName: {
+      ua: 'Назва основи',
+      en: 'Basics name'
+    },
+    available: 'Доступний',
+    avatarText: 'Фото',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну'
+  },
+  // TODO: Constructor end
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
@@ -700,95 +833,6 @@ const labels = {
         relativePrice: 'Relative price (%)'
       }
     }
-  },
-  pocketsPageLabel: {
-    pocketsHeader: 'pockets-header',
-    pocketsTable: 'sidePocketsTable',
-    pocketsName: {
-      ua: 'Назва кишені',
-      en: 'Pocket name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Доступний',
-    avatarText: 'Фото',
-    labelsRestriction: 'restriction',
-    labelIdAut: 'labelIdAut',
-    normal: 'normal',
-    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    }
-  },
-  closuresPageLabel: {
-    closuresHeader: 'closures-header',
-    closuresTable: 'sideClosuresTable',
-    closuresName: {
-      ua: 'Назва замочка',
-      en: 'Closure name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    available: 'Доступний',
-    avatarText: 'Фото',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    }
-  },
-  positionPageLabel: {
-    positionHeader: 'position-header',
-    positionTable: 'positionTable',
-    available: 'Доступно',
-    positionName: {
-      ua: 'Позиція',
-      en: 'Position'
-    }
-  },
-  basicsPageLabel: {
-    basicsHeader: 'basics-header',
-    basicsTable: 'sideBasicsTable',
-    basicsName: {
-      ua: 'Назва основи',
-      en: 'Basics name'
-    },
-    available: 'Доступний',
-    avatarText: 'Фото',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну'
-  },
-  strapsPageLabel: {
-    strapsHeader: 'straps-header',
-    strapsTable: 'sideStrapsTable',
-    strapsName: {
-      ua: 'Назва ремінця',
-      en: 'Strap name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    },
-    available: 'Доступний',
-    avatarText: 'Фото',
-    chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   },
   materialAbout: {
     imgTitle: 'Фото',

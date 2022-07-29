@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import { shallow } from 'enzyme';
-import BottomForm from '../../../components/forms/bottom-form';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
 import LoadingBar from '../../../components/loading-bar';
 import constructorElementsMockStore from '../../constructorElementsMockStore';
 import BottomAdd from '../bottom-add';
@@ -36,7 +36,7 @@ describe('Bottom-page render tests', () => {
   });
 
   test(`Should render BottomForm wrapper`, () => {
-    expect(wrapper.exists(BottomForm)).toBe(true);
+    expect(wrapper.exists(ConstructorFormContainer)).toBe(true);
   });
 
   test('Should render Loading Bar', () => {
@@ -46,7 +46,7 @@ describe('Bottom-page render tests', () => {
     expect(wrapper.exists(LoadingBar)).toBeDefined();
     expect(wrapper.exists(LoadingBar)).toBe(true);
     expect(loadingBar).toHaveLength(1);
-    expect(wrapper.exists(BottomForm)).toBe(false);
+    expect(wrapper.exists(ConstructorFormContainer)).toBe(false);
     constructorElementsMockStore.loading = false;
   });
 

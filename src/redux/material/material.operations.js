@@ -45,22 +45,93 @@ export const getAllMaterials = async (skip, limit, filter) => {
   return result?.data?.getAllMaterials;
 };
 
-export const getAllMaterialsByPatternPurpose = async () => {
+export const getAllMaterialsByPurpose = async (purposes) => {
   const query = `
-    query {
-      getMaterialsByPurpose(purposes: PATTERN) {
+    query($purposes: [PurposeEnum]) {
+      getMaterialsByPurpose(purposes: $purposes) {
+        main {
+          _id
+          name {
+            lang
+            value
+          }
+          colors {
+              _id
+              name {
+                value
+              }
+            }
+        }
+        inner {
+          _id
+          name {
+            lang
+            value
+          }
+          colors {
+              _id
+              name {
+                value
+              }
+            }
+        }
+        bottom {
+          _id
+          name {
+            lang
+            value
+          }
+          colors {
+              _id
+              name {
+                value
+              }
+            }
+        }
+        back {
+          _id
+          name {
+            lang
+            value
+          }
+          colors {
+              _id
+              name {
+                value
+              }
+            }
+        }
         pattern {
           _id
           name {
             lang
             value
           }
+          colors {
+              _id
+              name {
+                value
+              }
+            }
+        }
+        closure {
+          _id
+          name {
+            lang
+            value
+          }
+          colors {
+            _id
+            name {
+              value
+            }
+          }
         }
       }
     }
   `;
 
-  const result = await getItems(query);
+  const result = await getItems(query, { purposes });
 
   return result?.data?.getMaterialsByPurpose;
 };

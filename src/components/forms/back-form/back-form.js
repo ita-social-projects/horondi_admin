@@ -33,7 +33,7 @@ import {
   defaultPropTypes,
   valuesPropTypes,
   imagePropTypes
-} from '../bottom-form/constructor.variables';
+} from './constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL, materialUiConstants } = config;
