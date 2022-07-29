@@ -99,7 +99,7 @@ const ConstructorFormContainer = ({
     initialValues: getPartItemInitialValues(edit, IMG_URL, partItem),
 
     onSubmit: () => {
-      const editAndUpload = edit && partItemUpload instanceof File;
+      const editAndUpload = Boolean(edit && partItemUpload instanceof File);
       const newPartItem = createPartItem(values);
       const actionPayload = {};
       actionPayload[partItemKey] = newPartItem;

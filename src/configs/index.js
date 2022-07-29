@@ -258,6 +258,14 @@ export const config = {
       counts: []
     }
   },
+  constructorOptionTypes: {
+    bottom: 'BOTTOM',
+    basic: 'BASIC',
+    back: 'BACK',
+    strap: 'STRAP',
+    closure: 'CLOSURE',
+    pocket: 'POCKET'
+  },
   UAH: 'грн',
   maxItemsPerPage: 10,
   buttonTitles,
