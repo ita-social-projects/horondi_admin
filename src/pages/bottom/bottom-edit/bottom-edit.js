@@ -30,7 +30,7 @@ const BottomEdit = ({ match }) => {
 
   return (
     <div className={common.detailsContainer}>
-      {bottom !== null ? (
+      {bottom ? (
         <ConstructorFormContainer
           id={id}
           edit

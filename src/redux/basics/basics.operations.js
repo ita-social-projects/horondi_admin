@@ -20,6 +20,7 @@ export const getAllBasics = async (limit, skip, filter) => {
 							absolutePrice
               relativePrice
 							available
+              optionType
               features {
                 material {
                   _id
@@ -144,6 +145,7 @@ export const getBasicById = async (id) => {
           absolutePrice
           relativePrice
           available
+          optionType
           features {
             material {
               _id

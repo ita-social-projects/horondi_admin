@@ -26,7 +26,7 @@ export const defaultPropTypes = {
   id: PropTypes.string,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.string.isRequired
+      id: PropTypes.string
     })
   }),
   edit: PropTypes.bool,

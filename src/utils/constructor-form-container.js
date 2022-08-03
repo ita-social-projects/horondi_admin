@@ -1,16 +1,54 @@
-import * as Yup from 'yup';
-
 import { config } from '../configs';
 
-const { PHOTO_NOT_PROVIDED } = config.bottomErrorMessages;
-const { MIN_LENGTH_MESSAGE, MAX_LENGTH_MESSAGE, PRICE_ERROR, ERROR_MESSAGE } =
-  config.commonErrorMessages;
+const { languages } = config;
 
-export const partItemColorsHandler = (values, setColors, materials) => {
-  const materialColors =
-    materials?.find((material) => material._id === values.material)?.colors ||
-    [];
-  setColors(materialColors);
+export const getNewPartItem = (values) => {
+  const partItem = {
+    name: [
+      {
+        lang: languages[0],
+        value: values.uaName
+      },
+      {
+        lang: languages[1],
+        value: values.enName
+      }
+    ],
+    available: values.available,
+    absolutePrice:
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null,
+    relativePrice:
+      values.additionalPriceType === 'RELATIVE'
+        ? +values.additionalPrice
+        : null,
+    optionType: values.optionType
+  };
+
+  switch (values.optionType) {
+    case 'CLOSURES':
+    case 'POCKETS':
+      partItem.features = {
+        color: values.color
+      };
+      break;
+
+    case 'bottom':
+    case 'basic':
+    case 'back':
+    case 'strap':
+      partItem.features = {
+        material: values.material,
+        color: values.color
+      };
+      break;
+
+    default:
+      break;
+  }
+
+  return partItem;
 };
 
 export const getPartItemInitialValues = (edit, IMG_URL, partItem) => {
@@ -27,15 +65,15 @@ export const getPartItemInitialValues = (edit, IMG_URL, partItem) => {
   };
 
   switch (partItem.optionType) {
-    case 'STRAPS':
     case 'CLOSURES':
     case 'POCKETS':
       initialValues.color = partItem.features.color;
       break;
 
-    case 'BOTTOM':
-    case 'BASICS':
-    case 'BACKS':
+    case 'bottom':
+    case 'basic':
+    case 'back':
+    case 'strap':
       initialValues.color = partItem.features.color._id;
       initialValues.material = partItem.features.material._id;
       break;
@@ -60,7 +98,7 @@ export const getCheckboxOptions = (values, label, handler) => [
 ];
 
 export const getDefaultPartItem = (partKey) => {
-  const optionType = partKey.toUpperCase();
+  const optionType = partKey;
 
   const constructorObject = {
     _id: '',
@@ -101,8 +139,9 @@ export const getDefaultPartItem = (partKey) => {
       break;
 
     case 'bottom':
-    case 'basics':
-    case 'backs':
+    case 'basic':
+    case 'back':
+    case 'strap':
       constructorObject.features = {
         material: {
           _id: '',
@@ -134,45 +173,4 @@ export const getDefaultPartItem = (partKey) => {
   }
 
   return constructorObject;
-};
-
-export const getValidationSchema = (optionType) => {
-  const validationObject = {
-    uaName: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .max(50, MAX_LENGTH_MESSAGE)
-      .required(ERROR_MESSAGE),
-    enName: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .max(50, MAX_LENGTH_MESSAGE)
-      .required(ERROR_MESSAGE),
-    material: Yup.string().required(ERROR_MESSAGE),
-    color: Yup.string().required(ERROR_MESSAGE),
-    additionalPriceType: Yup.string(),
-    additionalPrice: Yup.string()
-      .required(ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
-      .nullable(),
-    image: Yup.string().required(PHOTO_NOT_PROVIDED)
-  };
-
-  switch (optionType) {
-    case 'STRAPS':
-    case 'CLOSURES':
-    case 'POCKETS':
-      validationObject.color = Yup.string().required(ERROR_MESSAGE);
-      break;
-
-    case 'BOTTOM':
-    case 'BASICS':
-    case 'BACKS':
-      validationObject.color = Yup.string().required(ERROR_MESSAGE);
-      validationObject.material = Yup.string().required(ERROR_MESSAGE);
-      break;
-
-    default:
-      break;
-  }
-
-  return Yup.object().shape(validationObject);
 };

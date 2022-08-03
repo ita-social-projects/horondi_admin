@@ -141,13 +141,14 @@ const labels = {
       relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
   },
+
   // TODO: Constrtuctor start
 
   constructorItemLabels: {
     availableLabel: 'Доступний',
     uploadLabel: 'Фото',
     additionalPriceContainer: {
-      enterPrice: 'Додаткова ціна (USDT):',
+      enterPrice: 'Додаткова ціна:',
       additionalPrice: mapToLanguages(
         'Додаткова ціна (USD)',
         'Additional price (USD)'
@@ -163,56 +164,111 @@ const labels = {
     },
     constructorItems: {
       bottom: {
+        featuresVariant: 'materialsWithColor',
         featuresLabels: [
           {
             label: 'Матеріал низу',
-            name: 'material',
-            required: false,
-            validation: 'string'
+            name: 'material'
           },
           {
             label: 'Колір низу',
-            name: 'color',
-            required: false,
-            validation: 'string'
+            name: 'color'
           }
         ],
         inputFields: {
           ua: 'Назва низу',
           en: 'Bottom name'
         }
+      },
+      basic: {
+        featuresVariant: 'materialsWithColor',
+        featuresLabels: [
+          {
+            label: 'Матеріал основи',
+            name: 'material'
+          },
+          {
+            label: 'Колір основи',
+            name: 'color'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва основи',
+          en: 'Basics name'
+        }
+      },
+      back: {
+        featuresVariant: 'materialsWithColor',
+        featuresLabels: [
+          {
+            label: 'Матеріал спинки',
+            name: 'material'
+          },
+          {
+            label: 'Колір спинки',
+            name: 'color'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва спинки',
+          en: 'Backs name'
+        }
+      },
+      strap: {
+        featuresVariant: 'materialsWithColor',
+        featuresLabels: [
+          {
+            label: 'Матеріал ремінця',
+            name: 'material'
+          },
+          {
+            label: 'Колір ремінця',
+            name: 'color'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва ремінця',
+          en: 'Straps name'
+        }
+      },
+      pockets: {
+        featuresVariant: 'positions',
+        featuresLabels: {
+          title: 'Список позицій',
+          inputTitle: 'Оберіть позиції'
+        },
+        inputFields: {
+          ua: 'Назва кишені',
+          en: 'Pocket name'
+        },
+        labelIdAut: 'labelIdAut',
+        margin: 'normal'
       }
     }
   },
-  bottom: {
-    image: 'Фото низу',
-    material: 'Матеріал',
-    available: 'Доступний',
-    avatarText: 'Фото',
+
+  // TODO: Constructor Items end
+  pocketsPageLabel: {
+    pocketsName: {
+      ua: 'Назва кишені',
+      en: 'Pocket name'
+    },
     enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну',
-    form: {
-      name: mapToLanguages("Ім'я", 'Name')
-    },
-    bottomName: {
-      ua: 'Назва низу',
-      en: 'Bottom name'
-    },
-    materialLabels: [
-      {
-        label: 'Матеріал для низу',
-        name: 'material',
-        required: false,
-        validation: 'string'
-      },
-      {
-        label: 'Колір низу',
-        name: 'color',
-        required: false,
-        validation: 'string'
-      }
-    ]
+    additionalPrice: 'Введіть додаткову ціну',
+    avaliable: 'Доступний',
+    avatarText: 'Фото',
+    labelIdAut: 'labelIdAut',
+    normal: 'normal',
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
+
   basics: {
     image: 'Фото основи',
     material: 'Матеріал',
@@ -301,29 +357,7 @@ const labels = {
     avatarText: 'Фото',
     chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   },
-  pocketsPageLabel: {
-    pocketsHeader: 'pockets-header',
-    pocketsTable: 'sidePocketsTable',
-    pocketsName: {
-      ua: 'Назва кишені',
-      en: 'Pocket name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Доступний',
-    avatarText: 'Фото',
-    labelsRestriction: 'restriction',
-    labelIdAut: 'labelIdAut',
-    normal: 'normal',
-    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    }
-  },
+
   closuresPageLabel: {
     closuresHeader: 'closures-header',
     closuresTable: 'sideClosuresTable',

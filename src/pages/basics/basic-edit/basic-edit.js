@@ -3,25 +3,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
-import { getStrap, updateStrap } from '../../../redux/straps/straps.actions';
+import { getBasic, updateBasic } from '../../../redux/basics/basics.actions';
 import { useCommonStyles } from '../../common.styles';
-import { strapsSelector } from '../../../redux/selectors/straps.selectors';
+import { basicsSelector } from '../../../redux/selectors/basics.selectors';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
-const StrapEdit = ({ match }) => {
+const BasicEdit = ({ match }) => {
   const { id } = match.params;
 
   const common = useCommonStyles();
   const dispatch = useDispatch();
-  const { strap, loading } = useSelector(strapsSelector);
+  const { basic, loading } = useSelector(basicsSelector);
 
-  const { pathToStraps } = config.routes;
+  const { pathToBasics } = config.routes;
   const { constructorItemsKeys } = config;
-  const partItemKey = constructorItemsKeys.strap;
+  const partItemKey = constructorItemsKeys.basic;
 
   useEffect(() => {
-    dispatch(getStrap(id));
+    dispatch(getBasic(id));
   }, [dispatch, id]);
 
   if (loading) {
@@ -30,21 +30,21 @@ const StrapEdit = ({ match }) => {
 
   return (
     <div className={common.detailsContainer}>
-      {strap ? (
+      {basic ? (
         <ConstructorFormContainer
           id={id}
           edit
-          part={strap}
+          part={basic}
           partItemKey={partItemKey}
-          pathBack={pathToStraps}
-          dispatchAction={updateStrap}
+          pathBack={pathToBasics}
+          dispatchAction={updateBasic}
         />
       ) : null}
     </div>
   );
 };
 
-StrapEdit.propTypes = {
+BasicEdit.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
@@ -52,4 +52,4 @@ StrapEdit.propTypes = {
   }).isRequired
 };
 
-export default withRouter(StrapEdit);
+export default withRouter(BasicEdit);

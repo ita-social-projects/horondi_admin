@@ -124,7 +124,7 @@ LanguagePanel.propTypes = {
     ),
     handleChange: PropTypes.func,
     handleBlur: PropTypes.func,
-    setFieldValue: PropTypes.func.isRequired
+    setFieldValue: PropTypes.func
   })
 };
 

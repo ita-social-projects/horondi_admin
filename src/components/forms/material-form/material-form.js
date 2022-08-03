@@ -237,8 +237,8 @@ function MaterialForm({ material, id }) {
                 label='Застосування'
               >
                 {Object.values(purposeEnum).map((value) => (
-                  <option key={value} value={value}>
-                    {value}
+                  <option key={value.en} value={value.en}>
+                    {value.ua}
                   </option>
                 ))}
               </Select>

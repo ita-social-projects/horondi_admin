@@ -49,7 +49,7 @@ export const getAllMaterialsByPurpose = async (purposes) => {
   const query = `
     query($purposes: [PurposeEnum]) {
       getMaterialsByPurpose(purposes: $purposes) {
-        main {
+        basic {
           _id
           name {
             lang
@@ -114,7 +114,7 @@ export const getAllMaterialsByPurpose = async (purposes) => {
               }
             }
         }
-        closure {
+        strap {
           _id
           name {
             lang

@@ -49,9 +49,6 @@ import {
   handleSuccessSnackbar,
   handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
-import Back from '../../back/back.reducer';
-import { mockBacks, mockBacksState } from '../../back/tests/back.variables';
-import { removeBackFromStore, setBackLoading } from '../../back/back.actions';
 
 describe('Test Closure sagas', () => {
   it('should load all Closures', async (done) => {

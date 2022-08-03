@@ -31,7 +31,6 @@ const StrapsPage = () => {
   const searchOptions = useStrapFilters();
   const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(strapsSelectorWithPagination);
-
   useEffect(() => {
     dispatch(
       getAllStraps({
@@ -64,6 +63,7 @@ const StrapsPage = () => {
       id={strap._id}
       image={strap?.images?.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
       name={strap?.name[0]?.value}
+      material={strap?.features?.material?.name[0]?.value}
       color={strap?.features?.color?.name[0]?.value}
       additionalPrice={constructorItemPrice(strap)}
       available={strap.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
