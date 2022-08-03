@@ -1,7 +1,11 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mockSize, mockItems } from './edit-product-form.variables';
+import {
+  mockSize,
+  mockItems,
+  mockItemsPriceWithDiscount
+} from './edit-product-form.variables';
 import EditProductForm from '../../edit-product-form/edit-product-form';
 
 jest.mock('react-redux');
@@ -22,7 +26,7 @@ describe('tests for edit-product-form component', () => {
         items={mockItems}
         setFieldValue={mockSetFieldValue}
         setSizeItems={jest.fn()}
-        setPricesWithDiscount={jest.fn()}
+        itemsPriceWithDiscount={mockItemsPriceWithDiscount}
         promoCode={{}}
       />
     );
@@ -45,7 +49,7 @@ describe('tests for edit-product-form component', () => {
     fireEvent.click(decrement);
     fireEvent.click(saveBtn);
 
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
+    expect(mockSetFieldValue).toHaveBeenCalledTimes(2);
     expect(quantity).toHaveTextContent('2');
   });
 });

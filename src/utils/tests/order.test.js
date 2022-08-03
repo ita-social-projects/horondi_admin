@@ -16,11 +16,13 @@ import {
   selectedProductMock,
   sizeMock,
   orderItemsMock,
-  productsMock
+  productsMock,
+  mockItemsDiscount,
+  mockItemsPriceWithDiscount,
+  modelMock
 } from './order.variables';
 
-const setPricesWithDiscount = jest.fn();
-const setDiscounts = jest.fn();
+const setFieldValue = jest.fn();
 const quantity = 3;
 const price = 171;
 
@@ -70,9 +72,11 @@ describe('[utils:order]', () => {
       quantity,
       orderItemsMock,
       categoryMock,
-      setPricesWithDiscount,
+      modelMock,
       promoCodeMock,
-      setDiscounts
+      setFieldValue,
+      mockItemsDiscount,
+      mockItemsPriceWithDiscount
     );
 
     expect(result).toEqual(productsMock);

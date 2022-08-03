@@ -1,3 +1,7 @@
+const {
+  getPromoCodeByCode
+} = require('../../../../promo-code/operations/promo-code.queries');
+
 const mockProduct = [
   {
     _id: '605659bc158e2fdb5349844a',
@@ -74,9 +78,31 @@ const mockItems = [
     quantity: 2
   }
 ];
+const mocksQuery = [
+  {
+    request: {
+      query: getPromoCodeByCode,
+      variables: {
+        code: 'wallet'
+      }
+    },
+    result: {
+      data: {
+        getPromoCodeByCode: {
+          categories: ['accessories'],
+          code: 'wallet',
+          discount: 40,
+          __typename: 'PromoCode',
+          _id: '62e90b1ba946c943d880f64c'
+        }
+      }
+    }
+  }
+];
 
 module.exports = {
   mockProduct,
   mockSize,
-  mockItems
+  mockItems,
+  mocksQuery
 };

@@ -203,6 +203,36 @@ export const productsMock = [
       ],
       _id: '60566452158e2fdb534984b6'
     },
+    model: {
+      category: {
+        name: [
+          {
+            lang: 'ua',
+            value: 'Аксесуари'
+          },
+          {
+            lang: 'en',
+            value: 'Accessories'
+          }
+        ]
+      }
+    },
     quantity: 3
   }
 ];
+export const mockItemsDiscount = [0];
+export const mockItemsPriceWithDiscount = [123];
+export const modelMock = {
+  category: {
+    name: [
+      {
+        lang: 'ua',
+        value: 'Аксесуари'
+      },
+      {
+        lang: 'en',
+        value: 'Accessories'
+      }
+    ]
+  }
+};

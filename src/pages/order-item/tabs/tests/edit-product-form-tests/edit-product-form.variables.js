@@ -41,8 +41,10 @@ const mockItems = [
     quantity: 3
   }
 ];
+const mockItemsPriceWithDiscount = [123];
 
 module.exports = {
   mockSize,
-  mockItems
+  mockItems,
+  mockItemsPriceWithDiscount
 };

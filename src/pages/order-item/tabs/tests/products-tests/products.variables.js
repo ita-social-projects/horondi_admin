@@ -45,10 +45,24 @@ export const mockData = {
         ],
         basePrice: 10
       },
+      model: {
+        category: {
+          _id: '6043be253e06ad3edcdb7b2e',
+          name: [{ value: 'Сумки' }, { value: 'Bags' }]
+        },
+        _id: '60ba9acbba1b8596281cea18'
+      },
       quantity: 2
     }
   ]
 };
+export const mockSizes = [
+  { price: 111, size: { _id: '604394cba7532c33dcb326d6', name: 'M' } },
+
+  { price: 111, size: { _id: '60439516a7532c33dcb326d7', name: 'S' } },
+
+  { price: 94, size: { _id: '62d47204326ecc0029808c48', name: 'XL' } }
+];
 
 export const getPromoCodeMock = [
   {
