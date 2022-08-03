@@ -4,28 +4,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import Products from '../../products';
 import { getPromoCodeMock, mockData, mockSizes } from './products.variables';
-import { editProductFormPropTypes } from '../../../../utils/order';
+import { editProductFormPropTypes } from '../../../../../utils/order';
 
 jest.mock('react-redux');
 let mockEditProductForm;
 jest.mock('../../edit-product-form/edit-product-form', () => ({
-    __esModule: true,
-    default: function mockEditProductForm({
-      onCloseHandler,
-      open,
-      setSizeItems
-    }) {
-      const sizes = setSizeItems(mockSizes);
-      return (
-        <>
-          {open && (
-            <div data-testid='close-button' onClick={onCloseHandler} />
-          )}
-          {open && <div data-testid='set-sizes'>{sizes}</div>}
-        </>
-      );
-    }
-  }));
+  __esModule: true,
+  default: function mockEditProductForm({
+    onCloseHandler,
+    open,
+    setSizeItems
+  }) {
+    const sizes = setSizeItems(mockSizes);
+    return (
+      <>
+        {open && <div data-testid='close-button' onClick={onCloseHandler} />}
+        {open && <div data-testid='set-sizes'>{sizes}</div>}
+      </>
+    );
+  }
+}));
 mockEditProductForm.propTypes = editProductFormPropTypes;
 
 const mockSetFieldValue = jest.fn();
