@@ -134,11 +134,7 @@ const AddProductForm = ({
           options={products}
           getOptionLabel={(option) => option?.name[0]?.value}
           onChange={(_e, value) => {
-            if (value) {
-              setSelectedProduct(value);
-            } else {
-              setSelectedProduct(null);
-            }
+            setSelectedProduct(value || null);
           }}
           inputValue={productInput}
           renderInput={(params) => (

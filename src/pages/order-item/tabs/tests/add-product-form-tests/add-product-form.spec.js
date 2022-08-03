@@ -9,6 +9,7 @@ import {
   mockItems,
   mocksQuery
 } from './add-product-form.variables';
+import config from '../../../../../configs/orders';
 
 jest.mock('react-redux');
 jest.mock('../../../../../utils/order');
@@ -124,7 +125,7 @@ describe('tests for add-product-form component', () => {
     const input = screen.getByTestId('promo-input');
     const value = 'wall';
     const button = screen.getByTestId('promo-button');
-    const error = 'Промокод не знайдено';
+    const {error} = config.promoCodesConsts;
     fireEvent.change(input, { target: { value } });
     fireEvent.click(button);
 
