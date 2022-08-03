@@ -58,11 +58,26 @@ describe('[utils:order]', () => {
 
     expect(result).toBe(462);
   });
+  it('calculateItemsPriceWithDiscount function', () => {
+    const result = calculateItemsPriceWithDiscount(
+      {},
+      quantity,
+      categoryMock,
+      price
+    );
+
+    expect(result).toBe(513);
+  });
 
   it('calculateDiscountsForProducts function', () => {
     const result = calculateDiscountsForProducts(promoCodeMock, categoryMock);
 
     expect(result).toBe(10);
+  });
+  it('calculateDiscountsForProducts function', () => {
+    const result = calculateDiscountsForProducts({}, categoryMock);
+
+    expect(result).toBe(0);
   });
 
   it('mergeProducts function', () => {

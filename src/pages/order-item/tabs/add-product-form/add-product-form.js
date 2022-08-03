@@ -161,7 +161,7 @@ const AddProductForm = ({
         <div className={styles.quantity}>
           {productLabels.quantity}
           <Button
-            data-testid='decrement'
+            data-testid='item-decrement'
             onClick={() => setQuantity((prev) => prev - 1)}
             disabled={quantity <= 1}
           >

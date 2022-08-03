@@ -79,15 +79,22 @@ describe('tests for add-product-form component', () => {
 
   it('should increment and decrement quantity product', () => {
     const increment = screen.getByTestId('increment');
-    const decrement = screen.getByTestId('decrement');
     const quantity = screen.getByTestId('quantity');
-
     fireEvent.click(increment);
     fireEvent.click(increment);
-    fireEvent.click(decrement);
 
     expect(increment).toHaveProperty('disabled', false);
-    expect(quantity).toHaveTextContent('2');
+    expect(quantity).toHaveTextContent('3');
+  });
+  it('should decrement and decrement quantity product', () => {
+    const decrement = screen.getByTestId('item-decrement');
+    const increment = screen.getByTestId('increment');
+    const quantity = screen.getByTestId('quantity');
+    expect(decrement).toHaveProperty('disabled', true);
+    fireEvent.click(increment);
+    expect(decrement).toHaveProperty('disabled', false);
+    fireEvent.click(decrement);
+    expect(quantity).toHaveTextContent('1');
   });
 
   it('should add Product', () => {

@@ -478,7 +478,6 @@ export const calculateItemsPriceWithDiscount = (
     if (isAllowCategory) {
       return Math.round(price - (price / 100) * discount) * quantity;
     }
-    return price * quantity;
   }
   return price * quantity;
 };
@@ -492,7 +491,6 @@ export const calculateDiscountsForProducts = (promoCode, category) => {
     if (isAllowCategory) {
       return discount;
     }
-    return 0;
   }
   return 0;
 };
