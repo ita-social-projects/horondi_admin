@@ -120,4 +120,15 @@ describe('tests for add-product-form component', () => {
 
     expect(await screen.findByTestId('promo-input')).toHaveValue('');
   });
+  it('should show error after entering wrong promoCode', async () => {
+    const input = screen.getByTestId('promo-input');
+    const value = 'wall';
+    const button = screen.getByTestId('promo-button');
+    const error = 'Промокод не знайдено';
+    fireEvent.change(input, { target: { value } });
+    fireEvent.click(button);
+
+    expect(await screen.findByTestId('promo-input')).toHaveValue('wall');
+    expect(await screen.findByText(error)).toBeInTheDocument();
+  });
 });

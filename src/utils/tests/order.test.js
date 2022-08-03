@@ -19,7 +19,9 @@ import {
   productsMock,
   mockItemsDiscount,
   mockItemsPriceWithDiscount,
-  modelMock
+  modelMock,
+  orderWithExistedItemsMock,
+  itemMerge
 } from './order.variables';
 
 const setFieldValue = jest.fn();
@@ -95,5 +97,21 @@ describe('[utils:order]', () => {
     );
 
     expect(result).toEqual(productsMock);
+  });
+  it('mergeProducts function with exiting item', () => {
+    const result = mergeProducts(
+      selectedProductMock,
+      sizeMock,
+      quantity,
+      orderWithExistedItemsMock,
+      categoryMock,
+      modelMock,
+      promoCodeMock,
+      setFieldValue,
+      mockItemsDiscount,
+      mockItemsPriceWithDiscount
+    );
+
+    expect(result).toEqual(itemMerge);
   });
 });

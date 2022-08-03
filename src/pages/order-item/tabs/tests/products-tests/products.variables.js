@@ -13,7 +13,7 @@ export const mockData = {
   itemsPriceWithDiscount: [212],
   itemsDiscount: [0],
   user_id: null,
-  promoCodeId: '62b32ce6b059bc152cb88',
+  promoCodeId: '62e90b1ba946c943d880f64c',
   delivery: {
     sentBy: 'SELFPICKUP',
     courier: {},
@@ -67,14 +67,17 @@ export const mockSizes = [
 export const getPromoCodeMock = [
   {
     request: {
-      query: getPromoCodeById
+      query: getPromoCodeById,
+      variables: { id: '62e90b1ba946c943d880f64c' }
     },
     result: {
       data: {
         getPromoCodeById: {
-          code: 'aa',
-          discount: 10,
-          categories: ['accessories']
+          categories: ['accessories'],
+          code: 'wallet',
+          dateFrom: '2022-08-02T11:31:22.110Z',
+          dateTo: '2022-08-09T11:31:22.112Z',
+          discount: 40
         }
       }
     }
