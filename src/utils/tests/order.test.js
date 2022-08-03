@@ -20,8 +20,7 @@ import {
   mockItemsDiscount,
   mockItemsPriceWithDiscount,
   modelMock,
-  orderWithExistedItemsMock,
-  itemMerge
+  orderWithExistedItemsMock
 } from './order.variables';
 
 const setFieldValue = jest.fn();
@@ -112,6 +111,7 @@ describe('[utils:order]', () => {
       mockItemsPriceWithDiscount
     );
 
-    expect(result).toEqual(itemMerge);
+    productsMock[1].quantity = 6;
+    expect(result).toEqual(productsMock);
   });
 });
