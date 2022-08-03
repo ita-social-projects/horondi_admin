@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import Products from '../../products';
 import { getPromoCodeMock, mockData, mockSizes } from './products.variables';
-import { editProductFormPropTypes } from '../../../../../utils/order';
 
 jest.mock('react-redux');
-let mockEditProductForm;
 jest.mock('../../edit-product-form/edit-product-form', () => ({
   __esModule: true,
   default: function mockEditProductForm({
@@ -24,7 +22,6 @@ jest.mock('../../edit-product-form/edit-product-form', () => ({
     );
   }
 }));
-mockEditProductForm.propTypes = editProductFormPropTypes;
 
 const mockSetFieldValue = jest.fn();
 const dispatch = jest.fn();
