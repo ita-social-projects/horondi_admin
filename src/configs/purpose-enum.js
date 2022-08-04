@@ -1,26 +1,26 @@
 const purposeEnum = {
   basic: {
-    en: 'basic',
+    en: 'BASIC',
     ua: 'Основи'
   },
   inner: {
-    en: 'inner',
+    en: 'INNER',
     ua: 'Внутрішні'
   },
   bottom: {
-    en: 'bottom',
+    en: 'BOTTOM',
     ua: 'Низи'
   },
   pattern: {
-    en: 'pattern',
+    en: 'PATTERN',
     ua: 'Гобелени'
   },
   strap: {
-    en: 'strap',
+    en: 'STRAP',
     ua: 'Ремінці'
   },
   back: {
-    en: 'back',
+    en: 'BACK',
     ua: 'Спинки'
   }
 };

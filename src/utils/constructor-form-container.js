@@ -34,10 +34,10 @@ export const getNewPartItem = (values) => {
       };
       break;
 
-    case 'bottom':
-    case 'basic':
-    case 'back':
-    case 'strap':
+    case 'BOTTOM':
+    case 'BASIC':
+    case 'BACK':
+    case 'STRAP':
       partItem.features = {
         material: values.material,
         color: values.color
@@ -70,10 +70,10 @@ export const getPartItemInitialValues = (edit, IMG_URL, partItem) => {
       initialValues.color = partItem.features.color;
       break;
 
-    case 'bottom':
-    case 'basic':
-    case 'back':
-    case 'strap':
+    case 'BOTTOM':
+    case 'BASIC':
+    case 'BACK':
+    case 'STRAP':
       initialValues.color = partItem.features.color._id;
       initialValues.material = partItem.features.material._id;
       break;
@@ -98,7 +98,7 @@ export const getCheckboxOptions = (values, label, handler) => [
 ];
 
 export const getDefaultPartItem = (partKey) => {
-  const optionType = partKey;
+  const optionType = partKey.toUpperCase();
 
   const constructorObject = {
     _id: '',
@@ -120,9 +120,8 @@ export const getDefaultPartItem = (partKey) => {
   };
 
   switch (partKey) {
-    case 'straps':
-    case 'closures':
-    case 'pockets':
+    case 'CLOSURE':
+    case 'POCKET':
       constructorObject.features = {
         color: {
           _id: '',

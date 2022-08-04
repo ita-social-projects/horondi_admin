@@ -24,7 +24,7 @@ const MaterialsWithColorContainer = ({
   const dispatch = useDispatch();
   const [colors, setColors] = useState([]);
   const [materials, setMaterials] = useState([]);
-  const materialsKey = materialsPurpose;
+  const materialsKey = materialsPurpose.toLowerCase();
 
   useEffect(() => {
     dispatch(getMaterialsByPurpose([materialsPurpose]));

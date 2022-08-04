@@ -267,7 +267,7 @@ const getProductDetails = async () => {
             }
           }
         }
-        getMaterialsByPurpose(purposes: [basic, inner, bottom, pattern, strap, back]) {
+        getMaterialsByPurpose(purposes: [BASIC, INNER, BOTTOM, BACK]) {
           basic {
             _id
             name {

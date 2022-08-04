@@ -32,10 +32,10 @@ export const getValidationSchema = (optionType) => {
       validationObject.color = Yup.string().required(ERROR_MESSAGE);
       break;
 
-    case 'bottom':
-    case 'basic':
-    case 'back':
-    case 'strap':
+    case 'BOTTOM':
+    case 'BASIC':
+    case 'BACK':
+    case 'STRAP':
       validationObject.color = Yup.string().required(ERROR_MESSAGE);
       validationObject.material = Yup.string().required(ERROR_MESSAGE);
       break;
