@@ -16,11 +16,14 @@ import {
   selectedProductMock,
   sizeMock,
   orderItemsMock,
-  productsMock
+  productsMock,
+  mockItemsDiscount,
+  mockItemsPriceWithDiscount,
+  modelMock,
+  orderWithExistedItemsMock
 } from './order.variables';
 
-const setPricesWithDiscount = jest.fn();
-const setDiscounts = jest.fn();
+const setFieldValue = jest.fn();
 const quantity = 3;
 const price = 171;
 
@@ -56,11 +59,26 @@ describe('[utils:order]', () => {
 
     expect(result).toBe(462);
   });
+  it('calculateItemsPriceWithDiscount function', () => {
+    const result = calculateItemsPriceWithDiscount(
+      {},
+      quantity,
+      categoryMock,
+      price
+    );
+
+    expect(result).toBe(513);
+  });
 
   it('calculateDiscountsForProducts function', () => {
     const result = calculateDiscountsForProducts(promoCodeMock, categoryMock);
 
     expect(result).toBe(10);
+  });
+  it('calculateDiscountsForProducts function', () => {
+    const result = calculateDiscountsForProducts({}, categoryMock);
+
+    expect(result).toBe(0);
   });
 
   it('mergeProducts function', () => {
@@ -70,11 +88,30 @@ describe('[utils:order]', () => {
       quantity,
       orderItemsMock,
       categoryMock,
-      setPricesWithDiscount,
+      modelMock,
       promoCodeMock,
-      setDiscounts
+      setFieldValue,
+      mockItemsDiscount,
+      mockItemsPriceWithDiscount
     );
 
+    expect(result).toEqual(productsMock);
+  });
+  it('mergeProducts function with exiting item', () => {
+    const result = mergeProducts(
+      selectedProductMock,
+      sizeMock,
+      quantity,
+      orderWithExistedItemsMock,
+      categoryMock,
+      modelMock,
+      promoCodeMock,
+      setFieldValue,
+      mockItemsDiscount,
+      mockItemsPriceWithDiscount
+    );
+
+    productsMock[1].quantity = 6;
     expect(result).toEqual(productsMock);
   });
 });

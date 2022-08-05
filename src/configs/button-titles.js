@@ -69,6 +69,7 @@ const buttonTitles = {
   HISTORY_NAME: "За ім'ям",
   SEND_CONFIRM: 'Надіслати підтвердження',
   SEND_CODE: 'Надіслати код для підтвердження',
+  ADD_PROMOCODE: 'Додати промокод',
   EXIT_WITHOUT_SAVING: 'Вийти без збереження',
   ORDER_STATUS: 'Статус замовлення',
   PAYMENT_STATUS: 'Статус оплати',
