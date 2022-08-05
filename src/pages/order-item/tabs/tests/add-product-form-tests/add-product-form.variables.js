@@ -1,6 +1,6 @@
 import { getPromoCodeByCode } from '../../../../promo-code/operations/promo-code.queries';
 
-const mockProduct = [
+export const mockProduct = [
   {
     _id: '605659bc158e2fdb5349844a',
     purchasedCount: 85,
@@ -33,7 +33,7 @@ const mockProduct = [
   }
 ];
 
-const mockSize = [
+export const mockSize = [
   {
     size: {
       _id: '604394cba7532c33dcb326d1',
@@ -50,7 +50,7 @@ const mockSize = [
   }
 ];
 
-const mockItems = [
+export const mockItems = [
   {
     options: {
       size: {
@@ -76,7 +76,7 @@ const mockItems = [
     quantity: 2
   }
 ];
-const mocksQuery = [
+export const mocksQuery = [
   {
     request: {
       query: getPromoCodeByCode,
@@ -97,10 +97,3 @@ const mocksQuery = [
     }
   }
 ];
-
-module.exports = {
-  mockProduct,
-  mockSize,
-  mockItems,
-  mocksQuery
-};
