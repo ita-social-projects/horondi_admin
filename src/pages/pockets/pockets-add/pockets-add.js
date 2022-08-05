@@ -1,22 +1,30 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-import PocketsForm from '../../../components/forms/pockets-form/pockets-form';
-import { useStyles } from './pockets-add.styles';
-import { pocketsSelector } from '../../../redux/selectors/pockets.selectors';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
 import LoadingBar from '../../../components/loading-bar';
+import { pocketsSelector } from '../../../redux/selectors/pockets.selectors';
+import { useCommonStyles } from '../../common.styles';
+import { config } from '../../../configs';
+import { addPockets } from '../../../redux/pockets/pockets.actions';
 
 const PocketsAdd = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
   const { loading } = useSelector(pocketsSelector);
+  const { pathToPockets } = config.routes;
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.pocket;
 
   if (loading) {
     return <LoadingBar />;
   }
 
   return (
-    <div className={styles.container}>
-      <PocketsForm />
+    <div className={common.detailsContainer}>
+      <ConstructorFormContainer
+        partItemKey={partItemKey}
+        pathBack={pathToPockets}
+        dispatchAction={addPockets}
+      />
     </div>
   );
 };

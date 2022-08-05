@@ -19,15 +19,15 @@ export const getAllPockets = async (limit, skip, filter) => {
                     thumbnail
                 }
                 absolutePrice
-                restriction
+                relativePrice
                 positions {
                   _id
                   name {
                     lang
                     value
                   }
-                  available
                 }
+                available
               }
               count
             }
@@ -42,8 +42,8 @@ export const getAllPockets = async (limit, skip, filter) => {
 
 export const createPockets = async (payload) => {
   const query = `
-          mutation($pocket: PocketInput!, $upload: Upload!) {
-              addPocket(pocket: $pocket, images: $upload) {
+          mutation($pocket: PocketInput!, $image: Upload!) {
+              addPocket(pocket: $pocket, images: $image) {
                   ... on Pocket {
                        _id
                   }
@@ -103,9 +103,8 @@ export const getPocketById = async (id) => {
                   lang
                   value
                 }
-               available
               }
-              restriction
+              available
               absolutePrice
             }
             ... on Error {

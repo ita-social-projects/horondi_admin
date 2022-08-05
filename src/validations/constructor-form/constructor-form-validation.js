@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { config } from '../../configs';
 
+// TODO:  provide multipupose error mesages
 const { PHOTO_NOT_PROVIDED } = config.bottomErrorMessages;
 const { MIN_LENGTH_MESSAGE, MAX_LENGTH_MESSAGE, PRICE_ERROR, ERROR_MESSAGE } =
   config.commonErrorMessages;
@@ -15,8 +16,6 @@ export const getValidationSchema = (optionType) => {
       .min(2, MIN_LENGTH_MESSAGE)
       .max(50, MAX_LENGTH_MESSAGE)
       .required(ERROR_MESSAGE),
-    material: Yup.string().required(ERROR_MESSAGE),
-    color: Yup.string().required(ERROR_MESSAGE),
     additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
       .required(ERROR_MESSAGE)
@@ -26,10 +25,12 @@ export const getValidationSchema = (optionType) => {
   };
 
   switch (optionType) {
-    case 'STRAPS':
-    case 'CLOSURES':
-    case 'POCKETS':
+    case 'CLOSURE':
       validationObject.color = Yup.string().required(ERROR_MESSAGE);
+      break;
+
+    case 'POCKET':
+      validationObject.positions = Yup.array().required(ERROR_MESSAGE);
       break;
 
     case 'BOTTOM':

@@ -19,7 +19,6 @@ import useStrapFilters from '../../hooks/filters/use-strap-filters';
 import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
-const labels = config.labels.strapsPageLabel;
 const { CREATE_STRAP_TITLE } = config.buttonTitles;
 const { pathToStrapsAdd } = config.routes;
 const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.strapsAvailableVariants;
@@ -86,7 +85,6 @@ const StrapsPage = () => {
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
-          data-cy={labels.strapsHeader}
         >
           {config.titles.strapsTitles.mainPageTitle}
         </Typography>

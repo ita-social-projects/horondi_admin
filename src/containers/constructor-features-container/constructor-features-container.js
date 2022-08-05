@@ -2,6 +2,7 @@
 // TODO: Implement propTypes
 import React from 'react';
 import MaterialsWithColorContainer from '../materials-with-color-container';
+import AutoCompleteOptions from '../../components/autocomplete-options/autocomplete-options';
 
 const ConstructorFeaturesContainer = ({
   materialsPurpose,
@@ -30,6 +31,19 @@ const ConstructorFeaturesContainer = ({
           handleBlur={handleBlur}
           setFieldValue={setFieldValue}
           materialLabels={featuresLabels}
+        />
+      );
+      break;
+
+    case 'autocompleteOptions':
+      featuresContainer = (
+        <AutoCompleteOptions
+          autocompleteLabels={featuresLabels}
+          values={values}
+          errors={errors}
+          touched={touched}
+          handleBlur={handleBlur}
+          setFieldValue={setFieldValue}
         />
       );
       break;

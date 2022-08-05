@@ -28,10 +28,13 @@ export const getNewPartItem = (values) => {
 
   switch (values.optionType) {
     case 'CLOSURES':
-    case 'POCKETS':
       partItem.features = {
         color: values.color
       };
+      break;
+
+    case 'POCKET':
+      partItem.positions = values.positions.map((position) => position._id);
       break;
 
     case 'BOTTOM':
@@ -66,8 +69,11 @@ export const getPartItemInitialValues = (edit, IMG_URL, partItem) => {
 
   switch (partItem.optionType) {
     case 'CLOSURES':
-    case 'POCKETS':
       initialValues.color = partItem.features.color;
+      break;
+
+    case 'POCKET':
+      initialValues.positions = partItem.positions;
       break;
 
     case 'BOTTOM':
@@ -120,8 +126,7 @@ export const getDefaultPartItem = (partKey) => {
   };
 
   switch (partKey) {
-    case 'CLOSURE':
-    case 'POCKET':
+    case 'closure':
       constructorObject.features = {
         color: {
           _id: '',
@@ -135,6 +140,10 @@ export const getDefaultPartItem = (partKey) => {
           ]
         }
       };
+      break;
+
+    case 'pocket':
+      constructorObject.positions = [];
       break;
 
     case 'bottom':

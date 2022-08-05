@@ -19,9 +19,9 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import usePocketFilters from '../../hooks/filters/use-pocket-filters';
+import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
-const labels = config.labels.pocketsPageLabel;
 const { CREATE_POCKETS_TITLE } = config.buttonTitles;
 const { pathToPocketsAdd } = config.routes;
 const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.pocketsAvailableVariants;
@@ -66,8 +66,8 @@ const PocketsPage = () => {
       id={pocket._id}
       image={pocket?.images?.thumbnail ? IMG_URL + pocket.images.thumbnail : ''}
       name={pocket?.name[0]?.value}
-      additionalPrice={pocket?.absolutePrice}
-      available={pocket.restriction ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
+      additionalPrice={constructorItemPrice(pocket)}
+      available={pocket.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         pocketsDeleteHandler(pocket._id);
       }}
@@ -87,7 +87,6 @@ const PocketsPage = () => {
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
-          data-cy={labels.pocketsHeader}
         >
           {config.titles.pocketsTitles.mainPageTitle}
         </Typography>

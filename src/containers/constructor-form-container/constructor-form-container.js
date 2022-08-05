@@ -61,7 +61,7 @@ const ConstructorFormContainer = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [partItemImage, setPartItemImage] = useState('');
-  const [partItemUpload, setPartItemUpload] = useState({});
+  const [partItemUpload, setPartItemUpload] = useState('');
 
   useEffect(() => {
     if (partItem?.images.thumbnail) {
