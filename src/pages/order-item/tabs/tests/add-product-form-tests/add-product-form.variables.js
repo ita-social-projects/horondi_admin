@@ -1,6 +1,4 @@
-const {
-  getPromoCodeByCode
-} = require('../../../../promo-code/operations/promo-code.queries');
+import { getPromoCodeByCode } from '../../../../promo-code/operations/promo-code.queries';
 
 const mockProduct = [
   {
