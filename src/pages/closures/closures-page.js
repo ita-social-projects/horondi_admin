@@ -22,7 +22,6 @@ import useClosureFilters from '../../hooks/filters/use-closure-filters';
 import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
-const labels = config.labels.closuresPageLabel;
 const { CREATE_CLOSURES_TITLE } = config.buttonTitles;
 const { pathToClosuresAdd } = config.routes;
 const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.closuresAvailableVariants;
@@ -89,7 +88,6 @@ const ClosuresPage = () => {
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
-          data-cy={labels.closuresHeader}
         >
           {config.titles.closuresTitles.mainPageTitle}
         </Typography>

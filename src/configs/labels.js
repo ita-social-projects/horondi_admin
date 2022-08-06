@@ -141,9 +141,6 @@ const labels = {
       relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
   },
-
-  // TODO: Constrtuctor start
-
   constructorItemLabels: {
     availableLabel: 'Доступний',
     uploadLabel: 'Фото',
@@ -247,40 +244,21 @@ const labels = {
             inputTitle: 'Оберіть позиції'
           }
         }
+      },
+      closure: {
+        inputFields: {
+          ua: 'Назва защіпки',
+          en: 'Closure name'
+        }
+      },
+      position: {
+        inputFields: {
+          ua: 'Позиція',
+          en: 'Position'
+        }
       }
     }
   },
-
-  // TODO: Constructor Items end
-
-  closuresPageLabel: {
-    closuresHeader: 'closures-header',
-    closuresTable: 'sideClosuresTable',
-    closuresName: {
-      ua: 'Назва замочка',
-      en: 'Closure name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    available: 'Доступний',
-    avatarText: 'Фото',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    }
-  },
-  positionPageLabel: {
-    positionHeader: 'position-header',
-    positionTable: 'positionTable',
-    available: 'Доступно',
-    positionName: {
-      ua: 'Позиція',
-      en: 'Position'
-    }
-  },
-  // TODO: Constructor end
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),

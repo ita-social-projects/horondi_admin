@@ -15,26 +15,13 @@ export const getNewPartItem = (values) => {
       }
     ],
     available: values.available,
-    absolutePrice:
-      values.additionalPriceType === 'ABSOLUTE'
-        ? +values.additionalPrice
-        : null,
-    relativePrice:
-      values.additionalPriceType === 'RELATIVE'
-        ? +values.additionalPrice
-        : null,
     optionType: values.optionType
   };
 
   switch (values.optionType) {
-    case 'CLOSURES':
-      partItem.features = {
-        color: values.color
-      };
-      break;
-
     case 'POCKET':
-      partItem.positions = values.positions.map((position) => position._id);
+      const positions = values.positions.map((position) => position._id);
+      partItem.positions = positions;
       break;
 
     case 'BOTTOM':
@@ -51,27 +38,29 @@ export const getNewPartItem = (values) => {
       break;
   }
 
+  if (values.optionType !== 'POSITION') {
+    partItem.absolutePrice =
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null;
+    partItem.relativePrice =
+      values.additionalPriceType === 'RELATIVE'
+        ? +values.additionalPrice
+        : null;
+  }
+
   return partItem;
 };
 
 export const getPartItemInitialValues = (edit, IMG_URL, partItem) => {
   const initialValues = {
-    image: edit ? IMG_URL + partItem.images.thumbnail : '',
     uaName: partItem.name[0].value,
     enName: partItem.name[1].value,
-    additionalPriceType: partItem.absolutePrice ? 'ABSOLUTE' : 'RELATIVE',
-    additionalPrice: partItem.absolutePrice
-      ? partItem.absolutePrice
-      : partItem.relativePrice,
     available: partItem.available,
     optionType: partItem.optionType
   };
 
   switch (partItem.optionType) {
-    case 'CLOSURES':
-      initialValues.color = partItem.features.color;
-      break;
-
     case 'POCKET':
       initialValues.positions = partItem.positions;
       break;
@@ -86,6 +75,16 @@ export const getPartItemInitialValues = (edit, IMG_URL, partItem) => {
 
     default:
       break;
+  }
+
+  if (partItem.optionType !== 'POSITION') {
+    initialValues.image = edit ? IMG_URL + partItem.images.thumbnail : '';
+    initialValues.additionalPriceType = partItem.absolutePrice
+      ? 'ABSOLUTE'
+      : 'RELATIVE';
+    initialValues.additionalPrice = partItem.absolutePrice
+      ? partItem.absolutePrice
+      : partItem.relativePrice;
   }
 
   return initialValues;
@@ -117,31 +116,10 @@ export const getDefaultPartItem = (partKey) => {
       }
     ],
     optionType,
-    images: {
-      thumbnail: ''
-    },
-    absolutePrice: ' ',
-    relativePrice: null,
-    available: false
+    available: true
   };
 
   switch (partKey) {
-    case 'closure':
-      constructorObject.features = {
-        color: {
-          _id: '',
-          name: [
-            {
-              value: ''
-            },
-            {
-              value: ''
-            }
-          ]
-        }
-      };
-      break;
-
     case 'pocket':
       constructorObject.positions = [];
       break;
@@ -178,6 +156,14 @@ export const getDefaultPartItem = (partKey) => {
 
     default:
       break;
+  }
+
+  if (partKey !== 'position') {
+    constructorObject.images = {
+      thumbnail: ''
+    };
+    constructorObject.absolutePrice = ' ';
+    constructorObject.relativePrice = null;
   }
 
   return constructorObject;

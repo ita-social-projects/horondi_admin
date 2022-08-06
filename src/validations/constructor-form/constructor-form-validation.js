@@ -15,20 +15,10 @@ export const getValidationSchema = (optionType) => {
     enName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(50, MAX_LENGTH_MESSAGE)
-      .required(ERROR_MESSAGE),
-    additionalPriceType: Yup.string(),
-    additionalPrice: Yup.string()
       .required(ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
-      .nullable(),
-    image: Yup.string().required(PHOTO_NOT_PROVIDED)
   };
 
   switch (optionType) {
-    case 'CLOSURE':
-      validationObject.color = Yup.string().required(ERROR_MESSAGE);
-      break;
-
     case 'POCKET':
       validationObject.positions = Yup.array().required(ERROR_MESSAGE);
       break;
@@ -43,6 +33,15 @@ export const getValidationSchema = (optionType) => {
 
     default:
       break;
+  }
+
+  if (optionType !== 'POSITION') {
+    validationObject.additionalPriceType = Yup.string();
+    validationObject.additionalPrice = Yup.string()
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
+      .nullable();
+    validationObject.image = Yup.string().required(PHOTO_NOT_PROVIDED);
   }
 
   return Yup.object().shape(validationObject);

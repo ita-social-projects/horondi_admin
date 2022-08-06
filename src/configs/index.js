@@ -265,7 +265,8 @@ export const config = {
     strap: 'strap',
     closure: 'closure',
     pocket: 'pocket',
-    pattern: 'pattern'
+    pattern: 'pattern',
+    position: 'position'
   },
   UAH: 'грн',
   maxItemsPerPage: 10,

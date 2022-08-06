@@ -49,7 +49,7 @@ const ConstructorFeaturesContainer = ({
       break;
 
     default:
-      break;
+      return null;
   }
   return <>{featuresContainer}</>;
 };

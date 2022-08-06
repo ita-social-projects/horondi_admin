@@ -50,7 +50,9 @@ const ConstructorFormContainer = ({
   edit,
   partItemKey,
   pathBack,
-  dispatchAction
+  dispatchAction,
+  withoutImg,
+  withoutPrice
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -64,7 +66,7 @@ const ConstructorFormContainer = ({
   const [partItemUpload, setPartItemUpload] = useState('');
 
   useEffect(() => {
-    if (partItem?.images.thumbnail) {
+    if (!withoutImg && partItem?.images.thumbnail) {
       setPartItemImage(`${imagePrefix}${partItem.images.thumbnail}`);
     }
   }, []);
@@ -167,27 +169,29 @@ const ConstructorFormContainer = ({
             </Grid>
           </div>
           <CheckboxOptions options={checkboxOptions} />
-          <Grid item xs={12}>
-            <Paper className={styles.itemUpdate}>
-              <div className={styles.imageUploadBlock}>
-                <div>
-                  <span className={styles.imageUpload}>{uploadLabel}</span>
-                  <div className={styles.imageUploadAvatar}>
-                    <ImageUploadPreviewContainer
-                      handler={handleImageLoad}
-                      src={partItemImage}
-                      id={imagePreviewId}
-                    />
-                    {touched.bottomImage && errors.bottomImage && (
-                      <div className={styles.inputError}>
-                        {errors.bottomImage}
-                      </div>
-                    )}
+          {!withoutImg ? (
+            <Grid item xs={12}>
+              <Paper className={styles.itemUpdate}>
+                <div className={styles.imageUploadBlock}>
+                  <div>
+                    <span className={styles.imageUpload}>{uploadLabel}</span>
+                    <div className={styles.imageUploadAvatar}>
+                      <ImageUploadPreviewContainer
+                        handler={handleImageLoad}
+                        src={partItemImage}
+                        id={imagePreviewId}
+                      />
+                      {touched.bottomImage && errors.bottomImage && (
+                        <div className={styles.inputError}>
+                          {errors.bottomImage}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Paper>
-          </Grid>
+              </Paper>
+            </Grid>
+          ) : null}
           <ConstructorFeaturesContainer
             setIsLoading={setIsLoading}
             materialsPurpose={optionType}
@@ -203,15 +207,17 @@ const ConstructorFormContainer = ({
 
           {languagesPanel}
 
-          <AdditionalPriceContainer
-            values={values}
-            labels={additionalPriceContainer}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            radio
-            errors={errors}
-            touched={touched}
-          />
+          {!withoutPrice ? (
+            <AdditionalPriceContainer
+              values={values}
+              labels={additionalPriceContainer}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              radio
+              errors={errors}
+              touched={touched}
+            />
+          ) : null}
         </form>
       )}
     </div>
