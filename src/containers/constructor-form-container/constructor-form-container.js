@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Paper, Grid } from '@material-ui/core';
 
 import { useStyles } from '../../components/forms/common.styles';
@@ -23,18 +24,9 @@ import {
 
 import { getValidationSchema } from '../../validations/constructor-form/constructor-form-validation';
 
-import {
-  imagePreviewId,
-  defaultProps,
-  constructorObjectPropsTypes,
-  defaultPropTypes,
-  valuesPropTypes,
-  imagePropTypes
-} from './constructor-form.variables';
-
 const { IMG_URL } = config;
 const { SAVE_TITLE } = config.buttonTitles;
-const { languages, imagePrefix } = config;
+const { languages, imagePrefix, imagePreviewId } = config;
 const { constructorItemLabels } = config.labels;
 
 const {
@@ -66,10 +58,14 @@ const ConstructorFormContainer = ({
   const [partItemUpload, setPartItemUpload] = useState('');
 
   useEffect(() => {
-    if (!withoutImg && partItem?.images.thumbnail) {
-      setPartItemImage(`${imagePrefix}${partItem.images.thumbnail}`);
+    let partImg;
+    if (!withoutImg) {
+      partImg = partItem?.images.thumbnail;
     }
-  }, []);
+    if (partImg) {
+      setPartItemImage(`${imagePrefix}${partImg}`);
+    }
+  }, [withoutImg, partItem]);
 
   const {
     values,
@@ -169,7 +165,7 @@ const ConstructorFormContainer = ({
             </Grid>
           </div>
           <CheckboxOptions options={checkboxOptions} />
-          {!withoutImg ? (
+          {withoutImg ? null : (
             <Grid item xs={12}>
               <Paper className={styles.itemUpdate}>
                 <div className={styles.imageUploadBlock}>
@@ -191,7 +187,7 @@ const ConstructorFormContainer = ({
                 </div>
               </Paper>
             </Grid>
-          ) : null}
+          )}
           <ConstructorFeaturesContainer
             setIsLoading={setIsLoading}
             materialsPurpose={optionType}
@@ -207,7 +203,7 @@ const ConstructorFormContainer = ({
 
           {languagesPanel}
 
-          {!withoutPrice ? (
+          {withoutPrice ? null : (
             <AdditionalPriceContainer
               values={values}
               labels={additionalPriceContainer}
@@ -217,25 +213,30 @@ const ConstructorFormContainer = ({
               errors={errors}
               touched={touched}
             />
-          ) : null}
+          )}
         </form>
       )}
     </div>
   );
 };
-// TODO: Check proptypes
-valuesPropTypes.values.bottomImage = imagePropTypes;
-valuesPropTypes.errors.bottomImage = imagePropTypes;
-valuesPropTypes.touched.bottomImage = imagePropTypes;
 
 ConstructorFormContainer.propTypes = {
-  ...defaultPropTypes,
-  part: constructorObjectPropsTypes.element,
-  ...valuesPropTypes
+  part: PropTypes.shape({}),
+  id: PropTypes.string,
+  edit: PropTypes.bool,
+  partItemKey: PropTypes.string.isRequired,
+  pathBack: PropTypes.string.isRequired,
+  dispatchAction: PropTypes.func.isRequired,
+  withoutImg: PropTypes.bool,
+  withoutPrice: PropTypes.bool
 };
 
 ConstructorFormContainer.defaultProps = {
-  ...defaultProps
+  part: null,
+  id: '',
+  edit: false,
+  withoutImg: false,
+  withoutPrice: false
 };
 
 export default ConstructorFormContainer;

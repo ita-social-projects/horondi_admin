@@ -236,11 +236,15 @@ function MaterialForm({ material, id }) {
                 onBlur={handleBlur}
                 label='Застосування'
               >
-                {Object.values(purposeEnum).map((value) => (
-                  <option key={value.en} value={value.en}>
-                    {value.ua}
-                  </option>
-                ))}
+                {Object.values(purposeEnum).map((value) => {
+                  const optionKey = value.en;
+                  const optionContent = value.ua;
+                  return (
+                    <option key={optionKey} value={optionKey}>
+                      {optionContent}
+                    </option>
+                  );
+                })}
               </Select>
             </FormControl>
             {touched.purpose && errors.purpose && (

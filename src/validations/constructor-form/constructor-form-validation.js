@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import { config } from '../../configs';
 
-// TODO:  provide multipupose error mesages
 const { PHOTO_NOT_PROVIDED } = config.bottomErrorMessages;
 const { MIN_LENGTH_MESSAGE, MAX_LENGTH_MESSAGE, PRICE_ERROR, ERROR_MESSAGE } =
   config.commonErrorMessages;

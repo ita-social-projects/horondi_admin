@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// TODO: Implement propTypes
 import React, { useMemo, useEffect, useState } from 'react';
 import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -37,22 +35,18 @@ const MaterialsWithColorContainer = ({
       setMaterials(materialsByPurpose[materialsKey]);
       setIsLoading(loading);
     }
-  }, [loading, setIsLoading, materialsByPurpose[materialsKey]]);
+  }, [loading, setIsLoading, materialsByPurpose, materialsKey]);
 
   const materialOptions = useMemo(() => handleMenuItem(materials), [materials]);
   const colorOptions = useMemo(() => handleMenuItem(colors), [colors]);
 
   const options = [materialOptions, colorOptions];
 
-  const selectColorsHandler = (values, setColors, materials) => {
+  useEffect(() => {
     const materialColors =
       materials?.find((material) => material._id === values.material)?.colors ||
       [];
     setColors(materialColors);
-  };
-
-  useEffect(() => {
-    selectColorsHandler(values, setColors, materials);
   }, [values, materials]);
 
   const handleSelectChange = (e) => {
@@ -62,9 +56,9 @@ const MaterialsWithColorContainer = ({
 
   return (
     <>
-      <Grid container spacing={1} xs={12} justify='flex-start'>
+      <Grid container spacing={1} justify='flex-start'>
         {materialLabels.map(({ label, name }, idx) => (
-          <FormControl className={styles.formControl} key={label}>
+          <FormControl className={styles.formControl} key={label} xs={12}>
             <InputLabel htmlFor={label}>{`${label}`}</InputLabel>
             <Select
               name={name}
@@ -83,23 +77,18 @@ const MaterialsWithColorContainer = ({
 };
 
 MaterialsWithColorContainer.propTypes = {
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  handleChange: PropTypes.func.isRequired,
+  materialsPurpose: PropTypes.string.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    material: PropTypes.string
+  }).isRequired,
+  errors: PropTypes.shape({}).isRequired,
+  touched: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  values: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.array,
-      PropTypes.object
-    ])
-  ).isRequired,
-  materialLabels: PropTypes.arrayOf(PropTypes.object).isRequired
+  materialLabels: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+    .isRequired
 };
-
-// TODO: define default props
 
 export default MaterialsWithColorContainer;

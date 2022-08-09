@@ -50,7 +50,7 @@ const TableContainerRow = ({
   const avatarSize = dense ? classes.small : classes.medium;
   return (
     <TableRow key={id} hover onClick={(e) => clickHandler(e)}>
-      {showCheckbox && (
+      {showCheckbox ? (
         <TableCell>
           <Checkbox
             color='default'
@@ -59,28 +59,26 @@ const TableContainerRow = ({
             onClick={(e) => checkboxChangeHandler(e, id)}
           />
         </TableCell>
-      )}
-      {showAvatar && (
+      ) : null}
+      {showAvatar ? (
         <TableCell className={classes.smallCell}>
           <Avatar className={avatarSize} src={image}>
             <ImageIcon />
           </Avatar>
         </TableCell>
-      )}
-
+      ) : null}
       {tableCells}
       {text ? (
         <TableCell>
           <p className={classes.text}>{text}</p>
         </TableCell>
       ) : null}
-      {!showAvatar && image && (
+      {!showAvatar && image ? (
         <TableCell className={classes.imageValue}>
           <img src={image} alt={image} />
         </TableCell>
-      )}
-
-      {(showEdit || showDelete) && (
+      ) : null}
+      {showEdit || showDelete ? (
         <TableCell className={classes.smallCell}>
           {showEdit && (
             <CustomizedEditIcon
@@ -98,7 +96,7 @@ const TableContainerRow = ({
             />
           )}
         </TableCell>
-      )}
+      ) : null}
     </TableRow>
   );
 };

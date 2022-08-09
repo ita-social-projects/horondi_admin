@@ -162,7 +162,7 @@ export const getDefaultPartItem = (partKey) => {
     constructorObject.images = {
       thumbnail: ''
     };
-    constructorObject.absolutePrice = ' ';
+    constructorObject.absolutePrice = 1;
     constructorObject.relativePrice = null;
   }
 

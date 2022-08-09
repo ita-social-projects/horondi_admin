@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
-// TODO: Implement propTypes
 import React from 'react';
+import PropTypes from 'prop-types';
 import MaterialsWithColorContainer from '../materials-with-color-container';
 import AutoCompleteOptions from '../../components/autocomplete-options/autocomplete-options';
 
@@ -52,6 +51,24 @@ const ConstructorFeaturesContainer = ({
       return null;
   }
   return <>{featuresContainer}</>;
+};
+
+ConstructorFeaturesContainer.propTypes = {
+  materialsPurpose: PropTypes.string.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
+  values: PropTypes.shape({}).isRequired,
+  errors: PropTypes.shape({}).isRequired,
+  touched: PropTypes.shape({}).isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  featuresLabels: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  variant: PropTypes.string
+};
+
+ConstructorFeaturesContainer.defaultProps = {
+  variant: '',
+  featuresLabels: null
 };
 
 export default ConstructorFeaturesContainer;

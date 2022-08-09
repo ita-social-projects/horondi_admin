@@ -225,6 +225,7 @@ export const config = {
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  imagePreviewId: 'imagePreviewContainerId',
   initialLanguageValues: [
     {
       lang: 'ua',

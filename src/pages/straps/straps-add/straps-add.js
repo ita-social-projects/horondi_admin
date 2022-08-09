@@ -7,7 +7,7 @@ import { useCommonStyles } from '../../common.styles';
 import { config } from '../../../configs';
 import { addStraps } from '../../../redux/straps/straps.actions';
 
-const StrapAdd = () => {
+const StrapsAdd = () => {
   const common = useCommonStyles();
   const { loading } = useSelector(strapsSelector);
   const { pathToStraps } = config.routes;
@@ -29,4 +29,4 @@ const StrapAdd = () => {
   );
 };
 
-export default StrapAdd;
+export default StrapsAdd;

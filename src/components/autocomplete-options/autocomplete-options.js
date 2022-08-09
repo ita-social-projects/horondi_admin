@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
-// TODO: Implement propTypes
-
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Paper, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +40,7 @@ const AutoCompleteOptions = ({
   const availablePositions =
     positionsList && positionsList.length
       ? positionsList.filter((el) => el.available)
-      : null;
+      : [];
 
   const [positions, setPositions] = useState(values.positions || []);
 
@@ -90,6 +88,24 @@ const AutoCompleteOptions = ({
       </Paper>
     </>
   );
+};
+
+AutoCompleteOptions.propTypes = {
+  autocompleteLabels: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  ).isRequired,
+  values: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+      PropTypes.number,
+      PropTypes.array
+    ])
+  ).isRequired,
+  errors: PropTypes.objectOf(PropTypes.object).isRequired,
+  touched: PropTypes.objectOf(PropTypes.object).isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired
 };
 
 export default AutoCompleteOptions;
