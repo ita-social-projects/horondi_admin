@@ -165,7 +165,7 @@ const ConstructorFormContainer = ({
             </Grid>
           </div>
           <CheckboxOptions options={checkboxOptions} />
-          {withoutImg || (
+          {!withoutImg && (
             <Grid item xs={12}>
               <Paper className={styles.itemUpdate}>
                 <div className={styles.imageUploadBlock}>
@@ -203,7 +203,7 @@ const ConstructorFormContainer = ({
 
           {languagesPanel}
 
-          {withoutPrice || (
+          {!withoutPrice && (
             <AdditionalPriceContainer
               values={values}
               labels={additionalPriceContainer}
