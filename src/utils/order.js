@@ -129,7 +129,7 @@ const items = (order) =>
 export const newOrder = (order) => ({
   status: order.status,
   recipient: order.recipient,
-  user_id: order.user_id,
+  user_id: order.user_id || null,
   delivery: address(order.delivery),
   items: items(order),
   paymentMethod: order.paymentMethod,
