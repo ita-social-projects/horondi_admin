@@ -94,10 +94,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
           onFocus={() => setRegionFocus(true)}
-          onBlur={(e) => {
-            setRegionFocus(false);
-            handleBlur(e);
-          }}
+          onBlur={() => setRegionFocus(false)}
           onChange={(_event, value) => {
             handleRegion(
               value,
@@ -129,12 +126,6 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             />
           )}
         />
-        {getTouched(inputName.ukrPost.region) &&
-          getError(inputName.ukrPost.region) && (
-            <div className={styles.error}>
-              {getError(inputName.ukrPost.region)}
-            </div>
-          )}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -143,10 +134,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             setDistrict(value);
           }}
           onFocus={() => setDistrictFocus(true)}
-          onBlur={(e) => {
-            setDistrictFocus(false);
-            handleBlur(e);
-          }}
+          onBlur={() => setDistrictFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(_event, value) => {
             handleDistrict(value, setFieldValue, setCity, setPostOffice);
@@ -177,12 +165,6 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             />
           )}
         />
-        {getTouched(inputName.ukrPost.district) &&
-          getError(inputName.ukrPost.district) && (
-            <div className={styles.error}>
-              {getError(inputName.ukrPost.district)}
-            </div>
-          )}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -223,7 +205,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
         />
         {getTouched(inputName.ukrPost.city) &&
           getError(inputName.ukrPost.city) && (
-            <div className={styles.error}>
+            <div className={styles.error} data-testid={inputName.ukrPost.city}>
               {getError(inputName.ukrPost.city)}
             </div>
           )}
@@ -275,7 +257,10 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
         />
         {getTouched(inputName.ukrPost.courierOffice) &&
           getError(inputName.ukrPost.courierOffice) && (
-            <div className={styles.error}>
+            <div
+              className={styles.error}
+              data-testid={inputName.ukrPost.courierOffice}
+            >
               {getError(inputName.ukrPost.courierOffice)}
             </div>
           )}

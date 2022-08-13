@@ -115,7 +115,10 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
             ))}
           </Select>
           {getTouched(worldWide.messenger) && getError(worldWide.messenger) && (
-            <div className={styles.inputError}>
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.messenger}
+            >
               {getError(worldWide.messenger)}
             </div>
           )}
@@ -133,7 +136,10 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
           />
           {getTouched(worldWide.messengerPhone) &&
             getError(worldWide.messengerPhone) && (
-              <div className={styles.inputError}>
+              <div
+                className={styles.inputError}
+                data-testid={worldWide.messengerPhone}
+              >
                 {getError(worldWide.messengerPhone)}
               </div>
             )}
@@ -162,14 +168,16 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
         />
         {getTouched(worldWide.worldWideCountry) &&
           getError(worldWide.worldWideCountry) && (
-            <div className={styles.inputError}>
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.worldWideCountry}
+            >
               {getError(worldWide.worldWideCountry)}
             </div>
           )}
         <Autocomplete
           id={worldWide.stateOrProvince}
           className={styles.addressInput}
-          // name={worldWide.stateOrProvince}
           options={statesOptions}
           value={values.stateOrProvince}
           inputValue={stateOrProvinceInput}
@@ -190,14 +198,16 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
         />
         {getTouched(worldWide.stateOrProvince) &&
           getError(worldWide.stateOrProvince) && (
-            <div className={styles.inputError}>
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.stateOrProvince}
+            >
               {getError(worldWide.stateOrProvince)}
             </div>
           )}
         <Autocomplete
           id={worldWide.worldWideCity}
           className={styles.addressInput}
-          // name={worldWide.worldWideCity}
           options={citiesOptions}
           inputValue={values.worldWideCity}
           onInputChange={(_, value, reason) => {
@@ -219,7 +229,10 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
         />
         {getTouched(worldWide.worldWideCity) &&
           getError(worldWide.worldWideCity) && (
-            <div className={styles.inputError}>
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.worldWideCity}
+            >
               {getError(worldWide.worldWideCity)}
             </div>
           )}
@@ -236,7 +249,10 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
         />
         {getTouched(worldWide.worldWideStreet) &&
           getError(worldWide.worldWideStreet) && (
-            <div className={styles.inputError}>
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.worldWideStreet}
+            >
               {getError(worldWide.worldWideStreet)}
             </div>
           )}
@@ -252,7 +268,7 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
           disabled={!values.worldWideStreet}
         />
         {getTouched(worldWide.cityCode) && getError(worldWide.cityCode) && (
-          <div className={styles.inputError}>
+          <div className={styles.inputError} data-testid={worldWide.cityCode}>
             {getError(worldWide.cityCode)}
           </div>
         )}
