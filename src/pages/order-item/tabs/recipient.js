@@ -1,39 +1,62 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 
+import { get } from 'lodash';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
 import { inputName, recipientPropTypes } from '../../../utils/order';
 import { config } from '../../../configs';
 
-const Recipient = ({ data, handleChange }) => {
+const Recipient = ({ data, handleChange, inputOptions }) => {
   const { materialUiConstants } = config;
   const { recipient, userComment } = data;
   const { orderRecipient } = labels;
   const classes = useStyles();
+
+  const { handleBlur, touched, errors } = inputOptions;
+
+  const recipientTouched = (item) => get(touched, item);
+  const recipientError = (item) => get(errors, item);
   return (
     <div className={classes.recipient}>
       {recipient &&
-        Object.keys(recipient).map((item) => (
-          <TextField
-            name={`recipient.${item}`}
-            label={orderRecipient[item] || ''}
-            key={item}
-            variant={materialUiConstants.outlined}
-            onChange={handleChange}
-            value={recipient[item] || ''}
-          />
+        Object.keys(recipient).map((item, idx) => (
+          <React.Fragment key={idx}>
+            <TextField
+              name={`recipient.${item}`}
+              label={orderRecipient[item] || ''}
+              key={item}
+              variant={materialUiConstants.outlined}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={recipient[item] || ''}
+            />
+            {recipientTouched(`recipient[${item}]`) &&
+              recipientError(`recipient[${item}]`) && (
+                <div className={classes.inputError}>
+                  {recipientError(`recipient[${item}]`)}
+                </div>
+              )}
+          </React.Fragment>
         ))}
       {recipient && (
-        <TextField
-          name={inputName.userComment}
-          label={orderRecipient.commentary}
-          onChange={handleChange}
-          variant={materialUiConstants.outlined}
-          value={userComment || ''}
-          multiline
-          rows={4}
-        />
+        <>
+          <TextField
+            name={inputName.userComment}
+            label={orderRecipient.commentary}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            variant={materialUiConstants.outlined}
+            value={userComment || ''}
+            multiline
+            rows={4}
+          />
+          {touched[inputName.userComment] && errors[inputName.userComment] && (
+            <div className={classes.inputError}>
+              {errors[inputName.userComment]}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

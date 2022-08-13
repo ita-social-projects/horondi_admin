@@ -7,7 +7,7 @@ import labels from '../../../configs/labels';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { generalPropTypes, inputName } from '../../../utils/order';
 
-const General = ({ data, handleChange }) => {
+const General = ({ data, handleChange, inputOptions }) => {
   const classes = useStyles();
   const { status, isPaid, paymentMethod } = data;
   const { generalLabels } = labels;
@@ -29,6 +29,8 @@ const General = ({ data, handleChange }) => {
     )
   );
 
+  const { handleBlur, touched, errors } = inputOptions;
+
   return (
     <div className={classes.general}>
       <div>
@@ -41,9 +43,13 @@ const General = ({ data, handleChange }) => {
           onChange={handleChange}
           variant={materialUiConstants.outlined}
           defaultValue={statusOptions[0].value}
+          onBlur={handleBlur}
         >
           {statusOptionElements}
         </Select>
+        {touched[inputName.status] && errors[inputName.status] && (
+          <div className={classes.inputError}>{errors[inputName.status]}</div>
+        )}
       </div>
       <div>
         <label htmlFor={inputName.paymentMethod}>{paymentMethodLabel}</label>
@@ -55,9 +61,16 @@ const General = ({ data, handleChange }) => {
           onChange={handleChange}
           variant={materialUiConstants.outlined}
           defaultValue={paymentOptions[0].value}
+          onBlur={handleBlur}
         >
           {paymentOptionsElements}
         </Select>
+        {touched[inputName.paymentMethod] &&
+          errors[inputName.paymentMethod] && (
+            <div className={classes.inputError}>
+              {errors[inputName.paymentMethod]}
+            </div>
+          )}
       </div>
       <div className={classes.isPaid}>
         <label htmlFor={inputName.paymentMethod}>{isPaidLabel}</label>

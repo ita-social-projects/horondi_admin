@@ -19,7 +19,7 @@ import AddProductForm from './add-product-form/add-product-form';
 import EditProductForm from './edit-product-form/edit-product-form';
 import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries';
 
-const Products = ({ data, setFieldValue }) => {
+const Products = ({ data, setFieldValue, inputOptions }) => {
   const classes = useStyles();
   const { items, itemsPriceWithDiscount, promoCodeId, itemsDiscount } = data;
   const { orderProductTitles } = tableHeadRowTitles;
@@ -56,7 +56,7 @@ const Products = ({ data, setFieldValue }) => {
         )
       );
     }
-  }, [promoCode]);
+  }, [promoCode, setFieldValue, items]);
 
   const deleteItemHendler = (indexItem) => {
     const removeItem = () => {
@@ -120,6 +120,7 @@ const Products = ({ data, setFieldValue }) => {
         itemsPriceWithDiscount={itemsPriceWithDiscount}
         itemsDiscount={itemsDiscount}
         promoCode={promoCode}
+        inputOptions={inputOptions}
       />
       {items.length ? (
         <TableContainerGenerator

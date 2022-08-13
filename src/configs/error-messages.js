@@ -38,9 +38,11 @@ export const commonErrorMessages = {
   MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
   MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   MAX_LENGTH_MESSAGE_300: 'Не більше 300 символів',
+  MAX_LENGTH_MESSAGE_500: 'Не більше 500 символів',
   ERROR_MESSAGE: 'Поле не може бути порожнім',
   UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
   EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  NAME_MESSAGE: 'Поле може містити тільки англійські та українські літери',
   ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
