@@ -30,11 +30,15 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={recipient[item] || ''}
+              data-testid={`input-recipient.${item}`}
             />
-            {recipientTouched(`recipient[${item}]`) &&
-              recipientError(`recipient[${item}]`) && (
-                <div className={classes.inputError}>
-                  {recipientError(`recipient[${item}]`)}
+            {recipientTouched(`recipient.${item}`) &&
+              recipientError(`recipient.${item}`) && (
+                <div
+                  className={classes.inputError}
+                  data-testid={`recipient.${item}`}
+                >
+                  {recipientError(`recipient.${item}`)}
                 </div>
               )}
           </React.Fragment>
@@ -48,11 +52,15 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
             onBlur={handleBlur}
             variant={materialUiConstants.outlined}
             value={userComment || ''}
+            data-testid={`input-${inputName.userComment}`}
             multiline
             rows={4}
           />
           {touched[inputName.userComment] && errors[inputName.userComment] && (
-            <div className={classes.inputError}>
+            <div
+              className={classes.inputError}
+              data-testid={inputName.userComment}
+            >
               {errors[inputName.userComment]}
             </div>
           )}

@@ -99,7 +99,10 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
           />
           {getTouched(inputName.novaPost.city) &&
             getError(inputName.novaPost.city) && (
-              <div className={styles.error}>
+              <div
+                className={styles.error}
+                data-testid={inputName.novaPost.city}
+              >
                 {getError(inputName.novaPost.city)}
               </div>
             )}
@@ -156,7 +159,10 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
           />
           {getTouched(inputName.novaPost.courierOffice) &&
             getError(inputName.novaPost.courierOffice) && (
-              <div className={styles.error}>
+              <div
+                className={styles.error}
+                data-testid={inputName.novaPost.courierOffice}
+              >
                 {getError(inputName.novaPost.courierOffice)}
               </div>
             )}

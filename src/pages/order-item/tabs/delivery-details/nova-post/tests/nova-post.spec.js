@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
-import UkrPost from '../ukrpost';
-import { props, inputOptions, errorInputOptions } from './ukrpost.variables';
+import NovaPost from '../nova-post';
+import { props, inputOptions, errorInputOptions } from './nova-post.variables';
 
 jest.mock('react-redux');
 
@@ -13,16 +13,14 @@ const dispatch = jest.fn();
 useDispatch.mockImplementation(() => dispatch);
 useSelector.mockImplementation(() => ({
   deliveryLoading: false,
-  ukrPoshtaCities: [],
-  ukrPoshtaRegions: [],
-  ukrPoshtaDistricts: [],
-  ukrPoshtaPostOffices: []
+  cities: [],
+  warehouses: []
 }));
 
-describe('tests for the UkrPost component', () => {
-  it('renders the UkrPost component correctly', () => {
+describe('tests for the NovaPost component', () => {
+  it('renders the NovaPost component correctly', () => {
     render(
-      <UkrPost
+      <NovaPost
         {...props}
         setFieldValue={setFieldValue}
         inputOptions={{ ...inputOptions, handleBlur }}
@@ -35,7 +33,7 @@ describe('tests for the UkrPost component', () => {
 
   it('should render errors for the fields, when validation fails for them', () => {
     render(
-      <UkrPost
+      <NovaPost
         {...props}
         setFieldValue={setFieldValue}
         inputOptions={{ ...errorInputOptions, handleBlur }}
