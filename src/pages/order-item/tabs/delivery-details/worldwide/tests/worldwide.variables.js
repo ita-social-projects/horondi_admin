@@ -7,3 +7,8 @@ export const props = {
     cityCode: ''
   }
 };
+
+export const inputOptions = {
+  touched: {},
+  errors: {}
+};

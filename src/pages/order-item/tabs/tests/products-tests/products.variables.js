@@ -83,3 +83,8 @@ export const getPromoCodeMock = [
     }
   }
 ];
+
+export const inputOptions = {
+  touched: {},
+  errors: {}
+};
