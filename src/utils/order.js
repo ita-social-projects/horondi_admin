@@ -227,6 +227,7 @@ export const inputName = {
     lastName: 'recipient.lastName',
     phoneNumber: 'recipient.phoneNumber'
   },
+  recipientBase: 'recipient',
   userId: 'user_id',
   noUser: 'Користувача не вибрано',
   isPaidInput: 'isPaid',

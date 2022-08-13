@@ -11,6 +11,7 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
   const { materialUiConstants } = config;
   const { recipient, userComment } = data;
   const { orderRecipient } = labels;
+  const { recipientBase } = inputName;
   const classes = useStyles();
 
   const { handleBlur, touched, errors } = inputOptions;
@@ -30,15 +31,15 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={recipient[item] || ''}
-              data-testid={`input-recipient.${item}`}
+              data-testid={`input-${recipientBase}.${item}`}
             />
-            {recipientTouched(`recipient.${item}`) &&
-              recipientError(`recipient.${item}`) && (
+            {recipientTouched(`${recipientBase}.${item}`) &&
+              recipientError(`${recipientBase}.${item}`) && (
                 <div
                   className={classes.inputError}
-                  data-testid={`recipient.${item}`}
+                  data-testid={`${recipientBase}.${item}`}
                 >
-                  {recipientError(`recipient.${item}`)}
+                  {recipientError(`${recipientBase}.${item}`)}
                 </div>
               )}
           </React.Fragment>
