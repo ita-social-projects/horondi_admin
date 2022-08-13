@@ -44,11 +44,14 @@ const General = ({ data, handleChange, inputOptions }) => {
           variant={materialUiConstants.outlined}
           defaultValue={statusOptions[0].value}
           onBlur={handleBlur}
+          data-testid={`input-${inputName.status}`}
         >
           {statusOptionElements}
         </Select>
         {touched[inputName.status] && errors[inputName.status] && (
-          <div className={classes.inputError}>{errors[inputName.status]}</div>
+          <div className={classes.inputError} data-testid={inputName.status}>
+            {errors[inputName.status]}
+          </div>
         )}
       </div>
       <div>
@@ -62,15 +65,18 @@ const General = ({ data, handleChange, inputOptions }) => {
           variant={materialUiConstants.outlined}
           defaultValue={paymentOptions[0].value}
           onBlur={handleBlur}
+          data-testid={`input-${inputName.paymentMethod}`}
         >
           {paymentOptionsElements}
         </Select>
-        {touched[inputName.paymentMethod] &&
-          errors[inputName.paymentMethod] && (
-            <div className={classes.inputError}>
-              {errors[inputName.paymentMethod]}
-            </div>
-          )}
+        {touched[inputName.paymentMethod] && errors[inputName.paymentMethod] && (
+          <div
+            className={classes.inputError}
+            data-testid={inputName.paymentMethod}
+          >
+            {errors[inputName.paymentMethod]}
+          </div>
+        )}
       </div>
       <div className={classes.isPaid}>
         <label htmlFor={inputName.paymentMethod}>{isPaidLabel}</label>

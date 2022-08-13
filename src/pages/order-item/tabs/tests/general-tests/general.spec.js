@@ -1,36 +1,37 @@
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
-import Recipient from '../../recipient';
-import { props, inputOptions, errorInputOptions } from './recipient.variables';
+import General from '../../general';
+import {
+  props,
+  inputOptions,
+  errorInputOptions,
+  inputFields
+} from './general.variables';
 
 const handleBlur = jest.fn();
 const handleChange = jest.fn();
 
-const getInputField = (testId) => {
-  const fieldElement = screen.getByTestId(testId);
-  return within(fieldElement).getByRole('textbox');
-};
-
-describe('tests for the Recipient component', () => {
-  it('renders the Recipient input fields correctly', () => {
+describe('tests for the General component', () => {
+  it('renders the General input fields correctly', () => {
     render(
-      <Recipient
+      <General
         {...props}
         handleChange={handleChange}
         inputOptions={{ ...inputOptions, handleBlur }}
       />
     );
 
-    const recipientFields = Object.entries(props.data.recipient);
-    recipientFields.forEach(([field, value]) => {
-      const inputField = getInputField(`input-recipient.${field}`);
-      expect(inputField).toHaveAttribute('value', value);
+    const generalFields = Object.entries(inputFields);
+    generalFields.forEach(([field, value]) => {
+      const fieldElement = screen.getByTestId(`input-${field}`);
+      const option = within(fieldElement).getByDisplayValue(value);
+      expect(option).not.toBe(null);
     });
   });
 
   it('should render errors for the fields, when validation fails for them', () => {
     render(
-      <Recipient
+      <General
         {...props}
         handleChange={handleChange}
         inputOptions={{ ...errorInputOptions, handleBlur }}
