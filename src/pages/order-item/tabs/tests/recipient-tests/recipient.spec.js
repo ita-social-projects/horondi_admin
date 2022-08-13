@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import Recipient from '../../recipient';
 import { props, inputOptions, errorInputOptions } from './recipient.variables';
+import { inputName } from '../../../../../utils/order';
 
 const handleBlur = jest.fn();
 const handleChange = jest.fn();
@@ -23,7 +24,9 @@ describe('tests for the Recipient component', () => {
 
     const recipientFields = Object.entries(props.data.recipient);
     recipientFields.forEach(([field, value]) => {
-      const inputField = getInputField(`input-recipient.${field}`);
+      const inputField = getInputField(
+        `input-${inputName.recipientBase}.${field}`
+      );
       expect(inputField).toHaveAttribute('value', value);
     });
   });
