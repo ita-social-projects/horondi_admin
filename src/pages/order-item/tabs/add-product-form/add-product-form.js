@@ -124,6 +124,7 @@ const AddProductForm = ({
   };
 
   const sizeItems = setSizeItems(sizes);
+  const isFieldError = (field) => Boolean(touched[field] && errors[field]);
 
   return (
     <div className={styles.section}>
@@ -146,6 +147,7 @@ const AddProductForm = ({
             <TextField
               {...params}
               label={productLabels.product}
+              error={isFieldError(inputName.items)}
               variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
@@ -159,7 +161,7 @@ const AddProductForm = ({
             />
           )}
         />
-        {touched[inputName.items] && errors[inputName.items] && (
+        {isFieldError(inputName.items) && (
           <div className={styles.inputError}>{errors[inputName.items]}</div>
         )}
         <div className={styles.quantity}>

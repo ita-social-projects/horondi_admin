@@ -30,6 +30,7 @@ const General = ({ data, handleChange, inputOptions }) => {
   );
 
   const { handleBlur, touched, errors } = inputOptions;
+  const isFieldError = (field) => Boolean(touched[field] && errors[field]);
 
   return (
     <div className={classes.general}>
@@ -45,10 +46,11 @@ const General = ({ data, handleChange, inputOptions }) => {
           defaultValue={statusOptions[0].value}
           onBlur={handleBlur}
           data-testid={`input-${inputName.status}`}
+          error={isFieldError(inputName.status)}
         >
           {statusOptionElements}
         </Select>
-        {touched[inputName.status] && errors[inputName.status] && (
+        {isFieldError(inputName.status) && (
           <div className={classes.inputError} data-testid={inputName.status}>
             {errors[inputName.status]}
           </div>
@@ -66,10 +68,11 @@ const General = ({ data, handleChange, inputOptions }) => {
           defaultValue={paymentOptions[0].value}
           onBlur={handleBlur}
           data-testid={`input-${inputName.paymentMethod}`}
+          error={isFieldError(inputName.paymentMethod)}
         >
           {paymentOptionsElements}
         </Select>
-        {touched[inputName.paymentMethod] && errors[inputName.paymentMethod] && (
+        {isFieldError(inputName.paymentMethod) && (
           <div
             className={classes.inputError}
             data-testid={inputName.paymentMethod}

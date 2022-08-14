@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import { get } from 'lodash';
 
 import { useStyles } from './courier.styles';
 import {
@@ -9,6 +8,10 @@ import {
 } from '../../../../../utils/order';
 import configs from '../../../../../configs/orders';
 import { config } from '../../../../../configs';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
 
 const Courier = ({ deliveryType, values, handleChange, inputOptions }) => {
   const { deliveryTypes, deliveryTitles } = configs;
@@ -16,8 +19,6 @@ const Courier = ({ deliveryType, values, handleChange, inputOptions }) => {
   const styles = useStyles();
 
   const { handleBlur, touched, errors } = inputOptions;
-  const getError = (field) => get(errors, field);
-  const getTouched = (field) => get(touched, field);
 
   return (
     <div>
@@ -44,9 +45,12 @@ const Courier = ({ deliveryType, values, handleChange, inputOptions }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 variant={materialUiConstants.outlined}
+                error={isFieldError(field.name, errors, touched)}
               />
-              {getTouched(field.name) && getError(field.name) && (
-                <div className={styles.error}>{getError(field.name)}</div>
+              {isFieldError(field.name, errors, touched) && (
+                <div className={styles.error}>
+                  {getError(field.name, errors)}
+                </div>
               )}
             </React.Fragment>
           ))}

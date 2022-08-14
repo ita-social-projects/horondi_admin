@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
-import { get } from 'lodash';
 
 import { config } from '../../../../../configs';
 import { useStyles } from './ukrpost.styles';
@@ -26,6 +25,10 @@ import {
   handleRegion,
   handleInputValue
 } from '../../../../../utils/handle-orders-page';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
 
 const UkrPost = ({ values, setFieldValue, inputOptions }) => {
   const { materialUiConstants } = config;
@@ -58,8 +61,6 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
   }, [dispatch]);
 
   const { handleBlur, touched, errors } = inputOptions;
-  const getError = (field) => get(errors, field);
-  const getTouched = (field) => get(touched, field);
 
   const [region, setRegion] = useState('');
   const [district, setDistrict] = useState('');
@@ -190,6 +191,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             <TextField
               {...params}
               label={deliveryLabels.city}
+              error={isFieldError(inputName.ukrPost.city, errors, touched)}
               variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
@@ -203,12 +205,11 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             />
           )}
         />
-        {getTouched(inputName.ukrPost.city) &&
-          getError(inputName.ukrPost.city) && (
-            <div className={styles.error} data-testid={inputName.ukrPost.city}>
-              {getError(inputName.ukrPost.city)}
-            </div>
-          )}
+        {isFieldError(inputName.ukrPost.city, errors, touched) && (
+          <div className={styles.error} data-testid={inputName.ukrPost.city}>
+            {getError(inputName.ukrPost.city, errors)}
+          </div>
+        )}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -243,6 +244,11 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
               {...params}
               label={deliveryLabels.department}
               variant={materialUiConstants.outlined}
+              error={isFieldError(
+                inputName.ukrPost.courierOffice,
+                errors,
+                touched
+              )}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -255,15 +261,14 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             />
           )}
         />
-        {getTouched(inputName.ukrPost.courierOffice) &&
-          getError(inputName.ukrPost.courierOffice) && (
-            <div
-              className={styles.error}
-              data-testid={inputName.ukrPost.courierOffice}
-            >
-              {getError(inputName.ukrPost.courierOffice)}
-            </div>
-          )}
+        {isFieldError(inputName.ukrPost.courierOffice, errors, touched) && (
+          <div
+            className={styles.error}
+            data-testid={inputName.ukrPost.courierOffice}
+          >
+            {getError(inputName.ukrPost.courierOffice, errors)}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
-import { filter, debounce, get } from 'lodash';
+import { filter, debounce } from 'lodash';
 
 import { config } from '../../../../../configs';
 import { useStyles } from './nova-post.styles';
@@ -13,6 +13,10 @@ import {
   getNovaPoshtaWarehouse
 } from '../../../../../redux/orders/orders.actions';
 import { inputName, POSTOMAT, postPropTypes } from '../../../../../utils/order';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
 
 const NovaPost = ({ setFieldValue, values, inputOptions }) => {
   const { materialUiConstants } = config;
@@ -27,8 +31,6 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
   }));
 
   const { handleBlur, touched, errors } = inputOptions;
-  const getError = (field) => get(errors, field);
-  const getTouched = (field) => get(touched, field);
 
   const [inputValue, setInputValue] = useState('');
   const [selectedCity, setSelectedCity] = useState(values.city);
@@ -85,6 +87,7 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
                 {...params}
                 label={deliveryLabels.city}
                 variant={materialUiConstants.outlined}
+                error={isFieldError(inputName.novaPost.city, errors, touched)}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -97,15 +100,11 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               />
             )}
           />
-          {getTouched(inputName.novaPost.city) &&
-            getError(inputName.novaPost.city) && (
-              <div
-                className={styles.error}
-                data-testid={inputName.novaPost.city}
-              >
-                {getError(inputName.novaPost.city)}
-              </div>
-            )}
+          {isFieldError(inputName.novaPost.city, errors, touched) && (
+            <div className={styles.error} data-testid={inputName.novaPost.city}>
+              {getError(inputName.novaPost.city, errors)}
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.novaPostData}>
@@ -145,6 +144,11 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
                 {...params}
                 label={deliveryLabels.department}
                 variant={materialUiConstants.outlined}
+                error={isFieldError(
+                  inputName.novaPost.courierOffice,
+                  errors,
+                  touched
+                )}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -157,15 +161,14 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               />
             )}
           />
-          {getTouched(inputName.novaPost.courierOffice) &&
-            getError(inputName.novaPost.courierOffice) && (
-              <div
-                className={styles.error}
-                data-testid={inputName.novaPost.courierOffice}
-              >
-                {getError(inputName.novaPost.courierOffice)}
-              </div>
-            )}
+          {isFieldError(inputName.novaPost.courierOffice, errors, touched) && (
+            <div
+              className={styles.error}
+              data-testid={inputName.novaPost.courierOffice}
+            >
+              {getError(inputName.novaPost.courierOffice, errors)}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 
-import { get } from 'lodash';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
 import { inputName, recipientPropTypes } from '../../../utils/order';
 import { config } from '../../../configs';
+import { isFieldError, getError } from '../../../utils/form-error-validation';
 
 const Recipient = ({ data, handleChange, inputOptions }) => {
   const { materialUiConstants } = config;
@@ -16,8 +16,6 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
 
   const { handleBlur, touched, errors } = inputOptions;
 
-  const recipientTouched = (item) => get(touched, item);
-  const recipientError = (item) => get(errors, item);
   return (
     <div className={classes.recipient}>
       {recipient &&
@@ -32,16 +30,16 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
               onBlur={handleBlur}
               value={recipient[item] || ''}
               data-testid={`input-${recipientBase}.${item}`}
+              error={isFieldError(`${recipientBase}.${item}`, errors, touched)}
             />
-            {recipientTouched(`${recipientBase}.${item}`) &&
-              recipientError(`${recipientBase}.${item}`) && (
-                <div
-                  className={classes.inputError}
-                  data-testid={`${recipientBase}.${item}`}
-                >
-                  {recipientError(`${recipientBase}.${item}`)}
-                </div>
-              )}
+            {isFieldError(`${recipientBase}.${item}`, errors, touched) && (
+              <div
+                className={classes.inputError}
+                data-testid={`${recipientBase}.${item}`}
+              >
+                {getError(`${recipientBase}.${item}`, errors)}
+              </div>
+            )}
           </React.Fragment>
         ))}
       {recipient && (
@@ -56,13 +54,14 @@ const Recipient = ({ data, handleChange, inputOptions }) => {
             data-testid={`input-${inputName.userComment}`}
             multiline
             rows={4}
+            error={isFieldError(inputName.userComment, errors, touched)}
           />
-          {touched[inputName.userComment] && errors[inputName.userComment] && (
+          {isFieldError(inputName.userComment, errors, touched) && (
             <div
               className={classes.inputError}
               data-testid={inputName.userComment}
             >
-              {errors[inputName.userComment]}
+              {getError(inputName.userComment, errors)}
             </div>
           )}
         </>
