@@ -97,3 +97,8 @@ export const mocksQuery = [
     }
   }
 ];
+
+export const inputOptions = {
+  touched: {},
+  errors: {}
+};

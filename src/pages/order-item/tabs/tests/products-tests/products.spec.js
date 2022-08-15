@@ -3,7 +3,12 @@ import { screen, render, fireEvent } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import Products from '../../products';
-import { getPromoCodeMock, mockData, mockSizes } from './products.variables';
+import {
+  getPromoCodeMock,
+  mockData,
+  mockSizes,
+  inputOptions
+} from './products.variables';
 
 jest.mock('react-redux');
 jest.mock('../../edit-product-form/edit-product-form', () => ({
@@ -24,6 +29,7 @@ jest.mock('../../edit-product-form/edit-product-form', () => ({
 }));
 
 const mockSetFieldValue = jest.fn();
+const handleBlur = jest.fn();
 const dispatch = jest.fn();
 const BagShopper = 'Сумка шопер';
 let wrapper;
@@ -40,7 +46,11 @@ describe('tests for Products component', () => {
   beforeEach(() => {
     wrapper = render(
       <MockedProvider mocks={getPromoCodeMock}>
-        <Products data={mockData} setFieldValue={mockSetFieldValue} />
+        <Products
+          data={mockData}
+          setFieldValue={mockSetFieldValue}
+          inputOptions={{ ...inputOptions, handleBlur }}
+        />
       </MockedProvider>
     );
   });

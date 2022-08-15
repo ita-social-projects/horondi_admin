@@ -30,7 +30,8 @@ const AddProductForm = ({
   setSizeItems,
   promoCode,
   itemsPriceWithDiscount,
-  itemsDiscount
+  itemsDiscount,
+  inputOptions
 }) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
@@ -46,6 +47,8 @@ const AddProductForm = ({
     })
   );
 
+  const { handleBlur, touched, errors } = inputOptions;
+
   const [productInput, setProductInput] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [size, setSize] = useState({ id: '', name: '', price: {} });
@@ -54,11 +57,11 @@ const AddProductForm = ({
 
   useEffect(() => {
     dispatch(getFiltredProducts({}));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     selectedProduct && dispatch(getProduct(selectedProduct._id));
-  }, [selectedProduct]);
+  }, [selectedProduct, dispatch]);
 
   useEffect(() => {
     selectedProduct &&
@@ -68,7 +71,7 @@ const AddProductForm = ({
         name: sizes[0].size.name,
         price: sizes[0].price
       });
-  }, [sizes]);
+  }, [sizes, selectedProduct]);
 
   const [getPromoCode, { error }] = useLazyQuery(getPromoCodeByCode, {
     onCompleted: (promocodeByCode) => {
@@ -121,6 +124,7 @@ const AddProductForm = ({
   };
 
   const sizeItems = setSizeItems(sizes);
+  const isFieldError = (field) => Boolean(touched[field] && errors[field]);
 
   return (
     <div className={styles.section}>
@@ -136,11 +140,14 @@ const AddProductForm = ({
           onChange={(_e, value) => {
             setSelectedProduct(value || null);
           }}
+          id={inputName.items}
+          onBlur={handleBlur}
           inputValue={productInput}
           renderInput={(params) => (
             <TextField
               {...params}
               label={productLabels.product}
+              error={isFieldError(inputName.items)}
               variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
@@ -154,6 +161,9 @@ const AddProductForm = ({
             />
           )}
         />
+        {isFieldError(inputName.items) && (
+          <div className={styles.inputError}>{errors[inputName.items]}</div>
+        )}
         <div className={styles.quantity}>
           {productLabels.quantity}
           <Button

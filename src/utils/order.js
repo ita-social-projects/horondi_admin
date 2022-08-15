@@ -221,6 +221,13 @@ export const inputName = {
     worldWideStreet: 'delivery.worldWide.worldWideStreet',
     cityCode: 'delivery.worldWide.cityCode'
   },
+  recipient: {
+    email: 'recipient.email',
+    firstName: 'recipient.firstName',
+    lastName: 'recipient.lastName',
+    phoneNumber: 'recipient.phoneNumber'
+  },
+  recipientBase: 'recipient',
   userId: 'user_id',
   noUser: 'Користувача не вибрано',
   isPaidInput: 'isPaid',
