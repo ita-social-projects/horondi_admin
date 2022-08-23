@@ -57,5 +57,8 @@ export const initialValues = {
     courier
   },
   userComment: '',
-  items: []
+  items: [],
+  itemsDiscount: [],
+  itemsPriceWithDiscount: [],
+  promoCodeId: ''
 };

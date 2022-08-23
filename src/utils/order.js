@@ -77,15 +77,15 @@ const itemPropType = PropTypes.shape({
 export const addProductFormPropTypes = {
   items: PropTypes.arrayOf(itemPropType),
   setFieldValue: PropTypes.func.isRequired,
-  promoCode: PropTypes.objectOf(PropTypes.object),
-  setPricesWithDiscount: PropTypes.func.isRequired
+  promoCode: PropTypes.objectOf(PropTypes.object)
 };
 
 export const editProductFormPropTypes = {
   ...addProductFormPropTypes,
   open: PropTypes.bool.isRequired,
   onCloseHandler: PropTypes.func.isRequired,
-  selectedItem: itemPropType
+  selectedItem: itemPropType,
+  setSizeItems: PropTypes.func
 };
 
 export const courierPropTypes = {
@@ -129,7 +129,7 @@ const items = (order) =>
 export const newOrder = (order) => ({
   status: order.status,
   recipient: order.recipient,
-  user_id: order.user_id,
+  user_id: order.user_id || null,
   delivery: address(order.delivery),
   items: items(order),
   paymentMethod: order.paymentMethod,
@@ -221,14 +221,25 @@ export const inputName = {
     worldWideStreet: 'delivery.worldWide.worldWideStreet',
     cityCode: 'delivery.worldWide.cityCode'
   },
+  recipient: {
+    email: 'recipient.email',
+    firstName: 'recipient.firstName',
+    lastName: 'recipient.lastName',
+    phoneNumber: 'recipient.phoneNumber'
+  },
+  recipientBase: 'recipient',
   userId: 'user_id',
   noUser: 'Користувача не вибрано',
   isPaidInput: 'isPaid',
-  itemsName: 'items',
+  items: 'items',
+  itemsPriceWithDiscount: 'itemsPriceWithDiscount',
+  itemsDiscount: 'itemsDiscount',
+  categories: 'categories',
   status: 'status',
   userComment: 'userComment',
   paymentMethod: 'paymentMethod',
-  sentBy: 'sentBy'
+  sentBy: 'sentBy',
+  promoCodeId: 'promoCodeId'
 };
 
 export const courierInputLabels = () => {
@@ -369,6 +380,7 @@ export const setFormValues = (selectedOrder) => {
         name: item.product.name,
         basePrice: item.product.basePrice
       },
+      model: item.model,
       quantity: item.quantity
     }))
   };
@@ -380,9 +392,11 @@ export const mergeProducts = (
   quantity,
   orderItems,
   category,
-  setPricesWithDiscount,
+  model,
   promoCode,
-  setDiscounts
+  setFieldValue,
+  itemsDiscount,
+  itemsPriceWithDiscount
 ) => {
   const index = orderItems.findIndex(
     (item) =>
@@ -392,15 +406,15 @@ export const mergeProducts = (
   if (index !== -1) {
     const newItem = { ...orderItems[index] };
     newItem.quantity += quantity;
-    setPricesWithDiscount((prev) => [
-      ...prev.slice(0, index),
+    setFieldValue(inputName.itemsPriceWithDiscount, [
+      ...itemsPriceWithDiscount.slice(0, index),
       calculateItemsPriceWithDiscount(
         promoCode,
         newItem.quantity,
         category,
         size.price
       ),
-      ...prev.slice(index + 1)
+      ...itemsPriceWithDiscount.slice(index + 1)
     ]);
     return [
       ...orderItems.slice(0, index),
@@ -408,12 +422,12 @@ export const mergeProducts = (
       ...orderItems.slice(index + 1)
     ];
   }
-  setPricesWithDiscount((prev) => [
-    ...prev,
+  setFieldValue(inputName.itemsPriceWithDiscount, [
+    ...itemsPriceWithDiscount,
     calculateItemsPriceWithDiscount(promoCode, quantity, category, size.price)
   ]);
-  setDiscounts((prev) => [
-    ...prev,
+  setFieldValue(inputName.itemsDiscount, [
+    ...itemsDiscount,
     calculateDiscountsForProducts(promoCode, category)
   ]);
   return [
@@ -427,6 +441,7 @@ export const mergeProducts = (
         name: selectedProduct.name,
         _id: selectedProduct._id
       },
+      model: { ...model, category },
       quantity
     }
   ];
@@ -470,7 +485,6 @@ export const calculateItemsPriceWithDiscount = (
     if (isAllowCategory) {
       return Math.round(price - (price / 100) * discount) * quantity;
     }
-    return price * quantity;
   }
   return price * quantity;
 };
@@ -484,7 +498,6 @@ export const calculateDiscountsForProducts = (promoCode, category) => {
     if (isAllowCategory) {
       return discount;
     }
-    return 0;
   }
   return 0;
 };

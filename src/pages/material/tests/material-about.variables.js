@@ -77,5 +77,14 @@ export const mockMaterialBlock = [
         getMaterialsBlockById: materialsBlock
       }
     }
+  },
+  {
+    request: {
+      query: GET_MATERIALS_BLOCK_BY_ID,
+      variables: {
+        id: 'error13e2f'
+      }
+    },
+    error: new Error('An error occurred')
   }
 ];

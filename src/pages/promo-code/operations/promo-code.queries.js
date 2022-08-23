@@ -51,3 +51,21 @@ export const getPromoCodeById = gql`
     }
   }
 `;
+
+export const getPromoCodeByCode = gql`
+  query ($code: String!) {
+    getPromoCodeByCode(code: $code) {
+      __typename
+      ... on PromoCode {
+        _id
+        code
+        discount
+        categories
+      }
+      ... on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;

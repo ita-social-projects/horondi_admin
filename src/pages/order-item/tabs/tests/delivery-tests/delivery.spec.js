@@ -1,9 +1,10 @@
 import React from 'react';
-import { screen, render, within, fireEvent } from '@testing-library/react';
+import { screen, render, within } from '@testing-library/react';
 import Delivery from '../../delivery';
-import { deliveryProps } from './delivery.variables';
+import { deliveryProps, inputOptions } from './delivery.variables';
 
 const setFieldValue = jest.fn();
+const handleBlur = jest.fn();
 
 describe('tests for delivery component', () => {
   it('should render delivery component with worldwide fields', () => {
@@ -11,6 +12,7 @@ describe('tests for delivery component', () => {
       <Delivery
         setFieldValue={setFieldValue}
         data={{ delivery: { ...deliveryProps, sentBy: 'WORLDWIDE' } }}
+        inputOptions={{ ...inputOptions, handleBlur }}
       />
     );
 
@@ -25,6 +27,7 @@ describe('tests for delivery component', () => {
       <Delivery
         setFieldValue={setFieldValue}
         data={{ delivery: { ...deliveryProps, sentBy: 'UKRPOSTCOURIER' } }}
+        inputOptions={{ ...inputOptions, handleBlur }}
       />
     );
 

@@ -22,8 +22,8 @@ const EditProductForm = ({
   selectedItem,
   setFieldValue,
   setSizeItems,
+  itemsPriceWithDiscount,
   items,
-  setPricesWithDiscount,
   promoCode
 }) => {
   const { materialUiConstants } = config;
@@ -77,15 +77,15 @@ const EditProductForm = ({
       newValue,
       ...items.slice(index + 1)
     ]);
-    setPricesWithDiscount((prev) => [
-      ...prev.slice(0, index),
+    setFieldValue(inputName.itemsPriceWithDiscount, [
+      ...itemsPriceWithDiscount.slice(0, index),
       calculateItemsPriceWithDiscount(
         promoCode,
         quantity,
         category,
         size.price
       ),
-      ...prev.slice(index + 1)
+      ...itemsPriceWithDiscount.slice(index + 1)
     ]);
     onCloseHandler();
   };

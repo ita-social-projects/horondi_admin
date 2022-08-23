@@ -156,6 +156,48 @@ export const orderItemsMock = [
   }
 ];
 
+export const orderWithExistedItemsMock = [
+  ...orderItemsMock,
+  {
+    options: {
+      size: {
+        _id: '60439516a7532c33dcb326d7',
+        name: 'S',
+        price: 171
+      }
+    },
+    product: {
+      basePrice: 50,
+      name: [
+        {
+          lang: 'ua',
+          value: 'Сірий гаманець'
+        },
+        {
+          lang: 'en',
+          value: 'Purse grey'
+        }
+      ],
+      _id: '60566452158e2fdb534984b6'
+    },
+    model: {
+      category: {
+        name: [
+          {
+            lang: 'ua',
+            value: 'Аксесуари'
+          },
+          {
+            lang: 'en',
+            value: 'Accessories'
+          }
+        ]
+      }
+    },
+    quantity: 3
+  }
+];
+
 export const productsMock = [
   {
     options: {
@@ -203,6 +245,36 @@ export const productsMock = [
       ],
       _id: '60566452158e2fdb534984b6'
     },
+    model: {
+      category: {
+        name: [
+          {
+            lang: 'ua',
+            value: 'Аксесуари'
+          },
+          {
+            lang: 'en',
+            value: 'Accessories'
+          }
+        ]
+      }
+    },
     quantity: 3
   }
 ];
+export const mockItemsDiscount = [0];
+export const mockItemsPriceWithDiscount = [123];
+export const modelMock = {
+  category: {
+    name: [
+      {
+        lang: 'ua',
+        value: 'Аксесуари'
+      },
+      {
+        lang: 'en',
+        value: 'Accessories'
+      }
+    ]
+  }
+};

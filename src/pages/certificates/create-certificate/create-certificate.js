@@ -103,7 +103,7 @@ const CreateCertificate = () => {
           newArr.push({
             name: 'HOR###',
             value: certificate.value,
-            dateStart: dateResetHours(date),
+            dateStart: date,
             dateEnd: expireDate
           });
         }
@@ -142,13 +142,6 @@ const CreateCertificate = () => {
     };
   }, [email]);
 
-  const dateResetHours = (dateArg) => {
-    const dateObj = dateArg ? new Date(dateArg) : new Date();
-    dateObj.setHours(0, 0, 0, 0);
-
-    return dateObj;
-  };
-
   const expireDate = date ? new Date(date) : new Date();
   expireDate.setFullYear(expireDate.getFullYear() + 1);
 
@@ -169,7 +162,7 @@ const CreateCertificate = () => {
   };
 
   if (date) {
-    const dateStart = { dateStart: dateResetHours(date) };
+    const dateStart = { dateStart: date };
     Object.assign(variables, dateStart);
   }
 

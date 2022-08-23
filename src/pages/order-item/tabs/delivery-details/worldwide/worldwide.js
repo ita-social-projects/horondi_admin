@@ -13,9 +13,15 @@ import { config } from '../../../../../configs';
 import configs from '../../../../../configs/orders';
 import { inputName, worldWidePropTypes } from '../../../../../utils/order';
 import WorldwideService from '../../../../../services/worldwide-delivery.service';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
 
-const Worldwide = ({ values, handleChange, setFieldValue }) => {
+const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
   const styles = useStyles();
+
+  const { handleBlur, touched, errors } = inputOptions;
 
   const { deliveryTitles, deliveryLabels } = configs;
   const { materialUiConstants, RESET } = config;
@@ -95,11 +101,14 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
             {deliveryLabels.messenger}
           </InputLabel>
           <Select
+            id={worldWide.messenger}
             className={styles.paymentSelect}
             label={deliveryLabels.messenger}
             value={values.messenger}
             name={worldWide.messenger}
             onChange={handleChange}
+            onBlur={handleBlur}
+            error={isFieldError(worldWide.messenger, errors, touched)}
           >
             {messengers.map((messenger) => (
               <MenuItem key={messenger} value={messenger}>
@@ -107,20 +116,40 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
               </MenuItem>
             ))}
           </Select>
+          {isFieldError(worldWide.messenger, errors, touched) && (
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.messenger}
+            >
+              {getError(worldWide.messenger, errors)}
+            </div>
+          )}
         </FormControl>
         <FormControl>
           <TextField
+            id={worldWide.messengerPhone}
             className={styles.formControl}
             label={deliveryLabels.messengerPhone}
             variant={materialUiConstants.outlined}
             value={values.messengerPhone}
             name={worldWide.messengerPhone}
             onChange={handleChange}
+            onBlur={handleBlur}
+            error={isFieldError(worldWide.messengerPhone, errors, touched)}
           />
+          {isFieldError(worldWide.messengerPhone, errors, touched) && (
+            <div
+              className={styles.inputError}
+              data-testid={worldWide.messengerPhone}
+            >
+              {getError(worldWide.messengerPhone, errors)}
+            </div>
+          )}
         </FormControl>
       </div>
       <div className={styles.addressWrapper}>
         <Autocomplete
+          id={worldWide.worldWideCountry}
           className={styles.addressInput}
           options={countryOptions}
           value={values.worldWideCountry}
@@ -130,15 +159,26 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
           onChange={(_, value) =>
             setFieldValue(worldWide.worldWideCountry, value || '')
           }
+          onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.country}
+              error={isFieldError(worldWide.worldWideCountry, errors, touched)}
               variant={materialUiConstants.outlined}
             />
           )}
         />
+        {isFieldError(worldWide.worldWideCountry, errors, touched) && (
+          <div
+            className={styles.inputError}
+            data-testid={worldWide.worldWideCountry}
+          >
+            {getError(worldWide.worldWideCountry, errors)}
+          </div>
+        )}
         <Autocomplete
+          id={worldWide.stateOrProvince}
           className={styles.addressInput}
           options={statesOptions}
           value={values.stateOrProvince}
@@ -149,6 +189,7 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
           onChange={(_, value) =>
             setFieldValue(worldWide.stateOrProvince, value || '')
           }
+          onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -158,6 +199,7 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
           )}
         />
         <Autocomplete
+          id={worldWide.worldWideCity}
           className={styles.addressInput}
           options={citiesOptions}
           inputValue={values.worldWideCity}
@@ -169,32 +211,61 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
           onChange={(_, value) =>
             setFieldValue(worldWide.worldWideCity, value || '')
           }
+          onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
               {...params}
+              error={isFieldError(worldWide.worldWideCity, errors, touched)}
               label={deliveryLabels.city}
               variant={materialUiConstants.outlined}
             />
           )}
         />
+        {isFieldError(worldWide.worldWideCity, errors, touched) && (
+          <div
+            className={styles.inputError}
+            data-testid={worldWide.worldWideCity}
+          >
+            {getError(worldWide.worldWideCity, errors)}
+          </div>
+        )}
         <TextField
+          id={worldWide.worldWideStreet}
           className={styles.addressInput}
           label={deliveryLabels.street}
           variant={materialUiConstants.outlined}
           value={values.worldWideStreet}
           name={worldWide.worldWideStreet}
           onChange={handleChange}
+          onBlur={handleBlur}
+          error={isFieldError(worldWide.worldWideStreet, errors, touched)}
           disabled={!values.worldWideCity}
         />
+        {isFieldError(worldWide.worldWideStreet, errors, touched) && (
+          <div
+            className={styles.inputError}
+            data-testid={worldWide.worldWideStreet}
+          >
+            {getError(worldWide.worldWideStreet, errors)}
+          </div>
+        )}
         <TextField
+          id={worldWide.cityCode}
           className={`${styles.addressInput} ${styles.addressInputCode}`}
           label={deliveryLabels.cityCode}
           variant={materialUiConstants.outlined}
           value={values.cityCode}
           name={worldWide.cityCode}
           onChange={handleChange}
+          onBlur={handleBlur}
+          error={isFieldError(worldWide.cityCode, errors, touched)}
           disabled={!values.worldWideStreet}
         />
+        {isFieldError(worldWide.cityCode, errors, touched) && (
+          <div className={styles.inputError} data-testid={worldWide.cityCode}>
+            {getError(worldWide.cityCode, errors)}
+          </div>
+        )}
       </div>
     </div>
   );
