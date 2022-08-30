@@ -165,11 +165,13 @@ const labels = {
         featuresLabels: [
           {
             label: 'Матеріал низу',
-            name: 'material'
+            name: 'material',
+            testId: 'materialLabel'
           },
           {
             label: 'Колір низу',
-            name: 'color'
+            name: 'color',
+            testId: 'colorLabel'
           }
         ],
         inputFields: {

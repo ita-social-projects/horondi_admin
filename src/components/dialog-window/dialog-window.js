@@ -32,8 +32,18 @@ const DialogWindow = ({
     dispatch(closeDialog());
   };
 
+  // const testClick = () => {
+  //   console.log('submit-click');
+  //   onClickHandler()
+  // }
+
   return (
-    <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
+    <Dialog
+      data-testid='dialog-window'
+      id='dialog-window'
+      onClose={handleClose}
+      open={isOpen}
+    >
       <DialogTitle className={styles.dialogTitle}>{dialogTitle}</DialogTitle>
       <DialogContent dividers>
         <div>{dialogContent}</div>
@@ -43,12 +53,15 @@ const DialogWindow = ({
           <>
             <StandardButton
               className={styles.yesButton}
-              data-cy='dialog-cancel'
+              data-testid='dialog-confirm'
               variant='outlined'
               title={YES_BUTTON}
               onClickHandler={onClickHandler}
             />
-            <DeleteButton data-cy='dialog-confirm' onClickHandler={handleClose}>
+            <DeleteButton
+              data-testid='dialog-cancel'
+              onClickHandler={handleClose}
+            >
               {NO_BUTTON}
             </DeleteButton>
           </>

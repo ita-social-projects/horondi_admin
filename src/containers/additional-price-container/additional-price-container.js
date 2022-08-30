@@ -66,7 +66,7 @@ const AdditionalPriceContainer = ({
         </FormControl>
       )}
       <TextField
-        data-cy='additionalPrice'
+        data-testid='additionalPrice'
         className={`
                   ${styles.textField}
                   ${styles.additionalPrice} 

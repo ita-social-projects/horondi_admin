@@ -152,7 +152,7 @@ const ConstructorFormContainer = ({
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton
-                  data-cy='save-btn'
+                  data-testid='save-btn'
                   type='submit'
                   title={SAVE_TITLE}
                   values={values}

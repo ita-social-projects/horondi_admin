@@ -57,10 +57,11 @@ const MaterialsWithColorContainer = ({
   return (
     <>
       <Grid container spacing={1} justify='flex-start'>
-        {materialLabels.map(({ label, name }, idx) => (
+        {materialLabels.map(({ label, name, testId }, idx) => (
           <FormControl className={styles.formControl} key={label} xs={12}>
             <InputLabel htmlFor={label}>{`${label}`}</InputLabel>
             <Select
+              data-testid={testId}
               name={name}
               error={touched[name] && !!errors[name]}
               value={values[name]}
