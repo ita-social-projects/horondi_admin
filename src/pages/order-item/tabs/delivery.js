@@ -10,7 +10,7 @@ import UkrPost from './delivery-details/ukrpost';
 import Worldwide from './delivery-details/worldwide';
 import config from '../../../configs/orders';
 
-const Delivery = ({ data, handleChange, setFieldValue }) => {
+const Delivery = ({ data, handleChange, setFieldValue, inputOptions }) => {
   const { deliveryTypes } = config;
   const classes = useStyles();
   const { deliveryLabels } = labels;
@@ -37,23 +37,30 @@ const Delivery = ({ data, handleChange, setFieldValue }) => {
           deliveryType={data.delivery.sentBy}
           values={data.delivery.courier}
           handleChange={handleChange}
+          inputOptions={inputOptions}
         />
       )}
       {data.delivery.sentBy === deliveryTypes.novaPost && (
         <NovaPost
           setFieldValue={setFieldValue}
           values={data.delivery.novaPost}
+          inputOptions={inputOptions}
         />
       )}
 
       {data.delivery.sentBy === deliveryTypes.ukrPost && (
-        <UkrPost setFieldValue={setFieldValue} values={data.delivery.ukrPost} />
+        <UkrPost
+          setFieldValue={setFieldValue}
+          values={data.delivery.ukrPost}
+          inputOptions={inputOptions}
+        />
       )}
       {data.delivery.sentBy === deliveryTypes.worldWide && (
         <Worldwide
           handleChange={handleChange}
           setFieldValue={setFieldValue}
           values={data.delivery.worldWide}
+          inputOptions={inputOptions}
         />
       )}
     </div>

@@ -5,3 +5,8 @@ export const deliveryProps = {
   worldWide: {},
   sentBy: ''
 };
+
+export const inputOptions = {
+  touched: {},
+  errors: {}
+};

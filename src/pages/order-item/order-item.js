@@ -47,18 +47,27 @@ const OrderItem = ({ id }) => {
     setTabValue(0);
   };
 
-  const { handleChange, values, setFieldValue, dirty, resetForm, isValid } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: handleFormSubmit
-    });
+  const {
+    handleChange,
+    handleBlur,
+    values,
+    setFieldValue,
+    dirty,
+    resetForm,
+    errors,
+    touched,
+    isValid
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleFormSubmit
+  });
 
   useEffect(() => {
     if (selectedOrder && id) {
       resetForm({ values: setFormValues(selectedOrder) });
     }
-  }, [selectedOrder, resetForm]);
+  }, [selectedOrder, resetForm, id]);
 
   const formikHandleChange =
     submitStatus.includes(selectedOrder && selectedOrder.status) || !id
@@ -71,6 +80,12 @@ const OrderItem = ({ id }) => {
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
+  };
+
+  const inputOptions = {
+    handleBlur,
+    touched,
+    errors
   };
 
   return (
@@ -106,7 +121,11 @@ const OrderItem = ({ id }) => {
           <Tab value={4} label={delivery} />
         </Tabs>
         <TabPanel value={tabValue} index={0}>
-          <General data={values} handleChange={formikHandleChange} />
+          <General
+            data={values}
+            handleChange={formikHandleChange}
+            inputOptions={inputOptions}
+          />
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <RegisteredUser
@@ -121,16 +140,22 @@ const OrderItem = ({ id }) => {
               userComment: values.userComment
             }}
             handleChange={formikHandleChange}
+            inputOptions={inputOptions}
           />
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
-          <Products data={values} setFieldValue={setFieldValue} />
+          <Products
+            data={values}
+            setFieldValue={setFieldValue}
+            inputOptions={inputOptions}
+          />
         </TabPanel>
         <TabPanel value={tabValue} index={4}>
           <Delivery
             data={{ delivery: values.delivery }}
             handleChange={formikHandleChange}
             setFieldValue={setFieldValue}
+            inputOptions={inputOptions}
           />
         </TabPanel>
       </Paper>

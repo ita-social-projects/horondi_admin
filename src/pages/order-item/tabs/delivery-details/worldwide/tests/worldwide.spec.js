@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, fireEvent } from '@testing-library/react';
 import Worldwide from '../worldwide';
-import { props } from './worldwide.variables';
+import { props, inputOptions, errorInputOptions } from './worldwide.variables';
 
 jest.mock('../../../../../../services/worldwide-delivery.service', () => ({
   getCountries: jest.fn().mockResolvedValue([]),
@@ -19,10 +19,17 @@ document.createRange = () => ({
 });
 
 const setFieldValue = jest.fn();
+const handleBlur = jest.fn();
 
 describe('tests for worldwide delivery component', () => {
   it('worldwide delivery component should be rendered correctly', () => {
-    render(<Worldwide {...props} setFieldValue={setFieldValue} />);
+    render(
+      <Worldwide
+        {...props}
+        setFieldValue={setFieldValue}
+        inputOptions={{ ...inputOptions, handleBlur }}
+      />
+    );
 
     const heading = screen.getByRole('heading', { level: 3 });
 
@@ -39,6 +46,7 @@ describe('tests for worldwide delivery component', () => {
         {...props}
         values={{ worldWideCountry: 'Ukraine' }}
         setFieldValue={setFieldValue}
+        inputOptions={{ ...inputOptions, handleBlur }}
       />
     );
 
@@ -47,5 +55,20 @@ describe('tests for worldwide delivery component', () => {
 
     fireEvent.change(citiesInput, { target: { value: 'city' } });
     expect(citiesInput).toHaveAttribute('value', 'city');
+  });
+
+  it('should render errors for the fields, when validation fails for them', () => {
+    render(
+      <Worldwide
+        {...props}
+        setFieldValue={setFieldValue}
+        inputOptions={{ ...errorInputOptions, handleBlur }}
+      />
+    );
+    const fields = Object.entries(errorInputOptions.errors);
+    fields.forEach(([field, value]) => {
+      const fieldElement = screen.getByTestId(field);
+      expect(fieldElement).toHaveTextContent(value);
+    });
   });
 });
