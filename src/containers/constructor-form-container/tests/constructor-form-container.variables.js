@@ -82,7 +82,7 @@ export const partItem = {
   available: true
 };
 
-export const addPartItemDispatch = {
+export const partItemPayload = {
   bottom: {
     name: [
       {

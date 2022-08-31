@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, wait } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import * as operations from '../../../redux/material/material.operations';
 import DialogWindow from '../../../components/dialog-window';
@@ -9,7 +9,7 @@ import {
   partItem,
   materialsByPurpose,
   partItemId,
-  addPartItemDispatch
+  partItemPayload
 } from './constructor-form-container.variables';
 import { config } from '../../../configs';
 
@@ -25,6 +25,8 @@ operations.getAllMaterialsByPurpose = jest
 
 const { Provider } = reactRedux;
 const store = configureStore();
+
+const dispatchAction = jest.fn();
 
 const { pathToBottoms } = config.routes;
 const { constructorItemsKeys } = config;
@@ -45,7 +47,7 @@ describe('Constructor-form-container editing test', () => {
           part={partItem}
           partItemKey={partItemKey}
           pathBack={pathToBottoms}
-          dispatchAction={jest.fn()}
+          dispatchAction={dispatchAction}
         />
         <DialogWindow />
       </Provider>
@@ -100,5 +102,30 @@ describe('Constructor-form-container editing test', () => {
     act(() => {
       fireEvent.click(dialogConfirmBtn);
     });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(dispatchAction).toHaveBeenCalledWith(partItemPayload);
+  });
+});
+
+describe('Constructor-form-container adding test', () => {
+  beforeEach(() => {
+    render(
+      <Provider store={store}>
+        <ConstructorFormContainer
+          partItemKey={partItemKey}
+          pathBack={pathToBottoms}
+          dispatchAction={dispatchAction}
+        />
+        <DialogWindow />
+      </Provider>
+    );
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('should render form without errors', () => {
+    expect(screen.getByTestId('materialLabel')).toBeInTheDocument();
   });
 });

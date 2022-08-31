@@ -32,11 +32,6 @@ const DialogWindow = ({
     dispatch(closeDialog());
   };
 
-  // const testClick = () => {
-  //   console.log('submit-click');
-  //   onClickHandler()
-  // }
-
   return (
     <Dialog
       data-testid='dialog-window'

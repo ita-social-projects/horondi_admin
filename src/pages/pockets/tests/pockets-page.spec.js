@@ -11,6 +11,13 @@ import { config } from '../../../configs';
 jest.mock('connected-react-router', () => ({ push: () => 0 }));
 jest.mock('react-redux');
 
+jest.mock('../../../utils/use-success-snackbar', () => {
+  const snackBarMock = {
+    openSuccessSnackbar: (handler) => handler()
+  };
+  return jest.fn(() => snackBarMock);
+});
+
 const { NO_POCKET_MESSAGE } = config.messages;
 
 describe('UseEffect tests', () => {
