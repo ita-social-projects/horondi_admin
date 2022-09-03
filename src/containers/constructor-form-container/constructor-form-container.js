@@ -30,6 +30,7 @@ const { languages, imagePrefix, imagePreviewId } = config;
 const { constructorItemLabels } = config.labels;
 
 const {
+  containerTestId,
   availableLabel,
   uploadLabel,
   additionalPriceContainer,
@@ -140,7 +141,7 @@ const ConstructorFormContainer = ({
   ));
 
   return (
-    <div>
+    <div data-testid={containerTestId}>
       {isLoading ? (
         <LoadingBar />
       ) : (

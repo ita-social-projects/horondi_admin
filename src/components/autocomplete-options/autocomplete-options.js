@@ -53,6 +53,7 @@ const AutoCompleteOptions = ({
     <>
       <Paper className={styles.inputPanel}>
         <Autocomplete
+          disablePortal
           id={labelIdAut}
           className={styles.textField}
           multiple
@@ -90,7 +91,6 @@ const AutoCompleteOptions = ({
   );
 };
 
-// TODO: check propTypes
 AutoCompleteOptions.propTypes = {
   autocompleteLabels: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.object])
@@ -103,22 +103,8 @@ AutoCompleteOptions.propTypes = {
       PropTypes.array
     ])
   ).isRequired,
-  errors: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-      PropTypes.number,
-      PropTypes.array
-    ])
-  ).isRequired,
-  touched: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-      PropTypes.number,
-      PropTypes.array
-    ])
-  ).isRequired,
+  errors: PropTypes.objectOf(PropTypes.string).isRequired,
+  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleBlur: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired
 };

@@ -142,6 +142,7 @@ const labels = {
     }
   },
   constructorItemLabels: {
+    containerTestId: 'constructor-form-container',
     availableLabel: 'Доступний',
     uploadLabel: 'Фото',
     additionalPriceContainer: {

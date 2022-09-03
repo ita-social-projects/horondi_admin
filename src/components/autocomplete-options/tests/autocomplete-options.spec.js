@@ -1,12 +1,13 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, act } from '@testing-library/react';
 import AutoCompleteOptions from '../autocomplete-options';
 import {
   autocompleteLabels,
   mockPositions,
   mockTouched,
-  mockValues
+  mockValues,
+  onChangeArg
 } from './autocomplete-options.variables';
 
 const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
@@ -32,8 +33,17 @@ describe('Autocomplete options test', () => {
     jest.clearAllMocks();
   });
 
-  test('Should render AutocompleteOptions', () => {
+  test('Should render AutocompleteOptions', async () => {
     const autocomplete = screen.getByRole('textbox');
-    expect(autocomplete).toBeInTheDocument();
+    act(() => {
+      fireEvent.mouseDown(autocomplete);
+    });
+
+    const option = screen.getByText('Ліворуч');
+    act(() => {
+      fireEvent.click(option);
+    });
+
+    expect(mockSetFieldValue).toHaveBeenCalledWith(...onChangeArg);
   });
 });
