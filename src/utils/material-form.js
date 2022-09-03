@@ -1,26 +1,3 @@
-export const onSubmitDispatchHandler = (
-  id,
-  dispatch,
-  updateAction,
-  addAction,
-  payload
-) => {
-  if (id) {
-    dispatch(
-      updateAction({
-        id,
-        material: { ...payload }
-      })
-    );
-    return;
-  }
-  dispatch(
-    addAction({
-      material: { ...payload }
-    })
-  );
-};
-
 export const descriptionAndNameHandler = (condition, styles) =>
   condition ? styles.errorTab : styles.tabs;
 

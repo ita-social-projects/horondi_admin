@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent, act, wait } from '@testing-library/react';
-import * as reactRedux from 'react-redux';
+import { render, screen, fireEvent, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import * as operations from '../../../redux/material/material.operations';
 import DialogWindow from '../../../components/dialog-window';
 import configureStore from '../../../store/store';
@@ -23,7 +23,6 @@ operations.getAllMaterialsByPurpose = jest
   .fn()
   .mockReturnValue(materialsByPurpose);
 
-const { Provider } = reactRedux;
 const store = configureStore();
 
 const dispatchAction = jest.fn();

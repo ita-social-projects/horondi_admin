@@ -60,7 +60,7 @@ const AutoCompleteOptions = ({
           filterSelectedOptions
           options={availablePositions}
           getOptionSelected={(option, value) => option._id === value._id}
-          defaultValue={positions}
+          value={positions}
           onChange={onTagsChange}
           onBlur={handleBlur}
           getOptionLabel={(option) => `${option.name[0].value}`}
@@ -90,6 +90,7 @@ const AutoCompleteOptions = ({
   );
 };
 
+// TODO: check propTypes
 AutoCompleteOptions.propTypes = {
   autocompleteLabels: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.object])
@@ -102,8 +103,22 @@ AutoCompleteOptions.propTypes = {
       PropTypes.array
     ])
   ).isRequired,
-  errors: PropTypes.objectOf(PropTypes.object).isRequired,
-  touched: PropTypes.objectOf(PropTypes.object).isRequired,
+  errors: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+      PropTypes.number,
+      PropTypes.array
+    ])
+  ).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+      PropTypes.number,
+      PropTypes.array
+    ])
+  ).isRequired,
   handleBlur: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired
 };
