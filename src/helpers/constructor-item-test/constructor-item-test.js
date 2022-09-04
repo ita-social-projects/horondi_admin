@@ -15,6 +15,7 @@ const mockStore = configureStore();
 const store = mockStore(initialState);
 
 export const constructorItemAddTest = (component) => {
+  // TODO: refactor test naming
   describe('Bottom-add test', () => {
     beforeEach(() => {
       render(<Provider store={store}>{component}</Provider>);
@@ -62,6 +63,12 @@ export const constructorItemEditTest = (component, entries) => {
     test('Should render LoadingBar', () => {
       const loadingBar = screen.getByRole('progressbar');
       expect(loadingBar).toBeInTheDocument();
+      mockUseSelector.mockReturnValueOnce({ bottom: null });
+    });
+
+    test('Should render empty container if item doesnt exis', () => {
+      const container = screen.queryByTestId('constructor-form-container');
+      expect(container).toBeNull();
     });
   });
 };
