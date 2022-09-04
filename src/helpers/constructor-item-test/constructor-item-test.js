@@ -5,18 +5,16 @@ import { MemoryRouter, Switch } from 'react-router';
 import configureStore from 'redux-mock-store';
 import { initialState } from './constructor-item-test.variables';
 
+const { Provider } = redux;
+
+const mockUseSelector = jest.spyOn(redux, 'useSelector');
+const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
+mockUseDispatch.mockImplementation(() => jest.fn());
+
 const mockStore = configureStore();
 const store = mockStore(initialState);
 
-const { Provider } = redux;
-const implementMockedRedux = () => {
-  const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
-  mockUseDispatch.mockImplementation(() => jest.fn());
-};
-
 export const constructorItemAddTest = (component) => {
-  implementMockedRedux();
-
   describe('Bottom-add test', () => {
     beforeEach(() => {
       render(<Provider store={store}>{component}</Provider>);
@@ -29,13 +27,17 @@ export const constructorItemAddTest = (component) => {
     test('Should render constructor-form', () => {
       const container = screen.getByTestId('constructor-form-container');
       expect(container).toBeInTheDocument();
+      mockUseSelector.mockReturnValueOnce({ loading: true });
+    });
+
+    test('Should render LoadingBar', () => {
+      const loadingBar = screen.getByRole('progressbar');
+      expect(loadingBar).toBeInTheDocument();
     });
   });
 };
 
 export const constructorItemEditTest = (component, entries) => {
-  implementMockedRedux();
-
   describe('Bottom-edit test', () => {
     beforeEach(() => {
       render(
@@ -52,9 +54,14 @@ export const constructorItemEditTest = (component, entries) => {
     });
 
     test('Should render constructor-form', () => {
-      screen.debug();
       const container = screen.getByTestId('constructor-form-container');
       expect(container).toBeInTheDocument();
+      mockUseSelector.mockReturnValueOnce({ loading: true });
+    });
+
+    test('Should render LoadingBar', () => {
+      const loadingBar = screen.getByRole('progressbar');
+      expect(loadingBar).toBeInTheDocument();
     });
   });
 };

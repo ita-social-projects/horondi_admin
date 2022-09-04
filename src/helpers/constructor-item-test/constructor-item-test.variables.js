@@ -58,6 +58,7 @@ export const initialState = {
     list: [],
     bottomLoading: false,
     bottom: {
+      optionType: 'BOTTOM',
       name: [
         {
           lang: 'ua',
@@ -68,21 +69,7 @@ export const initialState = {
           value: 'Black leather'
         }
       ],
-      optionType: 'BOTTOM',
       features: {
-        material: {
-          _id: '6043ac5d3e06ad3edcdb7b13',
-          name: [
-            {
-              lang: 'ua',
-              value: 'Шкіра'
-            },
-            {
-              lang: 'en',
-              value: 'Leather'
-            }
-          ]
-        },
         color: {
           _id: '6043a9cc3e06ad3edcdb7b0e',
           name: [
@@ -95,6 +82,19 @@ export const initialState = {
               value: 'Black'
             }
           ]
+        },
+        material: {
+          _id: '6043ac5d3e06ad3edcdb7b13',
+          name: [
+            {
+              lang: 'ua',
+              value: 'Шкіра'
+            },
+            {
+              lang: 'en',
+              value: 'Leather'
+            }
+          ]
         }
       },
       images: {
@@ -103,9 +103,9 @@ export const initialState = {
         small: 'small_eewk311kwdxcgv1_низ-шкіра-чорна.png',
         large: 'large_eewk311kwdxcgv1_низ-шкіра-чорна.png'
       },
-      absolutePrice: null,
       relativePrice: 25,
-      available: false
+      available: false,
+      absolutePrice: null
     }
   },
   Currencies: {
