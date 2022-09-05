@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { constructorItemEditTest } from '../../../helpers/constructor-item-test/constructor-item-test';
-import BottomEdit from '../bottom-edit/bottom-edit';
+import PositionEdit from '../position-edit/position-edit';
 import { config } from '../../../configs';
 
 const { routes } = config;
 
-const itemName = 'Bottom';
-const initialEntries = '/bottoms/619e937b5bbfb0002540b7b9';
+const itemName = 'Position';
+const initialEntries = '/positions/6100724bcbe2440024d73045';
 
 constructorItemEditTest(
   itemName,
-  <Route path={routes.pathToBottomsEdit} exact component={BottomEdit} />,
+  <Route path={routes.pathToPositionEdit} exact component={PositionEdit} />,
   initialEntries
 );

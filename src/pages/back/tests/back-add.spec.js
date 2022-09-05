@@ -1,7 +1,7 @@
 import React from 'react';
 import { constructorItemAddTest } from '../../../helpers/constructor-item-test/constructor-item-test';
-import BottomAdd from '../bottom-add/bottom-add';
+import BackAdd from '../back-add/back-add';
 
-const itemName = 'Bottom';
+const itemName = 'Back';
 
-constructorItemAddTest(itemName, <BottomAdd />);
+constructorItemAddTest(itemName, <BackAdd />);
