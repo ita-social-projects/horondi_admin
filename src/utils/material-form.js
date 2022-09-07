@@ -1,26 +1,3 @@
-export const onSubmitDispatchHandler = (
-  id,
-  dispatch,
-  updateAction,
-  addAction,
-  payload
-) => {
-  if (id) {
-    dispatch(
-      updateAction({
-        id,
-        material: { ...payload }
-      })
-    );
-    return;
-  }
-  dispatch(
-    addAction({
-      material: { ...payload }
-    })
-  );
-};
-
 export const descriptionAndNameHandler = (condition, styles) =>
   condition ? styles.errorTab : styles.tabs;
 
@@ -32,7 +9,7 @@ const getMaterialFormInitValues = (material, purposeEnum) => ({
   enName: material.name[1].value || '',
   uaDescription: material.description[0].value || '',
   enDescription: material.description[1].value || '',
-  purpose: material.purpose || purposeEnum.MAIN,
+  purpose: material.purpose || purposeEnum.basic.en,
   available: material.available || false,
   colors: (material.colors && material.colors.map((color) => color._id)) || [],
   additionalPriceType: material.relativePrice ? 'RELATIVE' : 'ABSOLUTE',

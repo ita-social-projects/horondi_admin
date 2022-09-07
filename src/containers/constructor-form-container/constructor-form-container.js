@@ -1,52 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Paper, Grid } from '@material-ui/core';
 
-import { BackButton, SaveButton } from '../../components/buttons';
 import { useStyles } from '../../components/forms/common.styles';
+import { BackButton, SaveButton } from '../../components/buttons';
 import LoadingBar from '../../components/loading-bar';
 import CheckboxOptions from '../../components/checkbox-options';
 import LanguagePanel from '../../components/forms/language-panel';
 import ImageUploadPreviewContainer from '../image-upload-container/image-upload-previewContainer';
-import { config } from '../../configs';
-import MaterialsContainer from '../materials-container';
+import ConstructorFeaturesContainer from '../constructor-features-container';
 import { useUnsavedChangesHandler } from '../../hooks/form-dialog/use-unsaved-changes-handler';
 import AdditionalPriceContainer from '../additional-price-container';
+import { config } from '../../configs';
 
-import { materialSelector } from '../../redux/selectors/material.selectors';
-import { getMaterialsByPurpose } from '../../redux/material/material.actions';
-
-import useConstructorFormHandlers from '../../utils/use-constructor-form-handlers';
 import {
   getDefaultPartItem,
   getCheckboxOptions,
   getPartItemInitialValues,
-  partItemColorsHandler,
-  getValidationSchema
-} from '../../utils/constructor-form-utils';
-import {
-  imagePreviewId,
-  defaultProps,
-  constructorObjectPropsTypes,
-  defaultPropTypes,
-  valuesPropTypes,
-  imagePropTypes
-} from './constructor-form.variables';
+  getNewPartItem
+} from '../../utils/constructor-form-container';
+
+import { getValidationSchema } from '../../validations/constructor-form/constructor-form-validation';
 
 const { IMG_URL } = config;
 const { SAVE_TITLE } = config.buttonTitles;
-const { languages, imagePrefix } = config;
+const { languages, imagePrefix, imagePreviewId } = config;
 const { constructorItemLabels } = config.labels;
 
 const {
+  containerTestId,
   availableLabel,
   uploadLabel,
   additionalPriceContainer,
   constructorItems
 } = constructorItemLabels;
-
-const { inputFields } = constructorItems.bottom;
 
 const ConstructorFormContainer = ({
   part,
@@ -54,35 +43,30 @@ const ConstructorFormContainer = ({
   edit,
   partItemKey,
   pathBack,
-  dispatchAction
+  dispatchAction,
+  withoutImg,
+  withoutPrice
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const partItem = part ?? getDefaultPartItem(partItemKey);
   const { optionType } = partItem;
   const { featuresLabels } = constructorItems[partItemKey];
-  const { materialsByPurpose, loading } = useSelector(materialSelector);
-  const materials = materialsByPurpose?.[partItemKey] || [];
+  const { inputFields, featuresVariant } = constructorItems[partItemKey];
 
-  const {
-    createPartItem,
-    setPartItemUpload,
-    partItemUpload,
-    setPartItemImage,
-    partItemImage,
-    colors,
-    setColors
-  } = useConstructorFormHandlers();
+  const [isLoading, setIsLoading] = useState(false);
+  const [partItemImage, setPartItemImage] = useState('');
+  const [partItemUpload, setPartItemUpload] = useState('');
 
   useEffect(() => {
-    dispatch(getMaterialsByPurpose([optionType]));
-  }, []);
-
-  useEffect(() => {
-    if (partItem?.images.thumbnail) {
-      setPartItemImage(`${imagePrefix}${partItem.images.thumbnail}`);
+    let partImg;
+    if (!withoutImg) {
+      partImg = partItem?.images.thumbnail;
     }
-  }, []);
+    if (partImg) {
+      setPartItemImage(`${imagePrefix}${partImg}`);
+    }
+  }, [withoutImg, partItem]);
 
   const {
     values,
@@ -97,10 +81,9 @@ const ConstructorFormContainer = ({
   } = useFormik({
     validationSchema: getValidationSchema(optionType),
     initialValues: getPartItemInitialValues(edit, IMG_URL, partItem),
-
     onSubmit: () => {
       const editAndUpload = Boolean(edit && partItemUpload instanceof File);
-      const newPartItem = createPartItem(values);
+      const newPartItem = getNewPartItem(values);
       const actionPayload = {};
       actionPayload[partItemKey] = newPartItem;
 
@@ -142,10 +125,6 @@ const ConstructorFormContainer = ({
     }
   };
 
-  useEffect(() => {
-    partItemColorsHandler(values, setColors, materials);
-  }, [values.material]);
-
   const inputs = [{ label: inputFields, name: 'name' }];
 
   const inputOptions = {
@@ -162,8 +141,8 @@ const ConstructorFormContainer = ({
   ));
 
   return (
-    <div>
-      {loading ? (
+    <div data-testid={containerTestId}>
+      {isLoading ? (
         <LoadingBar />
       ) : (
         <form onSubmit={(e) => eventPreventHandler(e)}>
@@ -174,7 +153,7 @@ const ConstructorFormContainer = ({
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton
-                  data-cy='save-btn'
+                  data-testid='save-btn'
                   type='submit'
                   title={SAVE_TITLE}
                   values={values}
@@ -187,68 +166,78 @@ const ConstructorFormContainer = ({
             </Grid>
           </div>
           <CheckboxOptions options={checkboxOptions} />
-          <Grid item xs={12}>
-            <Paper className={styles.itemUpdate}>
-              <div className={styles.imageUploadBlock}>
-                <div>
-                  <span className={styles.imageUpload}>{uploadLabel}</span>
-                  <div className={styles.imageUploadAvatar}>
-                    <ImageUploadPreviewContainer
-                      handler={handleImageLoad}
-                      src={partItemImage}
-                      id={imagePreviewId}
-                    />
-                    {touched.bottomImage && errors.bottomImage && (
-                      <div className={styles.inputError}>
-                        {errors.bottomImage}
-                      </div>
-                    )}
+          {!withoutImg && (
+            <Grid item xs={12}>
+              <Paper className={styles.itemUpdate}>
+                <div className={styles.imageUploadBlock}>
+                  <div>
+                    <span className={styles.imageUpload}>{uploadLabel}</span>
+                    <div className={styles.imageUploadAvatar}>
+                      <ImageUploadPreviewContainer
+                        handler={handleImageLoad}
+                        src={partItemImage}
+                        id={imagePreviewId}
+                      />
+                      {touched.bottomImage && errors.bottomImage && (
+                        <div className={styles.inputError}>
+                          {errors.bottomImage}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Paper>
-          </Grid>
-          <MaterialsContainer
-            material={materials}
-            color={colors}
+              </Paper>
+            </Grid>
+          )}
+          <ConstructorFeaturesContainer
+            setIsLoading={setIsLoading}
+            materialsPurpose={optionType}
             values={values}
             errors={errors}
             touched={touched}
             handleChange={handleChange}
             handleBlur={handleBlur}
             setFieldValue={setFieldValue}
-            materialLabels={featuresLabels}
+            featuresLabels={featuresLabels}
+            variant={featuresVariant}
           />
 
           {languagesPanel}
 
-          <AdditionalPriceContainer
-            values={values}
-            labels={additionalPriceContainer}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            radio
-            errors={errors}
-            touched={touched}
-          />
+          {!withoutPrice && (
+            <AdditionalPriceContainer
+              values={values}
+              labels={additionalPriceContainer}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              radio
+              errors={errors}
+              touched={touched}
+            />
+          )}
         </form>
       )}
     </div>
   );
 };
-// TODO: Check proptypes
-valuesPropTypes.values.bottomImage = imagePropTypes;
-valuesPropTypes.errors.bottomImage = imagePropTypes;
-valuesPropTypes.touched.bottomImage = imagePropTypes;
 
 ConstructorFormContainer.propTypes = {
-  ...defaultPropTypes,
-  part: constructorObjectPropsTypes.element,
-  ...valuesPropTypes
+  part: PropTypes.shape({}),
+  id: PropTypes.string,
+  edit: PropTypes.bool,
+  partItemKey: PropTypes.string.isRequired,
+  pathBack: PropTypes.string.isRequired,
+  dispatchAction: PropTypes.func.isRequired,
+  withoutImg: PropTypes.bool,
+  withoutPrice: PropTypes.bool
 };
 
 ConstructorFormContainer.defaultProps = {
-  ...defaultProps
+  part: null,
+  id: '',
+  edit: false,
+  withoutImg: null,
+  withoutPrice: null
 };
 
 export default ConstructorFormContainer;

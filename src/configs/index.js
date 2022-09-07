@@ -225,6 +225,7 @@ export const config = {
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  imagePreviewId: 'imagePreviewContainerId',
   initialLanguageValues: [
     {
       lang: 'ua',
@@ -265,7 +266,8 @@ export const config = {
     strap: 'strap',
     closure: 'closure',
     pocket: 'pocket',
-    pattern: 'pattern'
+    pattern: 'pattern',
+    position: 'position'
   },
   UAH: 'грн',
   maxItemsPerPage: 10,

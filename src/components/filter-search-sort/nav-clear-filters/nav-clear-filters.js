@@ -24,9 +24,7 @@ const NavClearFilters = ({ clearOptions: { clearAllFilters } }) => {
 };
 
 NavClearFilters.propTypes = {
-  clearOptions: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  ),
+  clearOptions: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   clearAllFilters: PropTypes.func
 };
 NavClearFilters.defaultProps = {

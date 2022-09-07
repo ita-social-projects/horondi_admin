@@ -11,7 +11,6 @@ import { config } from '../../../configs';
 
 const BottomEdit = ({ match }) => {
   const { id } = match.params;
-
   const common = useCommonStyles();
   const dispatch = useDispatch();
   const { bottom, loading } = useSelector(bottomSelector);
@@ -30,7 +29,7 @@ const BottomEdit = ({ match }) => {
 
   return (
     <div className={common.detailsContainer}>
-      {bottom !== null ? (
+      {bottom ? (
         <ConstructorFormContainer
           id={id}
           edit

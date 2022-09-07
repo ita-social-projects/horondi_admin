@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-
-import { useStyles } from './straps-edit.styles';
-import LoadingBar from '../../../components/loading-bar';
-import StrapsForm from '../../../components/forms/straps-form/straps-form';
-import { getStrap } from '../../../redux/straps/straps.actions';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
+import { getStrap, updateStrap } from '../../../redux/straps/straps.actions';
+import { useCommonStyles } from '../../common.styles';
 import { strapsSelector } from '../../../redux/selectors/straps.selectors';
+import LoadingBar from '../../../components/loading-bar';
+import { config } from '../../../configs';
 
-const StrapsEdit = ({ match }) => {
-  const dispatch = useDispatch();
-  const styles = useStyles();
-  const { loading, strap } = useSelector(strapsSelector);
-
+const StrapEdit = ({ match }) => {
   const { id } = match.params;
+
+  const common = useCommonStyles();
+  const dispatch = useDispatch();
+  const { strap, loading } = useSelector(strapsSelector);
+
+  const { pathToStraps } = config.routes;
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.strap;
 
   useEffect(() => {
     dispatch(getStrap(id));
@@ -24,20 +29,27 @@ const StrapsEdit = ({ match }) => {
   }
 
   return (
-    <div className={styles.container}>
-      {strap !== null ? <StrapsForm id={id} edit strap={strap} /> : null}
+    <div className={common.detailsContainer}>
+      {strap ? (
+        <ConstructorFormContainer
+          id={id}
+          edit
+          part={strap}
+          partItemKey={partItemKey}
+          pathBack={pathToStraps}
+          dispatchAction={updateStrap}
+        />
+      ) : null}
     </div>
   );
 };
 
-StrapsEdit.propTypes = {
-  id: PropTypes.string,
-  match: PropTypes.objectOf(PropTypes.object)
+StrapEdit.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
-StrapsEdit.defaultProps = {
-  id: '',
-  match: {}
-};
-
-export default StrapsEdit;
+export default withRouter(StrapEdit);

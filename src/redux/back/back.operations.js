@@ -83,6 +83,7 @@ export const getBackById = async (id) => {
           available
           absolutePrice
           relativePrice
+          optionType
           images {
             thumbnail
           }

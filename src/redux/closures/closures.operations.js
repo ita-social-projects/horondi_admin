@@ -32,10 +32,10 @@ export const getAllClosures = async (limit, skip, filter) => {
 
 export const createClosures = async (payload) => {
   const query = `
-          mutation($closure: ClosureInput!, $upload: Upload!) {
-              addClosure(closure: $closure, images: $upload) {
+          mutation($closure: ClosureInput!, $image: Upload!) {
+              addClosure(closure: $closure, images: $image) {
                   ... on Closure {
-                       _id
+                      _id
                   }
                   ... on Error {
                       message

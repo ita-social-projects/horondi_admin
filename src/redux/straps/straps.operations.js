@@ -11,6 +11,13 @@ export const getAllStraps = async (limit, skip, filter) => {
             value
           }
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -51,6 +58,13 @@ export const createStrap = async (payload) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -114,6 +128,13 @@ export const getStrapById = async (id) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -157,8 +178,19 @@ export const updateStrap = async (id, strap, image) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
+              name {
+                lang
+                value
+              }
             }
           }
           images {

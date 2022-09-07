@@ -19,7 +19,6 @@ import useBasicFilters from '../../hooks/filters/use-basic-filters';
 import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
-const labels = config.labels.basicsPageLabel;
 const { pathToAddBasic } = config.routes;
 const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.basicsAvailableVariants;
 const { CREATE_BASIC_TITLE } = config.buttonTitles;
@@ -82,7 +81,6 @@ const BasicsPage = () => {
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
-          data-cy={labels.BasicsHeader}
         >
           {config.titles.basicsTitles.mainPageTitle}
         </Typography>

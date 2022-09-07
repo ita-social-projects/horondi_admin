@@ -114,7 +114,7 @@ export const getAllMaterialsByPurpose = async (purposes) => {
               }
             }
         }
-        closure {
+        strap {
           _id
           name {
             lang

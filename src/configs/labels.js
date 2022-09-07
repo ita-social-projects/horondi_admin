@@ -141,13 +141,12 @@ const labels = {
       relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
   },
-  // TODO: Constrtuctor start
-
   constructorItemLabels: {
+    containerTestId: 'constructor-form-container',
     availableLabel: 'Доступний',
     uploadLabel: 'Фото',
     additionalPriceContainer: {
-      enterPrice: 'Додаткова ціна (USDT):',
+      enterPrice: 'Додаткова ціна:',
       additionalPrice: mapToLanguages(
         'Додаткова ціна (USD)',
         'Additional price (USD)'
@@ -163,214 +162,106 @@ const labels = {
     },
     constructorItems: {
       bottom: {
+        featuresVariant: 'materialsWithColor',
         featuresLabels: [
           {
             label: 'Матеріал низу',
             name: 'material',
-            required: false,
-            validation: 'string'
+            testId: 'materialLabel'
           },
           {
             label: 'Колір низу',
             name: 'color',
-            required: false,
-            validation: 'string'
+            testId: 'colorLabel'
           }
         ],
         inputFields: {
           ua: 'Назва низу',
           en: 'Bottom name'
         }
-      }
-    }
-  },
-  bottom: {
-    image: 'Фото низу',
-    material: 'Матеріал',
-    available: 'Доступний',
-    avatarText: 'Фото',
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну',
-    form: {
-      name: mapToLanguages("Ім'я", 'Name')
-    },
-    bottomName: {
-      ua: 'Назва низу',
-      en: 'Bottom name'
-    },
-    materialLabels: [
-      {
-        label: 'Матеріал для низу',
-        name: 'material',
-        required: false,
-        validation: 'string'
       },
-      {
-        label: 'Колір низу',
-        name: 'color',
-        required: false,
-        validation: 'string'
-      }
-    ]
-  },
-  basics: {
-    image: 'Фото основи',
-    material: 'Матеріал',
-    available: 'Доступна',
-    customizable: 'для конструктора',
-    avatarText: 'Фото',
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну',
-    form: {
-      name: mapToLanguages("Ім'я", 'Name')
-    },
-    basicName: {
-      ua: 'Назва основи',
-      en: 'Basic name'
-    },
-    materialLabels: [
-      {
-        label: 'Матеріал для основи ',
-        name: 'material',
-        required: false,
-        validation: 'string'
+      basic: {
+        featuresVariant: 'materialsWithColor',
+        featuresLabels: [
+          {
+            label: 'Матеріал основи',
+            name: 'material'
+          },
+          {
+            label: 'Колір основи',
+            name: 'color'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва основи',
+          en: 'Basics name'
+        }
       },
-      {
-        label: 'Колір основи',
-        name: 'color',
-        required: false,
-        validation: 'string'
-      }
-    ]
-  },
-  back: {
-    image: 'Фото спинки',
-    material: 'Матеріал',
-    available: 'Доступний',
-    customizable: 'для конструктора',
-    avatarText: 'Фото',
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну (USD)',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    },
-    additionalPrice: 'Введіть додаткову ціну',
-    form: {
-      name: mapToLanguages("Ім'я", 'Name')
-    },
-    backName: {
-      ua: 'Назва спинки',
-      en: 'Back name'
-    },
-    materialLabels: [
-      {
-        label: 'Матеріал для спинки ',
-        name: 'material',
-        required: false,
-        validation: 'string'
+      back: {
+        featuresVariant: 'materialsWithColor',
+        featuresLabels: [
+          {
+            label: 'Матеріал спинки',
+            name: 'material'
+          },
+          {
+            label: 'Колір спинки',
+            name: 'color'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва спинки',
+          en: 'Backs name'
+        }
       },
-      {
-        label: 'Колір спинки',
-        name: 'color',
-        required: false,
-        validation: 'string'
+      strap: {
+        featuresVariant: 'materialsWithColor',
+        featuresLabels: [
+          {
+            label: 'Матеріал ремінця',
+            name: 'material'
+          },
+          {
+            label: 'Колір ремінця',
+            name: 'color'
+          }
+        ],
+        inputFields: {
+          ua: 'Назва ремінця',
+          en: 'Straps name'
+        }
+      },
+      pocket: {
+        featuresVariant: 'autocompleteOptions',
+        inputFields: {
+          ua: 'Назва кишені',
+          en: 'Pocket name'
+        },
+        featuresLabels: {
+          labelIdAut: 'labelIdAut',
+          margin: 'normal',
+          variant: 'outlined',
+          codeError: 'code-error',
+          choosePositions: {
+            title: 'Список позицій',
+            inputTitle: 'Оберіть позиції'
+          }
+        }
+      },
+      closure: {
+        inputFields: {
+          ua: 'Назва защіпки',
+          en: 'Closure name'
+        }
+      },
+      position: {
+        inputFields: {
+          ua: 'Позиція',
+          en: 'Position'
+        }
       }
-    ]
-  },
-  strapsPageLabel: {
-    strapsHeader: 'straps-header',
-    strapsTable: 'sideStrapsTable',
-    strapsName: {
-      ua: 'Назва ремінця',
-      en: 'Strap name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    },
-    available: 'Доступний',
-    avatarText: 'Фото',
-    chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
-  },
-  pocketsPageLabel: {
-    pocketsHeader: 'pockets-header',
-    pocketsTable: 'sidePocketsTable',
-    pocketsName: {
-      ua: 'Назва кишені',
-      en: 'Pocket name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Доступний',
-    avatarText: 'Фото',
-    labelsRestriction: 'restriction',
-    labelIdAut: 'labelIdAut',
-    normal: 'normal',
-    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
   },
-  closuresPageLabel: {
-    closuresHeader: 'closures-header',
-    closuresTable: 'sideClosuresTable',
-    closuresName: {
-      ua: 'Назва замочка',
-      en: 'Closure name'
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    available: 'Доступний',
-    avatarText: 'Фото',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    }
-  },
-  positionPageLabel: {
-    positionHeader: 'position-header',
-    positionTable: 'positionTable',
-    available: 'Доступно',
-    positionName: {
-      ua: 'Позиція',
-      en: 'Position'
-    }
-  },
-  basicsPageLabel: {
-    basicsHeader: 'basics-header',
-    basicsTable: 'sideBasicsTable',
-    basicsName: {
-      ua: 'Назва основи',
-      en: 'Basics name'
-    },
-    available: 'Доступний',
-    avatarText: 'Фото',
-    additionalPriceType: {
-      absolutePrice: mapToLanguages(
-        'Абсолютна ціна (USD)',
-        'Absolute price (USD)'
-      ),
-      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
-    },
-    enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну'
-  },
-  // TODO: Constructor end
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),

@@ -109,7 +109,7 @@ LanguagePanel.propTypes = {
         PropTypes.object
       ])
     ),
-    touched: PropTypes.objectOf(PropTypes.string),
+    touched: PropTypes.objectOf(PropTypes.bool),
     errors: PropTypes.objectOf(PropTypes.string),
     inputs: PropTypes.arrayOf(
       PropTypes.shape({
@@ -124,7 +124,7 @@ LanguagePanel.propTypes = {
     ),
     handleChange: PropTypes.func,
     handleBlur: PropTypes.func,
-    setFieldValue: PropTypes.func.isRequired
+    setFieldValue: PropTypes.func
   })
 };
 
