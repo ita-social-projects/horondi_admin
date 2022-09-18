@@ -1,7 +1,7 @@
 import { getAllCertificates } from '../operations/certificate.queries';
 import {
   deleteCertificateById,
-  updateCertificateByName
+  updateCertificateStatus
 } from '../operations/certificate.mutation';
 
 export const getCertificatesMock = [
@@ -89,9 +89,12 @@ export const getCertificatesMock = [
   },
   {
     request: {
-      query: updateCertificateByName,
+      query: updateCertificateStatus,
       variables: {
-        name: 'HOR001'
+        params: {
+          name: 'HOR001'
+        },
+        statusUpdate: 'USED'
       }
     },
     result: {
