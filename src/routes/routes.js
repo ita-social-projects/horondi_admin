@@ -80,7 +80,7 @@ import BottomAdd from '../pages/bottom/bottom-add';
 import BottomEdit from '../pages/bottom/bottom-edit';
 import BasicsPage from '../pages/basics/basics-page';
 import BasicAdd from '../pages/basics/basic-add';
-import BasicDetails from '../pages/basics/basic-edit';
+import BasicEdit from '../pages/basics/basic-edit';
 import StrapsPage from '../pages/straps/straps-page';
 import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
@@ -401,7 +401,7 @@ const Routes = ({ validatorMethods }) => {
             component={PocketsEdit}
           />
           <Route path={routes.pathToBacks} exact component={BackPage} />
-          <Route path={routes.pathToAddBacks} exact component={BackAdd} />
+          <Route path={routes.pathToBacksAdd} exact component={BackAdd} />
           <Route
             path={routes.pathToBackDetails}
             exact
@@ -443,8 +443,8 @@ const Routes = ({ validatorMethods }) => {
             component={ClosuresEdit}
           />
           <Route path={routes.pathToBasics} exact component={BasicsPage} />
-          <Route path={routes.pathToAddBasic} exact component={BasicAdd} />
-          <Route path={routes.pathToEditBasic} exact component={BasicDetails} />
+          <Route path={routes.pathToBasicAdd} exact component={BasicAdd} />
+          <Route path={routes.pathToEditBasic} exact component={BasicEdit} />
           <Route path={routes.pathToStraps} exact component={StrapsPage} />
           <Route path={routes.pathToStrapsAdd} exact component={StrapsAdd} />
           <Route path={routes.pathToStrapsEdit} exact component={StrapsEdit} />

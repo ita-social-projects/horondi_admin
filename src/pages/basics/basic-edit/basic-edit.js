@@ -15,7 +15,6 @@ const BasicEdit = ({ match }) => {
   const common = useCommonStyles();
   const dispatch = useDispatch();
   const { basic, loading } = useSelector(basicsSelector);
-
   const { pathToBasics } = config.routes;
   const { constructorItemsKeys } = config;
   const partItemKey = constructorItemsKeys.basic;

@@ -30,24 +30,28 @@ describe('reducer tests', () => {
       bottom: mockBottoms.items[0]
     });
   });
+
   it('should set bottom loading to true', () => {
     expect(bottomReducer(initialState, setBottomLoading(true))).toEqual({
       ...initialState,
       bottomLoading: true
     });
   });
+
   it('should set bottom error to true', () => {
     expect(bottomReducer(initialState, setBottomError(true))).toEqual({
       ...initialState,
       bottomError: true
     });
   });
+
   it('should set bottoms to store', () => {
     expect(bottomReducer(initialState, setBottoms(mockBottoms.items))).toEqual({
       ...initialState,
       list: mockBottoms.items
     });
   });
+
   it('should remove bottom from store', () => {
     const state = { ...initialState, list: mockBottoms.items };
     const filteredBottoms = mockBottoms.items.filter(
@@ -58,15 +62,17 @@ describe('reducer tests', () => {
       list: filteredBottoms
     });
   });
+
   it('should set filter for bottoms', () => {
     expect(bottomReducer(initialState, setFilter(filter))).toEqual({
       ...initialState,
-      filters: {
+      filter: {
         ...mockInitialFilters,
         ...filter
       }
     });
   });
+
   it('should clear bottom', () => {
     expect(bottomReducer(initialState, clearBottom())).toEqual({
       ...initialState,
@@ -77,7 +83,7 @@ describe('reducer tests', () => {
   it('should clear all bottoms filters', () => {
     expect(bottomReducer(initialState, clearFilters())).toEqual({
       ...initialState,
-      filters: mockBottomsLoadPayload.filters
+      filter: mockBottomsLoadPayload.filters
     });
   });
 });

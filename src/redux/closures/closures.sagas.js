@@ -34,17 +34,12 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handleClosuresLoad({ payload: { pagination, filter } }) {
+export function* handleClosuresLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setClosuresLoading(true));
-    const closures = yield call(
-      getAllClosures,
-      pagination.limit,
-      pagination.skip,
-      filter
-    );
+    const closures = yield call(getAllClosures, limit, skip, filter);
     if (closures) {
-      yield put(setClosures(closures));
+      yield put(setClosures(closures?.items));
       yield put(setItemsCount(closures?.count));
       yield put(setClosuresLoading(false));
     }

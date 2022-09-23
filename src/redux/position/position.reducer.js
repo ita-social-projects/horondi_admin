@@ -8,14 +8,15 @@ import {
 } from './position.types';
 
 export const selectPositions = ({ Positions }) => ({
-  items: Positions.list?.items,
+  items: Positions.list,
   loading: Positions.positionsLoading,
   position: Positions.position,
   filter: Positions.filter
 });
 
 const initialFilter = {
-  search: ''
+  search: '',
+  name: ''
 };
 
 export const initialState = {
@@ -40,7 +41,7 @@ const positionsReducer = (state = initialState, action = {}) => {
         positionsLoading: action.payload
       };
     case REMOVE_POSITION_FROM_STATE: {
-      const list = state.list.items.filter(
+      const list = state.list.filter(
         (position) => position._id !== action.payload
       );
       return {
@@ -57,14 +58,14 @@ const positionsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filter: {
-          ...state.filters,
+          ...state.filter,
           ...action.payload
         }
       };
     case CLEAR_POSITIONS_FILTER:
       return {
         ...state,
-        filter: { search: '' }
+        filter: { ...initialFilter }
       };
     default:
       return state;

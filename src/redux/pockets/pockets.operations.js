@@ -45,7 +45,7 @@ export const createPockets = async (payload) => {
           mutation($pocket: PocketInput!, $image: Upload!) {
               addPocket(pocket: $pocket, images: $image) {
                   ... on Pocket {
-                       _id
+                      _id
                   }
                   ... on Error {
                       message

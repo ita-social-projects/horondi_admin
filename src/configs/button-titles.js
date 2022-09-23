@@ -81,16 +81,32 @@ const buttonTitles = {
   MODEL: 'Моделі',
   YES_BUTTON: 'Так',
   NO_BUTTON: 'Ні',
-  CREATE_BACK_TITLE: 'Додати спинку',
-  CREATE_BOTTOM_TITLE: 'Додати низ',
-  CREATE_POCKETS_TITLE: 'Додати кишеню',
-  PATTERN_AVAILABLE: 'Доступний',
+  constructorPageTitles: {
+    bottom: {
+      CREATE_ITEM_TITLE: 'Додати низ'
+    },
+    back: {
+      CREATE_ITEM_TITLE: 'Додати спинку'
+    },
+    pocket: {
+      CREATE_ITEM_TITLE: 'Додати кишеню'
+    },
+    closure: {
+      CREATE_ITEM_TITLE: 'Додати защіпку'
+    },
+    position: {
+      CREATE_ITEM_TITLE: 'Додати розміщення'
+    },
+    basic: {
+      CREATE_ITEM_TITLE: 'Додати основу'
+    },
+    strap: {
+      CREATE_ITEM_TITLE: 'Додати ремінець'
+    }
+  },
   PATTERN_MATERIAL: 'Матеріал',
+  PATTERN_AVAILABLE: 'Доступний',
   CREATE_CONSTRUCTOR: 'Створити новий ',
-  CREATE_CLOSURES_TITLE: 'Додати защіпку',
-  CREATE_POSITION_TITLE: 'Додати розміщення',
-  CREATE_BASIC_TITLE: 'Додати основу',
-  CREATE_STRAP_TITLE: 'Додати ремінець',
   AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
   GENERATE_CERTIFICATE: 'Згенерувати',
   CREATE_CERTIFICATE_TITLE: 'Створити Сертифікат',

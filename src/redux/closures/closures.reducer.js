@@ -9,14 +9,15 @@ import {
 } from './closures.types';
 
 export const selectClosures = ({ Closures }) => ({
-  items: Closures.list?.items,
+  items: Closures.list,
   loading: Closures.closuresLoading,
   closure: Closures.closure,
   filter: Closures.filter
 });
 
 const initialFilter = {
-  search: ''
+  search: '',
+  name: ''
 };
 
 export const initialState = {
@@ -41,7 +42,7 @@ const closuresReducer = (state = initialState, action = {}) => {
         closuresLoading: action.payload
       };
     case REMOVE_CLOSURE_FROM_STATE: {
-      const list = state.list.items.filter(
+      const list = state.list.filter(
         (closure) => closure._id !== action.payload
       );
       return {
@@ -65,7 +66,7 @@ const closuresReducer = (state = initialState, action = {}) => {
     case CLEAR_FILTER:
       return {
         ...state,
-        filter: { search: '' }
+        filter: { ...initialFilter }
       };
     case SET_CLOSURE_ERROR:
       return {

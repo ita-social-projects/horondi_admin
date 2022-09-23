@@ -59,7 +59,7 @@ describe('reducer tests', () => {
   it('should set filter for backs', () => {
     expect(backReducer(initialState, setFilter(filter))).toEqual({
       ...initialState,
-      filters: {
+      filter: {
         ...mockInitialFilters,
         ...filter
       }
@@ -75,7 +75,7 @@ describe('reducer tests', () => {
   it('should clear all backs filters', () => {
     expect(backReducer(initialState, clearFilters())).toEqual({
       ...initialState,
-      filters: mockBacksLoadPayload.filters
+      filter: mockBacksLoadPayload.filter
     });
   });
 });
