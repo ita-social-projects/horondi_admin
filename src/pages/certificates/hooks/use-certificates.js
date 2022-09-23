@@ -4,7 +4,7 @@ import { getAllCertificates } from '../operations/certificate.queries';
 import { setItemsCount } from '../../../redux/table/table.actions';
 import {
   deleteCertificateById,
-  updateCertificateByName
+  updateCertificateStatus
 } from '../operations/certificate.mutation';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import {
@@ -62,7 +62,7 @@ const useCertificates = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const [deleteCertificate] = useMutation(deleteCertificateById);
-  const [updateCertificate] = useMutation(updateCertificateByName);
+  const [updateCertificate] = useMutation(updateCertificateStatus);
   const certificatesFilters = useCertificateFilters();
   const { sortOptions, searchOptions, filterByMultipleOptions } =
     certificatesFilters;
@@ -106,11 +106,12 @@ const useCertificates = () => {
     dispatch(setSnackBarStatus(true));
   };
 
-  const updateCertificateHandler = async (name) => {
+  const updateCertificateHandler = async (params, statusUpdate) => {
     try {
       const { data } = await updateCertificate({
         variables: {
-          name
+          params,
+          statusUpdate
         }
       });
       if (data.updateCertificate.statusCode) {
@@ -127,7 +128,7 @@ const useCertificates = () => {
 
   const openUpdateModal = (name) => {
     openSuccessSnackbar(
-      () => updateCertificateHandler(name),
+      () => updateCertificateHandler({name: name}, 'USED'),
       UPDATE_CERTIFICATE_MESSAGE,
       UPDATE_CERTIFICATE_TITLE
     );
