@@ -100,8 +100,8 @@ describe('AboutUs component tests without data', () => {
     expect(loader).not.toBeInTheDocument();
   });
   it('shoud get all names for image', () => {
-    const {id} = businessPage.sectionsImgs[0];
+    const { id } = businessPage.sectionsImgs[0];
     const result = getImageNamesFromSection(businessPage, id);
-    expect(result).toEqual(deleteFilesFromSectionVariables);
+    expect(result).toEqual(deleteFilesFromSectionVariables.fileNames);
   });
 });
