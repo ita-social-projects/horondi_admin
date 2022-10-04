@@ -4,7 +4,12 @@ import { MockedProvider } from '@apollo/client/testing';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
-import { aboutUsPageDataMock, enTitle, imgLabel } from './about-us.variables';
+import {
+  aboutUsPageDataMock,
+  enTitle,
+  imgLabel,
+  aboutUsPageDataWithoutImage
+} from './about-us.variables';
 import AboutUs from '../about-us';
 import AboutUsTitleEdit from '../about-us-title-edit';
 import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
@@ -61,5 +66,35 @@ describe('AboutUs component tests', () => {
     const footerImgEditButton = editButtons[4];
     fireEvent.click(footerImgEditButton);
     expect(await screen.findByText(imgLabel)).toBeInTheDocument();
+  });
+});
+describe('AboutUs component tests without data', () => {
+  it('should render loader', async () => {
+    render(
+      <MockedProvider mocks={null} addTypename={false}>
+        <MemoryRouter initialEntries={[routes.pathToAboutUs]}>
+          <ThemeProvider theme={themeValue}>
+            <AboutUs />
+          </ThemeProvider>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+    const loader = await screen.findByTestId('loader');
+    expect(loader).toBeInTheDocument();
+  });
+  it('should render loader', async () => {
+    render(
+      <MockedProvider mocks={aboutUsPageDataWithoutImage} addTypename={false}>
+        <MemoryRouter initialEntries={[routes.pathToAboutUs]}>
+          <ThemeProvider theme={themeValue}>
+            <AboutUs />
+          </ThemeProvider>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+
+    const loader = await screen.findByTestId('loader');
+    screen.debug();
+    expect(loader).not.toBeInTheDocument();
   });
 });

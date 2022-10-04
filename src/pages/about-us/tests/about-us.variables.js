@@ -203,3 +203,21 @@ export const aboutUsPageDataMock = [
     }
   }
 ];
+export const aboutUsPageDataWithoutImage = [
+  {
+    request: {
+      query: getBusinessTextByCodeWithPopulatedTranslationsKey,
+      variables: {
+        code
+      }
+    },
+    result: {
+      data: {
+        getBusinessTextByCodeWithPopulatedTranslationsKey: {
+          ...businessPage,
+          sectionsImgs: [{ src: '' }, { src: '' }, { src: '' }]
+        }
+      }
+    }
+  }
+];
