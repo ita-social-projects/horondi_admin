@@ -8,13 +8,16 @@ import {
   aboutUsPageDataMock,
   enTitle,
   imgLabel,
-  aboutUsPageDataWithoutImage
+  aboutUsPageDataWithoutImage,
+  businessPage,
+  deleteFilesFromSectionVariables
 } from './about-us.variables';
 import AboutUs from '../about-us';
 import AboutUsTitleEdit from '../about-us-title-edit';
 import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import { config } from '../../../configs';
+import { getImageNamesFromSection } from '../../../utils/about-us-helper';
 
 const { routes } = config;
 
@@ -94,7 +97,11 @@ describe('AboutUs component tests without data', () => {
     );
 
     const loader = await screen.findByTestId('loader');
-    screen.debug();
     expect(loader).not.toBeInTheDocument();
+  });
+  it('shoud get all names for image', () => {
+    const {id} = businessPage.sectionsImgs[0];
+    const result = getImageNamesFromSection(businessPage, id);
+    expect(result).toEqual(deleteFilesFromSectionVariables);
   });
 });

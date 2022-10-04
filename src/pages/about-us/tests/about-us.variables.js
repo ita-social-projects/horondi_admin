@@ -215,7 +215,11 @@ export const aboutUsPageDataWithoutImage = [
       data: {
         getBusinessTextByCodeWithPopulatedTranslationsKey: {
           ...businessPage,
-          sectionsImgs: [{ src: '' }, { src: '' }, { src: '' }]
+          sectionsImgs: [
+            { src: '', id: '8aa1162e-cac7-11ec-9d64-0242ac120002' },
+            { src: '' },
+            { src: '' }
+          ]
         }
       }
     }
