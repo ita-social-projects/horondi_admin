@@ -188,6 +188,13 @@ export const deleteFilesFromSectionVariables = {
   ]
 };
 
+export const getImagesMock = [
+  'large_vgu48agl3fzuh6u_Rectangle 779.png',
+  'medium_vgu48agl3fzuh6u_Rectangle 779.png',
+  'small_vgu48agl3fzuh6u_Rectangle 779.png',
+  'thumbnail_vgu48agl3fzuh6u_Rectangle 779.png'
+];
+
 export const aboutUsPageDataMock = [
   {
     request: {

@@ -10,7 +10,7 @@ import {
   imgLabel,
   aboutUsPageDataWithoutImage,
   businessPage,
-  deleteFilesFromSectionVariables
+  getImagesMock
 } from './about-us.variables';
 import AboutUs from '../about-us';
 import AboutUsTitleEdit from '../about-us-title-edit';
@@ -102,6 +102,6 @@ describe('AboutUs component tests without data', () => {
   it('shoud get all names for image', () => {
     const { id } = businessPage.sectionsImgs[0];
     const result = getImageNamesFromSection(businessPage, id);
-    expect(result).toEqual(deleteFilesFromSectionVariables.fileNames);
+    expect(result).toEqual(getImagesMock);
   });
 });
