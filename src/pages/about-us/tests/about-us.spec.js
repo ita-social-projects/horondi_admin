@@ -10,14 +10,18 @@ import {
   imgLabel,
   aboutUsPageDataWithoutImage,
   businessPage,
-  getImagesMock
+  getImagesMock,
+  getFooterImageMock
 } from './about-us.variables';
 import AboutUs from '../about-us';
 import AboutUsTitleEdit from '../about-us-title-edit';
 import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import { config } from '../../../configs';
-import { getImageNamesFromSection } from '../../../utils/about-us-helper';
+import {
+  getFooterImgNames,
+  getImageNamesFromSection
+} from '../../../utils/about-us-helper';
 
 const { routes } = config;
 
@@ -109,5 +113,9 @@ describe('AboutUs component tests without data', () => {
     businessPage.sectionsImgs[0].src = '';
     const result = getImageNamesFromSection(businessPage, id);
     expect(result).toEqual(undefined);
+  });
+  it('shoud not get names for image', () => {
+    const result = getFooterImgNames(businessPage);
+    expect(result).toEqual(getFooterImageMock);
   });
 });

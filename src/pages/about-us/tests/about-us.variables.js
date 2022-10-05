@@ -194,6 +194,12 @@ export const getImagesMock = [
   'small_vgu48agl3fzuh6u_Rectangle 779.png',
   'thumbnail_vgu48agl3fzuh6u_Rectangle 779.png'
 ];
+export const getFooterImageMock = [
+  'large_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
+  'medium_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
+  'small_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
+  'thumbnail_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg'
+];
 
 export const aboutUsPageDataMock = [
   {
