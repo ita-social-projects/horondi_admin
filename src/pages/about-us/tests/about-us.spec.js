@@ -104,4 +104,10 @@ describe('AboutUs component tests without data', () => {
     const result = getImageNamesFromSection(businessPage, id);
     expect(result).toEqual(getImagesMock);
   });
+  it('shoud not get names for image', () => {
+    const { id } = businessPage.sectionsImgs[0];
+    businessPage.sectionsImgs[0].src = '';
+    const result = getImageNamesFromSection(businessPage, id);
+    expect(result).toEqual(undefined);
+  });
 });
