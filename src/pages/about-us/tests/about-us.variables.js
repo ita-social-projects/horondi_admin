@@ -194,12 +194,61 @@ export const getImagesMock = [
   'small_vgu48agl3fzuh6u_Rectangle 779.png',
   'thumbnail_vgu48agl3fzuh6u_Rectangle 779.png'
 ];
-export const getFooterImageMock = [
-  'large_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
-  'medium_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
-  'small_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
-  'thumbnail_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg'
-];
+
+export const bussinesPageAfterDel = {
+  __typename: 'BusinessTextWithPopulatedTranslationsKey',
+  _id: '5fa034039a59a906f0610e37',
+  code: 'about-us',
+  languages: ['ua', 'en'],
+  sectionsImgs: [
+    {
+      id: 'afe09df6-cac7-11ec-9d64-0242ac120002',
+      name: '55fc9d691404556b556461c240f08b21.jpg',
+      src: 'https://horondi.blob.core.windows.net/horondi/images/small_vgu4cfsl2yn0aa0_55fc9d691404556b556461c240f08b21.jpg'
+    },
+    {
+      id: 'bbe3959a-cac7-11ec-9d64-0242ac120002',
+      name: 'image 282.jpg',
+      src: 'https://horondi.blob.core.windows.net/horondi/images/small_vgu4cfsl2yn488z_image 282.jpg'
+    }
+  ],
+  footerImg: {
+    name: 'small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg',
+    src: 'https://horondi.blob.core.windows.net/horondi/images/small_vgu48agl3fzvlk7_small_vgu4cfsl2yn4y8o_36edf87e720064745a4d759cedcf32af.jpg'
+  },
+  translations: {
+    ua: {
+      title: 'Рюкзаки як терапія',
+      sections: [
+        {
+          id: 'afe09df6-cac7-11ec-9d64-0242ac120002',
+          title: '',
+          text: '<p>Але сталось як сталось і я вдячний цьому, бо ця, хоч і терниста, стежка привела мене сюди. Шлях був довгий, але це історія зі щасливим кінцем і мені вдалось віднайти себе і зайнятись власним ремеслом. Це справа, яка дарує радість людям навколо. Справа – заради якої я просинаюсь зранку. Справа, яка мотивує мене рухатись вперед.</p><p>Можливо, не варто було писати цього всього вище, так як не виключено, що ціль Вашого візиту просто купити річ, яка буде служити Вам багато років і дарувати радість. Але HORONDI - це не просто речі, які пошиті десь далеко за кордоном автоматизованими станками для шиття. HORONDI - це дещо більше. Кожна річ, будь це наплічник, гаманець чи сумочка – всі вони наділені душею, кожній з них я віддаю частинку своєї любові і в такий спосіб маю можливість розділяти її з людьми. В світі немає нічого благороднішого для мене ніж можливість викликати щиру посмішку на обличчях оточуючих і бачити радість в їхніх очах. Тому, купуючи HORONDI – Ви даєте мені можливість робити це.</p>'
+        },
+        {
+          id: 'bbe3959a-cac7-11ec-9d64-0242ac120002',
+          title: 'Наша команда',
+          text: '<p>Наша команда складається з п‘яти осіб, де кожен вірить в те, що робить. Ми працюємо від зорі до зорі, щоб Ви могли вчасно отримати свій HORONDI. Але при цьому ми не забуваємо про якість, яку Ви також заслуговуєте. Вся наша продукція пошита з якісної та приємної на дотик тканини з додатковим прошитим шаром дубляжу, що додає міцності та водостійкості. Дно зроблене з міцної тканини Кордура, шкіри чи еко-шкіри.</p><p><br></p><p>HORONDI розташований у Львові і місце, де ми створюємо нашу продукцію завбільшки, як звичайна кімната у Вашому домі. Тому, зараз ми не можемо похвалитись масштабами нашого підприємства, але ми ще молоді і тільки робимо перші кроки в цьому напрямку і з Вашою допомогою та підтримкою у нас все вийде!</p>'
+        }
+      ]
+    },
+    en: {
+      title: 'Backpacks as therapy',
+      sections: [
+        {
+          id: 'afe09df6-cac7-11ec-9d64-0242ac120002',
+          title: '',
+          text: "<p>Be that as it may, I am grateful, for this road, bumpy as it was, has lead me here. It was a long journey, but this story has a happy ending, as I've managed to find myself and my craft. This pursuit brings joy to the people around me. It gets me out of bed in the morning. It motivates me to keep improving.</p><p>Maybe I shouldn't have written all of that, as it's likely that you came here simply to buy an item that will serve you and bring joy for years to come. However, HORONDI is not machine-made products from somewhere far abroad. HORONDI is something more. Every item, be it a backpack, a wallet, or a bag, contains a sliver of my soul I've put in there to share it with people. There is nothing more precious to me in the whole world than an opportunity to bring a genuine smile to the faces of people around me and see joy in their eyes. That is why, when you buy HORONDI, you give me this opportunity.</p>"
+        },
+        {
+          id: 'bbe3959a-cac7-11ec-9d64-0242ac120002',
+          title: 'Our team',
+          text: "<p>Our team consists of five people, all of whom believe in what we do. We work from dawn till dusk for you to receive your HORONDI in time. In addition, we make sure you receive the high quality you deserve. Our entire stock is made from high-quality fabric that is pleasant to the touch and has an additional durable and water-resistant layer. The bottom can be made from durable Cordura, leather or eco leather.</p><p><br></p><p>HORONDI is located in Lviv, and the space where we create our products is as large as a usual room in your place. Therefore, we can't boast the scale of our business yet. But we are still young and only making our first steps. With your help and support, we can do anything!</p>"
+        }
+      ]
+    }
+  }
+};
 
 export const aboutUsPageDataMock = [
   {
