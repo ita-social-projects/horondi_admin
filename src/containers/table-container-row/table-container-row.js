@@ -35,11 +35,14 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-  const tableCells = Object.keys(properties).map((property) => (
-    <TableCell key={property} data-cy='table-cell'>
-      {properties[property]}
-    </TableCell>
-  ));
+  const tableCells = Object.entries(properties).map(
+    ([key, value]) =>
+      value && (
+        <TableCell key={key} data-cy='table-cell'>
+          {properties[key]}
+        </TableCell>
+      )
+  );
 
   const setCheckboxValue = (idToFind) => {
     const checked = checkBoxValue.find((item) => item === idToFind);
@@ -50,7 +53,7 @@ const TableContainerRow = ({
   const avatarSize = dense ? classes.small : classes.medium;
   return (
     <TableRow key={id} hover onClick={(e) => clickHandler(e)}>
-      {showCheckbox ? (
+      {showCheckbox && (
         <TableCell>
           <Checkbox
             color='default'
@@ -59,26 +62,28 @@ const TableContainerRow = ({
             onClick={(e) => checkboxChangeHandler(e, id)}
           />
         </TableCell>
-      ) : null}
-      {showAvatar ? (
+      )}
+      {showAvatar && (
         <TableCell className={classes.smallCell}>
           <Avatar className={avatarSize} src={image}>
             <ImageIcon />
           </Avatar>
         </TableCell>
-      ) : null}
+      )}
+
       {tableCells}
-      {text ? (
+      {text && (
         <TableCell>
-          <p className={classes.text}>{text}</p>
+          <div className={classes.text}>{text}</div>
         </TableCell>
-      ) : null}
-      {!showAvatar && image ? (
+      )}
+      {!showAvatar && image && (
         <TableCell className={classes.imageValue}>
           <img src={image} alt={image} />
         </TableCell>
-      ) : null}
-      {showEdit || showDelete ? (
+      )}
+
+      {(showEdit || showDelete) && (
         <TableCell className={classes.smallCell}>
           {showEdit && (
             <CustomizedEditIcon
@@ -96,13 +101,13 @@ const TableContainerRow = ({
             />
           )}
         </TableCell>
-      ) : null}
+      )}
     </TableRow>
   );
 };
 
 TableContainerRow.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
@@ -118,8 +123,8 @@ TableContainerRow.propTypes = {
 
 TableContainerRow.defaultProps = {
   id: '',
-  text: '',
-  image: '',
+  text: null,
+  image: null,
   deleteHandler: noop,
   editHandler: noop,
   clickHandler: noop,

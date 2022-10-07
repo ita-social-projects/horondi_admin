@@ -36,7 +36,6 @@ export const updateBusinessText = gql`
         }
         languages
         translations {
-          _id
           ua {
             title
             sections {

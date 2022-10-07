@@ -115,6 +115,7 @@ const LoginPage = () => {
             type={adminValues.showPassword ? 'text' : 'password'}
             value={values.password}
             error={touched.password && !!errors.password}
+            autoComplete='on'
             name='password'
             data-cy='password'
             onChange={handleChange}

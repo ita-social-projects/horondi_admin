@@ -4,12 +4,24 @@ import { MockedProvider } from '@apollo/client/testing';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
-import { aboutUsPageDataMock, enTitle, imgLabel } from './about-us.variables';
+import {
+  aboutUsPageDataMock,
+  enTitle,
+  imgLabel,
+  aboutUsPageDataWithoutImage,
+  businessPage,
+  getImagesMock,
+  bussinesPageAfterDel
+} from './about-us.variables';
 import AboutUs from '../about-us';
 import AboutUsTitleEdit from '../about-us-title-edit';
 import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import { config } from '../../../configs';
+import {
+  getBusinessPageWithoutSection,
+  getImageNamesFromSection
+} from '../../../utils/about-us-helper';
 
 const { routes } = config;
 
@@ -61,5 +73,50 @@ describe('AboutUs component tests', () => {
     const footerImgEditButton = editButtons[4];
     fireEvent.click(footerImgEditButton);
     expect(await screen.findByText(imgLabel)).toBeInTheDocument();
+  });
+});
+describe('AboutUs component tests without data', () => {
+  it('should render loader', async () => {
+    render(
+      <MockedProvider mocks={null} addTypename={false}>
+        <MemoryRouter initialEntries={[routes.pathToAboutUs]}>
+          <ThemeProvider theme={themeValue}>
+            <AboutUs />
+          </ThemeProvider>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+    const loader = await screen.findByTestId('loader');
+    expect(loader).toBeInTheDocument();
+  });
+  it('should render loader', async () => {
+    render(
+      <MockedProvider mocks={aboutUsPageDataWithoutImage} addTypename={false}>
+        <MemoryRouter initialEntries={[routes.pathToAboutUs]}>
+          <ThemeProvider theme={themeValue}>
+            <AboutUs />
+          </ThemeProvider>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+
+    const loader = await screen.findByTestId('loader');
+    expect(loader).not.toBeInTheDocument();
+  });
+  it('shoud get all names for image', () => {
+    const { id } = businessPage.sectionsImgs[0];
+    const result = getImageNamesFromSection(businessPage, id);
+    expect(result).toEqual(getImagesMock);
+  });
+  it('shoud not get names for image', () => {
+    const { id } = businessPage.sectionsImgs[0];
+    businessPage.sectionsImgs[0].src = '';
+    const result = getImageNamesFromSection(businessPage, id);
+    expect(result).toEqual(undefined);
+  });
+  it('shoud not get names for image', () => {
+    const { id } = businessPage.sectionsImgs[0];
+    const result = getBusinessPageWithoutSection(businessPage, id);
+    expect(result).toEqual(bussinesPageAfterDel);
   });
 });
