@@ -5,7 +5,9 @@ import {
   sizeToUpdate,
   update,
   initialSizes,
-  newSize
+  newSize,
+  dispatch,
+  products
 } from './use-size-handlers.variables';
 
 const { sizeAdd } = config.titles.sizesTitles;
@@ -38,7 +40,7 @@ describe('useSizeHandlers hook test', () => {
     const { result } = renderHook(() => useSizeHandlers(initialSizes));
 
     act(() => {
-      result.current.onSizeDelete(sizeToUpdate._id);
+      result.current.onSizeDelete(sizeToUpdate._id, products, dispatch);
     });
 
     expect(result.current.sizes).toEqual([]);

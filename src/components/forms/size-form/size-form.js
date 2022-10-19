@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   TextField,
   Grid,
@@ -6,7 +7,7 @@ import {
   Typography,
   MenuItem
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -36,6 +37,8 @@ import sizesEnum from '../../../configs/sizes-enum';
 
 import Tooltip from '../../tooltip';
 import { sizes } from '../../../configs/tooltip-titles';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { selectProductsAndTable } from '../../../redux/selectors/multiple.selectors';
 
 const { DELETE_TITLE } = config.buttonTitles;
 
@@ -51,12 +54,16 @@ const labels = config.labels.sizeLabels;
 const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
+const { DELETE_SIZE_CONFIRMATION_MESSAGE } = config.messages;
 
-function SizeForm({ size, sizeUtils, isEdit }) {
+const SizeForm = ({ size, sizeUtils, isEdit }) => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+  const dispatch = useDispatch();
 
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+  const { products } = useSelector(selectProductsAndTable);
 
   const [initSize, setInitSize] = useState(getSizeInitialValues(size));
   const { onSizeSubmit, onSizeDelete, sizesAdded } = sizeUtils;
@@ -118,7 +125,12 @@ function SizeForm({ size, sizeUtils, isEdit }) {
               <Grid item className={styles.button}>
                 <DeleteButton
                   data-cy='size-delete-btn'
-                  onClickHandler={() => onSizeDelete(size._id)}
+                  onClickHandler={() =>
+                    openSuccessSnackbar(
+                      () => onSizeDelete(size._id, products, dispatch),
+                      DELETE_SIZE_CONFIRMATION_MESSAGE
+                    )
+                  }
                 >
                   {DELETE_TITLE}
                 </DeleteButton>
@@ -151,7 +163,7 @@ function SizeForm({ size, sizeUtils, isEdit }) {
             <div className={styles.contentWrapper}>
               <Paper className={styles.sizeItemAdd}>
                 {sizeInputs.sizeMetricData.map((item) => (
-                  <>
+                  <React.Fragment key={item}>
                     <TextField
                       data-cy={item}
                       id={item}
@@ -172,7 +184,7 @@ function SizeForm({ size, sizeUtils, isEdit }) {
                         {errors[item]}
                       </div>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
                 <FormControl
                   variant={materialUiConstants.outlined}
@@ -284,9 +296,13 @@ function SizeForm({ size, sizeUtils, isEdit }) {
       </div>
     </div>
   );
-}
+};
 
-SizeForm.propTypes = sizePropTypes;
+SizeForm.propTypes = {
+  sizeUtils: PropTypes.shape(sizePropTypes.sizeUtils),
+  isEdit: sizePropTypes.isEdit,
+  size: PropTypes.shape(sizePropTypes.size)
+};
 SizeForm.defaultProps = sizeDefaultProps;
 
 export default SizeForm;

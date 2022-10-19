@@ -7,7 +7,10 @@ import {
   Typography
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { sizeFormAccordionPropTypes } from '../../../../utils/size-helpers';
+import {
+  sizeDefaultProps,
+  sizePropTypes
+} from '../../../../utils/size-helpers';
 import SizeForm from '..';
 import { config } from '../../../../configs';
 
@@ -39,25 +42,15 @@ const SizeFormAccordion = ({
 SizeFormAccordion.propTypes = {
   isExpanded: PropTypes.bool,
   onChange: PropTypes.func,
-  sizeUtils: PropTypes.shape({
-    onSizeSubmit: PropTypes.func,
-    onSizeDelete: PropTypes.func,
-    sizesAdded: PropTypes.arrayOf(PropTypes.string)
-  }),
-  isSizeEdit: PropTypes.bool,
-  size: PropTypes.shape(sizeFormAccordionPropTypes)
+  sizeUtils: PropTypes.shape(sizePropTypes.sizeUtils),
+  isSizeEdit: sizePropTypes.isEdit,
+  size: PropTypes.shape(sizePropTypes.size)
 };
 
 SizeFormAccordion.defaultProps = {
   isExpanded: true,
   onChange: null,
-  sizeUtils: {
-    onSizeSubmit: null,
-    onSizeDelete: null,
-    sizesAdded: []
-  },
-  isSizeEdit: false,
-  size: {}
+  ...sizeDefaultProps
 };
 
 export default SizeFormAccordion;

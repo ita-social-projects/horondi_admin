@@ -8,7 +8,8 @@ import {
   Grid,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  MenuItem
 } from '@material-ui/core';
 
 import useModelHandlers from '../../../utils/use-model-handlers';
@@ -48,7 +49,7 @@ const {
   labelsEn
 } = config.labels.model;
 const { IMG_URL } = config;
-const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
+const { MODEL_SAVE_TITLE } = config.buttonTitles;
 const { pathToModels } = config.routes;
 const { sizeAdd } = config.titles.sizesTitles;
 
@@ -236,16 +237,15 @@ const ModelForm = ({ model, id, isEdit }) => {
                 data-cy='category'
                 id='category'
                 name='category'
-                value={category}
+                value={categories.length ? category : ''}
                 onChange={handleCategory}
                 onBlur={handleBlur}
                 label={availableCategory}
               >
-                <option value='' />
                 {categories.map((cat) => (
-                  <option value={cat._id} key={cat._id}>
-                    {cat.code}
-                  </option>
+                  <MenuItem value={cat._id} key={cat._id}>
+                    {cat.name[0].value}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -273,16 +273,17 @@ const ModelForm = ({ model, id, isEdit }) => {
             {sizesTouched && errors.sizes && (
               <div className={styles.inputError}>{errors.sizes}</div>
             )}
-            {sizes.map((size) => (
-              <SizeFormAccordion
-                key={size._id}
-                size={size}
-                isExpanded={sizeFormExpanded === size._id}
-                onChange={handleExpandedChange(size._id)}
-                isSizeEdit
-                sizeUtils={sizeUtils}
-              />
-            ))}
+            {sizes.length &&
+              sizes.map((size) => (
+                <SizeFormAccordion
+                  key={size._id}
+                  size={size}
+                  isExpanded={sizeFormExpanded === size._id}
+                  onChange={handleExpandedChange(size._id)}
+                  isSizeEdit
+                  sizeUtils={sizeUtils}
+                />
+              ))}
             <SizeFormAccordion
               onChange={handleExpandedChange(sizeAdd)}
               isExpanded={sizeFormExpanded === sizeAdd}

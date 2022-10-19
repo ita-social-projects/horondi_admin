@@ -63,6 +63,18 @@ const messages = {
   DELETE_CERTIFICATE_MESSAGE: 'Ви впевнені, що хочете видалити цей сертифікат?',
   UPDATE_CERTIFICATE_MESSAGE:
     'Ви впевнені, що хочете відмітити цей сертифікат як використаний?',
-  NO_BASICS_MESSAGE: 'Основи відсутні'
+  NO_BASICS_MESSAGE: 'Основи відсутні',
+  PRODUCTS_DELETE_WITH_MODEL_MESSAGE: (
+    numberOfProducts,
+    numberOfConstructors
+  ) =>
+    `Буде видалено ${numberOfProducts ? `${numberOfProducts } продуктів` : ''} ${
+      numberOfProducts && numberOfConstructors ? 'і' : ''
+    } ${numberOfConstructors ? 'конструктор' : ''} цієї моделі`,
+  DELETE_SIZE_CONFIRMATION_MESSAGE:
+    'Ви впевнені що хочете видалити цей розмір?',
+  DELETED_SIZE_MESSAGE: 'Розмір успішно видалено',
+  DELETE_SIZE_ERROR: (productsWithLastSize, productsToDeleteMessage) =>
+    `Це останній розмір для ${productsWithLastSize.length} продуктів: ${productsToDeleteMessage}. Замініть його або видаліть продукти`
 };
 export default messages;

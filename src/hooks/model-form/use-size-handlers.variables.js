@@ -15,3 +15,5 @@ export const newSize = {
   heightInCm: 6,
   available: false
 };
+export const dispatch = jest.fn();
+export const products = [];
