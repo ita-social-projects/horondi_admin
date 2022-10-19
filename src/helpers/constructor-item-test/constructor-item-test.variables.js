@@ -116,7 +116,7 @@ export const initialState = {
       ]
     }
   },
-  Bottom: {
+  Bottoms: {
     list: [],
     bottomLoading: false,
     bottom: {
@@ -170,7 +170,7 @@ export const initialState = {
   Currencies: {
     exchangeRate: 1
   },
-  Back: {
+  Backs: {
     list: [
       {
         _id: '60e71ce82d34d70024decb74',

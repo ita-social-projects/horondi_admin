@@ -1,121 +1,29 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { push } from 'connected-react-router';
-import _ from 'lodash';
+import React from 'react';
 
-import LoadingBar from '../../components/loading-bar';
-import { useCommonStyles } from '../common.styles';
-import { config } from '../../configs';
+import ConstructorPageContainer from '../../containers/constructor-page-container';
 import {
   getAllPockets,
-  deletePocket
+  deletePocket,
+  clearFilters,
+  setFilter
 } from '../../redux/pockets/pockets.actions';
 import { pocketsSelectorWithPagination } from '../../redux/selectors/pockets.selectors';
-import TableContainerRow from '../../containers/table-container-row';
-import TableContainerGenerator from '../../containers/table-container-generator';
-import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
-import usePocketFilters from '../../hooks/filters/use-pocket-filters';
-import constructorItemPrice from '../../utils/constructorItemPrice';
+import { config } from '../../configs';
 
-const { materialUiConstants } = config;
-const { CREATE_POCKETS_TITLE } = config.buttonTitles;
-const { pathToPocketsAdd } = config.routes;
-const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.pocketsAvailableVariants;
-const { DELETE_POCKET_MESSAGE, NO_POCKET_MESSAGE } = config.messages;
+const { constructorItemsKeys } = config;
+const itemKey = constructorItemsKeys.pocket;
+const itemAddPath = config.routes.pathToPocketsAdd;
 
-const PocketsPage = () => {
-  const dispatch = useDispatch();
-  const { IMG_URL } = config;
-  const { openSuccessSnackbar } = useSuccessSnackbar();
-  const pocketOptions = usePocketFilters();
-
-  const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
-    useSelector(pocketsSelectorWithPagination);
-
-  useEffect(() => {
-    dispatch(
-      getAllPockets({
-        pagination: {
-          skip: currentPage * rowsPerPage,
-          limit: rowsPerPage
-        },
-        filter: {
-          search: filter.search
-        }
-      })
-    );
-  }, [dispatch, itemsCount, currentPage, rowsPerPage, filter]);
-
-  const commonStyles = useCommonStyles();
-
-  const pocketsDeleteHandler = (id) => {
-    const removePocket = () => {
-      dispatch(closeDialog());
-      dispatch(deletePocket(id));
-    };
-    openSuccessSnackbar(removePocket, DELETE_POCKET_MESSAGE);
-  };
-
-  const pocketsItems = _.map(items, (pocket) => (
-    <TableContainerRow
-      key={pocket._id}
-      id={pocket._id}
-      image={pocket?.images?.thumbnail ? IMG_URL + pocket.images.thumbnail : ''}
-      name={pocket?.name[0]?.value}
-      additionalPrice={constructorItemPrice(pocket)}
-      available={pocket.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
-      deleteHandler={() => {
-        pocketsDeleteHandler(pocket._id);
-      }}
-      editHandler={() => {
-        dispatch(push(`${config.routes.pathToPockets}/${pocket._id}`));
-      }}
-    />
-  ));
-
-  if (loading) {
-    return <LoadingBar />;
-  }
-
-  return (
-    <div className={commonStyles.container}>
-      <div className={`${commonStyles.adminHeader}`}>
-        <Typography
-          variant={materialUiConstants.typographyVariantH1}
-          className={commonStyles.materialTitle}
-        >
-          {config.titles.pocketsTitles.mainPageTitle}
-        </Typography>
-        <Button
-          id='addPockets'
-          component={Link}
-          variant={materialUiConstants.contained}
-          color={materialUiConstants.primary}
-          to={pathToPocketsAdd}
-        >
-          {CREATE_POCKETS_TITLE}
-        </Button>
-      </div>
-      <div>
-        <FilterNavbar options={pocketOptions || {}} />
-      </div>
-
-      {pocketsItems?.length ? (
-        <TableContainerGenerator
-          pagination
-          tableTitles={config.tableHeadRowTitles.pockets}
-          tableItems={pocketsItems}
-          count={itemsCount}
-        />
-      ) : (
-        <p className={commonStyles.noRecords}>{NO_POCKET_MESSAGE}</p>
-      )}
-    </div>
-  );
-};
+const PocketsPage = () => (
+  <ConstructorPageContainer
+    itemKey={itemKey}
+    getItemsAction={getAllPockets}
+    deleteItemAction={deletePocket}
+    itemSelectorAction={pocketsSelectorWithPagination}
+    itemAddPath={itemAddPath}
+    setFilterAction={setFilter}
+    clearFilterAction={clearFilters}
+  />
+);
 
 export default PocketsPage;

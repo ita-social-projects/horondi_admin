@@ -9,15 +9,15 @@ import {
   CLEAR_FILTERS
 } from './bottom.types';
 
-export const selectBottom = ({ Bottom }) => ({
-  items: Bottom.list,
-  loading: Bottom.bottomLoading,
-  bottom: Bottom.bottom,
-  filter: Bottom.filters,
-  sort: Bottom.sort
+export const selectBottom = ({ Bottoms }) => ({
+  items: Bottoms.list,
+  loading: Bottoms.bottomLoading,
+  bottom: Bottoms.bottom,
+  filter: Bottoms.filter,
+  sort: Bottoms.sort
 });
 
-const initialFilters = {
+const initialFilter = {
   name: ''
 };
 
@@ -26,7 +26,7 @@ export const initialState = {
   sort: {
     name: 1
   },
-  filters: initialFilters,
+  filter: initialFilter,
   bottom: null,
   bottomLoading: false,
   bottomError: null
@@ -65,8 +65,8 @@ const bottomReducer = (state = initialState, action = {}) => {
     case SET_BOTTOM_FILTER:
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filter: {
+          ...state.filter,
           ...action.payload
         }
       };
@@ -78,7 +78,7 @@ const bottomReducer = (state = initialState, action = {}) => {
     case CLEAR_FILTERS:
       return {
         ...state,
-        filters: {
+        filter: {
           name: ''
         }
       };

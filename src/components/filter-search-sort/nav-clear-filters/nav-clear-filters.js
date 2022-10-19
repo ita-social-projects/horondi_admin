@@ -16,7 +16,11 @@ const NavClearFilters = ({ clearOptions: { clearAllFilters } }) => {
   };
   return (
     <Box ml={1}>
-      <Button className={styles.clearButton} onClick={handleClearFilters}>
+      <Button
+        className={styles.clearButton}
+        onClick={handleClearFilters}
+        data-testid='clear-filters'
+      >
         {CLEAR_FILTERS}
       </Button>
     </Box>

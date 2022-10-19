@@ -45,7 +45,7 @@ describe('reducer tests', () => {
   });
 
   it('should remove closure from store', () => {
-    const state = { ...initialState, list: mockClosures };
+    const state = { ...initialState, list: [...mockClosures.items] };
     const filteredClosures = mockClosures.items.filter(
       (closureEl) => closureEl._id !== mockId
     );

@@ -32,21 +32,14 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handleStrapsLoad({ payload: { pagination, filter } }) {
+export function* handleStrapsLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setStrapsLoading(true));
-    const straps = yield call(
-      getAllStraps,
-      pagination.limit,
-      pagination.skip,
-      filter
-    );
+    const straps = yield call(getAllStraps, limit, skip, filter);
 
-    if (straps) {
-      yield put(setStraps(straps));
-      yield put(setItemsCount(straps?.count));
-      yield put(setStrapsLoading(false));
-    }
+    yield put(setStraps(straps?.items));
+    yield put(setItemsCount(straps?.count));
+    yield put(setStrapsLoading(false));
   } catch (error) {
     yield call(handleStrapsError, error);
   }

@@ -8,14 +8,15 @@ import {
 } from './pockets.types';
 
 export const selectPockets = ({ Pockets }) => ({
-  items: Pockets.list?.items,
+  items: Pockets.list,
   loading: Pockets.pocketsLoading,
   pocket: Pockets.pocket,
   filter: Pockets.filter
 });
 
 const initialFilter = {
-  search: ''
+  search: '',
+  name: ''
 };
 
 export const initialState = {
@@ -40,9 +41,7 @@ const pocketsReducer = (state = initialState, action = {}) => {
         pocketsLoading: action.payload
       };
     case REMOVE_POCKET_FROM_STATE: {
-      const list = state.list.items.filter(
-        (pocket) => pocket._id !== action.payload
-      );
+      const list = state.list.filter((pocket) => pocket._id !== action.payload);
       return {
         ...state,
         list
@@ -57,14 +56,14 @@ const pocketsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filter: {
-          ...state.filters,
+          ...state.filter,
           ...action.payload
         }
       };
     case CLEAR_POCKETS_FILTER:
       return {
         ...state,
-        filter: { search: '' }
+        filter: { ...initialFilter }
       };
     default:
       return state;

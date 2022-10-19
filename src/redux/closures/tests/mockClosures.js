@@ -74,14 +74,16 @@ const mockClosure = {
 };
 
 const filter = {
-  search: ''
+  search: '',
+  name: ''
 };
 const pagination = {
   limit: 1,
   skip: 0
 };
 const mockInitialFilters = {
-  search: ''
+  search: '',
+  name: ''
 };
 
 const mockClosuresState = {

@@ -46,13 +46,11 @@ describe('Basics reducer tests', () => {
   });
 
   it('should remove basic from store', () => {
-    const state = { ...initialState, list: { items: [mockBasics.list.items] } };
+    const state = { ...initialState, list: [...mockBasics.list.items] };
     const filteredBasics = mockBasics.list.items.filter(
       (backEl) => backEl._id !== mockId
     );
-    expect(
-      basicReducer(state, removeBasicFromState(mockBasics.list.items._id))
-    ).toEqual({
+    expect(basicReducer(state, removeBasicFromState(mockId))).toEqual({
       ...state,
       list: filteredBasics
     });

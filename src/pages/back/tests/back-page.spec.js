@@ -1,7 +1,7 @@
 import React from 'react';
-import PositionPage from '../position-page';
+import BackPage from '../back-page';
 import { constructorPageTest } from '../../../helpers/constructor-page-test/constructor-page-test';
 
-const itemName = 'Bottom';
+const itemName = 'Back';
 
-constructorPageTest(itemName, <PositionPage />);
+constructorPageTest(itemName, <BackPage />);
