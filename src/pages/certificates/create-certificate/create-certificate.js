@@ -78,7 +78,7 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && check) {
+    if (!isInvalid && check && email) {
       setDisabled(false);
     } else {
       setDisabled(true);
