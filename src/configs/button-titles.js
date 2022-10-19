@@ -94,6 +94,7 @@ const buttonTitles = {
   AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
   GENERATE_CERTIFICATE: 'Згенерувати',
   CREATE_CERTIFICATE_TITLE: 'Створити Сертифікат',
+  CREATE_PROMOCODE_TITLE: 'Створити промокод',
   PRICE: 'Вартість',
   STATUS: 'Статус'
 };
