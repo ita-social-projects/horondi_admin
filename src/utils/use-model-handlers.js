@@ -9,7 +9,7 @@ const useModelHandlers = () => {
   const [upload, setUpload] = useState(null);
   const [imageName, setImageName] = useState('');
 
-  const handleTabsChange = (event, newValue) => {
+  const handleTabsChange = (_event, newValue) => {
     setTabsValue(newValue);
   };
 

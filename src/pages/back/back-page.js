@@ -15,6 +15,7 @@ import { backSelectorWithPagination } from '../../redux/selectors/back.selectors
 import { getProductDetails } from '../../redux/products/products.actions';
 import FilterNavbar from '../../components/filter-search-sort';
 import useBackFilters from '../../hooks/filters/use-back-filters';
+import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
 const map = require('lodash/map');
@@ -68,7 +69,7 @@ const BackPage = () => {
       name={backItem.name[0].value}
       material={backItem.features.material.name[0].value}
       color={backItem.features.color.name[0].value}
-      additionalPrice={backItem?.absolutePrice}
+      additionalPrice={constructorItemPrice(backItem)}
       available={backItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => backDeleteHandler(backItem._id)}
       editHandler={() => {

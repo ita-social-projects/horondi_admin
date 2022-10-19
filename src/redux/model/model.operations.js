@@ -94,13 +94,14 @@ export const getModelById = async (id) => {
           sizes {
             _id
             name
-            modelId { 
-              name { 
-                value
-                lang
-              }
-            }
+            heightInCm
+            widthInCm
+            depthInCm
+            volumeInLiters
+            weightInKg
             available
+            absolutePrice
+            relativePrice
           }
           images {
             large

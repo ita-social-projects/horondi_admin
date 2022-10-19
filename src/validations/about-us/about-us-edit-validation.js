@@ -35,7 +35,7 @@ export const sectionValidationSchema = Yup.object().shape({
   enText: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
     .required(ERROR_MESSAGE),
-  img: Yup.string().min(1, REQUIRED_IMG_MESSAGE)
+  img: Yup.string().min(1, REQUIRED_IMG_MESSAGE).nullable()
 });
 
 export const footerImgEditValidationSchema = Yup.object().shape({

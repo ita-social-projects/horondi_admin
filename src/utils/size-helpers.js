@@ -10,29 +10,31 @@ export const createSize = (data) => ({
   volumeInLiters: data.volumeInLiters,
   weightInKg: data.weightInKg,
   available: data.available,
-  modelId: data.modelId,
   absolutePrice:
     data.additionalPriceType === 'ABSOLUTE' ? +data.additionalPrice : null,
   relativePrice:
     data.additionalPriceType === 'RELATIVE' ? +data.additionalPrice : null
 });
 
-export const getSizeInitialValues = (size) => ({
-  name: size.name || 'M',
-  modelId: size.modelId._id || '',
-  model: size.modelId || {},
-  heightInCm: size.heightInCm || '',
-  widthInCm: size.widthInCm || '',
-  depthInCm: size.depthInCm || '',
-  volumeInLiters: size.volumeInLiters || '',
-  weightInKg: size.weightInKg || '',
-  available: size.available || false,
-  additionalPriceType: size.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
-  additionalPrice: size.absolutePrice ? size.absolutePrice : size.relativePrice
-});
+export const getSizeInitialValues = (size) => {
+  const priceType = size.absolutePrice
+    ? size.absolutePrice
+    : size.relativePrice;
+
+  return {
+    name: size.name || '',
+    heightInCm: size.heightInCm || '',
+    widthInCm: size.widthInCm || '',
+    depthInCm: size.depthInCm || '',
+    volumeInLiters: size.volumeInLiters || '',
+    weightInKg: size.weightInKg || '',
+    available: size.available || false,
+    additionalPriceType: size.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
+    additionalPrice: priceType || ''
+  };
+};
 
 export const sizePropTypes = {
-  id: PropTypes.string,
   size: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -46,25 +48,42 @@ export const sizePropTypes = {
       PropTypes.shape({
         value: PropTypes.number
       })
-    ),
-    modelId: PropTypes.string
-  })
+    )
+  }),
+  sizeUtils: PropTypes.shape({
+    onSizeSubmit: PropTypes.func,
+    onSizeDelete: PropTypes.func,
+    sizesAdded: PropTypes.arrayOf(PropTypes.string)
+  }),
+  isEdit: PropTypes.bool
 };
 export const sizeDefaultProps = {
-  id: '',
   size: {
     _id: '',
     name: '',
-    modelId: '',
     heightInCm: '',
     widthInCm: '',
     depthInCm: '',
     volumeInLiters: '',
     weightInKg: '',
     available: '',
+    additionalPriceType: 'ABSOLUTE',
     additionalPrice: 0
-  }
+  },
+  sizeUtils: {
+    onSizeSubmit: null,
+    onSizeDelete: null,
+    sizesAdded: []
+  },
+  isSizeEdit: false
 };
+
+export const sizeFormAccordionPropTypes = {
+  ...sizePropTypes.size,
+  absolutePrice: PropTypes.number,
+  relativePrice: PropTypes.number
+};
+
 export const sizeFilterObj = () => {
   const arrToFilter = [];
 

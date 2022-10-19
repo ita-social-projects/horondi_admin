@@ -21,7 +21,6 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import usePositionFilters from '../../hooks/filters/use-position-filters';
 
 const { materialUiConstants } = config;
-const labels = config.labels.positionPageLabel;
 const { CREATE_POSITION_TITLE } = config.buttonTitles;
 const { pathToPositionAdd } = config.routes;
 const { DELETE_POSITION_MESSAGE, NO_POSITION_MESSAGE } = config.messages;
@@ -83,7 +82,6 @@ const PositionPage = () => {
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
-          data-cy={labels.positionHeader}
         >
           {config.titles.positionTitles.mainPageTitle}
         </Typography>

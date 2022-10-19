@@ -105,7 +105,7 @@ const ProductForm = ({ isEdit }) => {
     closure: product?.closure?._id,
     available: product.available || false,
     isHotItem: product.isHotItem || false,
-    sizes: product?.sizes?.map((el) => getIdFromItem(el.size) || []),
+    sizes: product?.sizes?.map((el) => getIdFromItem(el.size)) || [],
     images: {
       primary: product.images?.primary || {},
       additional: product.images?.additional || []
@@ -180,6 +180,8 @@ const ProductForm = ({ isEdit }) => {
     shouldValidate,
     setShouldValidate,
     values,
+    dirty,
+    isValid,
     errors,
     touched,
     handleSubmit,
@@ -340,6 +342,7 @@ const ProductForm = ({ isEdit }) => {
               values={values}
               errors={errors}
               unblockFunction={unblock}
+              disabled={!dirty || !isValid}
             />
           </Grid>
         </Grid>

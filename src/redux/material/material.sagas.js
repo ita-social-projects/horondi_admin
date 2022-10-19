@@ -16,7 +16,7 @@ import {
   createMaterial,
   updateMaterial,
   deleteMaterial,
-  getAllMaterialsByPatternPurpose
+  getAllMaterialsByPurpose
 } from './material.operations';
 
 import {
@@ -40,11 +40,11 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handleMaterialsByPurposeLoad() {
+export function* handleMaterialsByPurposeLoad({ payload }) {
   try {
     yield put(setMaterialLoading(true));
-    const materialsByPurpose = yield call(getAllMaterialsByPatternPurpose);
-    yield put(setMaterialsByPurpose(materialsByPurpose?.pattern));
+    const materialsByPurpose = yield call(getAllMaterialsByPurpose, payload);
+    yield put(setMaterialsByPurpose(materialsByPurpose));
     yield put(setMaterialLoading(false));
   } catch (error) {
     yield call(handleMaterialError, error);

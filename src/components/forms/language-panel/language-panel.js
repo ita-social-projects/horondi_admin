@@ -63,7 +63,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               values[inputName] = value;
             };
             return (
-              <>
+              <React.Fragment key={`${lang}-${input.name}`}>
                 <Editor
                   value={values[inputName]}
                   placeholder={input.label[lang]}
@@ -76,7 +76,6 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   data-cy={`${lang}-${input.name}`}
                   label={lang}
                   id={`${lang}-${input.name}`}
-                  key={lang}
                 />
                 {touched[`${lang}-${input.name}`] && errors[inputName] && (
                   <div
@@ -86,7 +85,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                     {errors[inputName]}
                   </div>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </Paper>
@@ -109,7 +108,7 @@ LanguagePanel.propTypes = {
         PropTypes.object
       ])
     ),
-    touched: PropTypes.objectOf(PropTypes.string),
+    touched: PropTypes.objectOf(PropTypes.bool),
     errors: PropTypes.objectOf(PropTypes.string),
     inputs: PropTypes.arrayOf(
       PropTypes.shape({
@@ -124,7 +123,7 @@ LanguagePanel.propTypes = {
     ),
     handleChange: PropTypes.func,
     handleBlur: PropTypes.func,
-    setFieldValue: PropTypes.func.isRequired
+    setFieldValue: PropTypes.func
   })
 };
 

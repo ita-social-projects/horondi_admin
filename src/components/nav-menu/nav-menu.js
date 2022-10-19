@@ -44,16 +44,6 @@ const NavMenu = ({ width }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [navbarTab, setNavbarTab] = useState({
-    clientTab: false,
-    catalogTab: false,
-    certificatesTab: false,
-    constructorTab: false,
-    staticTab: false,
-    materialsTab: false,
-    promoTab: false
-  });
-
   const staticArray = {
     clientTab: false,
     catalogTab: false,
@@ -63,6 +53,8 @@ const NavMenu = ({ width }) => {
     materialsTab: false,
     promoTab: false
   };
+
+  const [navbarTab, setNavbarTab] = useState({ ...staticArray });
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -76,7 +68,7 @@ const NavMenu = ({ width }) => {
       onClick={() => {
         dispatch(setSideMenuStatus(!sideMenuStatus));
         dispatch(resetPagination());
-        if (!nested) {
+        if (nested === classes.notNested) {
           setNavbarTab({
             ...staticArray
           });
@@ -86,6 +78,7 @@ const NavMenu = ({ width }) => {
       key={pathTitle}
       component={NavLink}
       to={pathTo}
+      disableGutters
       className={pathTitle === 'Слайдер' ? classes.sliderTab : nested || null}
       activeClassName={classes.selectedCategory}
       isActive={(props) => (props ? props.url === pathTo : null)}
@@ -95,147 +88,115 @@ const NavMenu = ({ width }) => {
       </ListItemIcon>
       <ListItemText primary={pathTitle} />
       {pathTitle === titles.emailQuestionsTitles.mainPageTitle && (
-        <Badge badgeContent={pendingQuestionsCount} color='error' />
+        <Badge
+          badgeContent={pendingQuestionsCount}
+          className={classes.badgeRight}
+          color='error'
+        />
       )}
     </ListItem>
   );
 
-  const menuItems = config.menuCategories.map((category) =>
-    returnedList(category[0], category[1], category[2])
+  const makeMenuItems = (arrayOfCategories, className) =>
+    config[arrayOfCategories].map(([pathTitle, pathTo, PathIcon]) =>
+      returnedList(pathTitle, pathTo, PathIcon, classes[className])
+    );
+
+  const menuItems = makeMenuItems('menuCategories', 'notNested');
+  const promoMenuItems = makeMenuItems('promoMenuCategories', 'nested');
+  const materialMenuItems = makeMenuItems('materialMenuCategories', 'nested');
+  const clientMenuItems = makeMenuItems('clientMenuCategories', 'nested');
+  const catalogMenuItems = makeMenuItems('catalogMenuCategories', 'nested');
+  const staticPagesMenuItems = makeMenuItems('staticPagesCategories', 'nested');
+  const constructorPagesMenuItems = makeMenuItems(
+    'constructorMenuCategories',
+    'nested'
+  );
+  const certificatesMenuItems = makeMenuItems(
+    'certificatesMenuCategories',
+    'nested'
   );
 
-  const materialMenuItems = config.materialMenuCategories.map((category) =>
-    returnedList(...category, classes.nested)
-  );
-
-  const clientMenuItems = config.clientMenuCategories.map((category) =>
-    returnedList(category[0], category[1], category[2], classes.nested)
-  );
-
-  const catalogMenuItems = config.catalogMenuCategories.map((category) =>
-    returnedList(category[0], category[1], category[2], classes.nested)
-  );
-
-  const promoMenuItems = config.promoMenuCategories.map((category) =>
-    returnedList(...category, classes.nested)
-  );
-
-  const staticPagesMenuItems = config.staticPagesCategories.map((category) =>
-    returnedList(category[0], category[1], category[2], classes.nested)
-  );
-
-  const constructorPagesMenuItems = config.constructorMenuCategories.map(
-    (category) =>
-      returnedList(category[0], category[1], category[2], classes.nested)
-  );
-
-  const certificatesMenuItems = config.certificatesMenuCategories.map(
-    (category) =>
-      returnedList(category[0], category[1], category[2], classes.nested)
-  );
-
-  const parentMenuTabsProperties = [
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          clientTab: !navbarTab.clientTab
-        }),
-      navbarTab.clientTab,
-      clientMenuItems,
-      MENU_TABS.CLIENTS,
-      AccessibilityNewIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          catalogTab: !navbarTab.catalogTab
-        }),
-      navbarTab.catalogTab,
-      catalogMenuItems,
-      MENU_TABS.CATALOG,
-      ImportContactsIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          certificatesTab: !navbarTab.certificatesTab
-        }),
-      navbarTab.certificatesTab,
-      certificatesMenuItems,
-      MENU_TABS.CERTIFICATES,
-      TuneIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          promoTab: !navbarTab.promoTab
-        }),
-      navbarTab.promoTab,
-      promoMenuItems,
-      MENU_TABS.PROMOCODE,
-      PromoIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          constructorTab: !navbarTab.constructorTab
-        }),
-      navbarTab.constructorTab,
-      constructorPagesMenuItems,
-      MENU_TABS.CONSTRUCTOR,
-      AccessibilityNewIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          materialsTab: !navbarTab.materialsTab
-        }),
-      navbarTab.materialsTab,
-      materialMenuItems,
-      MENU_TABS.MATERIALS,
-      ExtensionIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          staticTab: !navbarTab.staticTab
-        }),
-      navbarTab.staticTab,
-      staticPagesMenuItems,
-      MENU_TABS.STATIC_PAGES,
-      LayersIcon
-    ]
+  const createParentMenuTab = (tabName, itemsInMenu, TAB, icon) => [
+    () =>
+      setNavbarTab({
+        ...staticArray,
+        [tabName]: !navbarTab[tabName]
+      }),
+    navbarTab[tabName],
+    itemsInMenu,
+    MENU_TABS[TAB],
+    icon
   ];
 
-  const parentMenuItems = parentMenuTabsProperties.map((category) => {
-    const handleClick = category[0];
-    const stateMenu = category[1];
-    const subList = category[2];
-    const primary = category[3];
-    const ItemIcon = category[4];
+  const parentMenuTabsProperties = [
+    createParentMenuTab(
+      'clientTab',
+      clientMenuItems,
+      'CLIENTS',
+      AccessibilityNewIcon
+    ),
+    createParentMenuTab(
+      'catalogTab',
+      catalogMenuItems,
+      'CATALOG',
+      ImportContactsIcon
+    ),
+    createParentMenuTab(
+      'certificatesTab',
+      certificatesMenuItems,
+      'CERTIFICATES',
+      TuneIcon
+    ),
+    createParentMenuTab('promoTab', promoMenuItems, 'PROMOCODE', PromoIcon),
+    createParentMenuTab(
+      'constructorTab',
+      constructorPagesMenuItems,
+      'CONSTRUCTOR',
+      AccessibilityNewIcon
+    ),
+    createParentMenuTab(
+      'materialsTab',
+      materialMenuItems,
+      'MATERIALS',
+      ExtensionIcon
+    ),
+    createParentMenuTab(
+      'staticTab',
+      staticPagesMenuItems,
+      'STATIC_PAGES',
+      LayersIcon
+    )
+  ];
 
-    return (
-      <Fragment key={category.toString()}>
-        <ListItem button onClick={handleClick}>
+  const parentMenuItems = parentMenuTabsProperties.map(
+    ([handleClick, stateMenu, subList, primary, ItemIcon]) => (
+      <Fragment key={primary}>
+        <ListItem
+          button
+          onClick={handleClick}
+          disableGutters
+          className={classes.notNested}
+        >
           <ListItemIcon>
             <ItemIcon />
           </ListItemIcon>
           <ListItemText primary={primary} />
+          {subList === clientMenuItems && !stateMenu && (
+            <Badge
+              badgeContent={pendingQuestionsCount}
+              className={classes.badgeRight}
+              color='error'
+            />
+          )}
           {stateMenu ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={stateMenu} timeout='auto' unmountOnExit>
           <List>{subList}</List>
         </Collapse>
       </Fragment>
-    );
-  });
+    )
+  );
 
   const handleDrawerToggle = () => {
     dispatch(setSideMenuStatus(!sideMenuStatus));

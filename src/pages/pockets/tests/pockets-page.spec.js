@@ -11,6 +11,13 @@ import { config } from '../../../configs';
 jest.mock('connected-react-router', () => ({ push: () => 0 }));
 jest.mock('react-redux');
 
+jest.mock('../../../utils/use-success-snackbar', () => {
+  const snackBarMock = {
+    openSuccessSnackbar: (handler) => handler()
+  };
+  return jest.fn(() => snackBarMock);
+});
+
 const { NO_POCKET_MESSAGE } = config.messages;
 
 describe('UseEffect tests', () => {
@@ -82,5 +89,14 @@ describe('pockets-page tests', () => {
     }));
     wrapper = shallow(<PocketsPage />);
     expect(wrapper.text().includes(NO_POCKET_MESSAGE)).toBe(true);
+  });
+
+  it('should render without image and with unavailable text', () => {
+    mockPockets.items[0].images = {};
+    mockPockets.items[0].available = false;
+    useSelector.mockImplementation(() => mockPockets);
+    wrapper = shallow(<PocketsPage />);
+    expect(wrapper).toBeDefined();
+    expect(wrapper).toHaveLength(1);
   });
 });

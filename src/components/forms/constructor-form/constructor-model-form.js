@@ -7,7 +7,6 @@ import { useStyles } from './constructor-model-form.styles.js';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import { getCategories } from '../../../redux/categories/categories.actions';
-import { getSizes } from '../../../redux/sizes/sizes.actions';
 import ConstructorListAccordion from './constructor-list-accordion';
 import { getBottoms } from '../../../redux/bottom/bottom.actions.js';
 import { getAllBasics } from '../../../redux/basics/basics.actions.js';
@@ -44,13 +43,11 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
 
   const { createConstructor } = useConstructorHandlers();
 
-  const handleChange = (panel) => (event, isExpanded) => {
+  const handleChange = (panel) => (_event, isExpanded) => {
     setExpanded(isExpanded ? panel : '');
   };
 
   useEffect(() => {
-    dispatch(getSizes({ limit: null }));
-
     dispatch(getCategories({}));
   }, [dispatch]);
 

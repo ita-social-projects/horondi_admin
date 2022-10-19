@@ -6,7 +6,7 @@ const useConstructorHandlers = () => {
   const [imageName, setImageName] = useState('');
   const [uploadConstructorImg, setUploadConstructorImg] = useState('');
 
-  const handleTabsChange = (event, newValue) => {
+  const handleTabsChange = (_event, newValue) => {
     setTabsValue(newValue);
   };
 

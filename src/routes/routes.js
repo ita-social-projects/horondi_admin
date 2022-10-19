@@ -33,9 +33,6 @@ import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import PatternPage from '../pages/pattern';
 import Comments from '../pages/comments/comments';
-import Sizes from '../pages/sizes/sizes';
-import SizeAdd from '../pages/sizes/sizes-add/size-add';
-import SizeEdit from '../pages/sizes/sizes-edit/size-edit';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
@@ -60,9 +57,6 @@ import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
 import NewsDetails from '../pages/news/news-details/news-details';
 import NewsAdd from '../pages/news/news-add/news-add';
-import ConstructorPage from '../pages/model/constructor/constructor-page';
-import ConstructorAdd from '../pages/model/constructor/constructor-add';
-import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 import ReplyCommentEdit from '../pages/comments/comment-edit/replyComments/reply-comment-edit';
 import History from '../pages/history';
@@ -73,7 +67,7 @@ import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 import BackPage from '../pages/back';
 import BottomPage from '../pages/bottom';
 import BackAdd from '../pages/back/back-add';
-import BackDetails from '../pages/back/back-details';
+import BackDetails from '../pages/back/back-edit';
 import PositionPage from '../pages/position/position-page';
 import PositionAdd from '../pages/position/position-add';
 import PositionEdit from '../pages/position/position-edit';
@@ -86,7 +80,7 @@ import BottomAdd from '../pages/bottom/bottom-add';
 import BottomEdit from '../pages/bottom/bottom-edit';
 import BasicsPage from '../pages/basics/basics-page';
 import BasicAdd from '../pages/basics/basic-add';
-import BasicDetails from '../pages/basics/basic-details';
+import BasicDetails from '../pages/basics/basic-edit';
 import StrapsPage from '../pages/straps/straps-page';
 import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
@@ -98,6 +92,7 @@ import PromoCodeEdit from '../pages/promo-code/promo-code-edit/promo-code-edit';
 import PromoCodePage from '../pages/promo-code/promo-code-page';
 import MaterialAboutAdd from '../pages/material/material-about-add';
 import MaterialAbout from '../pages/material/material-about';
+import MaterialAboutDetails from '../pages/material/material-about-details';
 import CertificatesPage from '../pages/certificates';
 
 const { routes } = config;
@@ -195,9 +190,28 @@ const Routes = ({ validatorMethods }) => {
             )}
           />
           <Route
-            path={routes.pathToAboutMaterialsAdd}
+            path={routes.pathToAboutMaterialsMainAdd}
             exact
-            component={MaterialAboutAdd}
+            render={(props) => (
+              <MaterialAboutAdd {...props} currentType='main' />
+            )}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsBottomAdd}
+            exact
+            render={(props) => (
+              <MaterialAboutAdd {...props} currentType='bottom' />
+            )}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsMainDetails}
+            exact
+            render={(props) => <MaterialAboutDetails {...props} />}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsBottomDetails}
+            exact
+            render={(props) => <MaterialAboutDetails {...props} />}
           />
           <Route
             path={routes.pathToCreateCertificates}
@@ -314,13 +328,6 @@ const Routes = ({ validatorMethods }) => {
           />
           <Route path={routes.pathToCategories} exact component={Categories} />
           <Route path={routes.pathToComments} exact component={Comments} />
-          <Route path={routes.pathToSizes} exact component={Sizes} />
-          <Route path={routes.pathToAddSize} exact component={SizeAdd} />
-          <Route
-            path={routes.pathToEditSize}
-            exact
-            render={({ match }) => <SizeEdit id={match.params.id} />}
-          />
 
           <Route
             path={routes.pathToRegisterAdmin}
@@ -372,24 +379,9 @@ const Routes = ({ validatorMethods }) => {
             component={SlideDetails}
           />
           <Route
-            path={routes.pathToConstructor}
-            exact
-            component={ConstructorPage}
-          />
-          <Route
-            path={routes.pathToAddConstructor}
-            exact
-            component={ConstructorAdd}
-          />
-          <Route
             path={routes.pathToEditConstructor}
             exact
             component={constructorEdit}
-          />
-          <Route
-            path={routes.pathToConstructorDetails}
-            exact
-            component={ConstructorDetails}
           />
           <Route
             path={routes.pathToCommentsEdit}

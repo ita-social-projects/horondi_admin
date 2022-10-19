@@ -5,7 +5,7 @@ const useUserHandlers = () => {
   const [userImage, setUserImage] = useState('');
   const [upload, setUpload] = useState({});
   const [imageName] = useState('');
-  const handleTabsChange = (event, newValue) => {
+  const handleTabsChange = (_event, newValue) => {
     setTabsValue(newValue);
   };
 

@@ -35,11 +35,14 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-  const tableCells = Object.keys(properties).map((property) => (
-    <TableCell key={property} data-cy='table-cell'>
-      {properties[property]}
-    </TableCell>
-  ));
+  const tableCells = Object.entries(properties).map(
+    ([key, value]) =>
+      value && (
+        <TableCell key={key} data-cy='table-cell'>
+          {properties[key]}
+        </TableCell>
+      )
+  );
 
   const setCheckboxValue = (idToFind) => {
     const checked = checkBoxValue.find((item) => item === idToFind);
@@ -71,7 +74,7 @@ const TableContainerRow = ({
       {tableCells}
       {text && (
         <TableCell>
-          <p className={classes.text}>{text}</p>
+          <div className={classes.text}>{text}</div>
         </TableCell>
       )}
       {!showAvatar && image && (
@@ -104,7 +107,7 @@ const TableContainerRow = ({
 };
 
 TableContainerRow.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
@@ -120,8 +123,8 @@ TableContainerRow.propTypes = {
 
 TableContainerRow.defaultProps = {
   id: '',
-  text: '',
-  image: '',
+  text: null,
+  image: null,
   deleteHandler: noop,
   editHandler: noop,
   clickHandler: noop,

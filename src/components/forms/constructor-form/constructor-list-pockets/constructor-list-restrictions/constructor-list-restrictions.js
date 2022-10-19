@@ -175,7 +175,7 @@ const ConstructorListRestrictions = ({
               <Checkbox
                 color='default'
                 inputProps={{ 'aria-label': 'checkbox with default color' }}
-                onChange={(e) =>
+                onChange={(_e) =>
                   checkboxChangeHandler(pocketPosition._id, pocket._id)
                 }
                 checked={findCheckboxRestriction(

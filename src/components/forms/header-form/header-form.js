@@ -29,7 +29,7 @@ const HeaderForm = ({ header, id }) => {
   const { tabsValue, handleTabsChange, createHeader } = useHeaderHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
+      ? languages.map((lang) => <Tab label={lang} key={lang} />)
       : null;
 
   const headerValidationSchema = Yup.object().shape({

@@ -56,7 +56,7 @@ export const TablePaginator = () => {
     }
   });
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_event, newPage) => {
     dispatch(setCurrentPage(newPage));
   };
 

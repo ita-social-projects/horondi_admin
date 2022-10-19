@@ -96,6 +96,9 @@ export const getOrderById = (id) => {
 						isFromConstructor
 						fixedPrice
 					}
+					itemsPriceWithDiscount
+					promoCodeId
+					itemsDiscount
 					paymentMethod
 					paymentStatus
 					isPaid
@@ -166,6 +169,7 @@ export const updateOrder = (order, id) => {
 						options {
 							size {
 								_id
+								name
 							}
 							sidePocket
 						}
@@ -175,6 +179,9 @@ export const updateOrder = (order, id) => {
 					paymentMethod
 					paymentStatus
 					isPaid
+					itemsPriceWithDiscount
+					promoCodeId
+					itemsDiscount
 				}
 				...on Error {
 					statusCode

@@ -28,6 +28,6 @@ const formRegExp = {
   postCode: /^\d{5}(?:[-\\s]\\d{4})?$/,
   promoCodeName: /[a-z]{2,}\w*/i,
   promoCodeDiscountMultiple: /^\d*[05]$/,
-  promoCodeDiscountPositive: /^[1-9][0-9]*$/
+  promoCodeDiscountPositive: /^[1-9]\d*$/
 };
 export default formRegExp;

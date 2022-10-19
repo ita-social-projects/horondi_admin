@@ -96,8 +96,8 @@ export const productsErrors = {
 export const userTranslations = {
   USER_IS_BLOCKED: 'Користувача заблоковано',
   WRONG_CREDENTIALS: 'Неправильний логін або пароль',
-  INVALID_PERMISSIONS: 'Неправильний логін або пароль',
-  USER_NOT_FOUND: 'Неправильний логін або пароль'
+  INVALID_PERMISSIONS: 'Недостатньо прав для доступу',
+  USER_NOT_FOUND: 'Користувача не знайдено'
 };
 
 export const errorStatuses = {

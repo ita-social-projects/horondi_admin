@@ -2,19 +2,22 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import BottomForm from '../../../components/forms/bottom-form';
-import { getBottom } from '../../../redux/bottom/bottom.actions';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
+import { getBottom, updateBottom } from '../../../redux/bottom/bottom.actions';
 import { useCommonStyles } from '../../common.styles';
 import { bottomSelector } from '../../../redux/selectors/bottom.selectors';
 import LoadingBar from '../../../components/loading-bar';
+import { config } from '../../../configs';
 
 const BottomEdit = ({ match }) => {
   const { id } = match.params;
-
   const common = useCommonStyles();
-
   const dispatch = useDispatch();
   const { bottom, loading } = useSelector(bottomSelector);
+
+  const { pathToBottoms } = config.routes;
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.bottom;
 
   useEffect(() => {
     dispatch(getBottom(id));
@@ -26,33 +29,26 @@ const BottomEdit = ({ match }) => {
 
   return (
     <div className={common.detailsContainer}>
-      {bottom !== null ? <BottomForm id={id} edit bottom={bottom} /> : null}
+      {bottom ? (
+        <ConstructorFormContainer
+          id={id}
+          edit
+          part={bottom}
+          partItemKey={partItemKey}
+          pathBack={pathToBottoms}
+          dispatchAction={updateBottom}
+        />
+      ) : null}
     </div>
   );
 };
 
-const valueShape = PropTypes.shape({
-  value: PropTypes.string
-});
 BottomEdit.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  }).isRequired,
-  bottom: PropTypes.shape({
-    _id: PropTypes.string,
-    available: PropTypes.bool,
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
-    material: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape)
-  })
-};
-
-BottomEdit.defaultProps = {
-  bottom: {}
+  }).isRequired
 };
 
 export default withRouter(BottomEdit);

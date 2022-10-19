@@ -12,7 +12,11 @@ import {
   getUkrPostRegions
 } from '../../../../../redux/orders/orders.actions';
 import configs from '../../../../../configs/orders';
-import { postPropTypes, POST_OFFICE_NUMBER } from '../../../../../utils/order';
+import {
+  inputName,
+  postPropTypes,
+  POST_OFFICE_NUMBER
+} from '../../../../../utils/order';
 import {
   handleCircularProgress,
   handleCity,
@@ -21,8 +25,12 @@ import {
   handleRegion,
   handleInputValue
 } from '../../../../../utils/handle-orders-page';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
 
-const UkrPost = ({ values, setFieldValue }) => {
+const UkrPost = ({ values, setFieldValue, inputOptions }) => {
   const { materialUiConstants } = config;
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = configs;
 
@@ -50,7 +58,9 @@ const UkrPost = ({ values, setFieldValue }) => {
 
   useEffect(() => {
     dispatch(getUkrPostRegions());
-  }, []);
+  }, [dispatch]);
+
+  const { handleBlur, touched, errors } = inputOptions;
 
   const [region, setRegion] = useState('');
   const [district, setDistrict] = useState('');
@@ -79,13 +89,14 @@ const UkrPost = ({ values, setFieldValue }) => {
       <h3 className={styles.ukrPostTitle}>{deliveryTitles.ukrPost}</h3>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          id={inputName.ukrPost.region}
+          onInputChange={(_e, value) => {
             setRegion(value);
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
           onFocus={() => setRegionFocus(true)}
           onBlur={() => setRegionFocus(false)}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handleRegion(
               value,
               setFieldValue,
@@ -119,13 +130,14 @@ const UkrPost = ({ values, setFieldValue }) => {
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          id={inputName.ukrPost.district}
+          onInputChange={(_e, value) => {
             setDistrict(value);
           }}
           onFocus={() => setDistrictFocus(true)}
           onBlur={() => setDistrictFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handleDistrict(value, setFieldValue, setCity, setPostOffice);
           }}
           disabled={!values.regionId}
@@ -157,13 +169,17 @@ const UkrPost = ({ values, setFieldValue }) => {
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          id={inputName.ukrPost.city}
+          onInputChange={(_e, value) => {
             setCity(value);
           }}
           onFocus={() => setCityFocus(true)}
-          onBlur={() => setCityFocus(false)}
+          onBlur={(e) => {
+            setCityFocus(false);
+            handleBlur(e);
+          }}
           noOptionsText={deliveryAdditionalInfo.noOneCity}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handleCity(value, setFieldValue, setPostOffice);
           }}
           disabled={!values.districtId}
@@ -175,6 +191,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             <TextField
               {...params}
               label={deliveryLabels.city}
+              error={isFieldError(inputName.ukrPost.city, errors, touched)}
               variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
@@ -188,18 +205,27 @@ const UkrPost = ({ values, setFieldValue }) => {
             />
           )}
         />
+        {isFieldError(inputName.ukrPost.city, errors, touched) && (
+          <div className={styles.error} data-testid={inputName.ukrPost.city}>
+            {getError(inputName.ukrPost.city, errors)}
+          </div>
+        )}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
-          onInputChange={(e, value) => {
+          id={inputName.ukrPost.courierOffice}
+          onInputChange={(_e, value) => {
             setPostOffice(value);
           }}
           noOptionsText={deliveryAdditionalInfo.noOneDepartment}
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             handlePostOffice(value, setPostOffice, setFieldValue);
           }}
           onFocus={() => setDepartmentFocus(true)}
-          onBlur={() => setDepartmentFocus(false)}
+          onBlur={(e) => {
+            setDepartmentFocus(false);
+            handleBlur(e);
+          }}
           disabled={!values.cityId}
           options={ukrPoshtaPostOffices}
           inputValue={handleInputValue(
@@ -218,6 +244,11 @@ const UkrPost = ({ values, setFieldValue }) => {
               {...params}
               label={deliveryLabels.department}
               variant={materialUiConstants.outlined}
+              error={isFieldError(
+                inputName.ukrPost.courierOffice,
+                errors,
+                touched
+              )}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -230,6 +261,14 @@ const UkrPost = ({ values, setFieldValue }) => {
             />
           )}
         />
+        {isFieldError(inputName.ukrPost.courierOffice, errors, touched) && (
+          <div
+            className={styles.error}
+            data-testid={inputName.ukrPost.courierOffice}
+          >
+            {getError(inputName.ukrPost.courierOffice, errors)}
+          </div>
+        )}
       </div>
     </div>
   );

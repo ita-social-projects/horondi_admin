@@ -3,7 +3,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
+import { filter, debounce } from 'lodash';
 
 import { config } from '../../../../../configs';
 import { useStyles } from './nova-post.styles';
@@ -13,8 +13,12 @@ import {
   getNovaPoshtaWarehouse
 } from '../../../../../redux/orders/orders.actions';
 import { inputName, POSTOMAT, postPropTypes } from '../../../../../utils/order';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
 
-const NovaPost = ({ setFieldValue, values }) => {
+const NovaPost = ({ setFieldValue, values, inputOptions }) => {
   const { materialUiConstants } = config;
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = configs;
   const dispatch = useDispatch();
@@ -26,6 +30,8 @@ const NovaPost = ({ setFieldValue, values }) => {
     warehouses: Orders.warehouses
   }));
 
+  const { handleBlur, touched, errors } = inputOptions;
+
   const [inputValue, setInputValue] = useState('');
   const [selectedCity, setSelectedCity] = useState(values.city);
   const [wareHouse, setWarehouse] = useState('');
@@ -33,7 +39,7 @@ const NovaPost = ({ setFieldValue, values }) => {
   const [departmentFocus, setDepartmentFocus] = useState(false);
 
   const getPostCities = useCallback(
-    _.debounce((value) => {
+    debounce((value) => {
       dispatch(getNovaPoshtaCities(value));
     }, 500),
     [dispatch, getNovaPoshtaCities]
@@ -50,14 +56,18 @@ const NovaPost = ({ setFieldValue, values }) => {
       <div className={styles.novaPostData}>
         <div className={styles.selectorInfo}>
           <Autocomplete
+            id={inputName.novaPost.city}
             onFocus={() => setCityFocus(true)}
-            onBlur={() => setCityFocus(false)}
-            onInputChange={(e, value) => {
+            onBlur={(e) => {
+              setCityFocus(false);
+              handleBlur(e);
+            }}
+            onInputChange={(_e, value) => {
               setInputValue(value);
               getPostCities(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneCity}
-            onChange={(event, value) => {
+            onChange={(_event, value) => {
               if (value) {
                 setSelectedCity(value.description);
                 setFieldValue(inputName.novaPost.city, value.description);
@@ -77,6 +87,7 @@ const NovaPost = ({ setFieldValue, values }) => {
                 {...params}
                 label={deliveryLabels.city}
                 variant={materialUiConstants.outlined}
+                error={isFieldError(inputName.novaPost.city, errors, touched)}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -89,16 +100,22 @@ const NovaPost = ({ setFieldValue, values }) => {
               />
             )}
           />
+          {isFieldError(inputName.novaPost.city, errors, touched) && (
+            <div className={styles.error} data-testid={inputName.novaPost.city}>
+              {getError(inputName.novaPost.city, errors)}
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.novaPostData}>
         <div className={styles.selectorInfo}>
           <Autocomplete
-            onInputChange={(event, value) => {
+            id={inputName.novaPost.courierOffice}
+            onInputChange={(_event, value) => {
               setWarehouse(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneDepartment}
-            onChange={(event, value) => {
+            onChange={(_event, value) => {
               if (value) {
                 setFieldValue(
                   inputName.novaPost.courierOffice,
@@ -110,9 +127,12 @@ const NovaPost = ({ setFieldValue, values }) => {
               }
             }}
             onFocus={() => setDepartmentFocus(true)}
-            onBlur={() => setDepartmentFocus(false)}
+            onBlur={(e) => {
+              setDepartmentFocus(false);
+              handleBlur(e);
+            }}
             disabled={!selectedCity}
-            options={_.filter(
+            options={filter(
               warehouses,
               (warehouseItem) => !warehouseItem.description.includes(POSTOMAT)
             )}
@@ -124,6 +144,11 @@ const NovaPost = ({ setFieldValue, values }) => {
                 {...params}
                 label={deliveryLabels.department}
                 variant={materialUiConstants.outlined}
+                error={isFieldError(
+                  inputName.novaPost.courierOffice,
+                  errors,
+                  touched
+                )}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -136,6 +161,14 @@ const NovaPost = ({ setFieldValue, values }) => {
               />
             )}
           />
+          {isFieldError(inputName.novaPost.courierOffice, errors, touched) && (
+            <div
+              className={styles.error}
+              data-testid={inputName.novaPost.courierOffice}
+            >
+              {getError(inputName.novaPost.courierOffice, errors)}
+            </div>
+          )}
         </div>
       </div>
     </div>

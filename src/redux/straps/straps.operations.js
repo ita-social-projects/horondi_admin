@@ -11,6 +11,13 @@ export const getAllStraps = async (limit, skip, filter) => {
             value
           }
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -27,6 +34,7 @@ export const getAllStraps = async (limit, skip, filter) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         count
       }
@@ -50,6 +58,13 @@ export const createStrap = async (payload) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -66,6 +81,7 @@ export const createStrap = async (payload) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         ... on Error {
           message
@@ -112,6 +128,13 @@ export const getStrapById = async (id) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -128,6 +151,7 @@ export const getStrapById = async (id) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         ... on Error {
           statusCode
@@ -154,8 +178,19 @@ export const updateStrap = async (id, strap, image) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
+              name {
+                lang
+                value
+              }
             }
           }
           images {
@@ -166,6 +201,7 @@ export const updateStrap = async (id, strap, image) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         ... on Error {
           message

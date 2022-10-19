@@ -11,8 +11,8 @@ export const getAllPositions = async (limit, skip, filter) => {
                                 value
                             }
                             available
-                            }
-                            count
+                            optionType
+                          }
                         }
                       }
                     }
@@ -51,6 +51,7 @@ export const addPosition = async (payload) => {
                           value
                         }
                         available
+                        optionType
                       }
                       ... on Error {
                         message
@@ -75,6 +76,7 @@ export const getPositionById = async (id) => {
                           value
                         }
                         available
+                        optionType
                       }
                       ... on Error {
                         statusCode

@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactHtmlParser from 'react-html-parser';
 
 import { useStyles } from './material-page.styles';
 import { useCommonStyles } from '../common.styles';
@@ -18,12 +19,14 @@ import { config } from '../../configs';
 import LoadingBar from '../../components/loading-bar';
 
 const tableTitles = config.tableHeadRowTitles.materialsAbout;
-
-const { pathToAboutMaterialsAdd } = config.routes;
+const { IMG_URL } = config;
+const { pathToAboutMaterialsMainAdd, pathToAboutMaterialsBottomAdd } =
+  config.routes;
 const { CREATE_MATERIAL_TITLE_BLOCK } = buttonTitles;
 
 const MaterialAbout = ({ currentType }) => {
   const styles = useStyles();
+  const history = useHistory();
   const common = useCommonStyles();
   const dispatch = useDispatch();
   const { data, refetch, loading } = useQuery(GET_MATERIALS_BLOCKS_BY_TYPE, {
@@ -60,15 +63,22 @@ const MaterialAbout = ({ currentType }) => {
   const aboutMaterialItems = materialsData.items
     ? materialsData.items.map(({ _id, title, text, image }) => (
         <TableContainerRow
-          image={image}
+          image={`${IMG_URL}${image?.thumbnail}`}
           key={_id}
           title={title}
-          text={text[0].value}
+          text={ReactHtmlParser(text[0].value)}
           deleteHandler={() => openDeleteModalHandler(_id)}
-          editHandler={() => null}
+          editHandler={() => {
+            history.push(`/about-materials-${currentType}/${_id}`);
+          }}
         />
       ))
     : null;
+
+  const pathToAboutMaterialsAdd =
+    currentType === 'main'
+      ? pathToAboutMaterialsMainAdd
+      : pathToAboutMaterialsBottomAdd;
 
   if (loading) {
     return <LoadingBar />;
@@ -90,6 +100,7 @@ const MaterialAbout = ({ currentType }) => {
           component={Link}
           variant='contained'
           color='primary'
+          to={pathToAboutMaterialsAdd}
         >
           {CREATE_MATERIAL_TITLE_BLOCK}
         </Button>

@@ -70,8 +70,9 @@ export const setMaterialFilter = (payload) => ({
   payload
 });
 
-export const getMaterialsByPurpose = () => ({
-  type: GET_MATERIALS_BY_PURPOSE
+export const getMaterialsByPurpose = (payload) => ({
+  type: GET_MATERIALS_BY_PURPOSE,
+  payload
 });
 
 export const setMaterialsByPurpose = (payload) => ({

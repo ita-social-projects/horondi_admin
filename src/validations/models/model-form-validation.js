@@ -5,6 +5,7 @@ const { NO_STRING_TYPE_MESSAGE } = config.modelErrorMessages;
 
 const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, UA_NAME_MESSAGE, EN_NAME_MESSAGE } =
   config.commonErrorMessages;
+const { NO_SIZES_PROVIDED } = config.sizeErrorMessages;
 
 export const modelValidationSchema = Yup.object().shape({
   enDescription: Yup.string()
@@ -27,5 +28,5 @@ export const modelValidationSchema = Yup.object().shape({
     .required(ERROR_MESSAGE),
   priority: Yup.number().required(ERROR_MESSAGE),
   category: Yup.string().required(ERROR_MESSAGE),
-  sizes: Yup.string().required(ERROR_MESSAGE)
+  sizes: Yup.array().required(NO_SIZES_PROVIDED)
 });

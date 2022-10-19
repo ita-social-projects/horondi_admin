@@ -33,9 +33,9 @@ export const deleteCertificateById = gql`
   }
 `;
 
-export const updateCertificateByName = gql`
-  mutation ($name: String!) {
-    updateCertificate(name: $name) {
+export const updateCertificateStatus = gql`
+  mutation ($params: CertificateInput!, $statusUpdate: String) {
+    updateCertificate(params: $params, statusUpdate: $statusUpdate) {
       ... on Certificate {
         name
       }

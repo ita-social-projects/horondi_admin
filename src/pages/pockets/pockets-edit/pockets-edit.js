@@ -1,19 +1,27 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-
-import { useStyles } from './pockets-edit.styles';
-import LoadingBar from '../../../components/loading-bar';
-import PocketsForm from '../../../components/forms/pockets-form/pockets-form';
-import { getPocket } from '../../../redux/pockets/pockets.actions';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
+import {
+  getPocket,
+  updatePocket
+} from '../../../redux/pockets/pockets.actions';
+import { useCommonStyles } from '../../common.styles';
 import { pocketsSelector } from '../../../redux/selectors/pockets.selectors';
+import LoadingBar from '../../../components/loading-bar';
+import { config } from '../../../configs';
 
 const PocketsEdit = ({ match }) => {
-  const dispatch = useDispatch();
-  const styles = useStyles();
-  const { loading, pocket } = useSelector(pocketsSelector);
-
   const { id } = match.params;
+
+  const common = useCommonStyles();
+  const dispatch = useDispatch();
+  const { pocket, loading } = useSelector(pocketsSelector);
+
+  const { pathToPockets } = config.routes;
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.pocket;
 
   useEffect(() => {
     dispatch(getPocket(id));
@@ -24,20 +32,27 @@ const PocketsEdit = ({ match }) => {
   }
 
   return (
-    <div className={styles.container}>
-      {pocket !== null ? <PocketsForm id={id} edit pocket={pocket} /> : null}
+    <div className={common.detailsContainer}>
+      {pocket ? (
+        <ConstructorFormContainer
+          id={id}
+          edit
+          part={pocket}
+          partItemKey={partItemKey}
+          pathBack={pathToPockets}
+          dispatchAction={updatePocket}
+        />
+      ) : null}
     </div>
   );
 };
 
 PocketsEdit.propTypes = {
-  id: PropTypes.string,
-  match: PropTypes.objectOf(PropTypes.object)
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
-PocketsEdit.defaultProps = {
-  id: '',
-  match: {}
-};
-
-export default PocketsEdit;
+export default withRouter(PocketsEdit);

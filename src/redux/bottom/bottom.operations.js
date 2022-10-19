@@ -30,13 +30,14 @@ export const getAllBottoms = async (limit, skip, filter) => {
                 }
               }
             }
-            images{
+            images {
                 thumbnail
                 medium
                 small
                 large
             }
             absolutePrice
+            relativePrice
             available
           }
           count
@@ -91,13 +92,14 @@ export const getBottomById = async (id) => {
                     }
                   }
                 }
-                images{
+                images {
                     thumbnail
                     medium
                     small
                     large
                 }
                 absolutePrice
+                relativePrice
                 available
             }
             ... on Error {
@@ -204,13 +206,14 @@ export const updateBottom = async (payload) => {
                 }
               }
             }
-            images{
+            images {
                 thumbnail
                 medium
                 small
                 large
             }
             absolutePrice
+            relativePrice
             available  
           }
         }

@@ -6,7 +6,7 @@ const { languages } = config;
 const useColorHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
 
-  const handleTabsChange = (event, newValue) => {
+  const handleTabsChange = (_event, newValue) => {
     setTabsValue(newValue);
   };
   const createColor = (values) => ({

@@ -1,22 +1,30 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-import BasicsForm from '../../../components/forms/basics-form';
-import { useStyles } from './basic-add.styles';
-import { basicsSelector } from '../../../redux/selectors/basics.selectors';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
 import LoadingBar from '../../../components/loading-bar';
+import { basicsSelector } from '../../../redux/selectors/basics.selectors';
+import { useCommonStyles } from '../../common.styles';
+import { config } from '../../../configs';
+import { addBasic } from '../../../redux/basics/basics.actions';
 
 const BasicAdd = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
   const { loading } = useSelector(basicsSelector);
+  const { pathToBasics } = config.routes;
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.basic;
 
   if (loading) {
     return <LoadingBar />;
   }
 
   return (
-    <div className={styles.container}>
-      <BasicsForm />
+    <div className={common.detailsContainer}>
+      <ConstructorFormContainer
+        partItemKey={partItemKey}
+        pathBack={pathToBasics}
+        dispatchAction={addBasic}
+      />
     </div>
   );
 };
