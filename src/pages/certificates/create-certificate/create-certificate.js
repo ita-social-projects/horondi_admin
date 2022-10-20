@@ -78,11 +78,17 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && check && email) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    const timerId = setTimeout(() => {
+      if (!isInvalid && check && email) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    }, [700]);
+
+    return () => {
+      clearTimeout(timerId);
+    };
   }, [isInvalid, checkBoxes, email]);
 
   const disabledDate = (pickedDate) => {
