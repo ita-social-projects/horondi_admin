@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { push } from 'connected-react-router';
-import { Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Button, Typography } from '@material-ui/core';
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './promo-code-page.styles';
@@ -21,6 +22,7 @@ import usePromoCodeFilters from '../../hooks/filters/use-promo-code-filters';
 import FilterNavbar from '../../components/filter-search-sort';
 
 const pathToAddPromoCodePage = config.routes.pathToAddPromoCode;
+const { CREATE_PROMOCODE_TITLE } = config.buttonTitles;
 const tableTitles = config.tableHeadRowTitles.promoCodes;
 
 const PromoCodePage = () => {
@@ -135,6 +137,15 @@ const PromoCodePage = () => {
         >
           {config.titles.promoPageTitles.mainPageTitle}
         </Typography>
+        <Button
+          data-cy='add-certificate'
+          component={Link}
+          to={pathToAddPromoCodePage}
+          variant='contained'
+          color='primary'
+        >
+          {CREATE_PROMOCODE_TITLE}
+        </Button>
       </div>
       <FilterNavbar options={promoCodeFilters} />
       <TableContainerGenerator
