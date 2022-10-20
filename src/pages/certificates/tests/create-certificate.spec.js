@@ -32,7 +32,7 @@ describe('test certificates Emulation and Generation', () => {
     expect(h5).toHaveTextContent('1');
   });
 
-  it('should render table component', () => {
+  it('should render table component', async () => {
     const { getAllByRole } = screen;
     const input = document.querySelector('.MuiInputBase-input');
 
@@ -41,6 +41,7 @@ describe('test certificates Emulation and Generation', () => {
     userEvent.click(getAllByRole('checkbox')[0]);
     fireEvent.change(input, { target: { value: 'john.dee@someemail.com' } });
     fireEvent.focusOut(input);
+    await new Promise((resolve) => setTimeout(resolve, 700));
     userEvent.click(screen.getByTestId('emulate'));
 
     expect(screen.getByTestId('table')).toBeInTheDocument();
@@ -51,8 +52,13 @@ describe('test certificates Emulation and Generation', () => {
   });
 
   describe('test Bulk Generation', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
+      const input = document.querySelector('.MuiInputBase-input');
+
       userEvent.click(screen.getAllByRole('checkbox')[0]);
+      fireEvent.change(input, { target: { value: 'john.dee@someemail.com' } });
+      fireEvent.focusOut(input);
+      await new Promise((resolve) => setTimeout(resolve, 700));
       userEvent.click(screen.getByTestId('emulate'));
 
       userEvent.click(screen.getByRole('button', { name: /bulkGenerate/ }));
@@ -63,9 +69,8 @@ describe('test certificates Emulation and Generation', () => {
     });
 
     it('should render new table', async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
-      expect(await screen.findByText('HOR12345678')).toBeInTheDocument();
+      const text = await screen.findByText('HOR###');
+      expect(text).toBeInTheDocument();
     });
   });
 
