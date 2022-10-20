@@ -9,6 +9,9 @@ export const useStyles = makeStyles(() => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    '@media (max-width: 450px)': {
+      display: 'block'
+    }
   }
 }));
