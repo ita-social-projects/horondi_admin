@@ -32,7 +32,7 @@ describe('test certificates Emulation and Generation', () => {
     expect(h5).toHaveTextContent('1');
   });
 
-  it('should render table component', async () => {
+  it('should render table component', () => {
     const { getAllByRole } = screen;
     const input = document.querySelector('.MuiInputBase-input');
 
@@ -41,7 +41,6 @@ describe('test certificates Emulation and Generation', () => {
     userEvent.click(getAllByRole('checkbox')[0]);
     fireEvent.change(input, { target: { value: 'john.dee@someemail.com' } });
     fireEvent.focusOut(input);
-    await new Promise((resolve) => setTimeout(resolve, 700));
     userEvent.click(screen.getByTestId('emulate'));
 
     expect(screen.getByTestId('table')).toBeInTheDocument();
@@ -52,15 +51,12 @@ describe('test certificates Emulation and Generation', () => {
   });
 
   describe('test Bulk Generation', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       const input = document.querySelector('.MuiInputBase-input');
-
       userEvent.click(screen.getAllByRole('checkbox')[0]);
       fireEvent.change(input, { target: { value: 'john.dee@someemail.com' } });
       fireEvent.focusOut(input);
-      await new Promise((resolve) => setTimeout(resolve, 700));
       userEvent.click(screen.getByTestId('emulate'));
-
       userEvent.click(screen.getByRole('button', { name: /bulkGenerate/ }));
     });
 
@@ -80,16 +76,8 @@ describe('test certificates Emulation and Generation', () => {
       userEvent.type(input, '42');
     });
 
-    it('should not show error if there are no delay', () => {
+    it('should show error', () => {
       const errorMessage = screen.queryByText(/Некоректна email адреса/gi);
-
-      expect(errorMessage).not.toBeInTheDocument();
-    });
-
-    it('should show error after >500ms', async () => {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      const errorMessage = screen.queryByText(/Некоректна email адреса/gi);
-
       expect(errorMessage).toBeInTheDocument();
     });
   });
