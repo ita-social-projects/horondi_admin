@@ -78,12 +78,12 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && check && email) {
+    if (date && check && email) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [isInvalid, checkBoxes, email]);
+  }, [date, checkBoxes, email]);
 
   const disabledDate = (pickedDate) => {
     const yesterday = new Date();
@@ -212,6 +212,7 @@ const CreateCertificate = () => {
               size='lg'
               format='D/MM/YYYY'
               value={date}
+              data-testid='datePicker'
               disabledDate={disabledDate}
               onChange={(newValue) => {
                 setDate(newValue);
