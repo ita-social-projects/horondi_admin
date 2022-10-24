@@ -72,7 +72,7 @@ const EditProductForm = ({
     newValue.options.size.price = size.price;
     newValue.options.size.name = size.name;
     newValue.quantity = quantity;
-    setFieldValue(inputName.itemsName, [
+    setFieldValue(inputName.items, [
       ...items.slice(0, index),
       newValue,
       ...items.slice(index + 1)
