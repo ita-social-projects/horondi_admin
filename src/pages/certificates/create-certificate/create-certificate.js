@@ -78,12 +78,12 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && check) {
+    if (date && check && email) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [isInvalid, checkBoxes, email]);
+  }, [date, checkBoxes, email]);
 
   const disabledDate = (pickedDate) => {
     const yesterday = new Date();
@@ -129,17 +129,9 @@ const CreateCertificate = () => {
   };
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (email.length > 1) {
-        email.match(formRegExp.email)
-          ? setIsInvalid(false)
-          : setIsInvalid(true);
-      }
-    }, [500]);
-
-    return () => {
-      clearTimeout(timerId);
-    };
+    if (email.length > 1) {
+      email.match(formRegExp.email) ? setIsInvalid(false) : setIsInvalid(true);
+    }
   }, [email]);
 
   const expireDate = date ? new Date(date) : new Date();
@@ -220,6 +212,7 @@ const CreateCertificate = () => {
               size='lg'
               format='D/MM/YYYY'
               value={date}
+              data-testid='datePicker'
               disabledDate={disabledDate}
               onChange={(newValue) => {
                 setDate(newValue);
