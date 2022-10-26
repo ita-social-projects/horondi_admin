@@ -2,7 +2,8 @@ import * as Yup from 'yup';
 import {
   phoneNumberRegex,
   userNameRegex,
-  onlyNumbersRegex
+  onlyNumbersRegex,
+  phoneNumberWithoutLettersRegex
 } from '../../configs/regexes';
 import { inputName } from '../../utils/order';
 import ordersConfig from '../../configs/orders';
@@ -14,7 +15,8 @@ const {
   ERROR_MESSAGE,
   NAME_MESSAGE
 } = config.commonErrorMessages;
-const { PHONE_NUMBER_TYPE_MESSAGE } = config.contactErrorMessages;
+const { PHONE_NUMBER_TYPE_MESSAGE, INVALID_PHONE_MESSAGE } =
+  config.contactErrorMessages;
 const { MUST_BE_NUMBER } = config.paginationInputErrorMessages;
 const { USER_INVALID_EMAIL_MESSAGE } = config.userErrorMessages;
 
@@ -67,7 +69,8 @@ export const validationSchema = Yup.object().shape({
       .required(ERROR_MESSAGE),
     phoneNumber: Yup.string()
       .trim()
-      .matches(phoneNumberRegex, PHONE_NUMBER_TYPE_MESSAGE)
+      .matches(phoneNumberWithoutLettersRegex, PHONE_NUMBER_TYPE_MESSAGE)
+      .matches(phoneNumberRegex, INVALID_PHONE_MESSAGE)
       .required(ERROR_MESSAGE)
   }),
   userComment: Yup.string()
