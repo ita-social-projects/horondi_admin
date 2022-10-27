@@ -68,7 +68,7 @@ const messages = {
     numberOfProducts,
     numberOfConstructors
   ) =>
-    `Буде видалено ${numberOfProducts ? `${numberOfProducts } продуктів` : ''} ${
+    `Буде видалено ${numberOfProducts ? numberOfProducts + ' продуктів' : ''} ${
       numberOfProducts && numberOfConstructors ? 'і' : ''
     } ${numberOfConstructors ? 'конструктор' : ''} цієї моделі`,
   DELETE_SIZE_CONFIRMATION_MESSAGE:
