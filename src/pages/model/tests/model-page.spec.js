@@ -1,33 +1,37 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/styles';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { theme } from '../../../components/app/app-theme/app.theme';
 import ModelPage from '../model-page';
 import { config } from '../../../configs';
+import { model, items, products } from './model-page.variables';
 
-jest.mock('../filters/filters', () => ({
-    __esModule: true,
-    default () {
-      return <div>filters</div>;
-    }
-  }));
-const mockDispatch = jest.fn();
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-  useDispatch: jest.fn()
-}));
+jest.mock('react-redux');
+useDispatch.mockImplementation(() => jest.fn());
 jest.mock('connected-react-router', () => ({
   push: jest.fn()
 }));
-const themeValue = theme('light');
+jest.mock('../../../redux/products/products.operations', () => ({
+  deleteManyProducts: () => jest.fn()
+}));
+jest.mock('../../../redux/constructor/constructor.operations', () => ({
+  deleteConstructor: () => jest.fn()
+}));
+jest.mock('../filters/filters', () => ({
+  __esModule: true,
+  default() {
+    return <div>filters</div>;
+  }
+}));
+jest.mock('../../../utils/use-success-snackbar', () => ({
+  __esModule: true,
+  default: () => ({
+    openSuccessSnackbar: jest.fn((func) => func('6043c1223e06ad3edcdb7b31'))
+  })
+}));
+
 const pageTitle = config.titles.modelPageTitles.mainPageTitle;
 const { CREATE_MODEL_TITLE } = config.buttonTitles;
-
-useDispatch.mockImplementation(() => mockDispatch);
 
 describe('test model page component', () => {
   it('should render title and button', () => {
@@ -43,20 +47,17 @@ describe('test model page component', () => {
       loading: false
     }));
     render(
-      <MockedProvider addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <ModelPage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
+      <BrowserRouter>
+        <ModelPage />
+      </BrowserRouter>
     );
     const addButton = screen.getByText(CREATE_MODEL_TITLE);
     const title = screen.getByText(pageTitle);
+
     expect(title).toBeInTheDocument();
     expect(addButton).toBeInTheDocument();
   });
-  it('should render title and button', () => {
+  it('should render loader', () => {
     useSelector.mockImplementation(() => ({
       loading: true,
       filter: {
@@ -67,15 +68,35 @@ describe('test model page component', () => {
       }
     }));
     render(
-      <MockedProvider addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <ModelPage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
+      <BrowserRouter>
+        <ModelPage />
+      </BrowserRouter>
     );
     const loader = screen.getByTestId('loader');
+
     expect(loader).toBeInTheDocument();
+  });
+  it('should delete model', () => {
+    useSelector.mockImplementation(() => ({
+      products,
+      loading: false,
+      filter: {
+        available: [],
+        availableForConstructor: [],
+        category: [],
+        search: ''
+      },
+      list: [model],
+      items
+    }));
+    render(
+      <BrowserRouter>
+        <ModelPage />
+      </BrowserRouter>
+    );
+    const deleteButton = screen.getByTestId('del_btn6043c1223e06ad3edcdb7b31');
+    fireEvent.click(deleteButton);
+
+    expect(useDispatch).toHaveBeenCalledTimes(1);
   });
 });
