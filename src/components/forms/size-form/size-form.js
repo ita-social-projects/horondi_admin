@@ -24,7 +24,7 @@ import {
   getSizeInitialValues,
   sizePropTypes,
   sizeDefaultProps
-} from '../../../utils/size-helpers';
+} from '../../../utils/size';
 import {
   getLabelValue,
   calculateAddittionalPriceValue
@@ -113,6 +113,28 @@ const SizeForm = ({ size, sizeUtils, isEdit }) => {
     return sizeAddedCondition;
   });
 
+  const sizeEditFields = sizeInputs.sizeMetricData.map((item) => (
+    <React.Fragment key={item}>
+      <TextField
+        data-cy={item}
+        id={item}
+        className={styles.textField}
+        variant={materialUiConstants.outlined}
+        type={materialUiConstants.types.number}
+        label={labels.ua[item]}
+        value={values[item]}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={touched[item] && !!errors[item]}
+      />
+      {touched[item] && errors[item] && (
+        <div data-cy={materialUiConstants.codeError} className={styles.error}>
+          {errors[item]}
+        </div>
+      )}
+    </React.Fragment>
+  ));
+
   return (
     <div
       className={styles.container}
@@ -162,30 +184,7 @@ const SizeForm = ({ size, sizeUtils, isEdit }) => {
           <div className={styles.wrapper}>
             <div className={styles.contentWrapper}>
               <Paper className={styles.sizeItemAdd}>
-                {sizeInputs.sizeMetricData.map((item) => (
-                  <React.Fragment key={item}>
-                    <TextField
-                      data-cy={item}
-                      id={item}
-                      className={styles.textField}
-                      variant={materialUiConstants.outlined}
-                      type={materialUiConstants.types.number}
-                      label={labels.ua[item]}
-                      value={values[item]}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={touched[item] && !!errors[item]}
-                    />
-                    {touched[item] && errors[item] && (
-                      <div
-                        data-cy={materialUiConstants.codeError}
-                        className={styles.error}
-                      >
-                        {errors[item]}
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
+                {sizeEditFields}
                 <FormControl
                   variant={materialUiConstants.outlined}
                   className={`${styles.formControl} 

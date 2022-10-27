@@ -108,7 +108,7 @@ LanguagePanel.propTypes = {
         PropTypes.object
       ])
     ),
-    touched: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+    touched: PropTypes.objectOf(PropTypes.bool),
     errors: PropTypes.objectOf(PropTypes.string),
     inputs: PropTypes.arrayOf(
       PropTypes.shape({

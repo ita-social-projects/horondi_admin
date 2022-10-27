@@ -7,10 +7,7 @@ import {
   Typography
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {
-  sizeDefaultProps,
-  sizePropTypes
-} from '../../../../utils/size-helpers';
+import { sizeDefaultProps, sizePropTypes } from '../../../../utils/size';
 import SizeForm from '..';
 import { config } from '../../../../configs';
 

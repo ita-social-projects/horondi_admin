@@ -5,7 +5,7 @@ import { SaveButton } from '../../../buttons';
 import DeleteButton from '../../../buttons/delete-button';
 import SizeForm from '../index';
 import { sizeList, id, size } from './size-form.variables';
-import { sizeDefaultProps } from '../../../../utils/size-helpers';
+import { sizeDefaultProps } from '../../../../utils/size';
 
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 

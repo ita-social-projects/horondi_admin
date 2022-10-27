@@ -10,7 +10,7 @@ import buttonTitles from '../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import { purposeFilterObj } from '../../../utils/material';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
-import { sizeAvailableObj } from '../../../utils/size-helpers';
+import { sizeAvailableObj } from '../../../utils/size';
 
 function Filters() {
   const { filters } = useSelector(({ Material }) => Material);

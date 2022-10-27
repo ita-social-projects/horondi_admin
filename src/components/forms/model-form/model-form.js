@@ -33,7 +33,7 @@ import {
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useSizeHandlers from '../../../hooks/model-form/use-size-handlers';
 import SizeFormAccordion from '../size-form/size-form-accordion';
-import { sizeDefaultProps } from '../../../utils/size-helpers';
+import { sizeDefaultProps } from '../../../utils/size';
 
 const { languages } = config;
 const { materialUiConstants } = config;

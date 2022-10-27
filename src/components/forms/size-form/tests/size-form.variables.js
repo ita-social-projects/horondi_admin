@@ -1,4 +1,4 @@
-import { sizeDefaultProps } from '../../../../utils/size-helpers';
+import { sizeDefaultProps } from '../../../../utils/size';
 
 export const defaultProps = sizeDefaultProps;
 export const id = '6043bf9e3e06ad3edcdb7b30';
