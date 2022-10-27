@@ -7,6 +7,7 @@ import {
   initialSizes,
   newSize,
   dispatch,
+  productWhithSize,
   products
 } from './use-size-handlers.variables';
 
@@ -34,6 +35,15 @@ describe('useSizeHandlers hook test', () => {
     });
 
     expect(result.current.sizes[0].name).toBe(update.name);
+  });
+  it('Should not delete a size from the sizes state variable', () => {
+    const { result } = renderHook(() => useSizeHandlers(initialSizes));
+
+    act(() => {
+      result.current.onSizeDelete(sizeToUpdate._id, productWhithSize, dispatch);
+    });
+
+    expect(result.current.sizes[0]).toEqual(sizeToUpdate);
   });
 
   it('Should delete a size from the sizes state variable', () => {

@@ -17,3 +17,6 @@ export const newSize = {
 };
 export const dispatch = jest.fn();
 export const products = [];
+export const productWhithSize = [
+  { sizes: [{ size: { _id: '123' } }], name: [{ value: 'Роллтоп' }] }
+];
