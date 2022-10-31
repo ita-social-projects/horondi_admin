@@ -207,35 +207,8 @@ export const getConstructorById = async (payload) => {
             closures {
               _id
             }
-            pocketsWithRestrictions {
-              currentPocketWithPosition {
-                pocket {
-                  _id
-                  name {
-                    lang
-                    value
-                  }
-                  images{
-                    thumbnail
-                  }
-                  absolutePrice
-                }
-                position {
-                  _id
-                  name {
-                    lang
-                    value
-                  }
-                }
-              }
-              otherPocketsWithAvailablePositions {
-                pocket {
-                  _id
-                }
-                position {
-                  _id
-                }
-              }
+            pockets{
+              _id
             }
             basePrice
           }

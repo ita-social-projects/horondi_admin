@@ -3,31 +3,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
+
 import { useStyles } from './constructor-model-form.styles.js';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
-import { getCategories } from '../../../redux/categories/categories.actions';
 import ConstructorListAccordion from './constructor-list-accordion';
+import ConstructorListBasePrice from './constructor-list-base-price/constructor-list-base-price.js';
+import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
+
+import { getCategories } from '../../../redux/categories/categories.actions';
 import { getBottoms } from '../../../redux/bottom/bottom.actions.js';
 import { getAllBasics } from '../../../redux/basics/basics.actions.js';
 import { getPatterns } from '../../../redux/pattern/pattern.actions.js';
 import { getBacks } from '../../../redux/back/back.actions.js';
 import { getAllStraps } from '../../../redux/straps/straps.actions.js';
 import { getAllClosures } from '../../../redux/closures/closures.actions.js';
+import { getAllPockets } from '../../../redux/pockets/pockets.actions.js';
+
 import { bottomSelectorWithPagination } from '../../../redux/selectors/bottom.selectors.js';
 import { basicsSelectorWithPagination } from '../../../redux/selectors/basics.selectors.js';
 import { patternSelectorWithPagination } from '../../../redux/selectors/pattern.selectors.js';
 import { backSelectorWithPagination } from '../../../redux/selectors/back.selectors.js';
 import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
 import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
+import { pocketsSelectorWithPagination } from '../../../redux/selectors/pockets.selectors.js';
 import {
   addConstructor,
   updateConstructor
 } from '../../../redux/constructor/constructor.actions.js';
 import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
-import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
-import ConstructorListBasePrice from './constructor-list-base-price/constructor-list-base-price.js';
-import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -57,7 +61,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [backsToAdd, setBacksToAdd] = useState([]);
   const [strapsToAdd, setStrapsToAdd] = useState([]);
   const [closuresToAdd, setClosuresToAdd] = useState([]);
-  const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
+  const [pocketsToAdd, setPocketsToAdd] = useState([]);
   const [basePriceToAdd, setBasePriceToAdd] = useState(0);
 
   const onSaveHandler = () => {
@@ -69,8 +73,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       backsToAdd,
       strapsToAdd,
       closuresToAdd,
-      restrictionsToAdd,
-      basePriceToAdd
+      basePriceToAdd,
+      pocketsToAdd
     };
     const constructorToAdd = createConstructor(itemsToSave);
 
@@ -88,7 +92,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     backsToAdd,
     strapsToAdd,
     closuresToAdd,
-    restrictionsToAdd,
+    pocketsToAdd,
     basePriceToAdd
   };
   const mapElement = (element) => element?.map((item) => item._id);
@@ -100,7 +104,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     setBacksToAdd(isEdit ? mapElement(constructor?.backs) : []);
     setStrapsToAdd(isEdit ? mapElement(constructor?.straps) : []);
     setClosuresToAdd(isEdit ? mapElement(constructor?.closures) : []);
-    setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
+    setPocketsToAdd(isEdit ? mapElement(constructor?.pockets) : []);
     setBasePriceToAdd(isEdit ? constructor?.basePrice : 0);
   }, [constructor, isEdit]);
 
@@ -152,6 +156,14 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       selector: closuresSelectorWithPagination,
       optionToAdd: closuresToAdd,
       setOptionToAdd: setClosuresToAdd
+    },
+    {
+      optionName: 'pocket',
+      label: 'Кишені',
+      getItems: getAllPockets,
+      selector: pocketsSelectorWithPagination,
+      optionToAdd: pocketsToAdd,
+      setOptionToAdd: setPocketsToAdd
     }
   ];
 
@@ -164,15 +176,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       expanded={expanded}
     />
   ));
-
-  const pocketAccordion = (
-    <ConstructorListPockets
-      setRestrictionsToAdd={setRestrictionsToAdd}
-      restrictionsToAdd={restrictionsToAdd}
-      handleChange={handleChange}
-      expanded={expanded}
-    />
-  );
 
   const basePriceAccordion = (
     <ConstructorListBasePrice
@@ -209,7 +212,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
         </Typography>
         <div className={classes.root}>
           {constructorAccordions}
-          {pocketAccordion}
           {basePriceAccordion}
         </div>
       </div>
@@ -217,60 +219,15 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   );
 };
 
-const valueShape = PropTypes.shape({
-  value: PropTypes.string
-});
-
 ConstructorModelForm.propTypes = {
-  isEdit: PropTypes.bool,
-  model: PropTypes.shape({
-    name: PropTypes.arrayOf(valueShape),
-    _id: PropTypes.string,
-    description: PropTypes.arrayOf(valueShape),
-    show: PropTypes.bool,
-    priority: PropTypes.number,
-    availableForConstructor: PropTypes.bool,
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
-    sizes: PropTypes.arrayOf(valueShape),
-    category: PropTypes.shape({
-      _id: PropTypes.string,
-      images: PropTypes.shape({
-        thumbnail: PropTypes.string
-      }),
-      name: PropTypes.arrayOf(valueShape),
-      code: PropTypes.string
-    }),
-    basePrice: PropTypes.number
-  }),
-  id: PropTypes.string
+  model: PropTypes.shape({}),
+  id: PropTypes.string.isRequired,
+  isEdit: PropTypes.bool
 };
 
 ConstructorModelForm.defaultProps = {
-  id: '',
-  model: {
-    _id: '',
-    name: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
-    description: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
-    images: {
-      thumbnail: ''
-    }
-  },
+  model: {},
   isEdit: false
 };
+
 export default ConstructorModelForm;
