@@ -61,7 +61,7 @@ describe('reducer tests', () => {
   it('should set filter for bottoms', () => {
     expect(bottomReducer(initialState, setFilter(filter))).toEqual({
       ...initialState,
-      filters: {
+      filter: {
         ...mockInitialFilters,
         ...filter
       }
@@ -77,7 +77,7 @@ describe('reducer tests', () => {
   it('should clear all bottoms filters', () => {
     expect(bottomReducer(initialState, clearFilters())).toEqual({
       ...initialState,
-      filters: mockBottomsLoadPayload.filters
+      filter: mockBottomsLoadPayload.filters
     });
   });
 });

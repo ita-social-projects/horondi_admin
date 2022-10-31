@@ -34,20 +34,13 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handleBasicsLoad({ payload: { pagination, filter } }) {
+export function* handleBasicsLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setBasicsLoading(true));
-    const basics = yield call(
-      getAllBasics,
-      pagination.limit,
-      pagination.skip,
-      filter
-    );
-    if (basics) {
-      yield put(setBasics(basics));
-      yield put(setItemsCount(basics?.count));
-      yield put(setBasicsLoading(false));
-    }
+    const basics = yield call(getAllBasics, limit, skip, filter);
+    yield put(setItemsCount(basics?.count));
+    yield put(setBasics(basics?.items));
+    yield put(setBasicsLoading(false));
   } catch (error) {
     yield call(handleBasicsError, error);
   }

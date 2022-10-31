@@ -9,7 +9,7 @@ import {
 } from './straps.types';
 
 export const selectStraps = ({ Straps }) => ({
-  items: Straps.list?.items,
+  items: Straps.list,
   loading: Straps.strapsLoading,
   strap: Straps.strap,
   filter: Straps.filter
@@ -43,9 +43,7 @@ const strapsReducer = (state = initialState, action = {}) => {
         strapsLoading: action.payload
       };
     case REMOVE_STRAP_FROM_STATE: {
-      const list = state.list.items.filter(
-        (strap) => strap._id !== action.payload
-      );
+      const list = state.list.filter((strap) => strap._id !== action.payload);
       return {
         ...state,
         list
@@ -60,14 +58,14 @@ const strapsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filter: {
-          ...state.filters,
+          ...state.filter,
           ...action.payload
         }
       };
     case CLEAR_STRAPS_FILTER:
       return {
         ...state,
-        filter: { name: '' }
+        filter: { ...initialFilter }
       };
     case SET_STRAPS_ERROR:
       return {

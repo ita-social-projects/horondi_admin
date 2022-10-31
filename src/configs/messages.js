@@ -43,26 +43,42 @@ const messages = {
   REMOVE_CONSTRUCTOR_MESSAGE: 'Ви впевнені, що хочете видалити цей елемент?',
   NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
   REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
-  BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
-  BOTTOM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
-  DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
-  NO_POCKET_MESSAGE: 'Кишені відсутні',
-  DELETE_STRAP_MESSAGE: 'Ви впевнені, що хочете видалити цей ремінець?',
-  NO_STRAPS_MESSAGE: 'Ремінці відсутні',
-  DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
-  NO_POSITION_MESSAGE: 'Позиції відсутні',
-  NO_BACKS_MESSAGE: 'Cпинки відсутні',
-  NO_BOTTOMS_MESSAGE: 'Низи відсутні',
+  constructorPageMessages: {
+    bottom: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
+      NO_ITEMS_MESSAGE: 'Низи відсутні'
+    },
+    back: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
+      NO_ITEMS_MESSAGE: 'Cпинки відсутні'
+    },
+    pocket: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
+      NO_ITEMS_MESSAGE: 'Кишені відсутні'
+    },
+    strap: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей ремінець?',
+      NO_ITEMS_MESSAGE: 'Ремінці відсутні'
+    },
+    position: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
+      NO_ITEMS_MESSAGE: 'Розміщення відсутні'
+    },
+    closure: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю защіпку?',
+      NO_ITEMS_MESSAGE: 'Защіпки відсутні'
+    },
+    basic: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
+      NO_ITEMS_MESSAGE: 'Основи відсутні'
+    }
+  },
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
   DELETE_CONSTRUCTOR_MESSAGE:
     'Ви впевнені, що хочете видалити цей конструктор?',
-  DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
-  NO_CLOSURE_MESSAGE: 'Замочки відсутні',
-  DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
   NO_CERTIFICATES_MESSAGE: 'Сертифікати відсутні',
   DELETE_CERTIFICATE_MESSAGE: 'Ви впевнені, що хочете видалити цей сертифікат?',
   UPDATE_CERTIFICATE_MESSAGE:
-    'Ви впевнені, що хочете відмітити цей сертифікат як використаний?',
-  NO_BASICS_MESSAGE: 'Основи відсутні'
+    'Ви впевнені, що хочете відмітити цей сертифікат як використаний?'
 };
 export default messages;

@@ -104,7 +104,9 @@ AutoCompleteOptions.propTypes = {
     ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.bool, PropTypes.array])
+  ).isRequired,
   handleBlur: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired
 };

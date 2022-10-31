@@ -35,14 +35,14 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH',
     modelTitle: 'Модель'
   },
-  backTitles: {
-    mainPageTitle: 'Інформація про спинки',
-    createPageTitle: 'Створити спинку',
-    convertationTitle: 'Відповідна ціна в UAH'
-  },
-  bottomTitles: {
-    mainPageTitle: 'Інформація про низи',
-    createPageTitle: 'Створити низ'
+  constructorMainPageTitles: {
+    back: 'Інформація про спинки',
+    bottom: 'Інформація про низи',
+    closure: 'Інформація про защіпки',
+    basic: 'Інформація про основи',
+    strap: 'Інформація про ремінці',
+    pocket: 'Інформація про кишені',
+    position: 'Інформація про розміщення'
   },
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
@@ -147,29 +147,11 @@ const titles = {
   promoPageTitles: {
     mainPageTitle: 'Інформація про промокоди'
   },
-  pocketsTitles: {
-    mainPageTitle: 'Інформація про кишені'
-  },
-  positionTitles: {
-    mainPageTitle: 'Інформація про розміщення'
-  },
   constructorListPageTitles: {
     mainPageTitle: 'Список конструкторів'
   },
   constructorModelTitles: {
     mainPageTitle: 'Опції конструктора'
-  },
-  closuresTitles: {
-    mainPageTitle: 'Інформація про защіпки',
-    convertationTitle: 'Відповідна ціна в UAH'
-  },
-  basicsTitles: {
-    mainPageTitle: 'Інформація про основи',
-    convertationTitle: 'Відповідна ціна в UAH'
-  },
-  strapsTitles: {
-    mainPageTitle: 'Інформація про ремінці',
-    convertationTitle: 'Відповідна ціна в UAH'
   },
   certificatesTitles: {
     mainPageTitle: 'Створити Подарунковий Сертифікат:',

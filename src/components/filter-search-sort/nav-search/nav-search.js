@@ -35,6 +35,7 @@ const NavSearch = ({
         />
         <Tooltip title={searchLabel()} placement='bottom'>
           <IconButton
+            data-testid='search'
             className={styles.iconButton}
             aria-label='search'
             onClick={activateSearch}

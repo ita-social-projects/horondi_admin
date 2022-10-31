@@ -31,20 +31,13 @@ import { config } from '../../configs';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handlePositionsLoad({ payload: { pagination, filter } }) {
+export function* handlePositionsLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setPositionsLoading(true));
-    const positions = yield call(
-      getAllPositions,
-      pagination.limit,
-      pagination.skip,
-      filter
-    );
-    if (positions) {
-      yield put(setPositions(positions));
-      yield put(setItemsCount(positions?.count));
-      yield put(setPositionsLoading(false));
-    }
+    const positions = yield call(getAllPositions, limit, skip, filter);
+    yield put(setPositions(positions?.items));
+    yield put(setItemsCount(positions?.count));
+    yield put(setPositionsLoading(false));
   } catch (error) {
     yield call(handlePositionsError, error);
   }

@@ -114,7 +114,9 @@ AdditionalPriceContainer.propTypes = {
   ).isRequired,
   radio: PropTypes.bool,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.bool, PropTypes.array])
+  ).isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 };

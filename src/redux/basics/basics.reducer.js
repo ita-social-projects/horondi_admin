@@ -8,7 +8,7 @@ import {
 } from './basics.types';
 
 export const selectBasics = ({ Basics }) => ({
-  items: Basics.list.items,
+  items: Basics.list,
   loading: Basics.basicsLoading,
   filter: Basics.filter,
   basic: Basics.basic
@@ -37,9 +37,7 @@ const basicsReducer = (state = initialState, action = {}) => {
         list: action.payload
       };
     case REMOVE_BASIC:
-      const list = state.list.items.filter(
-        (basic) => basic._id !== action.payload
-      );
+      const list = state.list.filter((basic) => basic._id !== action.payload);
       return {
         ...state,
         list

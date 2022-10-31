@@ -35,6 +35,7 @@ export const getAllStraps = async (limit, skip, filter) => {
           available
           absolutePrice
           relativePrice
+          optionType
         }
         count
       }
