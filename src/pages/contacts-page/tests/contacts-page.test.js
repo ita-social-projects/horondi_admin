@@ -8,7 +8,7 @@ import LoadingBar from '../../../components/loading-bar';
 import TableContainerRow from '../../../containers/table-container-row';
 import { contactsList } from './contactsList';
 
-jest.mock('../../../hooks/filters/use-strap-filters');
+jest.mock('../../../hooks/filters/use-constructor-page-filter');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),

@@ -83,7 +83,7 @@ const mockBottomsState = {
   sort: {
     name: 1
   },
-  filters: initialFilters,
+  filter: initialFilters,
   bottom: null,
   bottomLoading: false,
   bottomError: null

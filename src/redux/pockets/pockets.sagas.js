@@ -31,20 +31,13 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handlePocketsLoad({ payload: { pagination, filter } }) {
+export function* handlePocketsLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setPocketsLoading(true));
-    const pockets = yield call(
-      getAllPockets,
-      pagination.limit,
-      pagination.skip,
-      filter
-    );
-    if (pockets) {
-      yield put(setPockets(pockets));
-      yield put(setItemsCount(pockets?.count));
-      yield put(setPocketsLoading(false));
-    }
+    const pockets = yield call(getAllPockets, limit, skip, filter);
+    yield put(setItemsCount(pockets?.count));
+    yield put(setPockets(pockets?.items));
+    yield put(setPocketsLoading(false));
   } catch (error) {
     yield call(handlePocketsError, error);
   }

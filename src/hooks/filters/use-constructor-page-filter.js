@@ -1,38 +1,42 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { clearFilters, setFilter } from '../../redux/back/back.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import { patternPlaceholderSearch } from '../../consts/pattern-status';
 
-const useBackFilters = () => {
+const useConstructorPageFilter = (
+  itemKey,
+  setFilterAction,
+  clearFilterAction
+) => {
   const dispatch = useDispatch();
-  const filters = useSelector(({ Back }) => Back.filters);
+
+  const constructorItemKey = `${itemKey[0].toUpperCase()}${itemKey.slice(1)}s`;
+  const store = useSelector((store) => store);
+  const { filter } = store[constructorItemKey];
 
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
-    dispatch(clearFilters());
+    dispatch(clearFilterAction());
   };
 
   const setSearchFilter = (name) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilter({
+      setFilterAction({
         name
       })
     );
   };
-
   return {
     searchOptions: {
       placeholderText: patternPlaceholderSearch,
-      search: filters?.name,
+      search: filter?.name,
       setSearchFilter
     },
     clearOptions: {
-      filters,
-      name: filters?.name,
+      filter,
       clearAllFilters
     }
   };
 };
 
-export default useBackFilters;
+export default useConstructorPageFilter;

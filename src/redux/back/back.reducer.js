@@ -9,15 +9,15 @@ import {
   CLEAR_BACK
 } from './back.types';
 
-export const selectBack = ({ Back }) => ({
-  items: Back.list,
-  loading: Back.backLoading,
-  back: Back.back,
-  filter: Back.filters,
-  sort: Back.sort
+export const selectBack = ({ Backs }) => ({
+  items: Backs.list,
+  loading: Backs.backLoading,
+  back: Backs.back,
+  filter: Backs.filter,
+  sort: Backs.sort
 });
 
-const initialFilters = {
+const initialFilter = {
   name: '',
   model: [],
   available: [],
@@ -30,7 +30,7 @@ export const initialState = {
   sort: {
     name: 1
   },
-  filters: initialFilters,
+  filter: initialFilter,
   back: null,
   backLoading: false,
   backError: null
@@ -67,8 +67,8 @@ const backReducer = (state = initialState, action = {}) => {
     case SET_BACK_FILTER:
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filter: {
+          ...state.filter,
           ...action.payload
         }
       };
@@ -80,12 +80,8 @@ const backReducer = (state = initialState, action = {}) => {
     case CLEAR_FILTERS:
       return {
         ...state,
-        filters: {
-          name: '',
-          model: [],
-          available: [],
-          material: [],
-          color: []
+        filter: {
+          ...initialFilter
         }
       };
     default:

@@ -1,6 +1,6 @@
 export const actionsPayload = ['custom payload'];
-export const filter = { name: 'abc' };
-export const cleanFilter = { name: '' };
+export const filter = { name: 'abc', color: [], available: [] };
+export const cleanFilter = { name: '', color: [], available: [] };
 export const mockId = '5fa034049a59a906f0610e42';
 export const mockStrapsState = {
   list: [],
