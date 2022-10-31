@@ -113,6 +113,7 @@ const getAllProducts = async (
               }
               basePrice
               model {
+					_id
                 name {
                   value
                 }
@@ -147,6 +148,12 @@ const getAllProducts = async (
                   value
                 }
               }
+				  sizes {
+					size{
+						_id
+						name
+					}
+				  }
               isHotItem
             }
             count

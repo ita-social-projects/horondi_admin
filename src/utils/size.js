@@ -35,7 +35,7 @@ export const getSizeInitialValues = (size) => {
 };
 
 export const sizePropTypes = {
-  size: PropTypes.shape({
+  size: {
     _id: PropTypes.string,
     name: PropTypes.string,
     heightInCm: PropTypes.number,
@@ -44,31 +44,28 @@ export const sizePropTypes = {
     volumeInLiters: PropTypes.number,
     weightInKg: PropTypes.number,
     available: PropTypes.bool,
-    additionalPrice: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.number
-      })
-    )
-  }),
-  sizeUtils: PropTypes.shape({
+    absolutePrice: PropTypes.number,
+    relativePrice: PropTypes.number
+  },
+  sizeUtils: {
     onSizeSubmit: PropTypes.func,
     onSizeDelete: PropTypes.func,
     sizesAdded: PropTypes.arrayOf(PropTypes.string)
-  }),
+  },
   isEdit: PropTypes.bool
 };
 export const sizeDefaultProps = {
   size: {
     _id: '',
+    absolutePrice: 0,
+    available: false,
+    depthInCm: 0,
+    heightInCm: 0,
     name: '',
-    heightInCm: '',
-    widthInCm: '',
-    depthInCm: '',
-    volumeInLiters: '',
-    weightInKg: '',
-    available: '',
-    additionalPriceType: 'ABSOLUTE',
-    additionalPrice: 0
+    relativePrice: null,
+    volumeInLiters: 0,
+    weightInKg: 0,
+    widthInCm: 0
   },
   sizeUtils: {
     onSizeSubmit: null,
@@ -76,12 +73,6 @@ export const sizeDefaultProps = {
     sizesAdded: []
   },
   isSizeEdit: false
-};
-
-export const sizeFormAccordionPropTypes = {
-  ...sizePropTypes.size,
-  absolutePrice: PropTypes.number,
-  relativePrice: PropTypes.number
 };
 
 export const sizeFilterObj = () => {
