@@ -2,7 +2,7 @@ import config from '../../configs/orders';
 
 const { deliveryTypes } = config;
 
-export const worldWideMock = {
+export const worldWideWithDataMock = {
   messenger: 'Telegram',
   messengerPhone: '0987654321',
   worldWideCountry: 'Ukraine',
@@ -12,9 +12,24 @@ export const worldWideMock = {
   cityCode: '68789'
 };
 
-export const novaPostMock = {
+export const novaPostWithDataMock = {
   city: 'Lviv',
   courierOffice: 'office 42'
+};
+
+export const worldWideMock = {
+  messenger: '',
+  messengerPhone: '',
+  worldWideCountry: '',
+  stateOrProvince: '',
+  worldWideCity: '',
+  worldWideStreet: '',
+  cityCode: ''
+};
+
+export const novaPostMock = {
+  city: '',
+  courierOffice: ''
 };
 
 export const ukrPostMock = {
@@ -39,7 +54,7 @@ export const courierMock = {
 export const selectedOrderMock = {
   items: [
     {
-      options: { size: { _id: 'id', name: 'name' } },
+      options: { size: { _id: 'id', name: 'name' }, sidePocket: false },
       fixedPrice: 50,
       product: { _id: '_id', name: 'name', basePrice: 50 },
       quantity: 100
@@ -50,20 +65,87 @@ export const selectedOrderMock = {
 export const deliveryMock = {
   sentBy: deliveryTypes.novaPost,
   courier: courierMock,
-  novaPost: novaPostMock,
+  novaPost: novaPostWithDataMock,
   ukrPost: ukrPostMock,
   worldWide: worldWideMock
 };
 
-export const setFormMock = {
-  delivery: deliveryMock,
+export const deliveryByNovaPostMock = {
+  sentBy: deliveryTypes.novaPost,
+  ...courierMock,
+  ...ukrPostMock,
+  ...worldWideMock,
+  ...novaPostWithDataMock
+};
+
+export const deliveryByWorldWideMock = {
+  sentBy: deliveryTypes.worldWide,
+  ...courierMock,
+  ...novaPostMock,
+  ...ukrPostMock,
+  ...worldWideWithDataMock
+};
+
+export const setFormMock = (post) => ({
   status: 'test',
   paymentMethod: 'CARD',
-  isPaid: 'isPaid',
+  isPaid: 'PAID',
   recipient: 'recipient',
   user_id: 'user_id',
   userComment: 'comment',
+  promoCodeId: '',
+  delivery: typeDelivery(post),
   items: selectedOrderMock.items
+});
+
+const typeDelivery = (post) => {
+  if (post === 'novaPost') {
+    return deliveryByNovaPostMock;
+  } if (post === 'worldWide') {
+    return deliveryByWorldWideMock;
+  } 
+    return deliveryMock;
+  
+};
+
+export const newOrderMock = {
+  status: 'test',
+  paymentMethod: 'CARD',
+  isPaid: 'PAID',
+  recipient: 'recipient',
+  paymentStatus: 'PAID',
+  promoCodeId: '',
+  user_id: 'user_id',
+  userComment: 'comment',
+  items: [
+    {
+      isFromConstructor: false,
+      options: { size: 'id', sidePocket: false },
+      product: '_id',
+      quantity: 100
+    }
+  ],
+  delivery: {
+    byCourier: false,
+    city: 'Lviv',
+    cityCode: '',
+    cityId: '',
+    courierOffice: 'office 42',
+    district: '',
+    districtId: '',
+    flat: '',
+    house: '',
+    messenger: '',
+    messengerPhone: '',
+    region: '',
+    regionId: '',
+    sentBy: 'NOVAPOST',
+    stateOrProvince: '',
+    street: '',
+    worldWideCity: '',
+    worldWideCountry: '',
+    worldWideStreet: ''
+  }
 };
 
 export const selectedProductMock = {

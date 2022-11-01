@@ -4,7 +4,9 @@ import {
   setFormValues,
   calculateItemsPriceWithDiscount,
   calculateDiscountsForProducts,
-  mergeProducts
+  mergeProducts,
+  paymentStatusTransfer,
+  newOrder
 } from '../order';
 import {
   deliveryMock,
@@ -20,7 +22,10 @@ import {
   mockItemsDiscount,
   mockItemsPriceWithDiscount,
   modelMock,
-  orderWithExistedItemsMock
+  orderWithExistedItemsMock,
+  worldWideWithDataMock,
+  novaPostWithDataMock,
+  newOrderMock
 } from './order.variables';
 
 const setFieldValue = jest.fn();
@@ -42,11 +47,20 @@ describe('[utils:order]', () => {
   });
 
   it('setFormValues function - novaPost type', () => {
-    const { delivery, paymentMethod } = setFormValues(setFormMock);
+    const { delivery, paymentMethod } = setFormValues(setFormMock('novaPost'));
 
     expect(paymentMethod).toBe('CARD');
     expect(delivery.courier).toEqual(courierMock);
+    expect(delivery.novaPost).toEqual(novaPostWithDataMock);
     expect(delivery.ukrPost).toEqual(ukrPostMock);
+  });
+
+  it('setFormValues function - worldWide type', () => {
+    const { delivery, paymentMethod } = setFormValues(setFormMock('worldWide'));
+
+    expect(paymentMethod).toBe('CARD');
+    expect(delivery.courier).toEqual(courierMock);
+    expect(delivery.worldWide).toEqual(worldWideWithDataMock);
   });
 
   it('calculateItemsPriceWithDiscount function', () => {
@@ -113,5 +127,23 @@ describe('[utils:order]', () => {
 
     productsMock[1].quantity = 6;
     expect(result).toEqual(productsMock);
+  });
+
+  it('Payment status is paid', () => {
+    const result = paymentStatusTransfer(true, 'CREATED');
+
+    expect(result).toBe('PAID');
+  });
+
+  it('Payment status is in progress', () => {
+    const result = paymentStatusTransfer(false, 'PROCESSING');
+
+    expect(result).toBe('PROCESSING');
+  });
+
+  it('Create new order', () => {
+    const result = newOrder(setFormMock('newOrder'));
+
+    expect(result).toStrictEqual(newOrderMock);
   });
 });
