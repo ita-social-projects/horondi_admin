@@ -43,7 +43,14 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = () => {
-    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, values, id);
+    handleOrderSubmition(
+      dispatch,
+      resetForm,
+      openSuccessSnackbar,
+      values,
+      id,
+      selectedOrder
+    );
     setTabValue(0);
   };
 

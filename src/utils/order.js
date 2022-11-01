@@ -135,8 +135,12 @@ export const newOrder = (order) => ({
   paymentMethod: order.paymentMethod,
   userComment: order.userComment,
   isPaid: order.isPaid,
-  promoCodeId: order.promoCodeId
+  promoCodeId: order.promoCodeId,
+  paymentStatus: paymentStatusTransfer(order.isPaid, order.paymentStatus)
 });
+
+const paymentStatusTransfer = (isPaid, paymentStatus) =>
+  isPaid ? 'PAID' : paymentStatus || 'CREATED';
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
 

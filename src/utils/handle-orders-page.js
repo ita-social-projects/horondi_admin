@@ -28,7 +28,8 @@ export const handleOrderSubmition = (
   resetForm,
   openSuccessSnackbar,
   data,
-  id
+  id,
+  selectedOrder
 ) => {
   if (
     newOrder(data).status !== initialValues.status &&
@@ -48,7 +49,11 @@ export const handleOrderSubmition = (
       openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
     }, 0);
   } else if (id) {
-    dispatch(updateOrder(newOrder(data), id));
+    const dataWithSelectedOrder = {
+      ...data,
+      paymentStatus: selectedOrder.paymentStatus
+    };
+    dispatch(updateOrder(newOrder(dataWithSelectedOrder), id));
   } else {
     dispatch(addOrder(newOrder(data)));
     resetForm({ values: initialValues });
