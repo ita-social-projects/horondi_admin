@@ -139,7 +139,7 @@ export const newOrder = (order) => ({
   paymentStatus: paymentStatusTransfer(order.isPaid, order.paymentStatus)
 });
 
-export const paymentStatusTransfer = (isPaid, paymentStatus) =>
+export const paymentStatusTransfer = (isPaid, paymentStatus = null) =>
   isPaid ? 'PAID' : paymentStatus || 'CREATED';
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
