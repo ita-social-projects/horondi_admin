@@ -32,6 +32,7 @@ export const getAllCertificates = gql`
           isExpired
           dateStart
           dateEnd
+          dateOfUsing
         }
         count
       }
