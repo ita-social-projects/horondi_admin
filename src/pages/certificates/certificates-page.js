@@ -50,6 +50,7 @@ const CertificatesPage = () => {
       deleteHandler={() => {
         certificates.openDeleteModal(certificate._id);
       }}
+      disabled={!certificate.isActivated}
       editHandler={() => {
         certificates.openUpdateModal(certificate.name);
       }}
