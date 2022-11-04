@@ -23,11 +23,12 @@ const CertificatesPage = () => {
   const certificates = useCertificates();
 
   const getDate = (item) =>
-    item.isUsed || item.isExpired
-      ? '-'
-      : `${certificates.transformDate(
-          item.dateStart
-        )} - ${certificates.transformDate(item.dateEnd)}`;
+    `${certificates.transformDate(
+      item.dateStart
+    )} - ${certificates.transformDate(item.dateEnd)}`;
+
+  const dateOfUsing = (item) =>
+    item.dateOfUsing ? `${certificates.transformDate(item.dateOfUsing)}` : '-';
 
   const certificateItems = certificates.items.map((certificate) => (
     <TableContainerRow
@@ -45,9 +46,11 @@ const CertificatesPage = () => {
         />
       }
       date={getDate(certificate)}
+      dateOfUsing={dateOfUsing(certificate)}
       deleteHandler={() => {
         certificates.openDeleteModal(certificate._id);
       }}
+      disabled={!certificate.isActivated}
       editHandler={() => {
         certificates.openUpdateModal(certificate.name);
       }}

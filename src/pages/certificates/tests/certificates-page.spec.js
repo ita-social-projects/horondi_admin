@@ -98,7 +98,7 @@ describe('Information about certificates page', () => {
     );
 
     const editBtns = await findAllByTitle(/Редагувати/);
-    userEvent.click(editBtns[1]);
+    userEvent.click(editBtns[0]);
     expect(mockOpenSnackbar).toHaveBeenCalledTimes(1);
   });
 });

@@ -27,6 +27,7 @@ const TableContainerRow = ({
   clickHandler,
   checkBoxValue,
   checkboxChangeHandler,
+  disabled,
   ...rest
 }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
@@ -91,8 +92,10 @@ const TableContainerRow = ({
               size={iconSize}
               onClickHandler={editHandler}
               data-cy='edit-btn'
+              disabled={disabled}
             />
           )}
+
           {showDelete && (
             <CustomizedDeleteIcon
               testId={`del_btn${id}`}
@@ -118,7 +121,8 @@ TableContainerRow.propTypes = {
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool,
-  showCheckbox: PropTypes.bool
+  showCheckbox: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 TableContainerRow.defaultProps = {
@@ -133,7 +137,8 @@ TableContainerRow.defaultProps = {
   showAvatar: true,
   showEdit: true,
   showDelete: true,
-  showCheckbox: false
+  showCheckbox: false,
+  disabled: false
 };
 
 export default TableContainerRow;
