@@ -7,7 +7,7 @@ import { config } from '../../../configs';
 const { EDIT_TITLE } = config.buttonTitles;
 
 const CustomizedEditIcon = ({ onClickHandler, size, testId, disabled }) => (
-  <Tooltip title={EDIT_TITLE}>
+  <Tooltip title={!disabled ? EDIT_TITLE : ''}>
     <IconButton
       data-testid={testId}
       aria-label={EDIT_TITLE}
