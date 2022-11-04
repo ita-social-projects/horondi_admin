@@ -87,6 +87,7 @@ const General = ({ data, handleChange, inputOptions }) => {
           checked={isPaid}
           name={inputName.isPaidInput}
           onChange={handleChange}
+          disabled={paymentMethod === 'CARD'}
         />
       </div>
     </div>
