@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Button, Typography } from '@material-ui/core';
@@ -60,6 +60,19 @@ const ConstructorListPage = () => {
     itemsCount
   } = useSelector(constructorSelectorWithPagination);
 
+  const availableList = useMemo(
+    () =>
+      list.filter((listItem) => {
+        for (const constructorItem of constructorItems) {
+          if (constructorItem.model._id === listItem._id) {
+            return false;
+          }
+        }
+        return listItem.availableForConstructor;
+      }),
+    [list, constructorItems]
+  );
+
   const handleConstructor = () => {
     dispatch(push(`/constructor-model/${id}`));
   };
@@ -106,6 +119,12 @@ const ConstructorListPage = () => {
     />
   ));
 
+  const menuList = availableList.map((modelItem) => (
+    <MenuItem key={modelItem._id} value={modelItem._id}>
+      {modelItem.name[0].value}
+    </MenuItem>
+  ));
+
   if (loading || constructorLoading) {
     return <LoadingBar />;
   }
@@ -125,11 +144,7 @@ const ConstructorListPage = () => {
         <MenuItem value='' disabled>
           Модель
         </MenuItem>
-        {list.map((modelItem) => (
-          <MenuItem key={modelItem._id} value={modelItem._id}>
-            {modelItem.name[0].value}
-          </MenuItem>
-        ))}
+        {menuList}
       </Select>
       <FormHelperText className={styles.textAbove}>
         Після вибору моделі настисніть кнопку створити новий
