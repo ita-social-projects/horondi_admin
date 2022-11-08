@@ -39,7 +39,7 @@ const UserTab = (props) => {
           ? `${userItem.firstName || ''} ${userItem.lastName || ''}`
           : unknownUser
       }
-      mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
+      mobile={formatPhoneNumber(userItem.phoneNumber) || '-'}
       email={userItem.email || ''}
       image={IMG_URL + userItem.images?.thumbnail}
       role={userRoleTranslations[userItem.role]}

@@ -78,7 +78,7 @@ const Comments = () => {
       text={comment.text}
       show={comment?.show ? yes : no}
       id={comment?._id}
-      count={comment?.replyCommentsCount}
+      count={comment?.replyCommentsCount || '0'}
       key={comment?._id}
       deleteHandler={() => {
         commentDeleteHandler(comment?._id);
