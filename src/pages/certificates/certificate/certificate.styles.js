@@ -10,6 +10,12 @@ export const useStyles = makeStyles(() => ({
     textAlign: 'center',
     fontSize: '10px',
     fontWeight: '900',
-    lineHeight: '20px'
+    lineHeight: '20px',
+    margin: '0'
+  },
+  img: {
+    width: '136px',
+    height: '63px',
+    objectFit: 'cover'
   }
 }));

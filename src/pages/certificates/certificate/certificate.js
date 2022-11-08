@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 
 import { useStyles } from './certificate.styles';
+import CertificateImages from '../../../assets/images/certificates/CertificateImages';
 
-import certificateImg from '../img/certificate.svg';
-
-const Certificate = ({ name }) => {
+const Certificate = ({ name, value }) => {
   const styles = useStyles();
 
   return (
     <div className={styles.wrapper}>
-      <img src={certificateImg} alt='Certificate' />
+      <img
+        src={CertificateImages[`image${value}`]}
+        alt='Certificate'
+        className={styles.img}
+      />
       <Typography paragraph className={styles.name}>
         {name}
       </Typography>
@@ -20,7 +23,8 @@ const Certificate = ({ name }) => {
 };
 
 Certificate.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 export default Certificate;
