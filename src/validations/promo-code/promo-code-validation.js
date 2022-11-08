@@ -5,6 +5,7 @@ import { config } from '../../configs';
 const {
   LENGTH_CODE,
   STYLE_CODE,
+  DATE_TO,
   ERROR_MESSAGE,
   LENGTH_DISCOUNT,
   POSITIVE_DISCOUNT,
@@ -17,8 +18,13 @@ export const promoValidationSchema = Yup.object().shape({
     .max(30, LENGTH_CODE)
     .matches(formRegExp.promoCodeName, STYLE_CODE)
     .required(ERROR_MESSAGE),
-  dateFrom: Yup.string().required(ERROR_MESSAGE),
-  dateTo: Yup.string().required(ERROR_MESSAGE),
+  dateFrom: Yup.date().required(ERROR_MESSAGE),
+  dateTo: Yup.date()
+    .required(ERROR_MESSAGE)
+    .when(
+      'dateFrom',
+      (dateFrom, Yup) => dateFrom && Yup.min(dateFrom, DATE_TO)
+    ),
   discount: Yup.string()
     .min(1, LENGTH_DISCOUNT)
     .max(2, LENGTH_DISCOUNT)

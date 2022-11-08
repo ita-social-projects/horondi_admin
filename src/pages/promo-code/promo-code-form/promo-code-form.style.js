@@ -23,6 +23,9 @@ export const useStyles = makeStyles((theme) => ({
   dataPickerContainer: {
     marginRight: '16px'
   },
+  dateError: {
+    marginLeft: '14px'
+  },
   errorDate: {
     fontSize: '11px',
     margin: '3px 0 0 14px',

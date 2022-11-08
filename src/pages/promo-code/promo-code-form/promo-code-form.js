@@ -5,6 +5,7 @@ import { DatePicker } from 'rsuite';
 import {
   Grid,
   TextField,
+  Typography,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -30,9 +31,9 @@ function PromoCodeForm({
   goToPromoPage,
   initialState = {
     code: '',
-    dateTo: '',
-    dateFrom: '',
-    discount: '',
+    dateTo: new Date(),
+    dateFrom: new Date(),
+    discount: 0,
     categories: []
   }
 }) {
@@ -208,6 +209,14 @@ function PromoCodeForm({
               )}
             </div>
           </div>
+          <Typography
+            className={styles.dateError}
+            color='error'
+            m={1}
+            variant='caption'
+          >
+            {errors.dateTo}
+          </Typography>
         </div>
 
         <div>
@@ -249,8 +258,8 @@ function PromoCodeForm({
 
 PromoCodeForm.propTypes = {
   pathToPromoCodesPage: PropTypes.string.isRequired,
-  initialState: PropTypes.objectOf(PropTypes.string).isRequired,
-  promoValidationSchema: PropTypes.objectOf(PropTypes.string).isRequired,
+  initialState: PropTypes.shape({}).isRequired,
+  promoValidationSchema: PropTypes.shape({}).isRequired,
   addPromoCodeHandler: PropTypes.func.isRequired,
   goToPromoPage: PropTypes.func.isRequired
 };
