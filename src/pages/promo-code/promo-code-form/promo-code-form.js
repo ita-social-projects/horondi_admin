@@ -212,7 +212,6 @@ function PromoCodeForm({
           <Typography
             className={styles.dateError}
             color='error'
-            m={1}
             variant='caption'
           >
             {errors.dateTo}
