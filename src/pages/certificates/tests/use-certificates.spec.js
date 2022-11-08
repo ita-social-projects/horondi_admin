@@ -70,7 +70,7 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(true, false, false);
+      status = result.current.checkStatus(true, false, false, false);
     });
     expect(status).toEqual('Активний');
   });
@@ -79,7 +79,7 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(false, true, false);
+      status = result.current.checkStatus(false, false, true, false);
     });
     expect(status).toEqual('Використаний');
   });
@@ -88,16 +88,25 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(false, false, true);
+      status = result.current.checkStatus(false, false, false, true);
     });
     expect(status).toEqual('Протермінований');
+  });
+
+  it('should get inProgress status', () => {
+    let status;
+    const { result } = renderHook(() => useCertificates());
+    act(() => {
+      status = result.current.checkStatus(false, true, false, false);
+    });
+    expect(status).toEqual('В процесі');
   });
 
   it('should get pending status', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(false, false, false);
+      status = result.current.checkStatus(false, false, false, false);
     });
     expect(status).toEqual('В обробці');
   });

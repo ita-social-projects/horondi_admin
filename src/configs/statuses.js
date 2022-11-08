@@ -11,6 +11,7 @@ const statuses = {
     `Користувач буде автоматично розблокований через ${period} днів `,
   USER_INACTIVE_FOREVER_STATUS: 'Користувач деактивований назавжди',
   ACTIVE_STATUS: 'Активний',
+  IN_PROGRESS_STATUS: 'В процесі',
   USED_STATUS: 'Використаний',
   EXPIRED_STATUS: 'Протермінований',
   PENDING_STATUS: 'В обробці'

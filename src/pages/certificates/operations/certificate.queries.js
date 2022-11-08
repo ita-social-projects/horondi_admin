@@ -30,6 +30,7 @@ export const getAllCertificates = gql`
           isUsed
           isActivated
           isExpired
+          inProgress
           dateStart
           dateEnd
           dateOfUsing

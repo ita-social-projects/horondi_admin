@@ -40,6 +40,7 @@ const CertificatesPage = () => {
         <Status
           status={certificates.checkStatus(
             certificate.isActivated,
+            certificate.inProgress,
             certificate.isUsed,
             certificate.isExpired
           )}

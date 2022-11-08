@@ -25,6 +25,7 @@ const {
   USED_STATUS,
   EXPIRED_STATUS,
   PENDING_STATUS,
+  IN_PROGRESS_STATUS,
   SUCCESS_UPDATE_STATUS,
   SUCCESS_DELETE_STATUS
 } = config.statuses;
@@ -40,9 +41,12 @@ const transformDate = (date) => {
   });
 };
 
-const checkStatus = (active, used, expired) => {
+const checkStatus = (active, inProgress, used, expired) => {
   if (active) {
     return ACTIVE_STATUS;
+  }
+  if (inProgress) {
+    return IN_PROGRESS_STATUS;
   }
   if (used) {
     return USED_STATUS;
@@ -128,7 +132,7 @@ const useCertificates = () => {
 
   const openUpdateModal = (name) => {
     openSuccessSnackbar(
-      () => updateCertificateHandler({name: name}, 'USED'),
+      () => updateCertificateHandler({ name: name }, 'USED'),
       UPDATE_CERTIFICATE_MESSAGE,
       UPDATE_CERTIFICATE_TITLE
     );
