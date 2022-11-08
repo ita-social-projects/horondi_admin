@@ -2,10 +2,10 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
+import isBefore from 'date-fns/isBefore';
 import {
   Grid,
   TextField,
-  Typography,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -31,8 +31,8 @@ function PromoCodeForm({
   goToPromoPage,
   initialState = {
     code: '',
-    dateTo: new Date(),
-    dateFrom: new Date(),
+    dateTo: '',
+    dateFrom: '',
     discount: 0,
     categories: []
   }
@@ -184,6 +184,9 @@ function PromoCodeForm({
           <div className={styles.dataContainer}>
             <div className={styles.dataPickerContainer}>
               <DatePicker
+                disabledDate={(date) =>
+                  isBefore(date, new Date().setDate(new Date().getDate() - 1))
+                }
                 placeholder={promoCodesConsts.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
@@ -197,6 +200,8 @@ function PromoCodeForm({
 
             <div className={styles.dataPickerContainer}>
               <DatePicker
+                disabled={!dateFrom}
+                disabledDate={(date) => isBefore(date, dateFrom || new Date())}
                 placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}
@@ -209,13 +214,6 @@ function PromoCodeForm({
               )}
             </div>
           </div>
-          <Typography
-            className={styles.dateError}
-            color='error'
-            variant='caption'
-          >
-            {errors.dateTo}
-          </Typography>
         </div>
 
         <div>
@@ -257,8 +255,8 @@ function PromoCodeForm({
 
 PromoCodeForm.propTypes = {
   pathToPromoCodesPage: PropTypes.string.isRequired,
-  initialState: PropTypes.shape({}).isRequired,
-  promoValidationSchema: PropTypes.shape({}).isRequired,
+  initialState: PropTypes.objectOf(PropTypes.string).isRequired,
+  promoValidationSchema: PropTypes.objectOf(PropTypes.string).isRequired,
   addPromoCodeHandler: PropTypes.func.isRequired,
   goToPromoPage: PropTypes.func.isRequired
 };
