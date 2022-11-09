@@ -37,9 +37,9 @@ const transformDate = (date) => {
 const checkStatus = (certificate) => {
   let certificateStatus = null;
 
-  statusCertificates.map((status) => {
+  statusCertificates.forEach((status) => {
     if (certificate[status.value]) {
-      return (certificateStatus = status.label);
+      certificateStatus = status.label;
     }
   });
 
