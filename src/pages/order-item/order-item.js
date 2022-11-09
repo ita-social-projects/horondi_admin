@@ -18,6 +18,7 @@ import { submitStatus, setFormValues } from '../../utils/order';
 import { initialValues } from '../../utils/order.values';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
+import { useUnsavedChangesHandler } from '../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -62,6 +63,8 @@ const OrderItem = ({ id }) => {
     validationSchema,
     onSubmit: handleFormSubmit
   });
+
+  useUnsavedChangesHandler(values);
 
   useEffect(() => {
     if (selectedOrder && id) {
