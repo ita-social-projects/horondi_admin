@@ -7,6 +7,7 @@ import { getCertificatesMock, mockStore } from './certificates-page.variables';
 const mockOpenSnackbar = jest.fn();
 const mutationMock = jest.fn();
 const certificatesMock = getCertificatesMock[0].result.data;
+const certificatesItems = certificatesMock.getAllCertificates.items;
 
 jest.mock('react-redux');
 jest.mock('@apollo/client');
@@ -70,7 +71,7 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(true, false, false, false);
+      status = result.current.checkStatus(certificatesItems[1]);
     });
     expect(status).toEqual('Активний');
   });
@@ -79,7 +80,7 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(false, false, true, false);
+      status = result.current.checkStatus(certificatesItems[2]);
     });
     expect(status).toEqual('Використаний');
   });
@@ -88,7 +89,7 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(false, false, false, true);
+      status = result.current.checkStatus(certificatesItems[0]);
     });
     expect(status).toEqual('Протермінований');
   });
@@ -97,18 +98,9 @@ describe('use-certificates hook', () => {
     let status;
     const { result } = renderHook(() => useCertificates());
     act(() => {
-      status = result.current.checkStatus(false, true, false, false);
+      status = result.current.checkStatus(certificatesItems[3]);
     });
     expect(status).toEqual('В процесі');
-  });
-
-  it('should get pending status', () => {
-    let status;
-    const { result } = renderHook(() => useCertificates());
-    act(() => {
-      status = result.current.checkStatus(false, false, false, false);
-    });
-    expect(status).toEqual('В обробці');
   });
 
   it('should set name of the certificate creator', () => {

@@ -29,6 +29,7 @@ export const getCertificatesMock = [
               isActivated: false,
               isExpired: true,
               isUsed: false,
+              inProgress: false,
               name: 'HOR67541841',
               value: 1500,
               _id: '624ee35a3daf9e63c88ceac3'
@@ -40,6 +41,7 @@ export const getCertificatesMock = [
               isActivated: true,
               isExpired: false,
               isUsed: false,
+              inProgress: false,
               name: 'HOR58332589',
               value: 1000,
               _id: '624ee6653daf9e63c88ceb22'
@@ -51,6 +53,7 @@ export const getCertificatesMock = [
               isActivated: false,
               isExpired: false,
               isUsed: true,
+              inProgress: false,
               name: 'HOR67541841',
               value: 1500,
               _id: '624ee35a3daf9e63c88ceac0'
@@ -62,6 +65,7 @@ export const getCertificatesMock = [
               isActivated: false,
               isExpired: false,
               isUsed: false,
+              inProgress: true,
               name: 'HOR58332589',
               value: 1000,
               _id: '624ee6653daf9e63c88ceb21'
