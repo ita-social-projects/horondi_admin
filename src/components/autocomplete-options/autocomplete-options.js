@@ -33,7 +33,7 @@ const AutoCompleteOptions = ({
   }, [dispatch]);
 
   const { positionsList, loadingPositions } = useSelector(({ Positions }) => ({
-    positionsList: Positions.list.items,
+    positionsList: Positions.list,
     loadingPositions: Positions.positionsLoading
   }));
 

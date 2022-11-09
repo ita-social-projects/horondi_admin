@@ -13,7 +13,23 @@ const mockStore = {
         small: 'small_xds8am0kr0e5x4r_47.png',
         large: 'large_xds8am0kr0e5x4r_47.png'
       },
-      available: true
+      available: true,
+      availableForConstructor: true
+    },
+    {
+      _id: '60eadfb9e913fc2882949',
+      name: [
+        { lang: 'ua', value: 'синій' },
+        { lang: 'en', value: 'blue' }
+      ],
+      images: {
+        thumbnail: 'thumbnail_xds8am0kr0e5x4r_47.png',
+        medium: 'medium_xds8am0kr0e5x4r_47.png',
+        small: 'small_xds8am0kr0e5x4r_47.png',
+        large: 'large_xds8am0kr0e5x4r_47.png'
+      },
+      available: true,
+      availableForConstructor: true
     }
   ],
   model: {
@@ -38,6 +54,7 @@ const mockStore = {
         { lang: 'en', value: 'blue' }
       ],
       model: {
+        _id: '60eadfb9e913fc3f88294bd9',
         images: {
           thumbnail: 'thumbnail_xds8am0kr0e5x4r_47.png',
           medium: 'medium_xds8am0kr0e5x4r_47.png',
