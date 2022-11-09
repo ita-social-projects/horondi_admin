@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
 import isBefore from 'date-fns/isBefore';
+import moment from 'moment';
 import {
   Grid,
   TextField,
@@ -185,7 +186,7 @@ function PromoCodeForm({
             <div className={styles.dataPickerContainer}>
               <DatePicker
                 disabledDate={(date) =>
-                  isBefore(date, new Date().setDate(new Date().getDate() - 1))
+                  isBefore(date, moment().subtract(1, 'days').toDate())
                 }
                 placeholder={promoCodesConsts.date.validFrom}
                 oneTap
