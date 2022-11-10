@@ -3,18 +3,17 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 
 import { useStyles } from './certificate.styles';
-import CertificateImages from '../../../assets/images/certificates/CertificateImages';
 
 const Certificate = ({ name, value }) => {
   const styles = useStyles();
 
   return (
     <div className={styles.wrapper}>
-      <img
-        src={CertificateImages[`image${value}`]}
-        alt='Certificate'
-        className={styles.img}
-      />
+      <div className={styles.certificate}>
+        <Typography variant='body1' className={styles.value}>
+          {value}
+        </Typography>
+      </div>
       <Typography paragraph className={styles.name}>
         {name}
       </Typography>
