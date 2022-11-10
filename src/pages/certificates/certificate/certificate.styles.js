@@ -10,9 +10,7 @@ export const useStyles = makeStyles(() => ({
   certificate: {
     width: '136px',
     height: '63px',
-    backgroundImage: `url(${certificate})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
+    background: `center/cover url(${certificate}) no-repeat`,
     position: 'relative'
   },
   title: {
