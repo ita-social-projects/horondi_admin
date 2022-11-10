@@ -18,10 +18,11 @@ export const useStyles = makeStyles(() => ({
   value: {
     position: 'absolute',
     top: '45px',
-    left: '63px',
+    left: '62px',
     fontWeight: '700',
-    fontSize: '4.5px',
-    lineHeight: '8px'
+    fontSize: '5px',
+    lineHeight: '8px',
+    fontStyle: 'italic'
   },
   name: {
     textAlign: 'center',
