@@ -48,18 +48,14 @@ const PatternPage = () => {
         filter
       })
     );
-  }, [dispatch, currentPage, rowsPerPage, filter]);
+  }, [dispatch, currentPage, rowsPerPage, filter, itemsCount]);
 
   const patternDeleteHandler = (id) => {
     const removePattern = () => {
       dispatch(closeDialog());
       dispatch(deletePattern(id));
     };
-    openSuccessSnackbar(
-      removePattern,
-      EXIT_WITHOUT_SAVING,
-      PATTERN_REMOVE_MESSAGE
-    );
+    openSuccessSnackbar(removePattern, PATTERN_REMOVE_MESSAGE);
   };
 
   const patternItems = map(items, (patternItem) => (
