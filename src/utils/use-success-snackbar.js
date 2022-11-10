@@ -35,9 +35,7 @@ const useSuccessSnackbar = () => {
           <ul className={`${styles.list} ${navMenuStyles.drawerPaper}`}>
             {validationData.map((item) => (
               <li key={item.itemId} onClick={() => dispatch(closeDialog())}>
-                <Link to={`/products/${item.itemId}`}>
-                  {item.itemName.value}
-                </Link>
+                <Link to={`/products/${item.itemId}`}>{item.itemName}</Link>
               </li>
             ))}
           </ul>

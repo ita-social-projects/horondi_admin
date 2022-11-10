@@ -114,7 +114,7 @@ const ProductsPage = () => {
             pattern={pattern.name[0].value}
             price={basePrice}
             rate={rate.toFixed(2)}
-            purchasedCount={purchasedCount}
+            purchasedCount={purchasedCount || '0'}
             editHandler={() => handleProductEdit(_id)}
             deleteHandler={() => handleProductDelete(_id)}
           />
