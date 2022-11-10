@@ -15,13 +15,21 @@ export const useStyles = makeStyles(() => ({
     backgroundRepeat: 'no-repeat',
     position: 'relative'
   },
+  title: {
+    position: 'absolute',
+    top: '8px',
+    left: '45px',
+    fontSize: '11px'
+  },
   value: {
     position: 'absolute',
-    top: '45px',
-    left: '62px',
+    top: '30px',
+    left: '53px',
+    width: '35px',
     fontWeight: '700',
     fontSize: '5px',
-    lineHeight: '8px',
+    lineHeight: '9px',
+    textAlign: 'center',
     fontStyle: 'italic'
   },
   name: {
