@@ -14,20 +14,14 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../../configs';
+import { statusCertificates } from '../../../consts/certificate-status';
 import useCertificateFilters from '../../../hooks/filters/use-certificate-filters';
 
 const DELETE_CERTIFICATE_TITLE =
   config.titles.certificatesPageTitles.deleteCertificateTitle;
 const UPDATE_CERTIFICATE_TITLE =
   config.titles.certificatesPageTitles.updateCertificateTitle;
-const {
-  ACTIVE_STATUS,
-  USED_STATUS,
-  EXPIRED_STATUS,
-  PENDING_STATUS,
-  SUCCESS_UPDATE_STATUS,
-  SUCCESS_DELETE_STATUS
-} = config.statuses;
+const { SUCCESS_UPDATE_STATUS, SUCCESS_DELETE_STATUS } = config.statuses;
 const { DELETE_CERTIFICATE_MESSAGE, UPDATE_CERTIFICATE_MESSAGE } =
   config.messages;
 
@@ -40,17 +34,16 @@ const transformDate = (date) => {
   });
 };
 
-const checkStatus = (active, used, expired) => {
-  if (active) {
-    return ACTIVE_STATUS;
-  }
-  if (used) {
-    return USED_STATUS;
-  }
-  if (expired) {
-    return EXPIRED_STATUS;
-  }
-  return PENDING_STATUS;
+const checkStatus = (certificate) => {
+  let certificateStatus = null;
+
+  statusCertificates.forEach((status) => {
+    if (certificate[status.value]) {
+      certificateStatus = status.label;
+    }
+  });
+
+  return certificateStatus;
 };
 
 const setUser = (usersInitials) =>
@@ -128,7 +121,7 @@ const useCertificates = () => {
 
   const openUpdateModal = (name) => {
     openSuccessSnackbar(
-      () => updateCertificateHandler({name: name}, 'USED'),
+      () => updateCertificateHandler({ name: name }, 'USED'),
       UPDATE_CERTIFICATE_MESSAGE,
       UPDATE_CERTIFICATE_TITLE
     );

@@ -36,21 +36,13 @@ const CertificatesPage = () => {
       number={certificate.name}
       admin={<Certificate name={certificates.setUser(certificate.admin)} />}
       price={`${certificate.value} грн`}
-      status={
-        <Status
-          status={certificates.checkStatus(
-            certificate.isActivated,
-            certificate.isUsed,
-            certificate.isExpired
-          )}
-        />
-      }
+      status={<Status status={certificates.checkStatus(certificate)} />}
       date={getDate(certificate)}
       dateOfUsing={dateOfUsing(certificate)}
       deleteHandler={() => {
         certificates.openDeleteModal(certificate._id);
       }}
-      disabled={!certificate.isActivated}
+      disabled={!certificate.isActivated && !certificate.inProgress}
       editHandler={() => {
         certificates.openUpdateModal(certificate.name);
       }}
