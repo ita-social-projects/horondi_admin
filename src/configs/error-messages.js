@@ -48,7 +48,8 @@ export const commonErrorMessages = {
 };
 export const promoCodeErrorMessages = {
   LENGTH_CODE: 'Поле має містити від 2 до 30 символів',
-  STYLE_CODE: 'Поле має містити англійські літери або цифри',
+  STYLE_CODE:
+    'Поле має містити англійські літери або цифри і починатись з літери',
   ERROR_MESSAGE: 'Поле має бути заповнене',
   LENGTH_DISCOUNT: 'Поле має містити максимально 2 цифри',
   POSITIVE_DISCOUNT: 'Тільки більше нуля',

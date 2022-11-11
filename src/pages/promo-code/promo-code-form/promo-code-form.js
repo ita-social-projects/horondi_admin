@@ -2,6 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
+import isBefore from 'date-fns/isBefore';
+import moment from 'moment';
 import {
   Grid,
   TextField,
@@ -32,7 +34,7 @@ function PromoCodeForm({
     code: '',
     dateTo: '',
     dateFrom: '',
-    discount: '',
+    discount: 0,
     categories: []
   }
 }) {
@@ -183,6 +185,9 @@ function PromoCodeForm({
           <div className={styles.dataContainer}>
             <div className={styles.dataPickerContainer}>
               <DatePicker
+                disabledDate={(date) =>
+                  isBefore(date, moment().subtract(1, 'days').toDate())
+                }
                 placeholder={promoCodesConsts.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
@@ -196,6 +201,8 @@ function PromoCodeForm({
 
             <div className={styles.dataPickerContainer}>
               <DatePicker
+                disabled={!dateFrom}
+                disabledDate={(date) => isBefore(date, dateFrom || new Date())}
                 placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}

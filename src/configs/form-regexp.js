@@ -26,7 +26,7 @@ const formRegExp = {
   additionalPriceRegExp: /^[0-9|]/i,
   pageCode: /^[a-z0-9|-]/i,
   postCode: /^\d{5}(?:[-\\s]\\d{4})?$/,
-  promoCodeName: /[a-z]{2,}\w*/i,
+  promoCodeName: /^([a-z])[a-z]{2,}\w*/i,
   promoCodeDiscountMultiple: /^\d*[05]$/,
   promoCodeDiscountPositive: /^[1-9]\d*$/
 };
