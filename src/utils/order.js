@@ -334,6 +334,22 @@ export const setFormValues = (selectedOrder) => {
   if (sentBy === deliveryTypes.novaPost) {
     novaPost = { city, courierOffice };
   }
+  const sendWithCourier = {
+    region,
+    district,
+    city,
+    street,
+    house,
+    flat
+  };
+  const sendWithoutCourier = {
+    region: '',
+    district: '',
+    city: '',
+    street: '',
+    house: '',
+    flat: ''
+  };
 
   return {
     status: selectedOrder.status,
@@ -347,14 +363,7 @@ export const setFormValues = (selectedOrder) => {
     certificateId: selectedOrder.certificateId,
     delivery: {
       sentBy,
-      courier: {
-        region: sentBy.includes(COURIER) ? region : '',
-        district: sentBy.includes(COURIER) ? district : '',
-        city: sentBy.includes(COURIER) ? city : '',
-        street: sentBy.includes(COURIER) ? street : '',
-        house: sentBy.includes(COURIER) ? house : '',
-        flat: sentBy.includes(COURIER) ? flat : ''
-      },
+      courier: sentBy.includes(COURIER) ? sendWithCourier : sendWithoutCourier,
       novaPost,
       ukrPost: {
         region: sentBy === deliveryTypes.ukrPost ? region : '',
