@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up('xl')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none'
     }
   }
