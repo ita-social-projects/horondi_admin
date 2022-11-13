@@ -18,10 +18,17 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 import AddProductForm from './add-product-form/add-product-form';
 import EditProductForm from './edit-product-form/edit-product-form';
 import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries';
+import { getCertificatebyId } from '../../certificates/operations/certificate.queries';
 
 const Products = ({ data, setFieldValue, inputOptions }) => {
   const classes = useStyles();
-  const { items, itemsPriceWithDiscount, promoCodeId, itemsDiscount } = data;
+  const {
+    items,
+    itemsPriceWithDiscount,
+    promoCodeId,
+    itemsDiscount,
+    certificateId
+  } = data;
   const { orderProductTitles } = tableHeadRowTitles;
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
@@ -32,6 +39,12 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const { data: promoCode } = useQuery(getPromoCodeById, {
     variables: {
       id: promoCodeId
+    },
+    fetchPolicy: 'no-cache'
+  });
+  const { data: certificate } = useQuery(getCertificatebyId, {
+    variables: {
+      id: certificateId
     },
     fetchPolicy: 'no-cache'
   });
@@ -102,9 +115,9 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
         name={item.product.name[0].value}
         quantity={item.quantity}
         size={item.options.size.name}
-        price={`${item.options.size.price * item.quantity} $`}
+        price={`${item.options.size.price * item.quantity}$`}
         priceWithDiscount={`${itemsPriceWithDiscount[index]} $`}
-        discount={`${itemsDiscount[index]}%`}
+        discount={`${promoCodeId ? itemsDiscount[index] : 0}%`}
         showAvatar={false}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
@@ -120,6 +133,7 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
         itemsPriceWithDiscount={itemsPriceWithDiscount}
         itemsDiscount={itemsDiscount}
         promoCode={promoCode}
+        certificate={certificate}
         inputOptions={inputOptions}
       />
       {items.length ? (

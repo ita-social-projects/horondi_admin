@@ -38,9 +38,9 @@ const TableContainerRow = ({
   const properties = { ...rest };
   const tableCells = Object.entries(properties).map(
     ([key, value]) =>
-      value && (
+      (value || value === 0) && (
         <TableCell key={key} data-cy='table-cell'>
-          {properties[key]}
+          {value}
         </TableCell>
       )
   );

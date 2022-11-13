@@ -1,7 +1,7 @@
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField } from '@material-ui/core';
+import { List, ListItem, ListSubheader, TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -31,11 +31,13 @@ const AddProductForm = ({
   promoCode,
   itemsPriceWithDiscount,
   itemsDiscount,
-  inputOptions
+  inputOptions,
+  certificate
 }) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
-  const { productLabels, productAdditionalInfo, promoCodesConsts } = configs;
+  const { productLabels, productAdditionalInfo, promoCodesConsts, discount } =
+    configs;
   const dispatch = useDispatch();
   const { products, loading, sizes, category, model } = useSelector(
     ({ Products }) => ({
@@ -125,6 +127,59 @@ const AddProductForm = ({
 
   const sizeItems = setSizeItems(sizes);
   const isFieldError = (field) => Boolean(touched[field] && errors[field]);
+  const certificateOrPromoCode =
+    promoCode?.getPromoCodeById || certificate?.getCertificateById;
+
+  const discountInfo = certificateOrPromoCode && (
+    <List dense disablePadding className={styles.discounts}>
+      <ListSubheader disableGutters className={styles.discountTittle}>
+        {discount.tittle}
+      </ListSubheader>
+      <ListItem disableGutters className={styles.discountSubTittle}>
+        {certificateOrPromoCode.categories
+          ? discount.promoCode
+          : discount.certificate}
+      </ListItem>
+      <ListItem disableGutters>{`${discount.code} ${
+        certificateOrPromoCode.name || certificateOrPromoCode.code
+      }`}</ListItem>
+      <ListItem disableGutters>{`${discount.discount} ${
+        certificateOrPromoCode.categories
+          ? `${certificateOrPromoCode.discount }%`
+          : `${certificateOrPromoCode.value }грн.`
+      }`}</ListItem>
+      {certificateOrPromoCode.categories && (
+        <ListItem disableGutters>{`${
+          discount.categories
+        } ${certificateOrPromoCode.categories.join(', ')}`}</ListItem>
+      )}
+    </List>
+  );
+
+  const promoCodeInput = (
+    <div className={styles.generate}>
+      <TextField
+        inputProps={{ 'data-testid': 'promo-input' }}
+        className={styles.textField}
+        variant={materialUiConstants.outlined}
+        label='Промокод'
+        value={promoCodeValue}
+        error={Boolean(error)}
+        onChange={inputHandler}
+      />
+      <div className={styles.error}>{error ? promoCodesConsts.error : ''}</div>
+      <Button
+        data-testid='promo-button'
+        variant={materialUiConstants.contained}
+        color={materialUiConstants.primary}
+        onClick={checkPromoCode}
+        className={styles.promoBtn}
+        disabled={!promoCodeValue}
+      >
+        {buttonTitles.ADD_PROMOCODE}
+      </Button>
+    </div>
+  );
 
   return (
     <div className={styles.section}>
@@ -204,30 +259,7 @@ const AddProductForm = ({
           {productLabels.addProduct}
         </Button>
       </div>
-      <div className={styles.generate}>
-        <TextField
-          inputProps={{ 'data-testid': 'promo-input' }}
-          className={styles.textField}
-          variant={materialUiConstants.outlined}
-          label='Промокод'
-          value={promoCodeValue}
-          error={error}
-          onChange={(e) => inputHandler(e)}
-        />
-        <div className={styles.error}>
-          {error ? promoCodesConsts.error : ''}
-        </div>
-        <Button
-          data-testid='promo-button'
-          variant={materialUiConstants.contained}
-          color={materialUiConstants.primary}
-          onClick={checkPromoCode}
-          className={styles.promoBtn}
-          disabled={!promoCodeValue}
-        >
-          {buttonTitles.ADD_PROMOCODE}
-        </Button>
-      </div>
+      {certificateOrPromoCode ? discountInfo : promoCodeInput}
     </div>
   );
 };

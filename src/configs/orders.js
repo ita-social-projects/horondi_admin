@@ -123,6 +123,17 @@ const orders = {
       title: 'Застосувати до:',
       checkboxes: [{ label: 'Зроби сам', value: 'constructor' }]
     }
+  },
+  size: {
+    deleted: 'Розмір видалено'
+  },
+  discount: {
+    tittle: 'Iнформація про знижку:',
+    promoCode: 'Промокод:',
+    certificate: 'Сертифікат:',
+    code: 'Код:',
+    discount: 'Pозмір знижки:',
+    categories: 'Категорія:'
   }
 };
 

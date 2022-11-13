@@ -344,6 +344,7 @@ export const setFormValues = (selectedOrder) => {
     itemsDiscount: selectedOrder.itemsDiscount,
     user_id: selectedOrder.user_id,
     promoCodeId: selectedOrder.promoCodeId,
+    certificateId: selectedOrder.certificateId,
     delivery: {
       sentBy,
       courier: {
@@ -370,8 +371,8 @@ export const setFormValues = (selectedOrder) => {
     items: selectedOrder.items.map((item) => ({
       options: {
         size: {
-          _id: item.options.size._id,
-          name: item.options.size.name,
+          _id: item.options.size?._id,
+          name: item.options.size?.name || config.size.deleted,
           price: item.fixedPrice
         }
       },

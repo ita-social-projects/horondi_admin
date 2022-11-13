@@ -40,3 +40,18 @@ export const getAllCertificates = gql`
     }
   }
 `;
+
+export const getCertificatebyId = gql`
+  query ($id: ID!) {
+    getCertificateById(id: $id) {
+      ... on Certificate {
+        name
+        value
+      }
+      ... on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;

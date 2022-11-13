@@ -60,5 +60,6 @@ export const initialValues = {
   items: [],
   itemsDiscount: [],
   itemsPriceWithDiscount: [],
-  promoCodeId: ''
+  promoCodeId: '',
+  certificateId: ''
 };

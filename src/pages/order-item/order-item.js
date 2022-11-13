@@ -116,7 +116,12 @@ const OrderItem = ({ id }) => {
         </div>
       </div>
       <Paper>
-        <Tabs value={tabValue} onChange={handleTabChange}>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          variant='scrollable'
+          scrollButtons='auto'
+        >
           <Tab value={0} label={general} />
           <Tab value={1} label={registeredUser} />
           <Tab value={2} label={receiver} />
