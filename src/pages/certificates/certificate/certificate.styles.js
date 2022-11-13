@@ -8,21 +8,18 @@ export const useStyles = makeStyles(() => ({
     alignItems: 'center'
   },
   certificate: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '136px',
     height: '63px',
-    background: `center/cover url(${certificate}) no-repeat`,
-    position: 'relative'
+    background: `center/cover url(${certificate}) no-repeat`
   },
   title: {
-    position: 'absolute',
-    top: '8px',
-    left: '45px',
     fontSize: '11px'
   },
   value: {
-    position: 'absolute',
-    top: '30px',
-    left: '53px',
     width: '35px',
     fontWeight: '700',
     fontSize: '5px',
