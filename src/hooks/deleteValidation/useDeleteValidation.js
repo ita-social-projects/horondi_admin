@@ -29,9 +29,7 @@ function useDeleteValidation(queryFunction) {
       .filter((product) => product.ids.includes(id))
       .map((product) => ({
         itemId: product._id,
-        itemName: {
-          value: product.itemName
-        }
+        itemName: product.itemName.value
       }));
   return { deleteValidation, toggleRerender };
 }
