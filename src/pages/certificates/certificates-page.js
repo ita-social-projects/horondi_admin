@@ -34,7 +34,12 @@ const CertificatesPage = () => {
     <TableContainerRow
       key={certificate._id}
       number={certificate.name}
-      admin={<Certificate name={certificates.setUser(certificate.admin)} />}
+      admin={
+        <Certificate
+          value={certificate.value}
+          name={certificates.setUser(certificate.admin)}
+        />
+      }
       price={`${certificate.value} грн`}
       status={<Status status={certificates.checkStatus(certificate)} />}
       date={getDate(certificate)}

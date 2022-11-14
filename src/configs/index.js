@@ -83,6 +83,7 @@ import {
   inputNames
 } from './news-form-helpers';
 import { imageUploadSlideInputsId } from './home-page-slide-helpers';
+import certificate from './certificate';
 
 export const config = {
   fetchPolicy: 'no-cache',
@@ -347,6 +348,7 @@ export const config = {
   errorStatuses,
   userErrorMessages,
   materialAboutErrorMessages,
+  certificate,
   RESET: 'reset'
 };
 export const inputTypes = {
