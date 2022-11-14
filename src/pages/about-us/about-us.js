@@ -125,33 +125,24 @@ const AboutUs = () => {
   }
 
   if (businessPage) {
-    const items = [
-      {
-        showAvatar: false,
-        key: uaTranslations.title,
-        title: uaTranslations.title,
-        showDelete: false,
-        editHandler: editTitleHandler
-      },
-      {
-        showAvatar: false,
-        key: businessPage.footerImg.name,
-        image: businessPage.footerImg.src,
-        showDelete: false,
-        editHandler: editFooterImgHandler
-      }
-    ];
-
-    const titleItemAndFooterItem = items.map((item) => [
+    const titleItem = [
       <TableContainerRow
-        showAvatar={item.showAvatar}
-        key={item.key}
-        title={item?.title}
-        showDelete={item.showDelete}
-        editHandler={item.editHandler}
-        image={item?.image}
+        showAvatar={false}
+        key={uaTranslations.title}
+        showDelete={false}
+        editHandler={editTitleHandler}
+        title={uaTranslations.title}
       />
-    ]);
+    ];
+    const footerItem = [
+      <TableContainerRow
+        showAvatar={false}
+        key={businessPage.footerImg.name}
+        showDelete={false}
+        editHandler={editFooterImgHandler}
+        image={businessPage.footerImg.src}
+      />
+    ];
 
     const sectionItems = uaTranslations.sections.map(
       ({ id, title, text }, idx) => (
@@ -172,7 +163,7 @@ const AboutUs = () => {
         id: 'AboutUsHeaderTable',
         className: styles.header,
         tableTitles: aboutUsHeaderTitles,
-        tableItems: titleItemAndFooterItem[0]
+        tableItems: titleItem
       },
       {
         id: 'AboutUsTable',
@@ -184,7 +175,7 @@ const AboutUs = () => {
         id: 'AboutUsFooterTable',
         className: styles.footer,
         tableTitles: aboutUsFooterTitles,
-        tableItems: titleItemAndFooterItem[1]
+        tableItems: footerItem
       }
     ];
 

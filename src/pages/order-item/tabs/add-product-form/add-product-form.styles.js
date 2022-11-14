@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => {
       gap: '48px',
       '@media(max-width:600px)': {
         flexDirection: 'column',
-        gap: '5%'
+        gap: '12px'
       }
     },
     promoBtn: {

@@ -36,14 +36,11 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-  const tableCells = Object.entries(properties).map(
-    ([key, value]) =>
-      (value || value === 0) && (
-        <TableCell key={key} data-cy='table-cell'>
-          {value}
-        </TableCell>
-      )
-  );
+  const tableCells = Object.entries(properties).map(([key, value]) => (
+    <TableCell key={key} data-cy='table-cell'>
+      {value || '-'}
+    </TableCell>
+  ));
 
   const setCheckboxValue = (idToFind) => {
     const checked = checkBoxValue.find((item) => item === idToFind);
