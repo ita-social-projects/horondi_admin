@@ -180,6 +180,19 @@ export const config = {
     UNAVAILABLE_TEXT: 'Недоступна'
   },
 
+  constructorModelForm: {
+    constructorKeys: [
+      'backs',
+      'basics',
+      'bottoms',
+      'closures',
+      'patterns',
+      'pockets',
+      'straps'
+    ],
+    constructorLabels: labels.constructorLabels
+  },
+
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
   product: {

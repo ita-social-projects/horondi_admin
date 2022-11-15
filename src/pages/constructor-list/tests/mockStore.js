@@ -1,4 +1,4 @@
-const mockStore = {
+export const mockStore = {
   count: 5,
   list: [
     {
@@ -82,4 +82,57 @@ const mockStore = {
   itemsCount: 7
 };
 
-export default mockStore;
+export const initialState = {
+  Constructor: {
+    constructor: {
+      _id: '6366445a0e8c5684b99d4c81',
+      model: {
+        _id: '6043bf9e3e06ad3edcdb7b30',
+        name: [
+          {
+            lang: 'ua',
+            value: 'Роллтоп'
+          },
+          {
+            lang: 'en',
+            value: 'Rolltop'
+          }
+        ]
+      },
+      name: [
+        {
+          lang: 'ua',
+          value: 'Роллтоп'
+        },
+        {
+          lang: 'en',
+          value: 'Rolltop'
+        }
+      ],
+      bottoms: [
+        {
+          _id: '619e937b5bbfb0002540b7b9'
+        }
+      ],
+      basics: [
+        {
+          _id: '619eb9a45bbfb0002540bf96'
+        }
+      ],
+      patterns: [
+        {
+          _id: '619e24c25bbfb00025409bf3'
+        }
+      ],
+      backs: [
+        {
+          _id: '60e71ce82d34d70024decb74'
+        }
+      ],
+      straps: [],
+      closures: [],
+      pockets: [],
+      basePrice: 14
+    }
+  }
+};

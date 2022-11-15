@@ -94,7 +94,10 @@ export const basicsErrorMessages = {
 };
 
 export const constructorErrorMessages = {
-  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
+  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора',
+  PRICE_REQUIRED: "Ціна є обов'язковим полем",
+  ITEMS_REQUIRED: 'Додайте принаймі один елемент зі списку',
+  NOT_NULL: 'Ціна не може бути нульовою'
 };
 
 export const strapsErrorMessages = {

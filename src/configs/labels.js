@@ -742,6 +742,15 @@ const labels = {
       name: 'text',
       isEditor: true
     }
-  }
+  },
+  constructorLabels: [
+    'Спинки',
+    'Основи',
+    'Низи',
+    'Защіпки',
+    'Гобелени',
+    'Кишені',
+    'Ремінці'
+  ]
 };
 export default labels;

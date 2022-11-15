@@ -1,33 +1,31 @@
 import React from 'react';
-import { StaticRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { MemoryRouter, Switch } from 'react-router-dom';
+import * as redux from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
-import constructorEdit from '../constructor-edit';
-import mockStore from './mockStore';
+import ConstructorEdit from '../constructor-edit';
+import { initialState } from './mockStore';
 
-jest.mock('react-redux');
-
+const { Provider } = redux;
 let wrapper;
-const mockDispatch = jest.fn();
 
-useSelector.mockImplementation(() => mockStore);
-useDispatch.mockReturnValue(mockDispatch);
+const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
+mockUseDispatch.mockImplementation(() => jest.fn());
+
+const mockStore = configureStore();
+const store = mockStore(initialState);
 
 describe('constructor-edit tests', () => {
   test('Should render constructor-edit', () => {
     wrapper = mount(
-      <StaticRouter
-        store={mockStore}
-        location='/constructor-list/60eadfb9e913fc288294bd9'
-      >
-        <Switch>
-          <Route
-            path='/constructor-list/:id'
-            exact
-            component={constructorEdit}
-          />
-        </Switch>
-      </StaticRouter>
+      <Provider store={store}>
+        <MemoryRouter
+          initialEntries={['constructor-list/6366445a0e8c5684b99d4c81']}
+          initialIndex={0}
+        >
+          <Switch>{ConstructorEdit}</Switch>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(wrapper).toBeDefined();
