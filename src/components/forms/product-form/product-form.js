@@ -410,7 +410,7 @@ const ProductForm = ({ isEdit }) => {
               <ProductMaterialsContainer
                 innerMaterials={materials?.inner || []}
                 innerColors={innerColors}
-                mainMaterials={materials?.main || []}
+                mainMaterials={materials?.basic || []}
                 mainColors={mainColors}
                 bottomMaterials={materials?.bottom || []}
                 bottomColors={bottomColors}

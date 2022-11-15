@@ -77,7 +77,7 @@ export const setMainColorsHandler = (
 ) => {
   if (values.mainMaterial) {
     setMainColorsFn(
-      find(materials.main, (material) => material._id === values.mainMaterial)
+      find(materials.basic, (material) => material._id === values.mainMaterial)
         ?.colors || []
     );
   }
