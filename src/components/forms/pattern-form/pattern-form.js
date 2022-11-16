@@ -434,17 +434,21 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   {errors.additionalPrice}
                 </div>
               )}
-              <TextField
-                id='outlined-basic'
-                variant='outlined'
-                label={convertationTitle}
-                className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
+              {values.additionalPriceType === 'ABSOLUTE' ? (
+                <TextField
+                  id='outlined-basic'
+                  variant='outlined'
+                  label={convertationTitle}
+                  className={`
+                    ${styles.textField} 
+                    ${styles.currencyField}
                   `}
-                value={calculateAddittionalPriceValue(values, exchangeRate)}
-                disabled
-              />
+                  value={calculateAddittionalPriceValue(values, exchangeRate)}
+                  disabled
+                />
+              ) : (
+                <></>
+              )}
             </Paper>
           </Grid>
           {map(languages, (lang) => (
