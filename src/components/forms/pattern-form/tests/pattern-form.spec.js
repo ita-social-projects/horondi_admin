@@ -68,8 +68,8 @@ describe('Basics form tests', () => {
     expect(mockUseDispatchFn).toHaveBeenCalledTimes(3);
   });
 
-  it('Should render 9 inputs', () => {
-    expect(component.find('input')).toHaveLength(9);
+  it('Should render 10 inputs', () => {
+    expect(component.find('input')).toHaveLength(10);
   });
 
   it('should call setFieldValue for checkbox', () => {
