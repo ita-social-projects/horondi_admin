@@ -17,19 +17,30 @@ export const useStyles = makeStyles((theme) => {
       flexDirection: 'column',
       justifyContent: 'flex-end'
     },
+    discounts: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      fontSize: '14px'
+    },
+    discountTittle: {
+      fontWeight: 600,
+      fontSize: '18px'
+    },
+    discountSubTittle: {
+      fontWeight: 600
+    },
     section: {
       display: 'flex',
-      justifyContent: 'flex-start',
-      gap: '20%',
-      width: '100%',
-      '@media(max-width:580px)': {
+      gap: '48px',
+      '@media(max-width:600px)': {
         flexDirection: 'column',
-        gap: '5%'
+        gap: '12px'
       }
     },
     promoBtn: {
       margin: '12px 0px',
-      '@media(max-width:580px)': {
+      '@media(max-width:600px)': {
         width: 'fit-content'
       }
     },

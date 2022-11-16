@@ -98,6 +98,7 @@ export const getOrderById = (id) => {
 					}
 					itemsPriceWithDiscount
 					promoCodeId
+					certificateId
 					itemsDiscount
 					paymentMethod
 					paymentStatus

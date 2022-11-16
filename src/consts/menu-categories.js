@@ -1,6 +1,6 @@
 export const DRAWER_TEMPORARY = 'temporary';
 export const DRAWER_PERMANENT = 'permanent';
-export const TEMPORARY_WIDTHS = ['sm', 'xs'];
+export const TEMPORARY_WIDTHS = ['sm', 'xs', 'md'];
 export const MENU_TABS = {
   MATERIALS: 'Про матеріали',
   CLIENTS: 'Клієнти',
