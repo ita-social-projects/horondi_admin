@@ -434,7 +434,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   {errors.additionalPrice}
                 </div>
               )}
-              {values.additionalPriceType === 'ABSOLUTE' ? (
+              {values.additionalPriceType === 'ABSOLUTE' ?? (
                 <TextField
                   id='outlined-basic'
                   variant='outlined'
@@ -446,8 +446,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   value={calculateAddittionalPriceValue(values, exchangeRate)}
                   disabled
                 />
-              ) : (
-                <></>
               )}
             </Paper>
           </Grid>
