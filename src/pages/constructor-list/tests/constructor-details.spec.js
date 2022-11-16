@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { StaticRouter, Route, Switch } from 'react-router-dom';
 
-import mockStore from './mockStore';
+import { mockStore } from './mockStore';
 import ConstructorModelDetails from '../constructor-details';
 import LoadingBar from '../../../components/loading-bar';
 

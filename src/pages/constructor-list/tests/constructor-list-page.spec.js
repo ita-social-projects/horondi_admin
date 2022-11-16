@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { shallow, mount } from 'enzyme';
-import mockStore from './mockStore';
+import { mockStore } from './mockStore';
 import ConstructorListPage from '../constructor-list-page';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';

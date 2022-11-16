@@ -22,7 +22,7 @@ import {
   getNewPartItem
 } from '../../utils/constructor-form-container';
 
-import { getValidationSchema } from '../../validations/constructor-form/constructor-form-validation';
+import { getValidationSchema } from '../../validations/constructor/constructor-form-container';
 
 const { IMG_URL } = config;
 const { SAVE_TITLE } = config.buttonTitles;
