@@ -18,7 +18,7 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 import AddProductForm from './add-product-form/add-product-form';
 import EditProductForm from './edit-product-form/edit-product-form';
 import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries';
-import { getCertificatebyId } from '../../certificates/operations/certificate.queries';
+import { getCertificateById } from '../../certificates/operations/certificate.queries';
 
 const Products = ({ data, setFieldValue, inputOptions }) => {
   const classes = useStyles();
@@ -42,7 +42,7 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
     },
     fetchPolicy: 'no-cache'
   });
-  const { data: certificate } = useQuery(getCertificatebyId, {
+  const { data: certificate } = useQuery(getCertificateById, {
     variables: {
       id: certificateId
     },
