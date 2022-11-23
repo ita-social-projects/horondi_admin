@@ -32,27 +32,12 @@ jest.mock('react-router-dom', () => ({
   useHistory: () => ({ push: () => null })
 }));
 jest.mock('../../../../utils/business-page-form', () => ({
-  setCodeHandler: jest.fn(() => null),
-  uaSetTitleHandler: jest.fn(() => null),
-  uaSetTextHandler: jest.fn(() => null),
-  enSetTitleHandler: jest.fn(() => null),
-  enSetTextHandler: jest.fn(() => null),
   businessPageDispatchHandler: jest.fn(() => null),
   indexFinder: jest.fn(() => null)
 }));
 jest.mock('../../../../utils/use-business-handlers', () => ({
   __esModule: true,
   default: () => ({
-    code: 'some code',
-    uaText: 'some text',
-    uaTitle: 'some title',
-    enText: 'some text',
-    enTitle: 'some title',
-    setCode: jest.fn(() => null),
-    uaSetText: jest.fn(() => null),
-    uaSetTitle: jest.fn(() => null),
-    enSetText: jest.fn(() => null),
-    enSetTitle: jest.fn(() => null),
     languages: ['ua', 'en'],
     createBusinessPage: jest.fn(() => null),
     files: ['image.png'],

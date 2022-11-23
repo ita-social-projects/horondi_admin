@@ -1,25 +1,16 @@
 export const mockBusinessPage = {
   code: 'some code',
-  title: [
-    {
-      lang: 'ua',
-      value: 'some title'
+  translations: {
+    en: {
+      title: 'some title',
+      text: 'some text'
     },
-    {
-      lang: 'en',
-      value: 'some title'
+    ua: {
+      title: 'some title',
+      text: 'some text'
     }
-  ],
-  text: [
-    {
-      lang: 'ua',
-      value: 'some text'
-    },
-    {
-      lang: 'en',
-      value: 'some text'
-    }
-  ],
+  },
+
   languages: ['ua', 'en']
 };
-export const mockId = '91hcf1187wyhhacs';
+export const mockId = 'payment-and-shipping';

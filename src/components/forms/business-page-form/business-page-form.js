@@ -12,11 +12,6 @@ import { SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 
 import {
-  setCodeHandler,
-  uaSetTitleHandler,
-  uaSetTextHandler,
-  enSetTitleHandler,
-  enSetTextHandler,
   businessPageDispatchHandler,
   indexFinder
 } from '../../../utils/business-page-form';
@@ -61,16 +56,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
   const {
     createBusinessPage,
     createBusinessTextTranslationFields,
-    uaSetText,
-    enSetText,
-    uaSetTitle,
-    enSetTitle,
-    uaText,
-    enText,
-    enTitle,
-    uaTitle,
-    code,
-    setCode,
+
     files,
     setFiles
   } = useBusinessHandlers();
@@ -78,25 +64,6 @@ const BusinessPageForm = ({ editMode, codePath }) => {
   useEffect(() => {
     codePath && dispatch(getBusinessPageByCode(codePath));
   }, [dispatch, codePath]);
-
-  useEffect(() => {
-    const isEditingReady = businessPage && editMode;
-
-    setCode(setCodeHandler(isEditingReady, businessPage));
-    uaSetTitle(uaSetTitleHandler(isEditingReady, businessPage));
-    uaSetText(uaSetTextHandler(isEditingReady, businessPage));
-    enSetTitle(enSetTitleHandler(isEditingReady, businessPage));
-    enSetText(enSetTextHandler(isEditingReady, businessPage));
-  }, [
-    code,
-    setCode,
-    editMode,
-    businessPage,
-    uaSetText,
-    uaSetTitle,
-    enSetText,
-    enSetTitle
-  ]);
 
   const formSchema = Yup.object().shape({
     code: Yup.string()
@@ -119,6 +86,17 @@ const BusinessPageForm = ({ editMode, codePath }) => {
       .required(ENTER_TEXT_ERROR_MESSAGE)
   });
 
+  const initial = useMemo(
+    () => ({
+      code: businessPage ? businessPage.code : '',
+      uaTitle: businessPage ? businessPage.translations.ua.title : '',
+      enTitle: businessPage ? businessPage.translations.en.title : '',
+      uaText: businessPage ? businessPage.translations.ua.text : '',
+      enText: businessPage ? businessPage.translations.en.text : ''
+    }),
+    [businessPage]
+  );
+
   const {
     values,
     errors,
@@ -128,14 +106,9 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     handleChange,
     setFieldValue
   } = useFormik({
-    initialValues: {
-      code,
-      uaTitle,
-      enTitle,
-      uaText,
-      enText
-    },
+    initialValues: initial,
     validationSchema: formSchema,
+    enableReinitialize: true,
     onSubmit: async () => {
       const uniqueFiles = files.filter((file, i) => {
         const { name, size } = file;
@@ -173,14 +146,6 @@ const BusinessPageForm = ({ editMode, codePath }) => {
 
   const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
-
-  useMemo(() => {
-    values.code = code;
-    values.uaTitle = uaTitle;
-    values.enTitle = enTitle;
-    values.uaText = uaText;
-    values.enText = enText;
-  }, [code, uaTitle, enTitle, uaText, enText]);
 
   if (loading) {
     return <LoadingBar />;
@@ -231,7 +196,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
           className={common.materialTitle}
           data-cy='add-header'
         >
-          {config.titles.businessPageTitles.addBusinessPageTitle}
+          {config.titles.businessPageTitles.editBusinessPageTitle}
         </Typography>
       </div>
 
