@@ -100,7 +100,8 @@ const titles = {
   },
   businessPageTitles: {
     mainPageTitle: 'Інформація про бізнес сторінки',
-    addBusinessPageTitle: 'Додати нову бізнес сторінку'
+    addBusinessPageTitle: 'Додати нову бізнес сторінку',
+    editBusinessPageTitle: 'Редагувати бізнес сторінку'
   },
   questionsAnswersTitles: {
     mainQuestionsAnswersTitle: 'Питання та відповіді',
