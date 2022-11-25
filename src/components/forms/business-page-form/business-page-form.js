@@ -26,7 +26,6 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const BusinessPageForm = ({ editMode, codePath }) => {
   const dispatch = useDispatch();
@@ -104,7 +103,9 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     handleSubmit,
     handleBlur,
     handleChange,
-    setFieldValue
+    setFieldValue,
+    dirty,
+    isValid
   } = useFormik({
     initialValues: initial,
     validationSchema: formSchema,
@@ -144,7 +145,6 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   if (loading) {
@@ -185,7 +185,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
                 enTitle: values.enTitle
               }}
               errors={errors}
-              {...(businessPage?._id ? { disabled: !changed } : {})}
+              disabled={!dirty || !isValid}
             />
           </Grid>
         </Grid>
@@ -231,13 +231,11 @@ const BusinessPageForm = ({ editMode, codePath }) => {
 
 BusinessPageForm.propTypes = {
   editMode: PropTypes.bool,
-  id: PropTypes.string,
   codePath: PropTypes.string
 };
 
 BusinessPageForm.defaultProps = {
   editMode: false,
-  id: null,
   codePath: null
 };
 

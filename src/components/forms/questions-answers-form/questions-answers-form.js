@@ -24,7 +24,6 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const FormQNA = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -72,7 +71,9 @@ const FormQNA = ({ id, editMode }) => {
     handleSubmit,
     handleBlur,
     handleChange,
-    setFieldValue
+    setFieldValue,
+    dirty,
+    isValid
   } = useFormik({
     enableReinitialize: true,
     initialValues: initial,
@@ -92,7 +93,6 @@ const FormQNA = ({ id, editMode }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   if (loading) {
@@ -130,7 +130,7 @@ const FormQNA = ({ id, editMode }) => {
               unblockFunction={unblock}
               values={{}}
               errors={errors}
-              {...(id ? { disabled: !changed } : {})}
+              disabled={!dirty || !isValid}
             />
           </Grid>
         </Grid>

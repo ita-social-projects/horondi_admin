@@ -70,7 +70,9 @@ const CategoryForm = ({ category, id, edit }) => {
     handleBlur,
     touched,
     errors,
-    setFieldValue
+    setFieldValue,
+    dirty,
+    isValid
   } = useFormik({
     validationSchema: categoryValidationSchema,
     initialValues: getCategoryInitialValues(edit, IMG_URL, category),
@@ -142,6 +144,7 @@ const CategoryForm = ({ category, id, edit }) => {
                   enName: values.enName,
                   code: values.code
                 }}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>
