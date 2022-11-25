@@ -128,7 +128,10 @@ const FormQNA = ({ id, editMode }) => {
               data-cy='save-btn'
               onClickHandler={handleSubmit}
               unblockFunction={unblock}
-              values={{}}
+              values={{
+                uaQuestion: values.uaQuestion,
+                enQuestion: values.enQuestion
+              }}
               errors={errors}
               disabled={!dirty || !isValid}
             />
