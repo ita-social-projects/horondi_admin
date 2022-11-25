@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme) => {
       }
     },
     discountInput: {
-      padding: '0 5px',
+      minWidth: '248px'
     },
     promoBtn: {
       margin: '12px 0px',

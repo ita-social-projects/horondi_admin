@@ -37,8 +37,12 @@ const AddProductForm = ({
 }) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
-  const { productLabels, productAdditionalInfo, promoCodesConsts, discount } =
-    configs;
+  const {
+    productLabels,
+    productAdditionalInfo,
+    promoCodesConsts: { error },
+    discount
+  } = configs;
   const dispatch = useDispatch();
   const { products, loading, sizes, category, model } = useSelector(
     ({ Products }) => ({
@@ -200,11 +204,9 @@ const AddProductForm = ({
         label='Промокод або сертифікат'
         value={certificateOrPromoValue}
         error={!!certificateOrPromoError}
+        helperText={certificateOrPromoError ? error : ' '}
         onChange={inputHandler}
       />
-      <div className={styles.error}>
-        {certificateOrPromoError ? promoCodesConsts.error : ''}
-      </div>
       <Button
         data-testid='promo-button'
         variant={materialUiConstants.contained}
