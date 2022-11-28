@@ -116,7 +116,7 @@ const orders = {
       validTo: 'Термін до'
     },
     discount: {
-      title: 'Розмір знижки у процентах:',
+      title: 'Розмір знижки у відсотках:',
       label: 'Розмір знижки'
     },
     categories: {
