@@ -53,8 +53,7 @@ export const promoCodeErrorMessages = {
   ERROR_MESSAGE: 'Поле має бути заповнене',
   POSITIVE_DISCOUNT: 'Тільки більше нуля',
   INTEGER_DISCOUNT: 'Тільки ціле число',
-  MAX_VALUE_DISCOUNT: 'Не більше 85',
-  MULTIPLE_DISCOUNT: 'Число має бути кратним п’яти'
+  MAX_VALUE_DISCOUNT: 'Не більше 90'
 };
 
 export const patternErrorMessages = {

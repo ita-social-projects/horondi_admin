@@ -8,8 +8,7 @@ const {
   ERROR_MESSAGE,
   POSITIVE_DISCOUNT,
   INTEGER_DISCOUNT,
-  MAX_VALUE_DISCOUNT,
-  MULTIPLE_DISCOUNT
+  MAX_VALUE_DISCOUNT
 } = config.promoCodeErrorMessages;
 
 export const promoValidationSchema = Yup.object().shape({
@@ -23,7 +22,7 @@ export const promoValidationSchema = Yup.object().shape({
   discount: Yup.number()
     .integer(INTEGER_DISCOUNT)
     .positive(POSITIVE_DISCOUNT)
-    .max(85, MAX_VALUE_DISCOUNT)
+    .max(90, MAX_VALUE_DISCOUNT)
     .required(ERROR_MESSAGE),
   categories: Yup.array().min(1, ERROR_MESSAGE).required(ERROR_MESSAGE)
 });
