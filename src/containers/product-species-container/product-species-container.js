@@ -11,11 +11,9 @@ import {
 import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 
-import { productsTranslations } from '../../configs/product-translations';
 import { config, formConstants } from '../../configs';
 
 const { selectsLabels } = config.labels.product;
-const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
 const { formTypeSelect, isRequired, notRequired } = formConstants;
 
 const ProductSpeciesContainer = ({
@@ -126,7 +124,7 @@ const ProductSpeciesContainer = ({
               <Select
                 name={name}
                 error={touched[name] && !!errors[name]}
-                value={values[name] || []}
+                value={options[idx].length ? values[name] : ''}
                 onChange={handleSelectChange}
                 onBlur={handleBlur}
                 multiple={multiple}
@@ -171,7 +169,18 @@ ProductSpeciesContainer.propTypes = {
     ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([
+          PropTypes.bool,
+          PropTypes.objectOf(PropTypes.bool)
+        ])
+      ),
+      PropTypes.object
+    ])
+  ).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

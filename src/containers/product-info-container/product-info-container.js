@@ -57,7 +57,18 @@ ProductInfoContainer.propTypes = {
     ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([
+          PropTypes.bool,
+          PropTypes.objectOf(PropTypes.bool)
+        ])
+      ),
+      PropTypes.object
+    ])
+  ).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleBlur: PropTypes.func,

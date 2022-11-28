@@ -81,7 +81,7 @@ const ProductMaterialsContainer = ({
   ];
   return (
     <form onSubmit={handleSubmit} className={sharedStyles.container}>
-      <Grid container spacing={1} xs={12} justify='flex-start'>
+      <Grid container spacing={1} justify='flex-start'>
         {materialLabels.map(({ label, name, required }, idx) => (
           <FormControl className={styles.formControl} key={label}>
             <InputLabel htmlFor={label}>{`${label}${
@@ -90,7 +90,7 @@ const ProductMaterialsContainer = ({
             <Select
               name={name}
               error={touched[name] && !!errors[name]}
-              value={values[name]}
+              value={options[idx].length ? values[name] : ''}
               onChange={handleSelectChange}
               onBlur={handleBlur}
               disabled={!options[idx] || !options[idx].length}
@@ -121,7 +121,18 @@ ProductMaterialsContainer.propTypes = {
     ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([
+          PropTypes.bool,
+          PropTypes.objectOf(PropTypes.bool)
+        ])
+      ),
+      PropTypes.object
+    ])
+  ).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

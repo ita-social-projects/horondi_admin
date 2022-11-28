@@ -109,7 +109,7 @@ LanguagePanel.propTypes = {
       ])
     ),
     touched: PropTypes.objectOf(
-      PropTypes.oneOfType([PropTypes.bool, PropTypes.array])
+      PropTypes.oneOfType([PropTypes.bool, PropTypes.array, PropTypes.object])
     ).isRequired,
     errors: PropTypes.objectOf(PropTypes.string),
     inputs: PropTypes.arrayOf(
