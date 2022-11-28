@@ -8,6 +8,7 @@ import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './product-materials-container.styles';
 import { config } from '../../configs';
 import { handleMenuItem } from '../../utils/handle-menu-item';
+import productContainersTypes from '../../propTypes/product-containers';
 
 const { materialLabels } = config.labels.product;
 
@@ -111,33 +112,8 @@ ProductMaterialsContainer.propTypes = {
   bottomColors: PropTypes.arrayOf(PropTypes.object).isRequired,
   mainMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   mainColors: PropTypes.arrayOf(PropTypes.object).isRequired,
-  values: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.array,
-      PropTypes.object
-    ])
-  ).isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.arrayOf(
-        PropTypes.oneOfType([
-          PropTypes.bool,
-          PropTypes.objectOf(PropTypes.bool)
-        ])
-      ),
-      PropTypes.object
-    ])
-  ).isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
-  toggleFieldsChanged: PropTypes.func
+  toggleFieldsChanged: PropTypes.func,
+  ...productContainersTypes
 };
 
 ProductMaterialsContainer.defaultProps = {
