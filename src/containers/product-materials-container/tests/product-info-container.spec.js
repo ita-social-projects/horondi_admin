@@ -3,10 +3,6 @@ import { render, screen } from '@testing-library/react';
 import ProductMaterialsContainer from '../product-materials-container';
 
 const mockProps = {
-  innerMaterials: [],
-  innerColors: [],
-  bottomMaterials: [],
-  bottomColors: [],
   mainMaterials: [
     {
       name: [{ value: 'Мальмо' }, { value: 'Malmo' }],
@@ -23,12 +19,7 @@ const mockProps = {
     mainColor: '6043a1653e06ad3edcdb7b08'
   },
   errors: {},
-  touched: {},
-  handleBlur: jest.fn(),
-  handleChange: jest.fn(),
-  handleSubmit: jest.fn(),
-  setFieldValue: jest.fn(),
-  toggleFieldsChanged: jest.fn()
+  touched: {}
 };
 
 describe('CartHeader', () => {
