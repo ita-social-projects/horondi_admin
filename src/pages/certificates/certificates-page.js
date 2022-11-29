@@ -44,10 +44,11 @@ const CertificatesPage = () => {
       status={<Status status={certificates.checkStatus(certificate)} />}
       date={getDate(certificate)}
       dateOfUsing={dateOfUsing(certificate)}
+      disabledDeleteButton={certificate.isActivated || certificate.inProgress}
       deleteHandler={() => {
         certificates.openDeleteModal(certificate._id);
       }}
-      disabled={!certificate.isActivated && !certificate.inProgress}
+      disabledEditButton={!certificate.isActivated && !certificate.inProgress}
       editHandler={() => {
         certificates.openUpdateModal(certificate.name);
       }}
