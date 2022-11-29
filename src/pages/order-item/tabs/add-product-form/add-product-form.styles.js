@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { formStyles } from '../../../../configs/styles';
 
-export const useStyles = makeStyles((theme) => {
-  const { inputError } = formStyles(theme);
-  return {
+export const useStyles = makeStyles((theme) => ({
     quantity: {
       display: 'flex',
       justifyContent: 'flex-start',
@@ -48,7 +45,5 @@ export const useStyles = makeStyles((theme) => {
       color: 'red',
       fontSize: '12px',
       height: '12px'
-    },
-    inputError
-  };
-});
+    }
+  }));

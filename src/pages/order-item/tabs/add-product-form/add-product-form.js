@@ -126,7 +126,6 @@ const AddProductForm = ({
   };
 
   const sizeItems = setSizeItems(sizes);
-  const isFieldError = (field) => Boolean(touched[field] && errors[field]);
   const certificateOrPromoCode =
     promoCode?.getPromoCodeById || certificate?.getCertificateById;
 
@@ -145,8 +144,8 @@ const AddProductForm = ({
       }`}</ListItem>
       <ListItem disableGutters>{`${discount.discount} ${
         certificateOrPromoCode.categories
-          ? `${certificateOrPromoCode.discount }%`
-          : `${certificateOrPromoCode.value }грн.`
+          ? `${certificateOrPromoCode.discount}%`
+          : `${certificateOrPromoCode.value}грн.`
       }`}</ListItem>
       {certificateOrPromoCode.categories && (
         <ListItem disableGutters>{`${
@@ -202,7 +201,6 @@ const AddProductForm = ({
             <TextField
               {...params}
               label={productLabels.product}
-              error={isFieldError(inputName.items)}
               variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
@@ -216,9 +214,6 @@ const AddProductForm = ({
             />
           )}
         />
-        {isFieldError(inputName.items) && (
-          <div className={styles.inputError}>{errors[inputName.items]}</div>
-        )}
         <div className={styles.quantity}>
           {productLabels.quantity}
           <Button
