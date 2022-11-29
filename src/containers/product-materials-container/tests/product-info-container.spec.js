@@ -22,17 +22,14 @@ const mockProps = {
   touched: {}
 };
 
-describe('CartHeader', () => {
-  it('should consist 1 item in <Badge />', () => {
-    render(<ProductMaterialsContainer {...mockProps} />);
-
+describe('ProductMaterialsContainer', () => {
+  beforeEach(() => render(<ProductMaterialsContainer {...mockProps} />));
+  it('should consist mainColor', () => {
     const mainColor = screen.getByText(mockProps.mainColors[0].name[0].value);
 
     expect(mainColor).toBeInTheDocument();
   });
-  it('should consist 1 item in <Badge />', () => {
-    render(<ProductMaterialsContainer {...mockProps} />);
-
+  it('should not consist mainMaterial', () => {
     const mainMaterial = screen.queryByText(
       mockProps.mainMaterials[0].name[0].value
     );

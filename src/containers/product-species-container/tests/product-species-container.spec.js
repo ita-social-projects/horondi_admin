@@ -23,17 +23,14 @@ const mockProps = {
   touched: {}
 };
 
-describe('CartHeader', () => {
-  it('should consist 1 item in <Badge />', () => {
-    render(<ProductSpeciesContainerconst {...mockProps} />);
-
+describe('ProductSpeciesContainerconst', () => {
+  beforeEach(() => render(<ProductSpeciesContainerconst {...mockProps} />));
+  it('should consist model', () => {
     const model = screen.getByText(mockProps.models[0].name[0].value);
 
     expect(model).toBeInTheDocument();
   });
-  it('should consist 1 item in <Badge />', () => {
-    render(<ProductSpeciesContainerconst {...mockProps} />);
-
+  it('should not consist pattern', () => {
     const pattern = screen.queryByText(mockProps.patterns[0].name[0].value);
 
     expect(pattern).not.toBeInTheDocument();
