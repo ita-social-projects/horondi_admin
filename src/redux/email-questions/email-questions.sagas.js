@@ -127,7 +127,7 @@ export function* handleAnswerEmailQuestion({ payload }) {
         )
       );
 
-      yield call(handleReloadingPendingQuestionsCount, emailQuestions);
+      yield call(handlePendingEmailQuestionsCount);
 
       yield put(setEmailQuestionLoading(false));
       yield put(push(routes.pathToEmailQuestions));
@@ -159,11 +159,6 @@ export function* handleEmailQuestionsDelete({ payload }) {
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
-}
-
-export function* handleReloadingPendingQuestionsCount(list) {
-  const count = list.filter((item) => item.status === 'PENDING').length;
-  yield put(setEmailQuestionsPendingCount(count - 1));
 }
 
 export function* handleGettingQuestionFromStore() {
