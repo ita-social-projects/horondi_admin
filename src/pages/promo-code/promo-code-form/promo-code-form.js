@@ -232,7 +232,7 @@ function PromoCodeForm({
             helperText={touched.discount ? errors?.discount : null}
             onBlur={handleBlur}
             onChange={handleChange}
-            InputProps={{ inputProps: { min: 0, max: 90, step: 5 } }}
+            InputProps={{ inputProps: { min: 0, max: 90 } }}
           />
           <div>
             <span className={styles.subTitle}>
