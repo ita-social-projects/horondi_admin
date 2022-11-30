@@ -102,9 +102,8 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
             <Checkbox
               checked={arrItems[index]?.checked || false}
               onChange={handleChange}
-              inputProps={{ 'aria-label': 'controlled' }}
+              inputProps={{ 'aria-label': 'controlled', name: file.index }}
               disabled={file.src === preview}
-              name={String(file.index)}
             />
           </div>
         </Grid>
