@@ -41,7 +41,7 @@ export const getAllCertificates = gql`
   }
 `;
 
-export const getCertificatebyId = gql`
+export const getCertificateById = gql`
   query ($id: ID!) {
     getCertificateById(id: $id) {
       ... on Certificate {
@@ -51,6 +51,19 @@ export const getCertificatebyId = gql`
       ... on Error {
         message
         statusCode
+      }
+    }
+  }
+`;
+
+export const getCertificateByParams = gql`
+  query ($params: CertificateInput!) {
+    getCertificateByParams(params: $params) {
+      __typename
+      ... on Certificate {
+        _id
+        name
+        value
       }
     }
   }

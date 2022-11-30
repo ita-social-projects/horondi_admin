@@ -135,4 +135,14 @@ describe('tests for add-product-form component', () => {
     expect(await screen.findByTestId('promo-input')).toHaveValue('wall');
     expect(await screen.findByText(error)).toBeInTheDocument();
   });
+
+  it('should clear input after using certificate', async () => {
+    const input = screen.getByTestId('promo-input');
+    const value = 'HOR12345678';
+    const button = screen.getByTestId('promo-button');
+    fireEvent.change(input, { target: { value } });
+    fireEvent.click(button);
+
+    expect(await screen.findByTestId('promo-input')).toHaveValue('');
+  });
 });

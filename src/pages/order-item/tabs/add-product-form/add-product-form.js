@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import { useLazyQuery } from '@apollo/client';
 import { config } from '../../../../configs';
 import { getPromoCodeByCode } from '../../../promo-code/operations/promo-code.queries';
+import { getCertificateByParams } from '../../../certificates/operations/certificate.queries';
 import { useStyles } from './add-product-form.styles';
 import {
   getFiltredProducts,
@@ -36,8 +37,12 @@ const AddProductForm = ({
 }) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
-  const { productLabels, productAdditionalInfo, promoCodesConsts, discount } =
-    configs;
+  const {
+    productLabels,
+    productAdditionalInfo,
+    promoCodesConsts: { error },
+    discount
+  } = configs;
   const dispatch = useDispatch();
   const { products, loading, sizes, category, model } = useSelector(
     ({ Products }) => ({
@@ -54,7 +59,7 @@ const AddProductForm = ({
   const [productInput, setProductInput] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [size, setSize] = useState({ id: '', name: '', price: {} });
-  const [promoCodeValue, setPromoCodeValue] = useState('');
+  const [certificateOrPromoValue, setCertificateOrPromoValue] = useState('');
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -75,25 +80,59 @@ const AddProductForm = ({
       });
   }, [sizes, selectedProduct]);
 
-  const [getPromoCode, { error }] = useLazyQuery(getPromoCodeByCode, {
-    onCompleted: (promocodeByCode) => {
-      if (promocodeByCode) {
-        setFieldValue(
-          inputName.promoCodeId,
-          promocodeByCode.getPromoCodeByCode._id
-        );
-        setPromoCodeValue('');
+  const [getPromoCode, { error: promoCodeError }] = useLazyQuery(
+    getPromoCodeByCode,
+    {
+      onCompleted: (promoCodeData) => {
+        if (promoCodeData) {
+          setFieldValue(
+            inputName.promoCodeId,
+            promoCodeData.getPromoCodeByCode._id
+          );
+          setCertificateOrPromoValue('');
+        }
       }
     }
-  });
+  );
+
+  const [getCertificate, { error: certificateError }] = useLazyQuery(
+    getCertificateByParams,
+    {
+      fetchPolicy: 'network-only',
+      onCompleted: (certificateData) => {
+        if (certificateData) {
+          setFieldValue(
+            inputName.certificateId,
+            certificateData.getCertificateByParams._id
+          );
+          setCertificateOrPromoValue('');
+        }
+      }
+    }
+  );
+
+  const certificateOrPromoError = certificateError || promoCodeError;
+
   const inputHandler = (e) => {
-    setPromoCodeValue(e.target.value);
+    setCertificateOrPromoValue(e.target.value);
   };
 
-  const checkPromoCode = () => {
+  const checkPromoCodeOrCertificate = () => {
+    const searchValue = /^HOR/i;
+    if (searchValue.test(certificateOrPromoValue)) {
+      getCertificate({
+        variables: {
+          params: {
+            name: certificateOrPromoValue
+          }
+        }
+      });
+      return;
+    }
+
     getPromoCode({
       variables: {
-        code: promoCodeValue
+        code: certificateOrPromoValue
       }
     });
   };
@@ -145,8 +184,8 @@ const AddProductForm = ({
       }`}</ListItem>
       <ListItem disableGutters>{`${discount.discount} ${
         certificateOrPromoCode.categories
-          ? `${certificateOrPromoCode.discount }%`
-          : `${certificateOrPromoCode.value }грн.`
+          ? `${certificateOrPromoCode.discount}%`
+          : `${certificateOrPromoCode.value}грн.`
       }`}</ListItem>
       {certificateOrPromoCode.categories && (
         <ListItem disableGutters>{`${
@@ -160,21 +199,21 @@ const AddProductForm = ({
     <div className={styles.generate}>
       <TextField
         inputProps={{ 'data-testid': 'promo-input' }}
-        className={styles.textField}
+        className={styles.discountInput}
         variant={materialUiConstants.outlined}
-        label='Промокод'
-        value={promoCodeValue}
-        error={Boolean(error)}
+        label='Промокод або сертифікат'
+        value={certificateOrPromoValue}
+        error={!!certificateOrPromoError}
+        helperText={certificateOrPromoError ? error : ' '}
         onChange={inputHandler}
       />
-      <div className={styles.error}>{error ? promoCodesConsts.error : ''}</div>
       <Button
         data-testid='promo-button'
         variant={materialUiConstants.contained}
         color={materialUiConstants.primary}
-        onClick={checkPromoCode}
+        onClick={checkPromoCodeOrCertificate}
         className={styles.promoBtn}
-        disabled={!promoCodeValue}
+        disabled={!certificateOrPromoValue}
       >
         {buttonTitles.ADD_PROMOCODE}
       </Button>

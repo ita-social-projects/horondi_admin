@@ -135,7 +135,8 @@ export const newOrder = (order) => ({
   paymentMethod: order.paymentMethod,
   userComment: order.userComment,
   isPaid: order.isPaid,
-  promoCodeId: order.promoCodeId
+  promoCodeId: order.promoCodeId,
+  certificateId: order.certificateId
 });
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
@@ -239,7 +240,8 @@ export const inputName = {
   userComment: 'userComment',
   paymentMethod: 'paymentMethod',
   sentBy: 'sentBy',
-  promoCodeId: 'promoCodeId'
+  promoCodeId: 'promoCodeId',
+  certificateId: 'certificateId'
 };
 
 export const courierInputLabels = () => {

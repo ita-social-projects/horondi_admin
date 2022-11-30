@@ -1,3 +1,4 @@
+import { getCertificateByParams } from '../../../../certificates/operations/certificate.queries';
 import { getPromoCodeByCode } from '../../../../promo-code/operations/promo-code.queries';
 
 export const mockProduct = [
@@ -92,6 +93,26 @@ export const mocksQuery = [
           discount: 40,
           __typename: 'PromoCode',
           _id: '62e90b1ba946c943d880f64c'
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: getCertificateByParams,
+      variables: {
+        params: {
+          name: 'HOR12345678'
+        }
+      }
+    },
+    result: {
+      data: {
+        getCertificateByParams: {
+          name: 'HOR12345678',
+          value: 17,
+          _id: '62d6cab33cb3cc2908fc7d61',
+          __typename: 'PaginatedCertificate'
         }
       }
     }

@@ -38,6 +38,9 @@ export const useStyles = makeStyles((theme) => {
         gap: '12px'
       }
     },
+    discountInput: {
+      minWidth: '248px'
+    },
     promoBtn: {
       margin: '12px 0px',
       '@media(max-width:600px)': {
