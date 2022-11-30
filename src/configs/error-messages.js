@@ -51,9 +51,9 @@ export const promoCodeErrorMessages = {
   STYLE_CODE:
     'Поле має містити англійські літери або цифри і починатись з літери',
   ERROR_MESSAGE: 'Поле має бути заповнене',
-  LENGTH_DISCOUNT: 'Поле має містити максимально 2 цифри',
   POSITIVE_DISCOUNT: 'Тільки більше нуля',
-  MULTIPLE_DISCOUNT: 'Число має бути кратним п’яти'
+  INTEGER_DISCOUNT: 'Тільки ціле число',
+  MAX_VALUE_DISCOUNT: 'Не більше 90'
 };
 
 export const patternErrorMessages = {

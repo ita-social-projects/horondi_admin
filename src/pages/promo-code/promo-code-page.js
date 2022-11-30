@@ -54,7 +54,7 @@ const PromoCodePage = () => {
 
   useEffect(() => {
     dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
-  }, [data]);
+  }, [data, dispatch]);
 
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
 

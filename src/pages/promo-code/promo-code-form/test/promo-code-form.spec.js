@@ -78,7 +78,7 @@ describe('promo-code-form component test', () => {
   });
 
   it('should render discount size', () => {
-    const text = screen.getByText(/Розмір знижки у процентах:/i);
+    const text = screen.getByText(/Розмір знижки у відсотках:/i);
 
     expect(text).toBeInTheDocument();
   });
