@@ -64,6 +64,7 @@ const ConstructorListPage = () => {
     () =>
       list.filter(
         (listItem) =>
+          listItem.availableForConstructor &&
           !constructorItems.some(
             (constructorItem) => constructorItem.model._id === listItem._id
           )
