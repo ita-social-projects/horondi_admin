@@ -7,14 +7,11 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import { Button } from 'rsuite';
 import { Delete } from '@material-ui/icons';
 import { useStyles } from './images-preview-container.styles';
 import { utils } from '../../utils/image-upload';
 import preview from '../../assets/images/preview.png';
 import { config } from '../../configs';
-
-const { materialUiConstants } = config;
 
 const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
   const style = useStyles();
@@ -89,10 +86,6 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
     });
   };
 
-  const handlePreviewPage = () => {
-    // handler for preview product page
-  };
-
   const list = arrItems.length
     ? arrItems.map((file, index) => (
         <Grid item className={style.item} key={index}>
@@ -109,9 +102,8 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
             <Checkbox
               checked={arrItems[index]?.checked || false}
               onChange={handleChange}
-              inputProps={{ 'aria-label': 'controlled' }}
+              inputProps={{ 'aria-label': 'controlled', name: file.index }}
               disabled={file.src === preview}
-              name={file.index}
             />
           </div>
         </Grid>
@@ -163,17 +155,6 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
             }
             label='Встановити як основне фото продукту'
           />
-        </Box>
-        <Box>
-          <Button
-            variant={materialUiConstants.contained}
-            color={materialUiConstants.primary}
-            onClick={handlePreviewPage}
-            size='medium'
-            disabled
-          >
-            Попередній перегляд
-          </Button>
         </Box>
       </Box>
     </>

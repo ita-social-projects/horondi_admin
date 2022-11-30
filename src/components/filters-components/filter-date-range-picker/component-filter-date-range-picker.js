@@ -28,8 +28,8 @@ const ComponentFilterDateRangePicker = ({ setFilterValue, filters }) => {
 };
 
 const FiltersShape = PropTypes.shape({
-  dateFrom: PropTypes.instanceOf(Date),
-  dateTo: PropTypes.instanceOf(Date)
+  dateFrom: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  dateTo: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
 });
 
 ComponentFilterDateRangePicker.propTypes = {

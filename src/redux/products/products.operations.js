@@ -148,12 +148,13 @@ const getAllProducts = async (
                   value
                 }
               }
-				  sizes {
-					size{
-						_id
-						name
-					}
-				  }
+            sizes {
+              size {
+                _id
+                name
+              }
+              price
+            }
               isHotItem
             }
             count

@@ -44,7 +44,7 @@ const HistoryDetails = ({ match }) => {
       <div className={styles.buttonContainer}>
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
-            <BackButton initial={false} pathBack={pathToHistory} />
+            <BackButton pathBack={pathToHistory} />
           </Grid>
         </Grid>
       </div>

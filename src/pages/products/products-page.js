@@ -103,7 +103,8 @@ const ProductsPage = () => {
           purchasedCount,
           pattern,
           rate,
-          images
+          images,
+          sizes
         }) => (
           <TableContainerRow
             key={_id}
@@ -113,6 +114,7 @@ const ProductsPage = () => {
             model={model.name[0].value}
             pattern={pattern.name[0].value}
             price={basePrice}
+            totalPrice={sizes[0]?.price}
             rate={rate.toFixed(2)}
             purchasedCount={purchasedCount || '0'}
             editHandler={() => handleProductEdit(_id)}

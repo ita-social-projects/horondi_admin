@@ -17,10 +17,9 @@ import {
 } from '../../redux/comments/comments.actions';
 import { useStyles } from './comments-section.style';
 import { commentSelectorWithPagination } from '../../redux/selectors/comments.selectors';
-import FilterNavbar from '../filter-search-sort/filter-navbar';
-import useCommentFilters from '../../hooks/filters/use-comment-filters';
 import { handleComments } from '../../utils/handle-comments';
 import getTime from '../../utils/getTime';
+import Filters from '../../pages/comments/filters/filters';
 
 const { pathToCommentsEdit } = config.routes;
 const {
@@ -33,7 +32,6 @@ const CommentsSection = ({ id, commentsType }) => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const commentOptions = useCommentFilters();
   const { sort, filter, list, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(commentSelectorWithPagination);
 
@@ -101,7 +99,7 @@ const CommentsSection = ({ id, commentsType }) => {
   return (
     <div className={styles.container}>
       <div>
-        <FilterNavbar options={commentOptions || {}} />
+        <Filters />
       </div>
       <TableContainerGenerator
         pagination

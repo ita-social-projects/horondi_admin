@@ -43,13 +43,11 @@ const NavFilterByDate = ({
 };
 
 NavFilterByDate.propTypes = {
-  dateFrom: PropTypes.string,
-  dateTo: PropTypes.string,
-  filterByDateOptions: PropTypes.objectOf(PropTypes.object)
+  filterByDateOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string])
+  )
 };
 NavFilterByDate.defaultProps = {
-  dateFrom: '',
-  dateTo: '',
   filterByDateOptions: {}
 };
 
