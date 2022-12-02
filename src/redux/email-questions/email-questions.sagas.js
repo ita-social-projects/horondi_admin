@@ -152,6 +152,8 @@ export function* handleEmailQuestionsDelete({ payload }) {
           )
         )
       );
+
+      yield call(handlePendingEmailQuestionsCount);
       yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
       yield put(updatePagination());
       yield put(setEmailQuestionLoading(false));
