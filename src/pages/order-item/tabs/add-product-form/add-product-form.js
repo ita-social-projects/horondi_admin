@@ -244,7 +244,8 @@ const AddProductForm = ({
               error={isFieldError(inputName.items)}
               variant={materialUiConstants.outlined}
               helperText={
-                isFieldError(inputName.items) && errors[inputName.items]
+                (isFieldError(inputName.items) && errors[inputName.items]) ||
+                ' '
               }
               InputProps={{
                 ...params.InputProps,
