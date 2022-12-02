@@ -24,8 +24,8 @@ export const bulkGenerateCertificates = gql`
 `;
 
 export const deleteCertificateById = gql`
-  mutation ($id: ID!) {
-    deleteCertificate(id: $id) {
+  mutation ($id: ID!, $adminId: ID!) {
+    deleteCertificate(id: $id, adminId: $adminId) {
       ... on Certificate {
         _id
       }

@@ -90,7 +90,8 @@ export const materialTranslations = {
 
 export const productsErrors = {
   PRODUCT_NOT_FOUND: 'Продуктів не знайдено',
-  PRODUCT_ALREADY_EXIST: 'Такий продукт вже існує!'
+  PRODUCT_ALREADY_EXIST: 'Такий продукт вже існує!',
+  PRODUCT_NOT_EXIST: 'Продукт видалено'
 };
 
 export const userTranslations = {
@@ -111,4 +112,7 @@ export const usersErrors = {
 
 export const adminsErrors = {
   ADMIN_NOT_FOUND: 'Адміністратора не знайдено'
+};
+export const certificateErrorMessages = {
+  CERTIFICATE_IS_ACTIVE: 'Неможливо видалити активний сертифікат'
 };
