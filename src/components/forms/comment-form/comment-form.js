@@ -18,6 +18,7 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 
 const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, MAX_LENGTH_MESSAGE_300 } =
   config.commonErrorMessages;
+const { PRODUCT_NOT_EXIST } = config.productsErrors;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -91,7 +92,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
         pathToEditProduct.replace(':id', comment.product._id)
       );
     }
-    dispatch(showErrorSnackbar("Product doesn't exist"));
+    dispatch(showErrorSnackbar(PRODUCT_NOT_EXIST));
   }
 
   const eventPreventHandler = (e) => {

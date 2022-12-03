@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
@@ -21,6 +22,7 @@ const { NO_CERTIFICATES_MESSAGE } = config.messages;
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
   const certificates = useCertificates();
+  const { adminId } = useSelector(({ Auth }) => ({ adminId: Auth.adminId }));
 
   const getDate = (item) =>
     `${certificates.transformDate(
@@ -45,7 +47,7 @@ const CertificatesPage = () => {
       date={getDate(certificate)}
       dateOfUsing={dateOfUsing(certificate)}
       deleteHandler={() => {
-        certificates.openDeleteModal(certificate._id);
+        certificates.openDeleteModal(certificate._id, adminId);
       }}
       disabled={!certificate.isActivated && !certificate.inProgress}
       editHandler={() => {

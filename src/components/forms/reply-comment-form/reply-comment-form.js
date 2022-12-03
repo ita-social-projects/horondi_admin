@@ -23,6 +23,8 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, MAX_LENGTH_MESSAGE_300 } =
   config.commonErrorMessages;
 
+const { COMMENT_NOT_FOUND } = config.commentsErrors;
+
 const { SAVE_MESSAGE, SAVE_CHANGES } = config.messages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -116,7 +118,7 @@ const ReplyCommentForm = ({
         pathToCommentsEdit.replace(':id', reply.refToReplyComment)
       );
     }
-    dispatch(showErrorSnackbar("Comment doesn't exist"));
+    dispatch(showErrorSnackbar(COMMENT_NOT_FOUND));
   };
 
   const checkboxes = [
