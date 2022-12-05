@@ -34,16 +34,13 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('HistoryDetails component tests', () => {
-  beforeEach(() => {
+  it('Should render backButton component', () => {
     render(
       <BrowserRouter>
         <HistoryDetails />
       </BrowserRouter>
     );
-  });
-  it('Should render backButton component', () => {
     const button = screen.getByText(buttonTitles.GO_BACK_TITLE);
-    screen.debug();
     expect(button).toBeInTheDocument();
   });
 });
