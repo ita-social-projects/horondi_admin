@@ -40,7 +40,7 @@ export const useUsersHandler = (id) => {
       setLastName(user.lastName || '');
       setCountry(user.address && user.address.country);
       setCity(user.address && user.address.city);
-      setAdress(setAddressString(user.address));
+      setAdress(setAddressString(user.address || {}));
       setPostCode(user.address && user.address.zipcode);
       setBan(user.banned);
       setConfirmed(user.confirmed);
