@@ -79,18 +79,15 @@ const CategoryForm = ({ category, id, edit }) => {
     onSubmit: (data) => {
       const newCategory = createCategory(data);
       const uploadCondition = upload instanceof File;
-      if (id) {
-        onSubmitCategoryHandler(edit, dispatch, updateCategory, {
-          id,
-          category: newCategory,
-          upload
-        });
-      } else {
-        onSubmitCategoryHandler(uploadCondition, dispatch, addCategory, {
-          category: newCategory,
-          upload
-        });
-      }
+      const submitCategoryArgs = id
+        ? [edit, dispatch, updateCategory]
+        : [uploadCondition, dispatch, addCategory];
+
+      onSubmitCategoryHandler(...submitCategoryArgs, {
+        id,
+        category: newCategory,
+        upload
+      });
       if (!uploadCondition && !category.images.thumbnail) {
         dispatch(showErrorSnackbar(CATEGORY_ERROR));
       }
