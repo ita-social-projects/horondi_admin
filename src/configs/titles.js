@@ -10,21 +10,19 @@ const titles = {
     mainTitleAdd: 'Додати Про Нас'
   },
   historyTitles: {
+    tableTitles: ['Поле', 'До', 'Після '],
     mainTitle: 'Останні зміни',
-    detailsTitle: 'Деталі зміни',
     detailsTitleNumber: (number) => `Деталі зміни № ${number}`,
     userInfo: 'Інформація про користувача',
+    itemsInfo: "Інформація про об'єкт",
     id: 'Ідентифікатор:',
     email: 'Електронна пошта:',
     name: `Ім'я:`,
     role: 'Роль:',
     changesTitle: 'Інформація про зміни',
-    subject: 'Об’єкт дії',
-    before: 'До зміни',
-    after: 'Після зміни',
-    noChanges: 'N/A',
-    from: 'Від',
-    to: 'До'
+    itemName: 'Назва:',
+    itemType: 'Тип:',
+    action: 'Дія:'
   },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'

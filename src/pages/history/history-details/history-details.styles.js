@@ -26,7 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     color: !darkMode ? '#828282' : '#ffffff',
     marginRight: 20,
     '@media (max-width: 450px)': {
-      fontSize: '11px',
+      fontSize: '14px',
       marginRight: '10px'
     }
   }),
@@ -58,19 +58,8 @@ export const useStyles = makeStyles((theme) => ({
     '@media (max-width: 534px)': {
       paddingTop: '5px'
     },
-
     '@media (max-width: 481px)': {
       paddingTop: '12px'
     }
-  },
-  table: {
-    overflow: 'scroll'
-  },
-  tableCell: ({ darkMode }) => ({
-    textAlign: 'center',
-    width: '30,333%',
-    color: !darkMode ? '#444444' : '#ffffff',
-    fontSize: 15,
-    fontWeight: 500
-  })
+  }
 }));

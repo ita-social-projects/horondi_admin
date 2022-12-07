@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import _ from 'lodash';
 import { Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ReactHtmlParser from 'react-html-parser';
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './history.styles';
@@ -14,9 +12,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import { handleHistory } from '../../utils/history';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerRow from '../../containers/table-container-row';
-import getTime from '../../utils/getTime';
 import { historySelector } from '../../redux/selectors/history';
-import { userRoleTranslations } from '../../configs/user-role-translations';
 import { historyEvents } from '../../consts/history-events';
 import routes from '../../configs/routes';
 import Filters from './filters/filters';
@@ -52,7 +48,7 @@ const History = () => {
     );
   }, [dispatch, currentPage, rowsPerPage, filters]);
 
-  const historyItems = _.map(records, (record) => (
+  const historyItems = records?.map((record) => (
     <TableContainerRow
       showAvatar={false}
       showDelete={false}
@@ -60,18 +56,11 @@ const History = () => {
       showEdit={false}
       id={record._id}
       key={record._id}
-      date={ReactHtmlParser(
-        getTime(new Date(record.createdAt).getTime(), true)
-      )}
-      action={historyEvents.historyAction[record.action]}
+      subject={record.subject.name}
       historyName={historyEvents.historyName[record.historyName]}
+      action={historyEvents.historyAction[record.action]}
       userName={`${record.userId.firstName} ${record.userId.lastName}`}
-      userRole={userRoleTranslations[record.userId.role]}
-      subject={
-        !record.subject.model
-          ? record.subject.name
-          : `${record.subject.model}/${record.subject.name}`
-      }
+      date={new Date(record.createdAt).toLocaleString('uk-UA')}
       details={
         <NavLink
           to={`${routes.pathToHistory}/${record._id}`}

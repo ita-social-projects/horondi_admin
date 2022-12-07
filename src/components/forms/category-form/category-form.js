@@ -79,12 +79,12 @@ const CategoryForm = ({ category, id, edit }) => {
     onSubmit: (data) => {
       const newCategory = createCategory(data);
       const uploadCondition = upload instanceof File;
-      onSubmitCategoryHandler(edit, dispatch, updateCategory, {
+      const submitCategoryArgs = id
+        ? [edit, dispatch, updateCategory]
+        : [uploadCondition, dispatch, addCategory];
+
+      onSubmitCategoryHandler(...submitCategoryArgs, {
         id,
-        category: newCategory,
-        upload
-      });
-      onSubmitCategoryHandler(uploadCondition, dispatch, addCategory, {
         category: newCategory,
         upload
       });
