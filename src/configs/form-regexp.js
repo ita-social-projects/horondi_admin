@@ -25,7 +25,7 @@ const formRegExp = {
   phoneNumber: /^(\+380|0)\d{9}$/,
   additionalPriceRegExp: /^[0-9|]/i,
   pageCode: /^[a-z0-9|-]/i,
-  postCode: /^\d{5}(?:[-\\s]\\d{4})?$/,
+  zipcode: /^\d{5}(?:[-\\s]\\d{4})?$/,
   promoCodeName: /^([a-z])[a-z]{2,}\w*/i
 };
 export default formRegExp;

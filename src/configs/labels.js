@@ -105,9 +105,9 @@ const labels = {
     region: 'Область',
     city: 'Місто',
     street: 'Вулиця',
-    house: 'Будинок',
-    flat: 'Квартира',
-    zipCode: 'Поштовий індекс'
+    buildingNumber: 'Будинок',
+    appartment: 'Квартира',
+    zipcode: 'Поштовий індекс'
   },
   pattern: {
     image: 'Фото гобелена',
