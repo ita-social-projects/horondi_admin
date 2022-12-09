@@ -51,5 +51,19 @@ export const state = {
     ...Straps,
     list: [Straps.strap],
     strap: null
+  },
+  Constructor: {
+    list: [
+      {
+        bottoms: [],
+        basics: [],
+        patterns: [],
+        backs: [],
+        straps: [],
+        closures: [],
+        pockets: []
+      }
+    ],
+    constructorLoading: false
   }
 };

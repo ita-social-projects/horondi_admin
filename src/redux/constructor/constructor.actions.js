@@ -22,7 +22,8 @@ import {
   SET_CONSTRUCTORS,
   ADD_CONSTRUCTOR,
   SET_CONSTRUCTOR_ERROR,
-  REMOVE_CONSTRUCTOR_FROM_STORE
+  REMOVE_CONSTRUCTOR_FROM_STORE,
+  GET_CONSTRUCTOR_PARTS
 } from './constructor.types';
 
 export const deleteConstructorBasic = (payload) => ({
@@ -47,6 +48,11 @@ export const removeConstructorFromStore = (payload) => ({
 
 export const getConstructors = (payload) => ({
   type: GET_CONSTRUCTORS,
+  payload
+});
+
+export const getConstructorParts = (payload) => ({
+  type: GET_CONSTRUCTOR_PARTS,
   payload
 });
 

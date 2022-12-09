@@ -5,14 +5,18 @@ export const basicSelector = ({ DialogWindow }) => ({
   isOpen: DialogWindow.isOpen,
   dialogTitle: DialogWindow.dialogTitle,
   dialogContent: DialogWindow.dialogContent,
-  onClickHandler: DialogWindow.onClickHandler
+  onClickHandler: DialogWindow.onClickHandler,
+  showCancelButton: DialogWindow.showCancelButton,
+  confirmTitle: DialogWindow.confirmTitle
 });
 
 export const initialState = {
   isOpen: false,
   dialogTitle: '',
   dialogContent: '',
-  onClickHandler: noop
+  showCancelButton: true,
+  onClickHandler: noop,
+  confirmTitle: false
 };
 
 const dialogWindowReducer = (state = initialState, action = {}) => {

@@ -25,7 +25,8 @@ const useSuccessSnackbar = () => {
     dialogContent,
     dialogTitle,
     showCancelButton = true,
-    validationData = null
+    validationData = null,
+    confirmTitle
   ) => {
     let content = dialogContent;
     if (validationData !== null && Object.keys(validationData).length) {
@@ -54,7 +55,8 @@ const useSuccessSnackbar = () => {
         dialogTitle,
         dialogContent: content,
         showCancelButton,
-        onClickHandler
+        onClickHandler,
+        confirmTitle
       })
     );
   };

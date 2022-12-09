@@ -75,7 +75,7 @@ export const initialState = {
             value: 'Black leather'
           }
         ],
-        relativePrice: 25,
+        relativePrice: 20,
         images: {
           thumbnail: 'thumbnail_eewk311kwdxcgv1_низ-шкіра-чорна.png'
         },
@@ -101,6 +101,20 @@ export const initialState = {
       }
     },
     itemsCount: 1
+  },
+  Constructor: {
+    list: [
+      {
+        bottoms: [],
+        basics: [],
+        patterns: [],
+        backs: [],
+        straps: [],
+        closures: [],
+        pockets: []
+      }
+    ],
+    constructorLoading: false
   }
 };
 
