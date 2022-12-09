@@ -30,13 +30,7 @@ function PromoCodeForm({
   promoValidationSchema,
   addPromoCodeHandler,
   goToPromoPage,
-  initialState = {
-    code: '',
-    dateTo: '',
-    dateFrom: '',
-    discount: 0,
-    categories: []
-  }
+  data
 }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
@@ -61,6 +55,13 @@ function PromoCodeForm({
       }))
     ];
   }
+  const initialValues = {
+    code: data?.code || '',
+    dateTo: data?.dateTo || '',
+    dateFrom: data?.dateFrom || '',
+    discount: data?.discount || 0,
+    categories: data?.categories || []
+  };
 
   const {
     values,
@@ -72,11 +73,11 @@ function PromoCodeForm({
     setFieldValue
   } = useFormik({
     validationSchema: promoValidationSchema,
-    initialValues: initialState,
+    initialValues,
     onSubmit: () =>
       addPromoCodeHandler({
         variables: {
-          id: _id,
+          id: data._id,
           promoCode: {
             code,
             dateTo,
@@ -191,7 +192,7 @@ function PromoCodeForm({
                 placeholder={promoCodesConsts.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
-                value={dateFrom}
+                value={dateFrom ? new Date(dateFrom) : null}
                 onChange={(value) => handlerDateHandler(value, 'dateFrom')}
               />
               {touched.dateFrom && errors.dateFrom && (
@@ -202,12 +203,14 @@ function PromoCodeForm({
             <div className={styles.dataPickerContainer}>
               <DatePicker
                 disabled={!dateFrom}
-                disabledDate={(date) => isBefore(date, dateFrom || new Date())}
+                disabledDate={(date) =>
+                  isBefore(date, new Date(dateFrom) || new Date())
+                }
                 placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}
                 id='dateTo'
-                value={dateTo}
+                value={dateTo ? new Date(dateTo) : null}
                 onChange={(value) => handlerDateHandler(value, 'dateTo')}
               />
               {touched.dateTo && errors.dateTo && (
@@ -256,10 +259,19 @@ function PromoCodeForm({
 
 PromoCodeForm.propTypes = {
   pathToPromoCodesPage: PropTypes.string.isRequired,
-  initialState: PropTypes.objectOf(PropTypes.string).isRequired,
-  promoValidationSchema: PropTypes.objectOf(PropTypes.string).isRequired,
+  data: PropTypes.objectOf(PropTypes.any),
+  promoValidationSchema: PropTypes.objectOf(PropTypes.any).isRequired,
   addPromoCodeHandler: PropTypes.func.isRequired,
   goToPromoPage: PropTypes.func.isRequired
+};
+PromoCodeForm.defaultProps = {
+  data: PropTypes.objectOf({
+    code: '',
+    dateTo: '',
+    dateFrom: '',
+    discount: 0,
+    categories: []
+  })
 };
 
 export default PromoCodeForm;

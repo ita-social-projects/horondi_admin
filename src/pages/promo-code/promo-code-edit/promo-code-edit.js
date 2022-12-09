@@ -42,7 +42,7 @@ function PromoCodeEdit() {
 
   return (
     <PromoCodeForm
-      initialState={data.getPromoCodeById}
+      data={data.getPromoCodeById}
       promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
       addPromoCodeHandler={updatePromoCodeHandler}
