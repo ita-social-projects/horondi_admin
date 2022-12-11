@@ -123,7 +123,7 @@ const RegisterUser = ({ handleClose }) => {
                 name='email'
                 data-cy='email'
                 type={text}
-                onBlur={handleChange}
+                onBlur={handleBlur}
                 error={touched.email && !!errors.email}
               />
               <FormHelperText data-cy='email-error-label'>
@@ -178,7 +178,7 @@ const RegisterUser = ({ handleClose }) => {
                   name='otp_code'
                   data-cy='otp_code'
                   type={text}
-                  onBlur={handleChange}
+                  onBlur={handleBlur}
                   error={touched.otp_code && !!errors.otp_code}
                 />
                 <FormHelperText data-cy='otp_code-error-label'>
