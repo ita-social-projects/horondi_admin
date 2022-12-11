@@ -168,6 +168,11 @@ const titles = {
     mainPageTitle: 'Інформація про сертифікати',
     deleteCertificateTitle: 'Видалити сертифікат',
     updateCertificateTitle: 'Змінити статус сертифікату'
+  },
+  registerUserTitles: {
+    role: 'Роль',
+    email: 'Пошта',
+    code: 'Код'
   }
 };
 

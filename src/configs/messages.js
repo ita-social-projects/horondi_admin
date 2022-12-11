@@ -85,13 +85,17 @@ const messages = {
     numberOfProducts,
     numberOfConstructors
   ) =>
-    `Буде видалено ${numberOfProducts ? numberOfProducts + ' продуктів' : ''} ${
+    `Буде видалено ${numberOfProducts ? `${numberOfProducts } продуктів` : ''} ${
       numberOfProducts && numberOfConstructors ? 'і' : ''
     } ${numberOfConstructors ? 'конструктор' : ''} цієї моделі`,
   DELETE_SIZE_CONFIRMATION_MESSAGE:
     'Ви впевнені що хочете видалити цей розмір?',
   DELETED_SIZE_MESSAGE: 'Розмір успішно видалено',
   DELETE_SIZE_ERROR: (productsWithLastSize, productsToDeleteMessage) =>
-    `Це останній розмір для ${productsWithLastSize.length} продуктів: ${productsToDeleteMessage}. Замініть його або видаліть продукти`
+    `Це останній розмір для ${productsWithLastSize.length} продуктів: ${productsToDeleteMessage}. Замініть його або видаліть продукти`,
+  SEND_CONFIRMATION_CODE:
+    'Для запрошення суперадміна необхідно ввести код, який буде надіслано Вам на пошту',
+  INVITE_ADMIN_TITLE: 'Запросити cупер користувача ?',
+  INVITE_ADMIN_MESSAGE: (email) => `Надіслати запрошення ${email} ?`
 };
 export default messages;

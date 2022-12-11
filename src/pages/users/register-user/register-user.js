@@ -8,7 +8,8 @@ import {
   InputLabel,
   FormControl,
   Paper,
-  FormHelperText
+  FormHelperText,
+  Typography
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -25,7 +26,13 @@ import {
 import LoadingBar from '../../../components/loading-bar';
 
 const {
+  messages: {
+    SEND_CONFIRMATION_CODE,
+    INVITE_ADMIN_MESSAGE,
+    INVITE_ADMIN_TITLE
+  },
   userRoles,
+  titles: { registerUserTitles },
   allowedforRegistrationRoles,
   loginErrorMessages: {
     ENTER_EMAIL_MESSAGE,
@@ -79,7 +86,6 @@ const RegisterUser = ({ handleClose }) => {
       handleClose();
     }
   });
-
   const roles = userRoles.filter((item) =>
     allowedforRegistrationRoles.includes(item.role)
   );
@@ -101,33 +107,27 @@ const RegisterUser = ({ handleClose }) => {
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <Paper className={styles.userInputPanel}>
-            <FormControl
+            <TextField
               className={styles.formControl}
+              onChange={handleChange}
+              value={values.email}
+              id='email'
+              variant={outlined}
+              label={registerUserTitles.email}
+              name='email'
+              data-cy='email'
+              type={text}
+              onBlur={handleChange}
               error={touched.email && !!errors.email}
-            >
-              <TextField
-                onChange={handleChange}
-                value={values.email}
-                id='email'
-                variant={outlined}
-                label='Пошта'
-                name='email'
-                data-cy='email'
-                type={text}
-                onBlur={handleChange}
-                error={touched.email && !!errors.email}
-              />
-              <FormHelperText data-cy='email-error-label'>
-                {touched.email && errors.email}
-              </FormHelperText>
-            </FormControl>
+              helperText={touched.email && !!errors.email ? errors.email : ' '}
+            />
             <FormControl
               className={styles.formControl}
               error={touched.role && !!errors.role}
             >
-              <InputLabel id='role-label'>Роль</InputLabel>
+              <InputLabel id='role-label'>{registerUserTitles.role}</InputLabel>
               <Select
                 labelId='role-label'
                 id='role'
@@ -151,6 +151,7 @@ const RegisterUser = ({ handleClose }) => {
                 className={styles.formControl}
                 error={touched.otp_code && !!errors.otp_code}
               >
+                <Typography>{SEND_CONFIRMATION_CODE}</Typography>
                 <Button
                   id='send-otp_code-button'
                   data-cy='add-user-admin-button'
@@ -166,25 +167,31 @@ const RegisterUser = ({ handleClose }) => {
                   value={values.otp_code}
                   id='otp_code'
                   variant={outlined}
-                  label='Код'
+                  label={registerUserTitles.code}
                   name='otp_code'
                   data-cy='otp_code'
                   type={text}
                   onBlur={handleChange}
                   error={touched.otp_code && !!errors.otp_code}
+                  helperText={
+                    touched.otp_code && !!errors.otp_code
+                      ? errors.otp_code
+                      : ' '
+                  }
                 />
-                <FormHelperText data-cy='otp_code-error-label'>
-                  {touched.otp_code && errors.otp_code}
-                </FormHelperText>
               </FormControl>
             )}
             <FormControl className={styles.formControl}>
               <SaveButton
                 type={submit}
+                values={values}
+                onClickHandler={handleSubmit}
                 title='Створити'
                 data-cy='submit-admin-register'
                 className={styles.saveButton}
                 errors={errors}
+                saveMessage={INVITE_ADMIN_MESSAGE(values.email)}
+                saveChanges={INVITE_ADMIN_TITLE}
               />
             </FormControl>
           </Paper>
