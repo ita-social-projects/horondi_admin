@@ -3,13 +3,12 @@ import { render, screen } from '@testing-library/react';
 import * as redux from 'react-redux';
 import RegisterUser from '../register-user';
 
-const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
+const mockDispatch = jest.spyOn(redux, 'useDispatch');
+mockDispatch.mockImplementation(() => jest.fn());
 const mockUseSelector = jest.spyOn(redux, 'useSelector');
 
 describe('HistoryDetails component tests', () => {
   it('Should render backButton component', () => {
-    mockUseDispatch.mockImplementation(() => jest.fn());
-
     mockUseSelector.mockImplementation(() => ({
       loading: false
     }));

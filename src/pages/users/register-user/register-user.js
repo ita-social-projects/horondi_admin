@@ -73,19 +73,20 @@ const RegisterUser = ({ handleClose }) => {
     })
   });
 
-  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
-    initialValues: {
-      role: admin,
-      email: '',
-      otp_code: ''
-    },
-    validationSchema: formSchema,
-    validateOnBlur: true,
-    onSubmit: (data) => {
-      dispatch(registerAdmin(data));
-      handleClose();
-    }
-  });
+  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
+    useFormik({
+      initialValues: {
+        role: admin,
+        email: '',
+        otp_code: ''
+      },
+      validationSchema: formSchema,
+      validateOnBlur: true,
+      onSubmit: (data) => {
+        dispatch(registerAdmin(data));
+        handleClose();
+      }
+    });
   const roles = userRoles.filter((item) =>
     allowedforRegistrationRoles.includes(item.role)
   );
@@ -109,20 +110,26 @@ const RegisterUser = ({ handleClose }) => {
       <Grid className={styles.userDetails}>
         <form onSubmit={(e) => e.preventDefault()}>
           <Paper className={styles.userInputPanel}>
-            <TextField
+            <FormControl
               className={styles.formControl}
-              onChange={handleChange}
-              value={values.email}
-              id='email'
-              variant={outlined}
-              label={registerUserTitles.email}
-              name='email'
-              data-cy='email'
-              type={text}
-              onBlur={handleChange}
               error={touched.email && !!errors.email}
-              helperText={touched.email && !!errors.email ? errors.email : ' '}
-            />
+            >
+              <TextField
+                onChange={handleChange}
+                value={values.email}
+                id='email'
+                variant={outlined}
+                label='Пошта'
+                name='email'
+                data-cy='email'
+                type={text}
+                onBlur={handleChange}
+                error={touched.email && !!errors.email}
+              />
+              <FormHelperText data-cy='email-error-label'>
+                {touched.email && errors.email}
+              </FormHelperText>
+            </FormControl>
             <FormControl
               className={styles.formControl}
               error={touched.role && !!errors.role}
@@ -173,12 +180,10 @@ const RegisterUser = ({ handleClose }) => {
                   type={text}
                   onBlur={handleChange}
                   error={touched.otp_code && !!errors.otp_code}
-                  helperText={
-                    touched.otp_code && !!errors.otp_code
-                      ? errors.otp_code
-                      : ' '
-                  }
                 />
+                <FormHelperText data-cy='otp_code-error-label'>
+                  {touched.otp_code && errors.otp_code}
+                </FormHelperText>
               </FormControl>
             )}
             <FormControl className={styles.formControl}>
