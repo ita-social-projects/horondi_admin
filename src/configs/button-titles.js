@@ -67,7 +67,7 @@ const buttonTitles = {
   HISTORY_ACTION: 'За дією',
   HISTORY_TYPE: 'За типом',
   SEND_CONFIRM: 'Надіслати підтвердження',
-  SEND_CODE: 'Надіслати код для підтвердження',
+  SEND_CODE: 'Надіслати код',
   ADD_PROMOCODE: 'Застосувати',
   EXIT_WITHOUT_SAVING: 'Вийти без збереження',
   ORDER_STATUS: 'Статус замовлення',

@@ -38,6 +38,8 @@ const SaveButton = ({
   values,
   unblockFunction,
   confirmOn,
+  saveMessage,
+  saveChanges,
   ...props
 }) => {
   const error = !!Object.keys(errors).length;
@@ -70,8 +72,8 @@ const SaveButton = ({
           onClickHandler,
           dispatch,
           openSuccessSnackbar,
-          SAVE_MESSAGE,
-          SAVE_CHANGES
+          saveMessage || SAVE_MESSAGE,
+          saveChanges || SAVE_CHANGES
         );
     setTimeout(() => {
       if (!error) {
@@ -102,7 +104,9 @@ SaveButton.propTypes = {
   type: PropTypes.string.isRequired,
   values: PropTypes.objectOf(PropTypes.any),
   errors: PropTypes.objectOf(PropTypes.string),
-  confirmOn: PropTypes.bool
+  confirmOn: PropTypes.bool,
+  saveChanges: PropTypes.string,
+  saveMessage: PropTypes.string
 };
 
 SaveButton.defaultProps = {
@@ -111,7 +115,9 @@ SaveButton.defaultProps = {
   values: {},
   onClickHandler: noop,
   unblockFunction: noop,
-  confirmOn: true
+  confirmOn: true,
+  saveChanges: '',
+  saveMessage: ''
 };
 
 export default SaveButton;
