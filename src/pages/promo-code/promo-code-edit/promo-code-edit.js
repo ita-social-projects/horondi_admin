@@ -3,7 +3,10 @@ import { useParams, useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 
-import { showSuccessSnackbar } from '../../../redux/snackbar/snackbar.actions';
+import {
+  showErrorSnackbar,
+  showSuccessSnackbar
+} from '../../../redux/snackbar/snackbar.actions';
 import { getPromoCodeById } from '../operations/promo-code.queries';
 import { updatePromoCode } from '../operations/promo-code.mutation';
 import { config } from '../../../configs';
@@ -22,19 +25,21 @@ function PromoCodeEdit() {
     fetchPolicy: 'no-cache'
   });
 
-  const onCompletedHandler = () => {
-    dispatch(showSuccessSnackbar('Успішно змінено'));
-  };
-
   const [updatePromoCodeHandler] = useMutation(updatePromoCode, {
-    onCompleted: onCompletedHandler
+    onCompleted: (data) => {
+      if (data.updatePromoCode.message) {
+        dispatch(showErrorSnackbar(`Помилка: ${data.updatePromoCode.message}`));
+      } else {
+        dispatch(showSuccessSnackbar('Успішно змінено'));
+        history.push(pathToPromoCodesPage);
+      }
+    },
+    onError: (err) => {
+      dispatch(showErrorSnackbar(`Помилка: ${err.message}`));
+    }
   });
 
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
-
-  const goToPromoPage = () => {
-    history.push(pathToPromoCodesPage);
-  };
 
   if (loading || error) {
     return <LoadingBar />;
@@ -42,11 +47,10 @@ function PromoCodeEdit() {
 
   return (
     <PromoCodeForm
-      data={data.getPromoCodeById}
       promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
       addPromoCodeHandler={updatePromoCodeHandler}
-      goToPromoPage={goToPromoPage}
+      data={data.getPromoCodeById}
     />
   );
 }

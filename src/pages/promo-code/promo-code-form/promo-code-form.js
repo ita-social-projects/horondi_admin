@@ -29,7 +29,6 @@ function PromoCodeForm({
   pathToPromoCodesPage,
   promoValidationSchema,
   addPromoCodeHandler,
-  goToPromoPage,
   data
 }) {
   const styles = useStyles();
@@ -86,12 +85,12 @@ function PromoCodeForm({
             categories
           }
         }
-      }).then(goToPromoPage)
+      })
   });
 
   const unblock = useUnsavedChangesHandler(values);
 
-  const { code, dateTo, dateFrom, discount, categories, _id } = values;
+  const { code, dateTo, dateFrom, discount, categories } = values;
 
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
@@ -261,17 +260,10 @@ PromoCodeForm.propTypes = {
   pathToPromoCodesPage: PropTypes.string.isRequired,
   data: PropTypes.objectOf(PropTypes.any),
   promoValidationSchema: PropTypes.objectOf(PropTypes.any).isRequired,
-  addPromoCodeHandler: PropTypes.func.isRequired,
-  goToPromoPage: PropTypes.func.isRequired
+  addPromoCodeHandler: PropTypes.func.isRequired
 };
 PromoCodeForm.defaultProps = {
-  data: PropTypes.objectOf({
-    code: '',
-    dateTo: '',
-    dateFrom: '',
-    discount: 0,
-    categories: []
-  })
+  data: {}
 };
 
 export default PromoCodeForm;
