@@ -51,7 +51,6 @@ export const useStyles = makeStyles((theme) => {
       color: 'red',
       fontSize: '12px',
       height: '12px'
-    },
-    inputError
+    }
   };
 });

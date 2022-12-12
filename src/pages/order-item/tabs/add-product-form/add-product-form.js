@@ -165,7 +165,8 @@ const AddProductForm = ({
   };
 
   const sizeItems = setSizeItems(sizes);
-  const isFieldError = (field) => Boolean(touched[field] && errors[field]);
+  const isFieldError = (field) =>
+    Boolean(touched[field] && errors[field]) && !productInput;
   const certificateOrPromoCode =
     promoCode?.getPromoCodeById || certificate?.getCertificateById;
 
@@ -243,6 +244,9 @@ const AddProductForm = ({
               label={productLabels.product}
               error={isFieldError(inputName.items)}
               variant={materialUiConstants.outlined}
+              helperText={
+                isFieldError(inputName.items) ? errors[inputName.items] : ' '
+              }
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -255,9 +259,7 @@ const AddProductForm = ({
             />
           )}
         />
-        {isFieldError(inputName.items) && (
-          <div className={styles.inputError}>{errors[inputName.items]}</div>
-        )}
+
         <div className={styles.quantity}>
           {productLabels.quantity}
           <Button
