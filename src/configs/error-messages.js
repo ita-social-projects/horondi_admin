@@ -48,12 +48,13 @@ export const commonErrorMessages = {
 };
 export const promoCodeErrorMessages = {
   LENGTH_CODE: 'Поле має містити від 2 до 30 символів',
-  STYLE_CODE:
-    'Поле має містити англійські літери або цифри і починатись з літери',
+  STYLE_CODE: 'Поле має містити англійські літери або цифри',
   ERROR_MESSAGE: 'Поле має бути заповнене',
   POSITIVE_DISCOUNT: 'Тільки більше нуля',
   INTEGER_DISCOUNT: 'Тільки ціле число',
-  MAX_VALUE_DISCOUNT: 'Не більше 90'
+  MAX_VALUE_DISCOUNT: 'Не більше 90',
+  DATEFROM_SMALLER_THAN_DATETO:
+    'Дата початку дії має бути менша дати закінчення'
 };
 
 export const patternErrorMessages = {

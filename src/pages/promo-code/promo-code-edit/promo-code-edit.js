@@ -20,19 +20,17 @@ function PromoCodeEdit() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const { SUCCESS_UPDATE_STATUS } = config.statuses;
+
   const { loading, error, data } = useQuery(getPromoCodeById, {
     variables: { id },
     fetchPolicy: 'no-cache'
   });
 
   const [updatePromoCodeHandler] = useMutation(updatePromoCode, {
-    onCompleted: (data) => {
-      if (data.updatePromoCode.message) {
-        dispatch(showErrorSnackbar(`Помилка: ${data.updatePromoCode.message}`));
-      } else {
-        dispatch(showSuccessSnackbar('Успішно змінено'));
-        history.push(pathToPromoCodesPage);
-      }
+    onCompleted: () => {
+      dispatch(showSuccessSnackbar(SUCCESS_UPDATE_STATUS));
+      history.push(pathToPromoCodesPage);
     },
     onError: (err) => {
       dispatch(showErrorSnackbar(`Помилка: ${err.message}`));

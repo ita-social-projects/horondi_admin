@@ -191,10 +191,10 @@ function PromoCodeForm({
                 placeholder={promoCodesConsts.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
-                value={dateFrom ? new Date(dateFrom) : null}
+                value={(dateFrom && new Date(dateFrom)) || null}
                 onChange={(value) => handlerDateHandler(value, 'dateFrom')}
               />
-              {touched.dateFrom && errors.dateFrom && (
+              {dateFrom && dateTo && errors.dateFrom && (
                 <div className={styles.errorDate}>{errors.dateFrom}</div>
               )}
             </div>
@@ -209,7 +209,7 @@ function PromoCodeForm({
                 oneTap
                 style={{ width: 200 }}
                 id='dateTo'
-                value={dateTo ? new Date(dateTo) : null}
+                value={(dateTo && new Date(dateTo)) || null}
                 onChange={(value) => handlerDateHandler(value, 'dateTo')}
               />
               {touched.dateTo && errors.dateTo && (

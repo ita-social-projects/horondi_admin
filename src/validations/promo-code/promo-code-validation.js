@@ -8,7 +8,8 @@ const {
   ERROR_MESSAGE,
   POSITIVE_DISCOUNT,
   INTEGER_DISCOUNT,
-  MAX_VALUE_DISCOUNT
+  MAX_VALUE_DISCOUNT,
+  DATEFROM_SMALLER_THAN_DATETO
 } = config.promoCodeErrorMessages;
 
 export const promoValidationSchema = Yup.object().shape({
@@ -17,8 +18,12 @@ export const promoValidationSchema = Yup.object().shape({
     .max(30, LENGTH_CODE)
     .matches(formRegExp.promoCodeName, STYLE_CODE)
     .required(ERROR_MESSAGE),
-  dateFrom: Yup.string().required(ERROR_MESSAGE),
-  dateTo: Yup.string().required(ERROR_MESSAGE),
+  dateFrom: Yup.date()
+    .max(Yup.ref('dateTo'), DATEFROM_SMALLER_THAN_DATETO)
+    .required(ERROR_MESSAGE),
+  dateTo: Yup.date()
+    .min(Yup.ref('dateFrom'), DATEFROM_SMALLER_THAN_DATETO)
+    .required(ERROR_MESSAGE),
   discount: Yup.number()
     .integer(INTEGER_DISCOUNT)
     .positive(POSITIVE_DISCOUNT)

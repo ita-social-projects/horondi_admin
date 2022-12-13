@@ -116,3 +116,6 @@ export const adminsErrors = {
 export const certificateErrorMessages = {
   CERTIFICATE_IS_ACTIVE: 'Неможливо видалити активний сертифікат'
 };
+export const promoCodeErrorMessages = {
+  THERE_IS_PROMOCODE_WITH_THIS_NAME: 'Промокод з такою назвою вже існує'
+};

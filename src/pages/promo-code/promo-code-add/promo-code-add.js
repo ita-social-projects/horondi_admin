@@ -12,6 +12,7 @@ import {
 import { getFromLocalStorage } from '../../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../../consts/local-storage';
 import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
+import { certificateErrorMessages } from '../../../configs/error-modal-messages';
 
 import PromoCodeForm from '../promo-code-form/promo-code-form';
 
@@ -21,10 +22,12 @@ const PromoCodeAdd = () => {
 
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
+  const { SUCCESS_ADD_STATUS } = config.statuses;
+  const { ERROR_BOUNDARY_STATUS } = config.errorStatuses;
 
   const [addPromoCodeHandler] = useMutation(addPromoCodes, {
     onCompleted: () => {
-      dispatch(showSuccessSnackbar('Успішно додано'));
+      dispatch(showSuccessSnackbar(SUCCESS_ADD_STATUS));
       history.push(pathToPromoCodesPage);
     },
     context: {
@@ -33,7 +36,11 @@ const PromoCodeAdd = () => {
       }
     },
     onError: (err) => {
-      dispatch(showErrorSnackbar(`Помилка: ${err.message}`));
+      dispatch(
+        showErrorSnackbar(
+          `${certificateErrorMessages[err.message] || ERROR_BOUNDARY_STATUS}`
+        )
+      );
     }
   });
 
