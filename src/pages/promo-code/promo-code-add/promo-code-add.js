@@ -11,8 +11,7 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { getFromLocalStorage } from '../../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../../consts/local-storage';
-import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
-import { certificateErrorMessages } from '../../../configs/error-modal-messages';
+import { promoCodeErrorMessages } from '../../../configs/error-modal-messages';
 
 import PromoCodeForm from '../promo-code-form/promo-code-form';
 
@@ -38,7 +37,7 @@ const PromoCodeAdd = () => {
     onError: (err) => {
       dispatch(
         showErrorSnackbar(
-          `${certificateErrorMessages[err.message] || ERROR_BOUNDARY_STATUS}`
+          `${promoCodeErrorMessages[err.message] || ERROR_BOUNDARY_STATUS}`
         )
       );
     }
@@ -46,7 +45,6 @@ const PromoCodeAdd = () => {
 
   return (
     <PromoCodeForm
-      promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
       addPromoCodeHandler={addPromoCodeHandler}
     />

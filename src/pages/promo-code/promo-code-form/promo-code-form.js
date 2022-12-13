@@ -24,13 +24,9 @@ import { useStyles } from './promo-code-form.style';
 import { useCommonStyles } from '../../common.styles';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import { BackButton, SaveButton } from '../../../components/buttons';
+import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
 
-function PromoCodeForm({
-  pathToPromoCodesPage,
-  promoValidationSchema,
-  addPromoCodeHandler,
-  data
-}) {
+function PromoCodeForm({ pathToPromoCodesPage, addPromoCodeHandler, data }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
@@ -259,7 +255,6 @@ function PromoCodeForm({
 PromoCodeForm.propTypes = {
   pathToPromoCodesPage: PropTypes.string.isRequired,
   data: PropTypes.objectOf(PropTypes.any),
-  promoValidationSchema: PropTypes.objectOf(PropTypes.any).isRequired,
   addPromoCodeHandler: PropTypes.func.isRequired
 };
 PromoCodeForm.defaultProps = {

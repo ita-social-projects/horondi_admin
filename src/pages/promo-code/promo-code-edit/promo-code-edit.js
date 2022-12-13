@@ -10,7 +10,6 @@ import {
 import { getPromoCodeById } from '../operations/promo-code.queries';
 import { updatePromoCode } from '../operations/promo-code.mutation';
 import { config } from '../../../configs';
-import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
 
 import LoadingBar from '../../../components/loading-bar';
 import PromoCodeForm from '../promo-code-form/promo-code-form';
@@ -45,7 +44,6 @@ function PromoCodeEdit() {
 
   return (
     <PromoCodeForm
-      promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
       addPromoCodeHandler={updatePromoCodeHandler}
       data={data.getPromoCodeById}
