@@ -26,6 +26,8 @@ const postValidation = (type) =>
   Yup.object().when(inputName.sentBy, {
     is: type,
     then: Yup.object().shape({
+      region: Yup.string().trim().required(ERROR_MESSAGE),
+      district: Yup.string().trim().required(ERROR_MESSAGE),
       city: Yup.string().trim().required(ERROR_MESSAGE),
       courierOffice: Yup.string().trim().required(ERROR_MESSAGE)
     })
@@ -41,7 +43,7 @@ const worldWideValidation = (type) =>
         .matches(phoneNumberRegex, PHONE_NUMBER_TYPE_MESSAGE)
         .required(ERROR_MESSAGE),
       worldWideCountry: Yup.string().required(ERROR_MESSAGE),
-      stateOrProvince: Yup.string(),
+      stateOrProvince: Yup.string().required(ERROR_MESSAGE),
       worldWideCity: Yup.string().required(ERROR_MESSAGE),
       worldWideStreet: Yup.string().required(ERROR_MESSAGE),
       cityCode: Yup.string()

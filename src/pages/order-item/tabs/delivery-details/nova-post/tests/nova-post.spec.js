@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
 import NovaPost from '../nova-post';
 import { props, inputOptions, errorInputOptions } from './nova-post.variables';
@@ -31,7 +31,7 @@ describe('tests for the NovaPost component', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it('should render errors for the fields, when validation fails for them', () => {
+  it('should show an error for the first field', () => {
     render(
       <NovaPost
         {...props}
@@ -39,10 +39,21 @@ describe('tests for the NovaPost component', () => {
         inputOptions={{ ...errorInputOptions, handleBlur }}
       />
     );
-    const fields = Object.entries(errorInputOptions.errors);
-    fields.forEach(([field, value]) => {
-      const fieldElement = screen.getByTestId(field);
-      expect(fieldElement).toHaveTextContent(value);
-    });
+
+    const city = screen.getByTestId('delivery.novaPost.city');
+    expect(city).toHaveTextContent('Поле не може бути порожнім');
+  });
+
+  it('should not show an error for the second field', () => {
+    render(
+      <NovaPost
+        {...props}
+        setFieldValue={setFieldValue}
+        inputOptions={{ ...errorInputOptions, handleBlur }}
+      />
+    );
+
+    const courierOffice = screen.getByTestId('delivery.novaPost.courierOffice');
+    expect(courierOffice).not.toHaveTextContent('Поле не може бути порожнім');
   });
 });

@@ -199,6 +199,7 @@ export function* handleNovaPoshtaCities({ payload }) {
 export function* handleNovaPoshtaWarehouse({ payload }) {
   try {
     yield put(setDeliveryLoading(true));
+    yield put(setNovaPoshtaWarehouse([]));
 
     const warehouses = yield call(getNovaPoshtaWarehouses, payload);
 

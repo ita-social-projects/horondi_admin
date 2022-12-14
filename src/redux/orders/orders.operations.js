@@ -336,6 +336,7 @@ export const getNovaPoshtaCities = async (city) => {
       query($city: String) {
         getNovaPoshtaCities(city: $city) {
           description
+		  cityID
         }
       }
     `;
@@ -348,6 +349,7 @@ export const getNovaPoshtaWarehouses = async (city) => {
       query($city: String) {
         getNovaPoshtaWarehouses(city: $city) {
           description
+		  number
         }
       }
     `;

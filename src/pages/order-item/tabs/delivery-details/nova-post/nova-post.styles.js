@@ -1,10 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(() => ({
-  error: {
-    color: '#e60000',
-    marginTop: 15
-  },
   novaPostTitle: {
     fontWeight: 400,
     fontSize: 18,
@@ -19,7 +15,7 @@ export const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    marginBottom: '15px'
+    marginBottom: 5
   },
   dataInput: {
     width: '100%'

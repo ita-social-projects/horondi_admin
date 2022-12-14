@@ -40,7 +40,9 @@ const worldWide = {
 
 const novaPost = {
   city: '',
-  courierOffice: ''
+  cityId: '',
+  courierOffice: '',
+  courierOfficeId: ''
 };
 
 export const initialValues = {

@@ -202,7 +202,9 @@ export const inputName = {
   },
   novaPost: {
     city: 'delivery.novaPost.city',
-    courierOffice: 'delivery.novaPost.courierOffice'
+    cityId: 'delivery.novaPost.cityId',
+    courierOffice: 'delivery.novaPost.courierOffice',
+    courierOfficeId: 'delivery.novaPost.courierOfficeId'
   },
   ukrPost: {
     region: 'delivery.ukrPost.region',

@@ -33,7 +33,7 @@ describe('tests for the UkrPost component', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it('should render errors for the fields, when validation fails for them', () => {
+  it('should not show errors except the first field', () => {
     render(
       <UkrPost
         {...props}
@@ -41,10 +41,9 @@ describe('tests for the UkrPost component', () => {
         inputOptions={{ ...errorInputOptions, handleBlur }}
       />
     );
-    const fields = Object.entries(errorInputOptions.errors);
-    fields.forEach(([field, value]) => {
-      const fieldElement = screen.getByTestId(field);
-      expect(fieldElement).toHaveTextContent(value);
-    });
+    const district = screen.getByTestId('delivery.ukrPost.district');
+    const city = screen.getByTestId('delivery.ukrPost.city');
+    expect(district).not.toHaveTextContent('Поле не може бути порожнім');
+    expect(city).not.toHaveTextContent('Поле не може бути порожнім');
   });
 });
