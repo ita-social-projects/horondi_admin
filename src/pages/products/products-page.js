@@ -112,7 +112,7 @@ const ProductsPage = () => {
             name={name[0].value}
             category={category.name[0].value}
             model={model.name[0].value}
-            pattern={pattern.name[0].value}
+            pattern={pattern?.name[0].value}
             price={basePrice}
             totalPrice={sizes[0]?.price}
             rate={rate.toFixed(2)}
