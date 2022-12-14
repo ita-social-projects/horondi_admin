@@ -20,6 +20,7 @@ function PromoCodeEdit() {
   const dispatch = useDispatch();
 
   const { SUCCESS_UPDATE_STATUS } = config.statuses;
+  const { ERROR_BOUNDARY_STATUS } = config.errorStatuses;
 
   const { loading, error, data } = useQuery(getPromoCodeById, {
     variables: { id },
@@ -32,7 +33,7 @@ function PromoCodeEdit() {
       history.push(pathToPromoCodesPage);
     },
     onError: (err) => {
-      dispatch(showErrorSnackbar(`Помилка: ${err.message}`));
+      dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
     }
   });
 

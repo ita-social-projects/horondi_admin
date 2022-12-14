@@ -51,11 +51,11 @@ function PromoCodeForm({ pathToPromoCodesPage, addPromoCodeHandler, data }) {
     ];
   }
   const initialValues = {
-    code: data?.code || '',
-    dateTo: data?.dateTo || '',
-    dateFrom: data?.dateFrom || '',
-    discount: data?.discount || 0,
-    categories: data?.categories || []
+    code: data.code || '',
+    dateTo: data.dateTo || '',
+    dateFrom: data.dateFrom || '',
+    discount: data.discount || 0,
+    categories: data.categories || []
   };
 
   const {
@@ -198,9 +198,7 @@ function PromoCodeForm({ pathToPromoCodesPage, addPromoCodeHandler, data }) {
             <div className={styles.dataPickerContainer}>
               <DatePicker
                 disabled={!dateFrom}
-                disabledDate={(date) =>
-                  isBefore(date, new Date(dateFrom) || new Date())
-                }
+                disabledDate={(date) => isBefore(date, new Date(dateFrom))}
                 placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}
