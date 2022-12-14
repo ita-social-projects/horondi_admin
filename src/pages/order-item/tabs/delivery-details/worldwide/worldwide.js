@@ -153,6 +153,9 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
                 ? getError(worldWide.messengerPhone, errors)
                 : ' '
             }
+            FormHelperTextProps={{
+              'data-testid': `${worldWide.messengerPhone}`
+            }}
           />
         </FormControl>
       </div>
@@ -278,6 +281,9 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
               ? getError(worldWide.worldWideStreet, errors)
               : ' '
           }
+          FormHelperTextProps={{
+            'data-testid': `${worldWide.worldWideStreet}`
+          }}
         />
         <TextField
           id={worldWide.cityCode}
@@ -299,6 +305,9 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
               ? getError(worldWide.cityCode, errors)
               : ' '
           }
+          FormHelperTextProps={{
+            'data-testid': `${worldWide.cityCode}`
+          }}
         />
       </div>
     </div>
