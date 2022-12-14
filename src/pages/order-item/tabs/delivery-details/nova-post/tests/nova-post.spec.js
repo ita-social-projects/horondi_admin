@@ -6,6 +6,15 @@ import { props, inputOptions, errorInputOptions } from './nova-post.variables';
 
 jest.mock('react-redux');
 
+document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document
+  }
+});
+
 const setFieldValue = jest.fn();
 const handleBlur = jest.fn();
 const dispatch = jest.fn();
@@ -55,5 +64,43 @@ describe('tests for the NovaPost component', () => {
 
     const courierOffice = screen.getByTestId('delivery.novaPost.courierOffice');
     expect(courierOffice).not.toHaveTextContent('Поле не може бути порожнім');
+  });
+});
+
+describe('tests for NovaPost delivery component with selected values', () => {
+  beforeEach(() => {
+    render(
+      <NovaPost
+        {...props}
+        setFieldValue={setFieldValue}
+        inputOptions={{ ...errorInputOptions, handleBlur }}
+      />
+    );
+    const autocomplete = screen.getByTestId('cityNovaPost');
+    const input = within(autocomplete).getByRole('textbox');
+    autocomplete.focus();
+    fireEvent.change(input, { target: { value: 'Київ' } });
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
+    fireEvent.keyDown(autocomplete, { key: 'Enter' });
+  });
+
+  it('input should have value Київ"', () => {
+    const productsField = screen
+      .getByTestId('cityNovaPost')
+      .querySelector('input');
+
+    expect(productsField.value).toEqual('Київ');
+  });
+
+  it('input should be empty', () => {
+    const autocomplete = screen.getByTestId('cityNovaPost');
+    const productsField = screen
+      .getByTestId('cityNovaPost')
+      .querySelector('input');
+    const input = within(autocomplete).getByRole('textbox');
+    const value = '';
+    fireEvent.change(input, { target: { value } });
+    expect(productsField.value).toEqual(value);
   });
 });

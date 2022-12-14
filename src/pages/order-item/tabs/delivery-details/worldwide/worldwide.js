@@ -122,6 +122,7 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
             name={worldWide.messenger}
             onChange={handleChange}
             onBlur={handleBlur}
+            data-testid='select'
             error={isFieldError(worldWide.messenger, errors, touched)}
           >
             {messengers.map((messenger) => (

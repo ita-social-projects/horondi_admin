@@ -87,6 +87,7 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               option.cityId === value.cityId
             }
             className={styles.dataInput}
+            data-testid='cityNovaPost'
             renderInput={(params) => (
               <TextField
                 {...params}

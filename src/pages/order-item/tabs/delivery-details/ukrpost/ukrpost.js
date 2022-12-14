@@ -107,6 +107,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             option.REGION_ID === value.REGION_ID
           }
           className={styles.dataInput}
+          data-testid='regionUkrPost'
           renderInput={(params) => (
             <TextField
               {...params}

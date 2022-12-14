@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  render,
-  screen,
-  within,
-  fireEvent,
-  getByRole
-} from '@testing-library/react';
-import UserEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
+import { render, screen, within, fireEvent } from '@testing-library/react';
 import Worldwide from '../worldwide';
 import { props, inputOptions, errorInputOptions } from './worldwide.variables';
 
@@ -95,5 +87,55 @@ describe('tests for worldwide delivery component', () => {
     );
     expect(stateOrProvince).not.toHaveTextContent('Поле не може бути порожнім');
     expect(worldWideCity).not.toHaveTextContent('Поле не може бути порожнім');
+  });
+});
+
+describe('tests for worldwide delivery component with selected values', () => {
+  beforeEach(() => {
+    render(
+      <Worldwide
+        {...props}
+        setFieldValue={setFieldValue}
+        inputOptions={{ ...errorInputOptions, handleBlur }}
+      />
+    );
+    const autocomplete = screen.getByTestId('worldWideCountry');
+    const input = within(autocomplete).getByRole('textbox');
+    autocomplete.focus();
+    fireEvent.change(input, { target: { value: 'Київ' } });
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
+    fireEvent.keyDown(autocomplete, { key: 'Enter' });
+  });
+
+  it('input should have value Київ"', () => {
+    const productsField = screen
+      .getByTestId('worldWideCountry')
+      .querySelector('input');
+
+    expect(productsField.value).toEqual('Київ');
+  });
+
+  it('input should be empty', () => {
+    const autocomplete = screen.getByTestId('worldWideCountry');
+    const productsField = screen
+      .getByTestId('worldWideCountry')
+      .querySelector('input');
+    const input = within(autocomplete).getByRole('textbox');
+    const value = '';
+    fireEvent.change(input, { target: { value } });
+    expect(productsField.value).toEqual(value);
+  });
+
+  it('Select sould show Telegram', () => {
+    const select = screen.getByTestId('select');
+    fireEvent.click(select);
+    fireEvent.keyDown(select, { key: 'ArrowDown' });
+    fireEvent.keyDown(select, { key: 'Enter' });
+
+    const messanger = screen.getByTestId('select').querySelector('input');
+    fireEvent.change(messanger, { target: { value: 'Telegram' } });
+
+    expect(messanger.value).toEqual('Telegram');
   });
 });
