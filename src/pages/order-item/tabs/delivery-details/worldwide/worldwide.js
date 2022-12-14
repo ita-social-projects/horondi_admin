@@ -76,7 +76,14 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
       setStatesOptions([]);
       setCitiesOptions([]);
     }
-  }, [values.worldWideCountry]);
+  }, [
+    values.worldWideCountry,
+    setFieldValue,
+    worldWide.stateOrProvince,
+    worldWide.worldWideCity,
+    worldWide.worldWideStreet,
+    worldWide.cityCode
+  ]);
 
   useEffect(() => {
     if (values.stateOrProvince) {
@@ -87,7 +94,7 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
     } else {
       setCitiesOptions([]);
     }
-  }, [values.stateOrProvince]);
+  }, [values.stateOrProvince, values.worldWideCountry]);
 
   return (
     <div className={styles.worldwide}>

@@ -21,7 +21,7 @@ export const useUnsavedChangesHandler = (values) => {
 
   useEffect(() => {
     if (isMountedFirst) toggleFieldsChanged(true);
-  }, [values]);
+  }, [values, isMountedFirst]);
 
   useEffect(() => toggleIsMountedFirst(true), []);
 
@@ -50,7 +50,7 @@ export const useUnsavedChangesHandler = (values) => {
     return () => {
       if (unblock.current) unblock.current();
     };
-  }, [history, isFieldsChanged]);
+  }, [history, isFieldsChanged, dispatch, openSuccessSnackbar]);
 
   return unblock.current;
 };

@@ -25,7 +25,7 @@ const App = () => {
     if (token) {
       dispatch(getEmailQuestionsPendingCount());
     }
-  }, []);
+  }, [dispatch, token]);
 
   useDocTitleUpdate();
 

@@ -71,7 +71,7 @@ const StatisticPage = () => {
     if (barValue === bar.select[2].value) {
       dispatch(getUsersByDays(date));
     }
-  }, [date]);
+  }, [date, dispatch, doughnutValue, barValue]);
 
   if (loading) {
     return <LoadingBar />;

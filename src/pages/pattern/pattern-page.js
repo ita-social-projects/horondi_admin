@@ -22,7 +22,7 @@ import usePatternFilters from '../../hooks/filters/use-pattern-filters';
 const map = require('lodash/map');
 
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { CREATE_PATTERN_TITLE, EXIT_WITHOUT_SAVING } = config.buttonTitles;
+const { CREATE_PATTERN_TITLE } = config.buttonTitles;
 
 const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;

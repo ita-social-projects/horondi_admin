@@ -60,7 +60,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         imageUrl: `${imagePrefix}${newsArticle.image}`
       });
     }
-  }, [dispatch, newsArticle]);
+  }, [dispatch, newsArticle, setUploadAuthorImage, setUploadNewsImage]);
 
   const selectFormSchema = () => {
     const formObj = languages.reduce((reducer, lang) => {

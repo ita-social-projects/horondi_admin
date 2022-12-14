@@ -48,7 +48,7 @@ const EditProductForm = ({
 
   useEffect(() => {
     selectedItem && dispatch(getProduct(selectedItem.product._id));
-  }, [selectedItem]);
+  }, [selectedItem, dispatch]);
 
   const selectHandler = (e) => {
     setSize({
