@@ -352,7 +352,7 @@ export const getNovaPoshtaWarehouses = async (city) => {
       }
     `;
 
-  const result = await getItems(query, city);
+  const result = await getItems(query, { city });
 
   return result?.data?.getNovaPoshtaWarehouses;
 };
