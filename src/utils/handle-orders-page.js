@@ -68,7 +68,6 @@ export const handleCityNovaPost = (
     setSelectedCity(value.description);
     setFieldValue(inputName.novaPost.city, value.description);
     setFieldValue(inputName.novaPost.cityId, value.cityID);
-    setFieldValue(inputName.novaPost.courierOffice, '');
   } else {
     setSelectedCity('');
     setWarehouse('');
