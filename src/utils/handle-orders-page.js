@@ -167,6 +167,9 @@ export const handlePostOffice = (value, setPostOffice, setFieldValue) => {
   }
 };
 
+export const handleInputValue = (isFocused, focusedValue, bluredValue) =>
+  isFocused ? focusedValue : bluredValue;
+
 export const handleWorldWideCountry = (value, setFieldValue) => {
   if (value) {
     setFieldValue(inputName.worldWide.worldWideCountry, value);

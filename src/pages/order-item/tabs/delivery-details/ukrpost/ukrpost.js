@@ -22,7 +22,8 @@ import {
   handleCity,
   handleDistrict,
   handlePostOffice,
-  handleRegion
+  handleRegion,
+  handleInputValue
 } from '../../../../../utils/handle-orders-page';
 import {
   isFieldError,
@@ -35,6 +36,11 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
 
   const dispatch = useDispatch();
   const styles = useStyles();
+
+  const [regionFocus, setRegionFocus] = useState(false);
+  const [districtFocus, setDistrictFocus] = useState(false);
+  const [cityFocus, setCityFocus] = useState(false);
+  const [departmentFocus, setDepartmentFocus] = useState(false);
 
   const {
     deliveryLoading,
@@ -89,7 +95,11 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             setRegion(value);
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
-          onBlur={handleBlur}
+          onFocus={() => setRegionFocus(true)}
+          onBlur={(e) => {
+            setRegionFocus(false);
+            handleBlur(e);
+          }}
           onChange={(_event, value) => {
             handleRegion(
               value,
@@ -101,7 +111,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             );
           }}
           options={ukrPoshtaRegions}
-          inputValue={region}
+          inputValue={handleInputValue(regionFocus, region, values.region)}
           getOptionLabel={(option) => option?.REGION_UA || ''}
           getOptionSelected={(option, value) =>
             option.REGION_ID === value.REGION_ID
@@ -141,15 +151,23 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           onInputChange={(_e, value) => {
             setDistrict(value);
           }}
-          onBlur={handleBlur}
+          onFocus={() => setDistrictFocus(true)}
+          onBlur={(e) => {
+            setDistrictFocus(false);
+            handleBlur(e);
+          }}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(_event, value) => {
             handleDistrict(value, setFieldValue, setCity, setPostOffice);
           }}
           disabled={!values.regionId}
           options={ukrPoshtaDistricts}
-          inputValue={district}
-          getOptionLabel={(option) => option?.DISTRICT_UA || ''}
+          inputValue={handleInputValue(
+            districtFocus,
+            district,
+            values.district
+          )}
+          getOptionLabel={(option) => option?.DISTRICT_UA || null}
           getOptionSelected={(option, value) =>
             option.DISTRICT_ID === value.DISTRICT_ID
           }
@@ -191,14 +209,18 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           onInputChange={(_e, value) => {
             setCity(value);
           }}
-          onBlur={handleBlur}
+          onFocus={() => setCityFocus(true)}
+          onBlur={(e) => {
+            setCityFocus(false);
+            handleBlur(e);
+          }}
           noOptionsText={deliveryAdditionalInfo.noOneCity}
           onChange={(_event, value) => {
             handleCity(value, setFieldValue, setPostOffice);
           }}
           disabled={!values.districtId}
           options={ukrPoshtaCities}
-          inputValue={city}
+          inputValue={handleInputValue(cityFocus, city, values.city)}
           getOptionLabel={(option) => option?.CITY_UA || ''}
           getOptionSelected={(option, value) =>
             option.CITY_ID === value.CITY_ID
@@ -245,10 +267,18 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           onChange={(_event, value) => {
             handlePostOffice(value, setPostOffice, setFieldValue);
           }}
-          onBlur={handleBlur}
+          onFocus={() => setDepartmentFocus(true)}
+          onBlur={(e) => {
+            setDepartmentFocus(false);
+            handleBlur(e);
+          }}
           disabled={!values.cityId}
           options={ukrPoshtaPostOffices}
-          inputValue={postOffice}
+          inputValue={handleInputValue(
+            departmentFocus,
+            postOffice,
+            values.courierOffice
+          )}
           getOptionLabel={(option) =>
             `${POST_OFFICE_NUMBER} ${option?.POSTCODE}, ${
               option?.STREET_UA_VPZ ? option?.STREET_UA_VPZ : ''

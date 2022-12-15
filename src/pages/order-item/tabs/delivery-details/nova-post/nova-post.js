@@ -39,6 +39,8 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
   const [inputValue, setInputValue] = useState('');
   const [selectedCity, setSelectedCity] = useState(values.city);
   const [wareHouse, setWarehouse] = useState('');
+  const [cityFocus, setCityFocus] = useState(false);
+  const [departmentFocus, setDepartmentFocus] = useState(false);
 
   const getPostCities = useCallback(
     debounce((value) => {
@@ -66,7 +68,11 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
         <div className={styles.selectorInfo}>
           <Autocomplete
             id={inputName.novaPost.city}
-            onBlur={handleBlur}
+            onFocus={() => setCityFocus(true)}
+            onBlur={(e) => {
+              setCityFocus(false);
+              handleBlur(e);
+            }}
             onInputChange={(_e, value) => {
               setInputValue(value);
               getPostCities(value);
@@ -81,7 +87,7 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               )
             }
             options={cities}
-            inputValue={inputValue}
+            inputValue={cityFocus ? inputValue : values.city}
             getOptionLabel={(option) => option?.description || null}
             getOptionSelected={(option, value) =>
               option.cityId === value.cityId
@@ -121,16 +127,20 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
           <Autocomplete
             id={inputName.novaPost.courierOffice}
             onInputChange={(_event, value) => {
-              setFieldValue('courierOffice', value);
+              setWarehouse(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneDepartment}
             onChange={(_event, value) =>
               handleWarehousesNovaPost(value, setFieldValue, setWarehouse)
             }
-            onBlur={handleBlur}
+            onFocus={() => setDepartmentFocus(true)}
+            onBlur={(e) => {
+              setDepartmentFocus(false);
+              handleBlur(e);
+            }}
             disabled={!selectedCity}
             options={availableWarehouses}
-            inputValue={wareHouse}
+            inputValue={departmentFocus ? wareHouse : values.courierOffice}
             getOptionLabel={(option) => option?.description || null}
             getOptionSelected={(option, value) =>
               option.courierOfficeId === value.courierOfficeId
@@ -140,7 +150,6 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               <TextField
                 {...params}
                 label={deliveryLabels.department}
-                autoComplete='off'
                 variant={materialUiConstants.outlined}
                 error={
                   isFieldError(

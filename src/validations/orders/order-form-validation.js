@@ -26,8 +26,6 @@ const postValidation = (type) =>
   Yup.object().when(inputName.sentBy, {
     is: type,
     then: Yup.object().shape({
-      region: Yup.string().trim().required(ERROR_MESSAGE),
-      district: Yup.string().trim().required(ERROR_MESSAGE),
       city: Yup.string().trim().required(ERROR_MESSAGE),
       courierOffice: Yup.string().trim().required(ERROR_MESSAGE)
     })
