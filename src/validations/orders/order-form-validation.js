@@ -22,10 +22,21 @@ const { USER_INVALID_EMAIL_MESSAGE } = config.userErrorMessages;
 
 const { deliveryTypes } = ordersConfig;
 
-const postValidation = (type) =>
+const novaPostValidation = (type) =>
   Yup.object().when(inputName.sentBy, {
     is: type,
     then: Yup.object().shape({
+      city: Yup.string().trim().required(ERROR_MESSAGE),
+      courierOffice: Yup.string().trim().required(ERROR_MESSAGE)
+    })
+  });
+
+const ukpPostValidation = (type) =>
+  Yup.object().when(inputName.sentBy, {
+    is: type,
+    then: Yup.object().shape({
+      region: Yup.string().trim().required(ERROR_MESSAGE),
+      district: Yup.string().trim().required(ERROR_MESSAGE),
       city: Yup.string().trim().required(ERROR_MESSAGE),
       courierOffice: Yup.string().trim().required(ERROR_MESSAGE)
     })
@@ -90,8 +101,8 @@ export const validationSchema = Yup.object().shape({
         flat: Yup.string().trim().required(ERROR_MESSAGE)
       })
     }),
-    novaPost: postValidation(deliveryTypes.novaPost),
-    ukrPost: postValidation(deliveryTypes.ukrPost),
+    novaPost: novaPostValidation(deliveryTypes.novaPost),
+    ukrPost: ukpPostValidation(deliveryTypes.ukrPost),
     worldWide: worldWideValidation(deliveryTypes.worldWide)
   })
 });
