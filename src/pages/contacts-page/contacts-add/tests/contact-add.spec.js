@@ -4,6 +4,9 @@ import ContactsForm from '../../../../components/forms/contacts-form';
 import ContactsAdd from '../contacts-add';
 
 jest.mock('react-redux');
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({ block: () => null })
+}));
 
 const dispatch = jest.fn();
 useDispatch.mockImplementation(() => dispatch);
