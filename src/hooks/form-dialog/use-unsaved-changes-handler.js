@@ -21,7 +21,7 @@ export const useUnsavedChangesHandler = (values) => {
 
   useEffect(() => {
     if (isMountedFirst) toggleFieldsChanged(true);
-  }, [values, isMountedFirst]);
+  }, [values]);
 
   useEffect(() => toggleIsMountedFirst(true), []);
 
