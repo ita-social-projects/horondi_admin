@@ -12,7 +12,7 @@ const dispatch = jest.fn();
 useDispatch.mockImplementation(() => dispatch);
 
 const props = {
-  initialState: {
+  data: {
     code: 'HORONDI',
     dateTo: '2022-01-29T10:49:49.736Z',
     dateFrom: '2022-01-28T10:49:49.725Z',
