@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Grid } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
-import { noop } from 'lodash';
 import { config } from '../../configs';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
@@ -14,7 +13,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton, SaveButton } from '../../components/buttons';
-import { submitStatus, setFormValues } from '../../utils/order';
+import { setFormValues } from '../../utils/order';
 import { initialValues } from '../../utils/order.values';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
@@ -72,11 +71,6 @@ const OrderItem = ({ id }) => {
     }
   }, [selectedOrder, resetForm, id]);
 
-  const formikHandleChange =
-    submitStatus.includes(selectedOrder && selectedOrder.status) || !id
-      ? handleChange
-      : noop;
-
   if (orderLoading) {
     return <LoadingBar />;
   }
@@ -131,7 +125,7 @@ const OrderItem = ({ id }) => {
         <TabPanel value={tabValue} index={0}>
           <General
             data={values}
-            handleChange={formikHandleChange}
+            handleChange={handleChange}
             inputOptions={inputOptions}
           />
         </TabPanel>
@@ -147,7 +141,7 @@ const OrderItem = ({ id }) => {
               recipient: values.recipient,
               userComment: values.userComment
             }}
-            handleChange={formikHandleChange}
+            handleChange={handleChange}
             inputOptions={inputOptions}
           />
         </TabPanel>
@@ -161,7 +155,7 @@ const OrderItem = ({ id }) => {
         <TabPanel value={tabValue} index={4}>
           <Delivery
             data={{ delivery: values.delivery }}
-            handleChange={formikHandleChange}
+            handleChange={handleChange}
             setFieldValue={setFieldValue}
             inputOptions={inputOptions}
           />
