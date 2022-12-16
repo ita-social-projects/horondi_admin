@@ -28,6 +28,7 @@ import {
   deleteConstructorBottom,
   deleteConstructorFrontPocket,
   getAllConstructors,
+  getAllConstructorParts,
   getConstructorById,
   updateConstructorBasic,
   updateConstructorBottom,
@@ -60,6 +61,7 @@ import {
   UPDATE_CONSTRUCTOR_FRONT_POCKET,
   ADD_CONSTRUCTOR,
   GET_CONSTRUCTORS,
+  GET_CONSTRUCTOR_PARTS,
   GET_CONSTRUCTOR,
   DELETE_CONSTRUCTOR,
   UPDATE_CONSTRUCTOR
@@ -113,6 +115,18 @@ export function* handleConstructorsLoad({ payload: { limit, skip, filter } }) {
       skip,
       filter
     });
+    yield put(setItemsCount(constructors?.count));
+    yield put(setConstructors(constructors?.items));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorPartsLoad() {
+  try {
+    yield put(setConstructorLoading(true));
+    const constructors = yield call(getAllConstructorParts);
     yield put(setItemsCount(constructors?.count));
     yield put(setConstructors(constructors?.items));
     yield put(setConstructorLoading(false));
@@ -337,6 +351,7 @@ export default function* constructorSaga() {
   yield takeEvery(DELETE_CONSTRUCTOR, handleConstructorDelete);
   yield takeEvery(UPDATE_CONSTRUCTOR_BOTTOM, handleConstructorBottomUpdate);
   yield takeEvery(GET_CONSTRUCTORS, handleConstructorsLoad);
+  yield takeEvery(GET_CONSTRUCTOR_PARTS, handleConstructorPartsLoad);
   yield takeEvery(GET_CONSTRUCTOR, handleConstructorLoad);
   yield takeEvery(ADD_CONSTRUCTOR, handleConstructorAdd);
   yield takeEvery(UPDATE_CONSTRUCTOR, handleConstructorUpdate);

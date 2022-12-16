@@ -75,7 +75,7 @@ export const initialState = {
             value: 'Black leather'
           }
         ],
-        relativePrice: 25,
+        relativePrice: 20,
         images: {
           thumbnail: 'thumbnail_eewk311kwdxcgv1_низ-шкіра-чорна.png'
         },
@@ -101,6 +101,21 @@ export const initialState = {
       }
     },
     itemsCount: 1
+  },
+  Constructor: {
+    list: [
+      {
+        bottoms: ['6043ac5d3e06ad3edcdb7b13'],
+        basics: [],
+        patterns: [],
+        backs: [],
+        straps: [],
+        closures: [],
+        pockets: [],
+        name: [{ value: 'Роллтоп' }]
+      }
+    ],
+    constructorLoading: false
   }
 };
 

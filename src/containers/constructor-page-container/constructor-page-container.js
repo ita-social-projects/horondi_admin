@@ -15,6 +15,8 @@ import { getTableRowProps } from '../../utils/constructor-page-container';
 import { useCommonStyles } from '../../pages/common.styles';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../configs';
+import { getConstructorParts } from '../../redux/constructor/constructor.actions';
+import { constructorSelector } from '../../redux/selectors/constructor.selectors';
 
 const ConstructorPageContainer = ({
   itemKey,
@@ -35,10 +37,12 @@ const ConstructorPageContainer = ({
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { items, loading, currentPage, rowsPerPage, itemsCount, filter } =
     useSelector(itemSelectorAction);
+  const { items: constructors } = useSelector(constructorSelector);
 
   const { materialUiConstants } = config;
   const { ITEM_REMOVE_MESSAGE, NO_ITEMS_MESSAGE } =
     config.messages.constructorPageMessages[itemKey];
+  const { IS_IN_CONSTRUCTOR_MESSAGE } = config.messages.constructorPageMessages;
   const createItemTitle =
     config.buttonTitles.createConstructorItemTitle[itemKey];
   const mainPageTitle = config.titles.constructorMainPageTitles[itemKey];
@@ -54,11 +58,45 @@ const ConstructorPageContainer = ({
     );
   }, [dispatch, currentPage, rowsPerPage, filter, getItemsAction]);
 
+  useEffect(() => {
+    dispatch(getConstructorParts());
+  }, [getConstructorParts]);
+
+  const isInConstructor = (id) => {
+    let modelsName = '';
+
+    constructors.forEach((constructor) => {
+      if (constructor[`${itemKey}s`].some((item) => item._id === id)) {
+        const [uaName] = constructor.name;
+        modelsName += `${uaName.value}, `;
+      }
+    });
+
+    return modelsName.slice(0, -2);
+  };
+
   const itemDeleteHandler = (id) => {
+    const modelsName = isInConstructor(id);
+    const skipParam = undefined;
+
+    if (modelsName.length) {
+      openSuccessSnackbar(
+        skipParam,
+        IS_IN_CONSTRUCTOR_MESSAGE(modelsName),
+        skipParam,
+        true,
+        false,
+        skipParam
+      );
+
+      return;
+    }
+
     const deleteItem = () => {
       dispatch(closeDialog());
       dispatch(deleteItemAction(id));
     };
+
     openSuccessSnackbar(deleteItem, ITEM_REMOVE_MESSAGE);
   };
 

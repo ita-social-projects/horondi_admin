@@ -71,6 +71,11 @@ const messages = {
     basic: {
       ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
       NO_ITEMS_MESSAGE: 'Основи відсутні'
+    },
+    IS_IN_CONSTRUCTOR_MESSAGE(modelsName) {
+      return `Цей елемент є частиною конструктора(ів): ${modelsName}.
+      Для видалення, спершу приберіть цей елемент
+      з обраних у відповідних конструкторах.`;
     }
   },
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',

@@ -143,7 +143,7 @@ export const getAllConstructors = async (payload) => {
               value
             }
             model {
-					_id
+		          _id
               images {
                 large
                 medium
@@ -171,6 +171,68 @@ export const getAllConstructors = async (payload) => {
   }
 
   return result?.data?.getAllConstructors;
+};
+
+export const getAllConstructorParts = async () => {
+  const getAllConstructorPartsQuery = `
+      query {
+        getAllConstructorParts {
+          items {
+            bottoms {
+              _id
+            }
+            basics {
+              _id
+            }
+            patterns {
+              _id
+            }
+            backs {
+              _id
+            }
+            straps {
+              _id
+            }
+            closures {
+              _id
+            }
+            pockets{
+              _id
+            }
+            _id
+            name {
+              lang
+              value
+            }
+            model {
+		          _id
+              images {
+                large
+                medium
+                small
+                thumbnail
+              }
+            }
+          }
+        }
+      }
+    `;
+
+  const result = await getItems(getAllConstructorPartsQuery);
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.getAllConstructorParts?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getAllConstructorParts.statusCode} ${
+        constructorErrors[result.data.getAllConstructorParts.message]
+      }`
+    );
+  }
+
+  return result?.data?.getAllConstructorParts;
 };
 
 export const getConstructorById = async (payload) => {
