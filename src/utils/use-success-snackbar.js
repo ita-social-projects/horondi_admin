@@ -24,9 +24,9 @@ const useSuccessSnackbar = () => {
     onClickHandler,
     dialogContent,
     dialogTitle,
+    confirmTitle,
     showCancelButton = true,
-    validationData = null,
-    confirmTitle
+    validationData = null
   ) => {
     let content = dialogContent;
     if (validationData !== null && Object.keys(validationData).length) {

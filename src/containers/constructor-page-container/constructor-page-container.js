@@ -84,9 +84,9 @@ const ConstructorPageContainer = ({
         skipParam,
         IS_IN_CONSTRUCTOR_MESSAGE(modelsName),
         skipParam,
+        true,
         false,
-        skipParam,
-        true
+        skipParam
       );
 
       return;

@@ -105,7 +105,7 @@ export const initialState = {
   Constructor: {
     list: [
       {
-        bottoms: [],
+        bottoms: ['6043ac5d3e06ad3edcdb7b13'],
         basics: [],
         patterns: [],
         backs: [],
