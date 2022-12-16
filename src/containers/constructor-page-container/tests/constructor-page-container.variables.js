@@ -111,7 +111,8 @@ export const initialState = {
         backs: [],
         straps: [],
         closures: [],
-        pockets: []
+        pockets: [],
+        name: [{ value: 'Роллтоп' }]
       }
     ],
     constructorLoading: false
