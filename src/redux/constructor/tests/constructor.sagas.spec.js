@@ -129,6 +129,7 @@ describe('Test Constructor sagas', () => {
       .then((result) => {
         expect(countAnalysis(result)).toHaveLength(4);
       });
+
     done();
   });
 
