@@ -57,7 +57,7 @@ describe('tests for worldwide delivery component', () => {
     expect(citiesInput).toHaveAttribute('value', 'city');
   });
 
-  it('should render errors for the fields, when validation fails for them', () => {
+  it('should show an error for the field', () => {
     render(
       <Worldwide
         {...props}
@@ -65,10 +65,38 @@ describe('tests for worldwide delivery component', () => {
         inputOptions={{ ...errorInputOptions, handleBlur }}
       />
     );
-    const fields = Object.entries(errorInputOptions.errors);
-    fields.forEach(([field, value]) => {
-      const fieldElement = screen.getByTestId(field);
-      expect(fieldElement).toHaveTextContent(value);
-    });
+    const worldWideCountry = screen.getByTestId(
+      'delivery.worldWide.worldWideCountry'
+    );
+    const messengerPhone = screen.getByTestId(
+      'delivery.worldWide.messengerPhone'
+    );
+    expect(worldWideCountry).toHaveTextContent('Поле не може бути порожнім');
+    expect(messengerPhone).toHaveTextContent('Поле не може бути порожнім');
+  });
+
+  it('should not show errors except the first field', () => {
+    render(
+      <Worldwide
+        {...props}
+        setFieldValue={setFieldValue}
+        inputOptions={{ ...errorInputOptions, handleBlur }}
+      />
+    );
+    const stateOrProvince = screen.getByTestId(
+      'delivery.worldWide.stateOrProvince'
+    );
+    const worldWideCity = screen.getByTestId(
+      'delivery.worldWide.worldWideCity'
+    );
+    const worldWideStreet = screen.getByTestId(
+      'delivery.worldWide.worldWideStreet'
+    );
+    const cityCode = screen.getByTestId('delivery.worldWide.cityCode');
+
+    expect(stateOrProvince).not.toHaveTextContent('Поле не може бути порожнім');
+    expect(worldWideCity).not.toHaveTextContent('Поле не може бути порожнім');
+    expect(worldWideStreet).not.toHaveTextContent('Поле не може бути порожнім');
+    expect(cityCode).not.toHaveTextContent('Поле не може бути порожнім');
   });
 });

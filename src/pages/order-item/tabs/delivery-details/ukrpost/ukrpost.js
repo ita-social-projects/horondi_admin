@@ -66,6 +66,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
   const [district, setDistrict] = useState('');
   const [city, setCity] = useState('');
   const [postOffice, setPostOffice] = useState('');
+
   useEffect(() => {
     if (values.regionId) {
       dispatch(getUkrPostDistricts(values.regionId));
@@ -95,7 +96,10 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
           onFocus={() => setRegionFocus(true)}
-          onBlur={() => setRegionFocus(false)}
+          onBlur={(e) => {
+            setRegionFocus(false);
+            handleBlur(e);
+          }}
           onChange={(_event, value) => {
             handleRegion(
               value,
@@ -109,12 +113,25 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           options={ukrPoshtaRegions}
           inputValue={handleInputValue(regionFocus, region, values.region)}
           getOptionLabel={(option) => option?.REGION_UA || ''}
+          getOptionSelected={(option, value) =>
+            option.REGION_ID === value.REGION_ID
+          }
           className={styles.dataInput}
+          data-testid='regionUkrPost'
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.region}
               variant={materialUiConstants.outlined}
+              error={isFieldError(inputName.ukrPost.region, errors, touched)}
+              helperText={
+                isFieldError(inputName.ukrPost.region, errors, touched)
+                  ? getError(inputName.ukrPost.region, errors)
+                  : ' '
+              }
+              FormHelperTextProps={{
+                'data-testid': `${inputName.ukrPost.region}`
+              }}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -135,7 +152,10 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             setDistrict(value);
           }}
           onFocus={() => setDistrictFocus(true)}
-          onBlur={() => setDistrictFocus(false)}
+          onBlur={(e) => {
+            setDistrictFocus(false);
+            handleBlur(e);
+          }}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(_event, value) => {
             handleDistrict(value, setFieldValue, setCity, setPostOffice);
@@ -147,13 +167,29 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             district,
             values.district
           )}
-          getOptionLabel={(option) => option?.DISTRICT_UA || ''}
+          getOptionLabel={(option) => option?.DISTRICT_UA || null}
+          getOptionSelected={(option, value) =>
+            option.DISTRICT_ID === value.DISTRICT_ID
+          }
           className={styles.dataInput}
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.district}
               variant={materialUiConstants.outlined}
+              error={
+                isFieldError(inputName.ukrPost.district, errors, touched) &&
+                !!region
+              }
+              helperText={
+                isFieldError(inputName.ukrPost.district, errors, touched) &&
+                !!region
+                  ? getError(inputName.ukrPost.district, errors)
+                  : ' '
+              }
+              FormHelperTextProps={{
+                'data-testid': `${inputName.ukrPost.district}`
+              }}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -186,13 +222,28 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           options={ukrPoshtaCities}
           inputValue={handleInputValue(cityFocus, city, values.city)}
           getOptionLabel={(option) => option?.CITY_UA || ''}
+          getOptionSelected={(option, value) =>
+            option.CITY_ID === value.CITY_ID
+          }
           className={styles.dataInput}
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.city}
-              error={isFieldError(inputName.ukrPost.city, errors, touched)}
+              error={
+                isFieldError(inputName.ukrPost.city, errors, touched) &&
+                !!district
+              }
               variant={materialUiConstants.outlined}
+              helperText={
+                isFieldError(inputName.ukrPost.city, errors, touched) &&
+                !!district
+                  ? getError(inputName.ukrPost.city, errors)
+                  : ' '
+              }
+              FormHelperTextProps={{
+                'data-testid': `${inputName.ukrPost.city}`
+              }}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -205,11 +256,6 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             />
           )}
         />
-        {isFieldError(inputName.ukrPost.city, errors, touched) && (
-          <div className={styles.error} data-testid={inputName.ukrPost.city}>
-            {getError(inputName.ukrPost.city, errors)}
-          </div>
-        )}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -238,17 +284,31 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
               option?.STREET_UA_VPZ ? option?.STREET_UA_VPZ : ''
             }` || ''
           }
+          getOptionSelected={(option, value) =>
+            option.POSTCODE === value.POSTCODE
+          }
           className={styles.dataInput}
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.department}
               variant={materialUiConstants.outlined}
-              error={isFieldError(
-                inputName.ukrPost.courierOffice,
-                errors,
-                touched
-              )}
+              error={
+                isFieldError(
+                  inputName.ukrPost.courierOffice,
+                  errors,
+                  touched
+                ) && !!city
+              }
+              helperText={
+                isFieldError(
+                  inputName.ukrPost.courierOffice,
+                  errors,
+                  touched
+                ) && !!city
+                  ? getError(inputName.ukrPost.courierOffice, errors)
+                  : ' '
+              }
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -261,14 +321,6 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             />
           )}
         />
-        {isFieldError(inputName.ukrPost.courierOffice, errors, touched) && (
-          <div
-            className={styles.error}
-            data-testid={inputName.ukrPost.courierOffice}
-          >
-            {getError(inputName.ukrPost.courierOffice, errors)}
-          </div>
-        )}
       </div>
     </div>
   );
