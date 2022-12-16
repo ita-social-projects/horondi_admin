@@ -10,7 +10,7 @@ function useDeleteValidation(queryFunction) {
       handleData(await queryFunction());
     }
     fetchData();
-  }, [queryData]);
+  }, [queryData, queryFunction]);
 
   const handleData = (data) => {
     setProducts(

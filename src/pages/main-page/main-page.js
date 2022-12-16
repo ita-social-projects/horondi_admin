@@ -64,11 +64,11 @@ const MainPage = () => {
         sort
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage, sort]);
 
   useEffect(() => {
     dispatch(getEmailQuestionsPendingCount());
-  }, []);
+  }, [dispatch]);
 
   if (orderLoading || loading) {
     return <LoadingBar />;

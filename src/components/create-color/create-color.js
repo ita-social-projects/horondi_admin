@@ -100,7 +100,7 @@ const CreateColor = () => {
       resetForm();
       handleTabsChange(null, 0);
     },
-    []
+    [resetForm, handleTabsChange]
   );
 
   const tabPanels = languages.map((lang, index) => (

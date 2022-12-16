@@ -100,7 +100,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     dispatch(getMaterialsByPurpose([puprose]));
     dispatch(getModels());
     dispatch(getCurrencies());
-  }, []);
+  }, [dispatch]);
 
   const { materialsByPurpose, loading } = useSelector(materialSelector);
   const materials = materialsByPurpose?.pattern || [];
@@ -112,7 +112,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       setConstructorImg,
       imagePrefix
     );
-  }, [dispatch, pattern]);
+  }, [dispatch, pattern, setPatternImage, setConstructorImg]);
 
   const patternValidationSchema = Yup.object().shape({
     sizes: Yup.array().notRequired(),

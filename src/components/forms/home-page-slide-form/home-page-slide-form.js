@@ -54,7 +54,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         imgUrl: `${imagePrefix}${slide.images.large}`
       });
     }
-  }, [dispatch, slide]);
+  }, [dispatch, slide, setUploadImage]);
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string()

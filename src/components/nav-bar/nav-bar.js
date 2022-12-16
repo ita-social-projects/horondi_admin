@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
@@ -77,18 +77,18 @@ const NavBar = () => {
 
   const sheet = document.createElement('style');
 
-  const changeDateRangePickerStyles = () => {
+  const changeDateRangePickerStyles = useCallback(() => {
     if (darkMode) {
       sheet.innerHTML = dateRangePickerCustomStyles.darkCSS;
     } else {
       sheet.innerHTML = dateRangePickerCustomStyles.lightCSS;
     }
-  };
+  }, [darkMode, sheet.innerHTML]);
   document.body.appendChild(sheet);
 
   useEffect(() => {
     changeDateRangePickerStyles();
-  }, [darkMode]);
+  }, [darkMode, changeDateRangePickerStyles]);
 
   return (
     <AppBar className={classes.appBar}>

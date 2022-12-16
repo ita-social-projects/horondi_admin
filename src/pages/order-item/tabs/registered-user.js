@@ -18,13 +18,13 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
 
   useEffect(() => {
     dispatch(getUsers({}));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (userId) {
       dispatch(getUser(userId));
     }
-  }, [id]);
+  }, [id, userId, dispatch]);
 
   const regUsers = useSelector(({ Users }) => ({
     list: Users.list,

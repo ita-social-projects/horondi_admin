@@ -17,10 +17,10 @@ const productContainersTypes = {
       PropTypes.arrayOf(
         PropTypes.oneOfType([
           PropTypes.bool,
-          PropTypes.oneOfType(
+          PropTypes.oneOfType([
             PropTypes.bool,
             PropTypes.objectOf(PropTypes.bool)
-          )
+          ])
         ])
       ),
       PropTypes.object

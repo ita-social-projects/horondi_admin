@@ -7,6 +7,10 @@ import { initialState } from './constructor-item-test.variables';
 
 const { Provider } = redux;
 
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({ block: () => null })
+}));
+
 const mockUseSelector = jest.spyOn(redux, 'useSelector');
 const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
 mockUseDispatch.mockImplementation(() => jest.fn());

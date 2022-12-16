@@ -132,7 +132,7 @@ function MaterialForm({ material, id }) {
   const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getCurrencies());
-  }, []);
+  }, [dispatch]);
 
   const checkboxes = [
     {

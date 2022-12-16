@@ -40,7 +40,7 @@ const ConstructorModelForm = ({ constructor, model, id, isEdit }) => {
   const initialValues = useMemo(
     () =>
       isEdit ? getInitialValues(constructor) : getDefaultConstructor(model),
-    [constructor, isEdit]
+    [constructor, isEdit, model]
   );
 
   const { values, handleSubmit, setFieldValue, errors } = useFormik({
