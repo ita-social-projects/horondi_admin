@@ -43,7 +43,7 @@ const {
   uaRegex,
   uaNameCreation,
   categoryCode,
-  postCode
+  zipcode
 } = config.formRegExp;
 const { pathToUsers } = config.routes;
 
@@ -73,9 +73,15 @@ const UserForm = ({ user, id, edit }) => {
     region: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
     city: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
     street: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
-    house: Yup.string().matches(uaNameCreation, USER_INVALID_ADDRESS_MESSAGE),
-    flat: Yup.string().matches(categoryCode, USER_INVALID_ADDRESS_MESSAGE),
-    zipcode: Yup.string().matches(postCode, USER_INVALID_ADDRESS_MESSAGE),
+    buildingNumber: Yup.string().matches(
+      uaNameCreation,
+      USER_INVALID_ADDRESS_MESSAGE
+    ),
+    appartment: Yup.string().matches(
+      categoryCode,
+      USER_INVALID_ADDRESS_MESSAGE
+    ),
+    zipcode: Yup.string().matches(zipcode, USER_INVALID_ADDRESS_MESSAGE),
     userImage: Yup.string()
   });
 

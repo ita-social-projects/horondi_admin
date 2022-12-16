@@ -63,7 +63,9 @@ export const newsErrors = {
 
 export const patternTranlations = {
   PATTERN_NOT_FOUND: 'Гобелен не знайдено!',
-  PATTERN_ALREADY_EXIST: 'Такий гобелен вже існує!'
+  PATTERN_ALREADY_EXIST: 'Такий гобелен вже існує!',
+  PATTERN_IS_IN_PRODUCT:
+    'Неможливо видалити, цей патерн застосований до продукту'
 };
 
 export const homePageEditErrors = {
@@ -115,4 +117,7 @@ export const adminsErrors = {
 };
 export const certificateErrorMessages = {
   CERTIFICATE_IS_ACTIVE: 'Неможливо видалити активний сертифікат'
+};
+export const promoCodeErrorMessages = {
+  THERE_IS_PROMOCODE_WITH_THIS_NAME: 'Промокод з такою назвою вже існує'
 };

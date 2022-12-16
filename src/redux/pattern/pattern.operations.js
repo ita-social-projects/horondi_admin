@@ -159,6 +159,14 @@ export const deletePattern = async (id) => {
 
   const result = await setItems(deletePatternQuery, { id });
 
+  if (
+    Object.keys(patternTranlations).includes(
+      result?.data?.deletePattern?.message
+    )
+  ) {
+    throw new Error(patternTranlations[result.data.deletePattern.message]);
+  }
+
   return result?.data?.deletePattern;
 };
 
