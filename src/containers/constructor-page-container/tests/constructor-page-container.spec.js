@@ -80,6 +80,28 @@ describe('Constructor-page-container test', () => {
   });
 
   test('Delete button should work', () => {
+    state = {
+      ...initialState,
+      Constructor: {
+        ...initialState.Constructor,
+        list: []
+      }
+    };
+    const store = mockStore(state);
+
+    render(getTestedComponent(store));
+
+    const deleteBtn = screen.getByTestId('del_btn');
+    act(() => {
+      fireEvent.click(deleteBtn);
+    });
+
+    expect(mockDispatchFn).toHaveBeenLastCalledWith(
+      expect.objectContaining(deleteActionType)
+    );
+  });
+
+  test('Delete button should prevent deletion item', () => {
     state = initialState;
     const store = mockStore(state);
 
