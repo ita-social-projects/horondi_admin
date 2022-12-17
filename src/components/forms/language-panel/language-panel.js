@@ -1,8 +1,7 @@
 import React from 'react';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import map from 'lodash/map';
-import { upperFirst, noop } from 'lodash';
+import { upperFirst, noop, map } from 'lodash';
 import { useStyles } from './language-panel.styles';
 import Editor from '../../editor';
 

@@ -28,11 +28,12 @@ const CustomizedDeleteIcon = (props) => {
 CustomizedDeleteIcon.propTypes = {
   onClickHandler: PropTypes.func,
   size: PropTypes.string.isRequired,
-  testId: PropTypes.string.isRequired
+  testId: PropTypes.string
 };
 
 CustomizedDeleteIcon.defaultProps = {
-  onClickHandler: noop
+  onClickHandler: noop,
+  testId: 'del_btn'
 };
 
 export default CustomizedDeleteIcon;

@@ -23,7 +23,7 @@ const Column = ({ column }) => {
             className={styles.taskListContainer}
             ref={provided.innerRef}
             {...provided.droppableProps}
-            isDraggingOver={snapshot.isDraggingOver}
+            isdraggingover={snapshot.isDraggingOver.toString()}
           >
             {column.items.length ? (
               column.items.map((slide, index) => (
@@ -72,7 +72,7 @@ const valueShape = PropTypes.shape({
 
 Column.propTypes = {
   column: PropTypes.shape({
-    items: PropTypes.shape(valueShape),
+    items: PropTypes.arrayOf(valueShape),
     title: PropTypes.string
   }).isRequired
 };

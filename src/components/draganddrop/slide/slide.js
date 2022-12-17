@@ -12,7 +12,7 @@ const Slide = ({ slide, index }) => {
   const { IMG_URL } = config;
   return (
     <Draggable
-      style={(_isDragging, draggableStyle) => ({
+      style={(_isdragging, draggableStyle) => ({
         ...draggableStyle,
         position: 'static'
       })}
@@ -25,7 +25,7 @@ const Slide = ({ slide, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           innerRef={provided.innerRef}
-          isDragging={snapshot.isDragging}
+          isdragging={snapshot.isDragging.toString()}
         >
           <Paper elevation={20} className={styles.dndItem} key={slide._id}>
             <Avatar
