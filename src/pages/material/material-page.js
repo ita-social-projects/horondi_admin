@@ -56,7 +56,7 @@ const MaterialPage = ({ validatorMethods }) => {
   useEffect(() => {
     dispatch(getColors());
     toggleRerender();
-  }, [dispatch, toggleRerender]);
+  }, []);
 
   useEffect(() => {
     dispatch(

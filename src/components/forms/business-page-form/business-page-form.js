@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, TextField, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
@@ -27,6 +27,13 @@ import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
+const pageNames = {
+  'payment-and-shipping': 'про оплату і доставку',
+  'privacy-policy': 'умови',
+  'user-agreement': 'угода користувача',
+  terms: 'правила користування сайтом'
+};
+
 const BusinessPageForm = ({ editMode, codePath }) => {
   const dispatch = useDispatch();
   const { loading, businessPage } = useSelector(({ BusinessPages }) => ({
@@ -40,7 +47,6 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     labels: { businessPageLabel },
     languages,
     businessPageErrorMessages: {
-      ENTER_CODE_ERROR_MESSAGE,
       ENTER_TITLE_ERROR_MESSAGE,
       ENTER_TEXT_ERROR_MESSAGE,
       MIN_TEXT_LENGTH_MESSAGE
@@ -65,9 +71,6 @@ const BusinessPageForm = ({ editMode, codePath }) => {
   }, [dispatch, codePath]);
 
   const formSchema = Yup.object().shape({
-    code: Yup.string()
-      .matches(config.formRegExp.pageCode, ENTER_CODE_ERROR_MESSAGE)
-      .required(ENTER_CODE_ERROR_MESSAGE),
     uaTitle: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .matches(config.formRegExp.uaNameCreation, EN_NAME_MESSAGE)
@@ -196,31 +199,11 @@ const BusinessPageForm = ({ editMode, codePath }) => {
           className={common.materialTitle}
           data-cy='add-header'
         >
-          {config.titles.businessPageTitles.editBusinessPageTitle}
+          {`Редагувати ${pageNames[codePath]}`}
         </Typography>
       </div>
 
       <form onSubmit={(e) => eventPreventHandler(e)}>
-        <Grid item xs={12}>
-          <Paper className={classes.businessPageForm}>
-            <TextField
-              id='code'
-              className={classes.textField}
-              variant='outlined'
-              label='Код сторінки'
-              value={values.code}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.code && !!errors.code}
-              data-cy='page-code'
-            />
-          </Paper>
-          {touched.code && errors.code && (
-            <div data-cy='code-error' className={classes.errorMessage}>
-              {errors.code}
-            </div>
-          )}
-        </Grid>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
