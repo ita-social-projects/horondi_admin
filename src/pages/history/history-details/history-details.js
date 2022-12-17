@@ -51,8 +51,4 @@ HistoryDetails.propTypes = {
   }).isRequired
 };
 
-HistoryDetails.defaultProps = {
-  match: {}
-};
-
 export default withRouter(HistoryDetails);

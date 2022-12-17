@@ -36,4 +36,8 @@ InfoItem.propTypes = {
   data: PropTypes.string
 };
 
+InfoItem.defaultProps = {
+  data: ''
+};
+
 export default InfoItem;
