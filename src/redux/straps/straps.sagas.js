@@ -93,8 +93,7 @@ export function* handleGetStrapById({ payload }) {
 export function* handleStrapUpdate({ payload }) {
   try {
     yield put(setStrapsLoading(true));
-    const { id, strap, image } = payload;
-    const strapUpdate = yield call(updateStrap, id, strap, image);
+    const strapUpdate = yield call(updateStrap, payload);
 
     if (strapUpdate) {
       yield put(setStrapsLoading(false));

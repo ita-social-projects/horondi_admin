@@ -167,7 +167,7 @@ export const getStrapById = async (id) => {
   return result?.data?.getStrapById;
 };
 
-export const updateStrap = async (id, strap, image) => {
+export const updateStrap = async (payload) => {
   const query = `
     mutation($id: ID!, $strap: StrapInput!, $image: Upload) {
       updateStrap(id: $id, strap: $strap, image: $image) {
@@ -211,7 +211,7 @@ export const updateStrap = async (id, strap, image) => {
       }
     }
   `;
-  const result = await setItems(query, { id, strap, image });
+  const result = await setItems(query, payload);
 
   return result?.data?.updateStrap;
 };

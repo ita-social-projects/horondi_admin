@@ -88,8 +88,7 @@ export function* handlePocketById({ payload }) {
 export function* handlePocketUpdate({ payload }) {
   try {
     yield put(setPocketsLoading(true));
-    const { id, pocket, upload } = payload;
-    const pocketUpdate = yield call(updatePocket, id, pocket, upload);
+    const pocketUpdate = yield call(updatePocket, payload);
     if (pocketUpdate) {
       yield put(setPocketsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);

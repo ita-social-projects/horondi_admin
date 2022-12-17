@@ -91,8 +91,7 @@ export function* handleBasicById({ payload }) {
 export function* handleBasicUpdate({ payload }) {
   try {
     yield put(setBasicsLoading(true));
-    const { id, basic, upload } = payload;
-    const basicUpdate = yield call(updateBasic, id, basic, upload);
+    const basicUpdate = yield call(updateBasic, payload);
     if (basicUpdate) {
       yield put(setBasicsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
