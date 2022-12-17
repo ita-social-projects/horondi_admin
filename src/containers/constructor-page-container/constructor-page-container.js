@@ -60,7 +60,7 @@ const ConstructorPageContainer = ({
 
   useEffect(() => {
     dispatch(getConstructorParts());
-  }, [getConstructorParts]);
+  }, [dispatch]);
 
   const isInConstructor = (id) => {
     let modelsName = '';

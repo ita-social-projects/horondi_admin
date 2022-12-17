@@ -44,9 +44,11 @@ const HistoryDetails = ({ match }) => {
 };
 
 HistoryDetails.propTypes = {
-  match: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.string])
-  )
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
 HistoryDetails.defaultProps = {

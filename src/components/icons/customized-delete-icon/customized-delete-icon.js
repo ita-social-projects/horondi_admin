@@ -28,7 +28,7 @@ const CustomizedDeleteIcon = (props) => {
 CustomizedDeleteIcon.propTypes = {
   onClickHandler: PropTypes.func,
   size: PropTypes.string.isRequired,
-  testId: PropTypes.string.isRequired
+  testId: PropTypes.string
 };
 
 CustomizedDeleteIcon.defaultProps = {
