@@ -3,7 +3,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TableContainerGenerator from '../containers/table-container-generator';
 import { config } from '../configs';
-import order from '../configs/orders';
 import { newOrder, submitStatus, inputName, POST_OFFICE_NUMBER } from './order';
 import { initialValues } from './order.values';
 import { addOrder, updateOrder } from '../redux/orders/orders.actions';
@@ -21,8 +20,6 @@ export const handleOrdersPage = (orders, itemsCount, orderItems, style) =>
     <p className={style}>{config.titles.orderTitles.ORDER_NOT_FOUND}</p>
   );
 
-const { dialogContent, buttonTitle } = order;
-
 export const handleOrderSubmition = (
   dispatch,
   resetForm,
@@ -34,19 +31,13 @@ export const handleOrderSubmition = (
     newOrder(data).status !== initialValues.status &&
     !submitStatus.includes(newOrder(data).status)
   ) {
-    const updateOrderSnackbar = () => {
-      dispatch(closeDialog());
-      if (id) {
-        dispatch(updateOrder(newOrder(data), id));
-      } else {
-        dispatch(addOrder(newOrder(data)));
-        resetForm({ values: initialValues });
-      }
-    };
-
-    setTimeout(() => {
-      openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
-    }, 0);
+    dispatch(closeDialog());
+    if (id) {
+      dispatch(updateOrder(newOrder(data), id));
+    } else {
+      dispatch(addOrder(newOrder(data)));
+      resetForm({ values: initialValues });
+    }
   } else if (id) {
     dispatch(updateOrder(newOrder(data), id));
   } else {
