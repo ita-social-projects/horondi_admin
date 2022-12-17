@@ -147,8 +147,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
       );
     }
   });
-
-  const unblock = useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(dirty);
 
   if (loading) {
     return <LoadingBar />;
