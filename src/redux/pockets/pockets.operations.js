@@ -120,7 +120,7 @@ export const getPocketById = async (id) => {
   return result?.data?.getPocketById;
 };
 
-export const updatePocket = async (id, pocket, image) => {
+export const updatePocket = async (payload) => {
   const query = `
         mutation (
           $id: ID!
@@ -138,7 +138,7 @@ export const updatePocket = async (id, pocket, image) => {
           }
         }
       `;
-  const result = await setItems(query, { id, pocket, image });
+  const result = await setItems(query, payload);
 
   return result?.data?.updatePocket;
 };

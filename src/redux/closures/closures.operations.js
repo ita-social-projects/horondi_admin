@@ -104,7 +104,7 @@ export const getClosureById = async (id) => {
   return result?.data?.getClosureById;
 };
 
-export const updateClosure = async ({ id, closure, upload: image }) => {
+export const updateClosure = async (payload) => {
   const query = `
     mutation updateClosure(
       $id: ID!
@@ -122,7 +122,7 @@ export const updateClosure = async ({ id, closure, upload: image }) => {
       }
     }
   `;
-  const result = await setItems(query, { id, closure, image });
+  const result = await setItems(query, payload);
 
   return result?.data?.updateClosure;
 };
