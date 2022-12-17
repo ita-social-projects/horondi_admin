@@ -125,7 +125,7 @@ const ProductSpeciesContainer = ({
               <Select
                 name={name}
                 error={touched[name] && !!errors[name]}
-                value={options[idx].length ? values[name] : ''}
+                value={values[name] || ''}
                 onChange={handleSelectChange}
                 onBlur={handleBlur}
                 multiple={multiple}
@@ -156,9 +156,9 @@ const ProductSpeciesContainer = ({
 };
 
 ProductSpeciesContainer.propTypes = {
-  patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-  closures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  patterns: PropTypes.arrayOf(PropTypes.object),
+  categories: PropTypes.arrayOf(PropTypes.object),
+  closures: PropTypes.arrayOf(PropTypes.object),
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleFieldsChanged: PropTypes.func,
   setSizes: PropTypes.func.isRequired,
@@ -167,6 +167,9 @@ ProductSpeciesContainer.propTypes = {
 };
 
 ProductSpeciesContainer.defaultProps = {
+  patterns: [],
+  categories: [],
+  closures: [],
   toggleFieldsChanged: noop
 };
 
