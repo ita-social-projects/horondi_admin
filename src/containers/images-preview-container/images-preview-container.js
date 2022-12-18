@@ -141,6 +141,7 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
             label='Видалити'
           />
           <FormControlLabel
+            className={style.primaryImageLabel}
             control={
               <Checkbox
                 name='primary'

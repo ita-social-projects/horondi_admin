@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
-import { Grid } from '@material-ui/core';
+import { Grid, useTheme } from '@material-ui/core';
 import { CloudUploadRounded } from '@material-ui/icons';
 import { useStyles } from './images-upload-container.styles';
 import { showErrorSnackbar } from '../../redux/snackbar/snackbar.actions';
@@ -10,6 +10,7 @@ import { showErrorSnackbar } from '../../redux/snackbar/snackbar.actions';
 const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
   const style = useStyles();
   const dispatch = useDispatch();
+  const theme = useTheme();
   const availableCount = length ? maxFiles - length : maxFiles;
 
   const validate = (file) => {
@@ -55,9 +56,9 @@ const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
       <div {...getRootProps({ className: style.dropzone })}>
         <input {...getInputProps()} />
         <span>
-          <CloudUploadRounded />
+          <CloudUploadRounded htmlColor={theme.palette.textColor} />
         </span>
-        <p>Перетягніть фото сюди або</p>
+        <p className={style.dropTitle}>Перетягніть фото сюди або</p>
         <button type='button' className={style.dropButton} onClick={open}>
           Обрати
         </button>
