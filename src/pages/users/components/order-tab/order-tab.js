@@ -46,7 +46,7 @@ const OrderTab = ({ list }) => {
       key={order._id}
       data={ReactHtmlParser(getTime(order.dateOfCreation, true))}
       orderId={order.orderNumber}
-      totalPrice={`${order?.totalPriceToPay[0]?.value} ₴`}
+      totalPrice={`${order?.totalPriceToPay} ₴`}
       paymentStatus={
         <Status
           status={orders.paymentStatusTranslation[order?.paymentStatus]}
