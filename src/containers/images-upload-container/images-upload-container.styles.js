@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
   image: {
     width: '200px',
     height: '200px'
@@ -45,6 +45,9 @@ export const useStyles = makeStyles(() => ({
     color: '#242424',
     marginBottom: '10px'
   },
+  dropTitle: {
+    color: theme.palette.textColor
+  },
   dropButton: {
     style: 'none',
     borderStyle: 'solid',
@@ -54,13 +57,14 @@ export const useStyles = makeStyles(() => ({
     background: 'none',
     width: '154px',
     height: '44px',
-    marginLeft: '10px'
+    marginLeft: '10px',
+    color: theme.palette.textColor
   },
   dropIcon: {
     maxWidth: '100px'
   },
   description: {
-    color: 'rgba(2,2,2,0.5)',
+    color: '#9E9E9E',
     fontSize: 14,
     padding: '5px'
   }
