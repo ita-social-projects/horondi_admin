@@ -33,7 +33,7 @@ const OrderItem = ({ id }) => {
     selectedOrder: Orders.selectedOrder,
     orderLoading: Orders.orderLoading
   }));
-  // console.log(selectedOrder)
+
   useEffect(() => {
     id && dispatch(getOrder(id));
   }, [dispatch, id]);

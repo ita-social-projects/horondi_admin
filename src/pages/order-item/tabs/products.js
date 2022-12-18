@@ -93,10 +93,10 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const onCloseHandler = () => {
     setSelectedItem(null);
   };
-  const [open, setOpen] = useState(items.map(() => false));
+  const [openExpandMore, setOpenExpandMore] = useState(items.map(() => false));
 
   const expandMoreHandler = (index) => {
-    setOpen((prevState) =>
+    setOpenExpandMore((prevState) =>
       prevState.map((element, idx) => (index === idx ? !element : element))
     );
   };
@@ -132,8 +132,8 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
           editHandler={() => setSelectedItem(item)}
           expandMoreHandler={() => expandMoreHandler(index)}
         />
-        {open[index] && (
-          <ul>
+        {openExpandMore[index] && (
+          <ul className={classes.ul}>
             <li>
               {`${materialMessages.purpose.BASIC}: ${item.constructorBasics.name}`}
             </li>

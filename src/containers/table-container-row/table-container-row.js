@@ -13,7 +13,7 @@ import {
 
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
-import CustomizedExpandIcon from '../../components/icons/costomized-expand-button/costomize-expand-button';
+import CustomizedExpandIcon from '../../components/icons/customized-expand-button/customized-expand-button';
 
 const TableContainerRow = ({
   id,
