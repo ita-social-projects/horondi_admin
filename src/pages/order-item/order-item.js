@@ -63,7 +63,7 @@ const OrderItem = ({ id }) => {
     onSubmit: handleFormSubmit
   });
 
-  useUnsavedChangesHandler(values);
+  useUnsavedChangesHandler(dirty);
 
   useEffect(() => {
     if (selectedOrder && id) {
