@@ -107,7 +107,7 @@ const MaterialAboutForm = ({ currentType, selectedBlock, editMode }) => {
     }
   };
 
-  const unblock = useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(dirty);
 
   if (materialAboutLoading) {
     return <LoadingBar />;

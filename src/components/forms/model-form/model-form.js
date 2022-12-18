@@ -134,7 +134,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     setFieldValue('sizes', updatedSizes);
   }, [sizes, setFieldValue]);
 
-  const unblock = useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(dirty);
 
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
