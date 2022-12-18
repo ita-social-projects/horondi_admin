@@ -41,7 +41,12 @@ export const selectedOrderMock = {
     {
       options: { size: { _id: 'id', name: 'name' } },
       fixedPrice: 50,
-      product: { _id: '_id', name: 'name', basePrice: 50 },
+      product: {
+        _id: '_id',
+        name: 'name',
+        basePrice: 50,
+        pattern: { name: [{ value: 'продукт' }] }
+      },
       quantity: 100
     }
   ]

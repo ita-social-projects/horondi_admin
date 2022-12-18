@@ -397,13 +397,19 @@ export const setFormValues = (selectedOrder) => {
       },
       isFromConstructor: item.isFromConstructor,
       constructorBasics: {
-        name: item.constructorBasics.name[0].value
+        name: item.constructorBasics
+          ? item.constructorBasics.name[0].value
+          : null
       },
       constructorBottom: {
-        name: item.constructorBottom.name[0].value
+        name: item.constructorBottom
+          ? item.constructorBottom.name[0].value
+          : null
       },
       constructorFrontPocket: {
-        name: item.constructorFrontPocket.name[0].value
+        name: item.constructorFrontPocket
+          ? item.constructorFrontPocket.name[0].value
+          : null
       },
       model: item.model,
       quantity: item.quantity

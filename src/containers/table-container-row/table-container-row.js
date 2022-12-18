@@ -6,7 +6,6 @@ import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   CustomizedEditIcon,
   CustomizedDeleteIcon
@@ -14,6 +13,7 @@ import {
 
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
+import CustomizedExpandIcon from '../../components/icons/costomized-expand-button/costomize-expand-button';
 
 const TableContainerRow = ({
   id,
@@ -26,10 +26,10 @@ const TableContainerRow = ({
   showCheckbox,
   showExpandMore,
   deleteHandler,
-  expandMoreHandler,
   clickHandler,
   checkBoxValue,
   checkboxChangeHandler,
+  expandMoreHandler,
   disabled,
   ...rest
 }) => {
@@ -104,7 +104,7 @@ const TableContainerRow = ({
             />
           )}
           {showExpandMore && (
-            <ExpandMoreIcon
+            <CustomizedExpandIcon
               testId={`exp_btn${id}`}
               size={iconSize}
               onClickHandler={expandMoreHandler}

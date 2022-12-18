@@ -7,6 +7,7 @@ export const materialMessages = {
     INNER: 'Внутрішні',
     PATTERN: 'Гобелен',
     STRAP: 'Ремінці',
-    BACK: 'Спинки'
+    BACK: 'Спинки',
+    POCKET: 'Кишені'
   }
 };

@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis'
   },
   smallCell: {
-    width: '150px'
+    width: '180px'
   },
   image: {
     maxWidth: '300px'

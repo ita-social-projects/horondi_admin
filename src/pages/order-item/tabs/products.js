@@ -19,6 +19,7 @@ import AddProductForm from './add-product-form/add-product-form';
 import EditProductForm from './edit-product-form/edit-product-form';
 import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries';
 import { getCertificateById } from '../../certificates/operations/certificate.queries';
+import { materialMessages } from '../../../configs/material-messages';
 
 const Products = ({ data, setFieldValue, inputOptions }) => {
   const classes = useStyles();
@@ -48,7 +49,6 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
     },
     fetchPolicy: 'no-cache'
   });
-  // console.log(items)
 
   useEffect(() => {
     if (promoCode) {
@@ -93,9 +93,12 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const onCloseHandler = () => {
     setSelectedItem(null);
   };
-  const [open, setOpen] = useState(false);
-  const expandMoreHandler = () => {
-    setOpen((prevState) => !prevState);
+  const [open, setOpen] = useState(items.map(() => false));
+
+  const expandMoreHandler = (index) => {
+    setOpen((prevState) =>
+      prevState.map((element, idx) => (index === idx ? !element : element))
+    );
   };
   const setSizeItems = (sizes) =>
     sizes &&
@@ -113,21 +116,33 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const productItems =
     items &&
     items.map((item, index) => (
-      <TableContainerRow
-        key={item.product._id + item.options.size._id}
-        num={index + 1}
-        name={item.product.name[0].value}
-        quantity={item.quantity}
-        size={item.options.size.name}
-        price={`${item.options.size.price * item.quantity}$`}
-        priceWithDiscount={`${itemsPriceWithDiscount[index]} $`}
-        discount={`${promoCodeId ? itemsDiscount[index] : 0}%`}
-        showAvatar={false}
-        showExpandMore={item.isFromConstructor}
-        deleteHandler={() => deleteItemHendler(index)}
-        editHandler={() => setSelectedItem(item)}
-        expandMoreHandler={expandMoreHandler}
-      />
+      <>
+        <TableContainerRow
+          key={item.product._id + item.options.size._id}
+          num={index + 1}
+          name={item.product.name[0].value}
+          quantity={item.quantity}
+          size={item.options.size.name}
+          price={`${item.options.size.price * item.quantity}$`}
+          priceWithDiscount={`${itemsPriceWithDiscount[index]} $`}
+          discount={`${promoCodeId ? itemsDiscount[index] : 0}%`}
+          showAvatar={false}
+          showExpandMore={item.isFromConstructor}
+          deleteHandler={() => deleteItemHendler(index)}
+          editHandler={() => setSelectedItem(item)}
+          expandMoreHandler={() => expandMoreHandler(index)}
+        />
+        {open[index] && (
+          <ul>
+            <li>
+              {`${materialMessages.purpose.BASIC}: ${item.constructorBasics.name}`}
+            </li>
+            <li>{`${materialMessages.purpose.BOTTOM}: ${item.constructorBottom.name}`}</li>
+            <li>{`${materialMessages.purpose.POCKET}: ${item.constructorFrontPocket.name}`}</li>
+            <li>{`${materialMessages.purpose.PATTERN}: ${item.product.pattern}`}</li>
+          </ul>
+        )}
+      </>
     ));
 
   return (
