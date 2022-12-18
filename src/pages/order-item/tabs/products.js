@@ -133,7 +133,7 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
           expandMoreHandler={() => expandMoreHandler(index)}
         />
         {openExpandMore[index] && (
-          <ul className={classes.ul}>
+          <ul>
             <li>
               {`${materialMessages.purpose.BASIC}: ${item.constructorBasics.name}`}
             </li>
