@@ -392,7 +392,18 @@ export const setFormValues = (selectedOrder) => {
       product: {
         _id: item.product._id,
         name: item.product.name,
-        basePrice: item.product.basePrice
+        basePrice: item.product.basePrice,
+        pattern: item.product.pattern.name[0].value
+      },
+      isFromConstructor: item.isFromConstructor,
+      constructorBasics: {
+        name: item.constructorBasics.name[0].value
+      },
+      constructorBottom: {
+        name: item.constructorBottom.name[0].value
+      },
+      constructorFrontPocket: {
+        name: item.constructorFrontPocket.name[0].value
       },
       model: item.model,
       quantity: item.quantity

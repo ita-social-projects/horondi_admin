@@ -6,6 +6,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   CustomizedEditIcon,
   CustomizedDeleteIcon
@@ -23,7 +24,9 @@ const TableContainerRow = ({
   showEdit,
   showDelete,
   showCheckbox,
+  showExpandMore,
   deleteHandler,
+  expandMoreHandler,
   clickHandler,
   checkBoxValue,
   checkboxChangeHandler,
@@ -81,7 +84,7 @@ const TableContainerRow = ({
         </TableCell>
       )}
 
-      {(showEdit || showDelete) && (
+      {(showEdit || showDelete || showExpandMore) && (
         <TableCell className={classes.smallCell}>
           {showEdit && (
             <CustomizedEditIcon
@@ -100,6 +103,13 @@ const TableContainerRow = ({
               onClickHandler={deleteHandler}
             />
           )}
+          {showExpandMore && (
+            <ExpandMoreIcon
+              testId={`exp_btn${id}`}
+              size={iconSize}
+              onClickHandler={expandMoreHandler}
+            />
+          )}
         </TableCell>
       )}
     </TableRow>
@@ -111,6 +121,7 @@ TableContainerRow.propTypes = {
   image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
+  expandMoreHandler: PropTypes.func,
   clickHandler: PropTypes.func,
   checkboxChangeHandler: PropTypes.func,
   id: PropTypes.string,
@@ -118,6 +129,7 @@ TableContainerRow.propTypes = {
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool,
+  showExpandMore: PropTypes.bool,
   showCheckbox: PropTypes.bool,
   disabled: PropTypes.bool
 };
@@ -127,6 +139,7 @@ TableContainerRow.defaultProps = {
   text: null,
   image: null,
   deleteHandler: noop,
+  expandMoreHandler: noop,
   editHandler: noop,
   clickHandler: noop,
   checkboxChangeHandler: noop,
@@ -134,6 +147,7 @@ TableContainerRow.defaultProps = {
   showAvatar: true,
   showEdit: true,
   showDelete: true,
+  showExpandMore: false,
   showCheckbox: false,
   disabled: false
 };

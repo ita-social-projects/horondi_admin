@@ -49,6 +49,11 @@ export const getOrderById = (id) => {
 							description {
 								lang
 								value
+							}
+							pattern {
+								name {
+									value
+								}
 							}  
 						}
 						model {

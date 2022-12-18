@@ -48,6 +48,7 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
     },
     fetchPolicy: 'no-cache'
   });
+  // console.log(items)
 
   useEffect(() => {
     if (promoCode) {
@@ -92,7 +93,10 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const onCloseHandler = () => {
     setSelectedItem(null);
   };
-
+  const [open, setOpen] = useState(false);
+  const expandMoreHandler = () => {
+    setOpen((prevState) => !prevState);
+  };
   const setSizeItems = (sizes) =>
     sizes &&
     sizes.length &&
@@ -119,8 +123,10 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
         priceWithDiscount={`${itemsPriceWithDiscount[index]} $`}
         discount={`${promoCodeId ? itemsDiscount[index] : 0}%`}
         showAvatar={false}
+        showExpandMore={item.isFromConstructor}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
+        expandMoreHandler={expandMoreHandler}
       />
     ));
 
