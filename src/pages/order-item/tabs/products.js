@@ -65,7 +65,8 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
             promoCode,
             item.quantity,
             item.model.category,
-            item.options.size.price
+            item.options.size.price,
+            item?.isFromConstructor
           )
         )
       );
@@ -135,11 +136,11 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
         {openExpandMore[index] && (
           <ul>
             <li>
-              {`${materialMessages.purpose.BASIC}: ${item.constructorBasics.name}`}
+              {`${materialMessages.purpose.BASIC}: ${item.constructorBasics.name[0].value}`}
             </li>
-            <li>{`${materialMessages.purpose.BOTTOM}: ${item.constructorBottom.name}`}</li>
-            <li>{`${materialMessages.purpose.POCKET}: ${item.constructorFrontPocket.name}`}</li>
-            <li>{`${materialMessages.purpose.PATTERN}: ${item.product.pattern}`}</li>
+            <li>{`${materialMessages.purpose.BOTTOM}: ${item.constructorBottom.name[0].value}`}</li>
+            <li>{`${materialMessages.purpose.POCKET}: ${item.constructorFrontPocket.name[0].value}`}</li>
+            <li>{`${materialMessages.purpose.PATTERN}: ${item.product.pattern.name[0].value}`}</li>
           </ul>
         )}
       </>
