@@ -83,7 +83,8 @@ const EditProductForm = ({
         promoCode,
         quantity,
         category,
-        size.price
+        size.price,
+        selectedItem.isFromConstructor && 'constructor'
       ),
       ...itemsPriceWithDiscount.slice(index + 1)
     ]);

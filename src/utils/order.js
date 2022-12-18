@@ -117,14 +117,24 @@ export const worldWidePropTypes = {
 const { deliveryTypes } = config;
 const items = (order) =>
   order.items?.map((item) => ({
-    product: item?.product._id,
-    quantity: item.quantity,
-    isFromConstructor: !item.product._id,
-    options: {
-      size: item.options.size._id,
-      sidePocket: item.options.sidePocket
-    }
-  }));
+      product: item?.product._id,
+      quantity: item.quantity,
+      isFromConstructor: item?.isFromConstructor,
+      price: item?.options?.size?.price,
+      constructorBasics: item?.constructorBasics
+        ? item?.constructorBasics._id
+        : null,
+      constructorBottom: item?.constructorBottom
+        ? item?.constructorBottom._id
+        : null,
+      constructorFrontPocket: item?.constructorFrontPocket
+        ? item?.constructorFrontPocket._id
+        : null,
+      options: {
+        size: item.options.size._id,
+        sidePocket: item.options.sidePocket
+      }
+    }));
 
 export const newOrder = (order) => ({
   status: order.status,
@@ -393,24 +403,14 @@ export const setFormValues = (selectedOrder) => {
         _id: item.product._id,
         name: item.product.name,
         basePrice: item.product.basePrice,
-        pattern: item.product.pattern.name[0].value
+        pattern: item.product.pattern
       },
       isFromConstructor: item.isFromConstructor,
-      constructorBasics: {
-        name: item.constructorBasics
-          ? item.constructorBasics.name[0].value
-          : null
-      },
-      constructorBottom: {
-        name: item.constructorBottom
-          ? item.constructorBottom.name[0].value
-          : null
-      },
-      constructorFrontPocket: {
-        name: item.constructorFrontPocket
-          ? item.constructorFrontPocket.name[0].value
-          : null
-      },
+      constructorBasics: item.constructorBasics ? item.constructorBasics : null,
+      constructorBottom: item.constructorBottom ? item.constructorBottom : null,
+      constructorFrontPocket: item.constructorFrontPocket
+        ? item.constructorFrontPocket
+        : null,
       model: item.model,
       quantity: item.quantity
     }))
@@ -506,13 +506,21 @@ export const calculateItemsPriceWithDiscount = (
   promoCode,
   quantity,
   category,
-  price
+  price,
+  isFromConstructor = false
 ) => {
   if (Object.keys(promoCode).length) {
     const { discount, categories } = promoCode.getPromoCodeById;
-    const isAllowCategory = categories.find(
-      (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
-    );
+    let isAllowCategory;
+    if (isFromConstructor) {
+      isAllowCategory = categories.find(
+        (item) => item.toLowerCase() === 'constructor'
+      );
+    } else {
+      isAllowCategory = categories.find(
+        (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
+      );
+    }
     if (isAllowCategory) {
       return Math.round(price - (price / 100) * discount) * quantity;
     }
