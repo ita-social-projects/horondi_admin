@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,6 +54,16 @@ const MaterialsWithColorContainer = ({
     handleChange(e);
   };
 
+  const getCurrentValue = useCallback(
+    (name) => {
+      if (!colors.length || !materials.length) {
+        return '';
+      }
+      return values[name];
+    },
+    [materials, colors, values]
+  );
+
   return (
     <>
       <Grid container spacing={1} justify='flex-start'>
@@ -64,7 +74,7 @@ const MaterialsWithColorContainer = ({
               data-testid={testId}
               name={name}
               error={touched[name] && !!errors[name]}
-              value={values[name]}
+              value={getCurrentValue(name)}
               onChange={handleSelectChange}
               onBlur={handleBlur}
             >
