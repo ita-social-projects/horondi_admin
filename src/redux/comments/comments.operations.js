@@ -77,6 +77,7 @@ const getAllComments = async (filter, pagination, sort) => {
               _id
             }
             show
+            rate
           }
           count
         }
