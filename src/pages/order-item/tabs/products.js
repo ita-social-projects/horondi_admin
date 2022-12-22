@@ -133,6 +133,7 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
           deleteHandler={() => deleteItemHendler(index)}
           editHandler={() => setSelectedItem(item)}
           expandMoreHandler={() => expandMoreHandler(index)}
+          openExpandMore={openExpandMore[index]}
         />
         <TableCell className={classes.tableCollapse} colSpan={8}>
           <Collapse in={openExpandMore[index]} timeout='auto'>
