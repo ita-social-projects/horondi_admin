@@ -8,7 +8,6 @@ export const useStyles = makeStyles((theme) => {
     materialItemAdd: {
       display: 'flex',
       flexDirection: 'column',
-      margin: '0 0 20px !important'
     },
     materialAdd: {
       display: 'flex',
@@ -44,12 +43,28 @@ export const useStyles = makeStyles((theme) => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '8px'
+      padding: '8px',
+      '& .MuiOutlinedInput-root': {
+        minWidth: '208px'
+      }
     },
-    tabs,
+    tabs: {
+      ...tabs,
+      '& span.MuiTabs-indicator': {
+        height: '3px'
+      }
+    },
+    saveBtnContainer: {
+      textAlign: 'center'
+    },
+    saveButton: {
+      ...saveButton,
+      '&.MuiButton-root': {
+        margin: '0'
+      },
+    },
     textField,
     inputError,
-    saveButton,
     controlsBlock
   };
 });
