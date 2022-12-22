@@ -15,8 +15,13 @@ import useColorHandlers from '../../utils/use-color-handlers';
 import { selectColorLoading } from '../../redux/selectors/color.selectors';
 import { handleNameInLanguageTabs } from '../../utils/create-color';
 
-const { languages, colorErrorMessages, buttonTitles, commonErrorMessages } =
-  config;
+const {
+  languages,
+  colorErrorMessages,
+  buttonTitles,
+  commonErrorMessages,
+  productErrorMessages
+} = config;
 const {
   MAX_LENGTH_MESSAGE,
   COLOR_VALIDATION_ERROR,
@@ -24,8 +29,9 @@ const {
   NOT_UA_SIMPLE_NAME_MESSAGE
 } = colorErrorMessages;
 
-const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, EN_NAME_MESSAGE, UA_NAME_MESSAGE } =
-  commonErrorMessages;
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE } = commonErrorMessages;
+
+const { NOT_UA_NAME_MESSAGE, NOT_EN_NAME_MESSAGE } = productErrorMessages;
 
 const { CREATE_COLOR_TITLE } = buttonTitles;
 
@@ -44,12 +50,12 @@ const CreateColor = () => {
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .matches(config.formRegExp.uaNameCreation, UA_NAME_MESSAGE)
+      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
       .required(ERROR_MESSAGE),
     enName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enNameCreation, EN_NAME_MESSAGE)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
       .required(ERROR_MESSAGE),
     uaSimpleName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
@@ -100,7 +106,7 @@ const CreateColor = () => {
       resetForm();
       handleTabsChange(null, 0);
     },
-    [resetForm, handleTabsChange]
+    []
   );
 
   const tabPanels = languages.map((lang, index) => (
@@ -117,10 +123,12 @@ const CreateColor = () => {
           value={values[`${lang}Name`]}
           onChange={handleChange}
           onBlur={handleBlur}
+          helperText={
+            touched[`${lang}Name`] && errors[`${lang}Name`]
+              ? errors[`${lang}Name`]
+              : ' '
+          }
         />
-        {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-          <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-        )}
         <TextField
           data-cy={`${lang}-SimpleName`}
           id={`${lang}SimpleName`}
@@ -132,10 +140,12 @@ const CreateColor = () => {
           value={values[`${lang}SimpleName`]}
           onChange={handleChange}
           onBlur={handleBlur}
+          helperText={
+            touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`]
+              ? errors[`${lang}SimpleName`]
+              : ' '
+          }
         />
-        {touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`] && (
-          <div className={styles.inputError}>{errors[`${lang}SimpleName`]}</div>
-        )}
       </div>
     </TabPanel>
   ));
@@ -178,12 +188,12 @@ const CreateColor = () => {
               }}
               onChange={handleChange}
               onBlur={handleBlur}
+              helperText={
+                touched.colorHex && errors.colorHex ? errors.colorHex : ' '
+              }
             />
             <ColorCircle color={values.colorHex} size={DEFAULT_CIRCLE} />
           </div>
-          {touched.colorHex && errors.colorHex && (
-            <div className={styles.inputError}>{errors.colorHex}</div>
-          )}
           {colorPicker && (
             <div className={styles.popover}>
               <div
@@ -216,12 +226,14 @@ const CreateColor = () => {
             </AppBar>
             {tabPanels}
           </div>
-          <div>
+          <div className={styles.saveBtnContainer}>
             <SaveButton
               className={styles.saveButton}
+              onClickHandler={handleSubmit}
               data-cy='open-dialog'
               type='submit'
               title={CREATE_COLOR_TITLE}
+              confirmOn={false}
               values={values}
               errors={errors}
             />
