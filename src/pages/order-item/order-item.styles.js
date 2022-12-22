@@ -111,6 +111,23 @@ export const useStyles = makeStyles((theme) => {
     button: {
       marginTop: theme.spacing(0.5)
     },
+    ul: {
+      padding: '5px 0px',
+      '& > li': {
+        display: 'flex',
+        gap: '5px',
+        margin: '5px 0'
+      }
+    },
+    tableCollapse: {
+      padding: '0 50px'
+    },
+    cellHeader: {
+      marginTop: '10px'
+    },
+    materialName: {
+      fontWeight: 'bold'
+    },
     inputError
   };
 });

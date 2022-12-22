@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, TableCell } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
 import { useQuery } from '@apollo/client';
 import { useStyles } from '../order-item.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
@@ -19,7 +20,7 @@ import AddProductForm from './add-product-form/add-product-form';
 import EditProductForm from './edit-product-form/edit-product-form';
 import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries';
 import { getCertificateById } from '../../certificates/operations/certificate.queries';
-import { materialMessages } from '../../../configs/material-messages';
+import { materialFromConstructor } from '../../../configs/material-messages';
 
 const Products = ({ data, setFieldValue, inputOptions }) => {
   const classes = useStyles();
@@ -33,6 +34,7 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const { orderProductTitles } = tableHeadRowTitles;
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
+  const [openExpandMore, setOpenExpandMore] = useState(items.map(() => false));
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { REMOVE_ITEM } = config.messages;
@@ -94,7 +96,6 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
   const onCloseHandler = () => {
     setSelectedItem(null);
   };
-  const [openExpandMore, setOpenExpandMore] = useState(items.map(() => false));
 
   const expandMoreHandler = (index) => {
     setOpenExpandMore((prevState) =>
@@ -132,17 +133,43 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
           deleteHandler={() => deleteItemHendler(index)}
           editHandler={() => setSelectedItem(item)}
           expandMoreHandler={() => expandMoreHandler(index)}
+          openExpandMore={openExpandMore[index]}
         />
-        {openExpandMore[index] && (
-          <ul>
-            <li>
-              {`${materialMessages.purpose.BASIC}: ${item.constructorBasics.name[0].value}`}
-            </li>
-            <li>{`${materialMessages.purpose.BOTTOM}: ${item.constructorBottom.name[0].value}`}</li>
-            <li>{`${materialMessages.purpose.POCKET}: ${item.constructorFrontPocket.name[0].value}`}</li>
-            <li>{`${materialMessages.purpose.PATTERN}: ${item.product.pattern.name[0].value}`}</li>
-          </ul>
-        )}
+        <TableCell className={classes.tableCollapse} colSpan={8}>
+          <Collapse in={openExpandMore[index]} timeout='auto'>
+            <h6 className={classes.cellHeader}>
+              {materialFromConstructor.HEADER}
+            </h6>
+            {openExpandMore[index] && (
+              <ul className={classes.ul}>
+                <li>
+                  <p className={classes.materialName}>
+                    {materialFromConstructor.BASIC}{' '}
+                  </p>{' '}
+                  - {item.constructorBasics.name[0].value}
+                </li>
+                <li>
+                  <p className={classes.materialName}>
+                    {materialFromConstructor.BOTTOM}{' '}
+                  </p>
+                  - {item.constructorBottom.name[0].value}
+                </li>
+                <li>
+                  <p className={classes.materialName}>
+                    {materialFromConstructor.POCKET}{' '}
+                  </p>{' '}
+                  - {item.constructorFrontPocket.name[0].value}
+                </li>
+                <li>
+                  <p className={classes.materialName}>
+                    {materialFromConstructor.PATTERN}{' '}
+                  </p>{' '}
+                  - {item.product.pattern.name[0].value}
+                </li>
+              </ul>
+            )}
+          </Collapse>
+        </TableCell>
       </>
     ));
 

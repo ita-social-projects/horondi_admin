@@ -1,7 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { TableRow, TableCell, Avatar, Checkbox } from '@material-ui/core';
+import {
+  TableRow,
+  TableCell,
+  Avatar,
+  Checkbox,
+  IconButton
+} from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import PropTypes from 'prop-types';
 
@@ -13,7 +21,6 @@ import {
 
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
-import CustomizedExpandIcon from '../../components/icons/customized-expand-button/customized-expand-button';
 
 const TableContainerRow = ({
   id,
@@ -30,6 +37,7 @@ const TableContainerRow = ({
   checkBoxValue,
   checkboxChangeHandler,
   expandMoreHandler,
+  openExpandMore,
   disabled,
   ...rest
 }) => {
@@ -104,11 +112,13 @@ const TableContainerRow = ({
             />
           )}
           {showExpandMore && (
-            <CustomizedExpandIcon
-              testId={`exp_btn${id}`}
-              size={iconSize}
-              onClickHandler={expandMoreHandler}
-            />
+            <IconButton onClick={expandMoreHandler}>
+              {openExpandMore ? (
+                <KeyboardArrowUpIcon fontSize={iconSize} />
+              ) : (
+                <KeyboardArrowDownIcon fontSize={iconSize} />
+              )}
+            </IconButton>
           )}
         </TableCell>
       )}
@@ -131,7 +141,8 @@ TableContainerRow.propTypes = {
   showDelete: PropTypes.bool,
   showExpandMore: PropTypes.bool,
   showCheckbox: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  openExpandMore: PropTypes.bool
 };
 
 TableContainerRow.defaultProps = {
@@ -149,7 +160,8 @@ TableContainerRow.defaultProps = {
   showDelete: true,
   showExpandMore: false,
   showCheckbox: false,
-  disabled: false
+  disabled: false,
+  openExpandMore: false
 };
 
 export default TableContainerRow;

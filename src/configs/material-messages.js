@@ -11,3 +11,11 @@ export const materialMessages = {
     POCKET: 'Кишені'
   }
 };
+
+export const materialFromConstructor = {
+  HEADER: 'Складові конструктора:',
+  POCKET: 'Кишеня',
+  PATTERN: 'Гобелен',
+  BASIC: 'Основа',
+  BOTTOM: 'Низ'
+};
