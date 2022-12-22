@@ -121,10 +121,6 @@ export const deleteColor = async (id) => {
                 _id
               }
               available
-              additionalPrice {
-                currency
-                value
-              }
             }
           }
           ... on Error {
