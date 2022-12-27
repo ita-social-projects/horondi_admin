@@ -57,10 +57,7 @@ export function* handleEmailQuestionsLoad({ payload }) {
 export function* handlePendingEmailQuestionsCount() {
   try {
     const count = yield call(getPendingEmailQuestionsCount);
-
-    if (count) {
-      yield put(setEmailQuestionsPendingCount(count));
-    }
+    yield put(setEmailQuestionsPendingCount(count));
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
