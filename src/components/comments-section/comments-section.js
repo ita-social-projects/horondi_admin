@@ -83,6 +83,7 @@ const CommentsSection = ({ id, commentsType }) => {
             show={commentItem?.show ? yes : no}
             id={commentItem?._id}
             count={commentItem?.replyCommentsCount}
+            rate={commentItem?.rate}
             key={commentItem?._id}
             deleteHandler={() => {
               commentDeleteHandler(commentItem?._id);
