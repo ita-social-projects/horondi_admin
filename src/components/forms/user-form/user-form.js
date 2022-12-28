@@ -15,6 +15,7 @@ import {
 } from '../../../utils/user-form';
 import useUserHandlers from '../../../utils/use-user-handlers';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import noImage from '../../../assets/images/no-image.png';
 
 const labels = config.labels.userDetails;
 
@@ -66,9 +67,10 @@ const UserForm = ({ user, id, edit }) => {
     email: Yup.string()
       .required(USER_EMAIL_MESSAGE)
       .matches(email, USER_INVALID_EMAIL_MESSAGE),
-    phoneNumber: Yup.string()
-      .required(USER_PHONE_NUMBER_MESSAGE)
-      .matches(phoneNumber, USER_INVALID_PHONE_NUMBER_MESSAGE),
+    phoneNumber: Yup.string().matches(
+      phoneNumber,
+      USER_INVALID_PHONE_NUMBER_MESSAGE
+    ),
     country: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
     region: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
     city: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
@@ -95,7 +97,7 @@ const UserForm = ({ user, id, edit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: userValidationSchema,
-    initialValues: getUserInitialValues(user, edit, IMG_URL),
+    initialValues: getUserInitialValues(user, edit, IMG_URL, noImage),
 
     onSubmit: () => {
       const editedUser = createUser(values);

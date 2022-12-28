@@ -1,5 +1,6 @@
-export const getUserInitialValues = (user, edit, IMG_URL) => ({
-  userImage: edit ? IMG_URL + user?.images?.medium : '',
+export const getUserInitialValues = (user, edit, IMG_URL, noImage) => ({
+  userImage:
+    edit && user?.images?.medium ? IMG_URL + user?.images?.medium : noImage,
   userFirstName: user?.firstName || '',
   userLastName: user?.lastName || '',
   email: user?.email || '',
