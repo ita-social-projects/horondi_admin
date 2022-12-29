@@ -74,6 +74,11 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
     [setFieldValue]
   );
 
+  const getOptionLabelCourierOffice = useCallback(
+    (option) => option?.description || null,
+    []
+  );
+
   return (
     <div>
       <h3 className={styles.novaPostTitle}>{deliveryTitles.novaPost}</h3>
@@ -143,7 +148,7 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
             disabled={!selectedCity}
             options={availableWarehouses}
             inputValue={departmentFocus ? wareHouse : values.courierOffice}
-            getOptionLabel={(option) => option?.description || ''}
+            getOptionLabel={getOptionLabelCourierOffice}
             getOptionSelected={getOptionSelected}
             className={styles.dataInput}
             renderInput={(params) => (

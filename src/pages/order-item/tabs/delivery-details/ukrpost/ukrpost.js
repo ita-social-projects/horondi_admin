@@ -102,6 +102,11 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
     [handleBlur]
   );
 
+  const getOptionLabelDistrict = useCallback(
+    (option) => option?.DISTRICT_UA || '',
+    []
+  );
+
   return (
     <div>
       <h3 className={styles.ukrPostTitle}>{deliveryTitles.ukrPost}</h3>
@@ -176,7 +181,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             district,
             values.district
           )}
-          getOptionLabel={(option) => option?.DISTRICT_UA || ''}
+          getOptionLabel={getOptionLabelDistrict}
           getOptionSelected={getOptionSelected}
           className={styles.dataInput}
           renderInput={(params) => (
