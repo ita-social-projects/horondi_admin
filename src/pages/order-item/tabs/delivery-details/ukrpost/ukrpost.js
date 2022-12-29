@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
@@ -29,6 +29,7 @@ import {
   isFieldError,
   getError
 } from '../../../../../utils/form-error-validation';
+import { getOptionSelected } from '../../../../../utils/handle-delivery';
 
 const UkrPost = ({ values, setFieldValue, inputOptions }) => {
   const { materialUiConstants } = config;
@@ -85,6 +86,22 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
     }
   }, [dispatch, values.cityId]);
 
+  const handleBlurRegion = useCallback(
+    (e) => {
+      setRegionFocus(false);
+      handleBlur(e);
+    },
+    [handleBlur]
+  );
+
+  const handleBlurDistrict = useCallback(
+    (e) => {
+      setDistrictFocus(false);
+      handleBlur(e);
+    },
+    [handleBlur]
+  );
+
   return (
     <div>
       <h3 className={styles.ukrPostTitle}>{deliveryTitles.ukrPost}</h3>
@@ -96,10 +113,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
           onFocus={() => setRegionFocus(true)}
-          onBlur={(e) => {
-            setRegionFocus(false);
-            handleBlur(e);
-          }}
+          onBlur={handleBlurRegion}
           onChange={(_event, value) => {
             handleRegion(
               value,
@@ -113,9 +127,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           options={ukrPoshtaRegions}
           inputValue={handleInputValue(regionFocus, region, values.region)}
           getOptionLabel={(option) => option?.REGION_UA || ''}
-          getOptionSelected={(option, value) =>
-            option.REGION_ID === value.REGION_ID
-          }
+          getOptionSelected={getOptionSelected}
           className={styles.dataInput}
           data-testid='regionUkrPost'
           renderInput={(params) => (
@@ -152,10 +164,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             setDistrict(value);
           }}
           onFocus={() => setDistrictFocus(true)}
-          onBlur={(e) => {
-            setDistrictFocus(false);
-            handleBlur(e);
-          }}
+          onBlur={handleBlurDistrict}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(_event, value) => {
             handleDistrict(value, setFieldValue, setCity, setPostOffice);
@@ -167,10 +176,8 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
             district,
             values.district
           )}
-          getOptionLabel={(option) => option?.DISTRICT_UA || null}
-          getOptionSelected={(option, value) =>
-            option.DISTRICT_ID === value.DISTRICT_ID
-          }
+          getOptionLabel={(option) => option?.DISTRICT_UA || ''}
+          getOptionSelected={getOptionSelected}
           className={styles.dataInput}
           renderInput={(params) => (
             <TextField
@@ -222,9 +229,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
           options={ukrPoshtaCities}
           inputValue={handleInputValue(cityFocus, city, values.city)}
           getOptionLabel={(option) => option?.CITY_UA || ''}
-          getOptionSelected={(option, value) =>
-            option.CITY_ID === value.CITY_ID
-          }
+          getOptionSelected={getOptionSelected}
           className={styles.dataInput}
           renderInput={(params) => (
             <TextField
@@ -284,9 +289,7 @@ const UkrPost = ({ values, setFieldValue, inputOptions }) => {
               option?.STREET_UA_VPZ ? option?.STREET_UA_VPZ : ''
             }` || ''
           }
-          getOptionSelected={(option, value) =>
-            option.POSTCODE === value.POSTCODE
-          }
+          getOptionSelected={getOptionSelected}
           className={styles.dataInput}
           renderInput={(params) => (
             <TextField

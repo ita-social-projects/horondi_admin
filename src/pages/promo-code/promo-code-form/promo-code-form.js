@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useFormik } from 'formik';
 import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
@@ -98,6 +98,11 @@ function PromoCodeForm({ pathToPromoCodesPage, addPromoCodeHandler, data }) {
       : setFieldValue('categories', [...checkboxes.map(({ value }) => value)]);
   };
 
+  const disabledDatePicker = useCallback(
+    () => (date) => isBefore(date, new Date(dateFrom)),
+    [dateFrom]
+  );
+
   const allCategoriesCheckbox = (
     <FormControlLabel
       className={styles.checkboxes}
@@ -167,8 +172,8 @@ function PromoCodeForm({ pathToPromoCodesPage, addPromoCodeHandler, data }) {
               variant='outlined'
               value={code}
               className={styles.textField}
-              error={!!(touched.code ? errors.code : null)}
-              helperText={touched.code ? errors.code : ''}
+              error={!!(touched.code && errors.code)}
+              helperText={touched.code ? errors.code : ' '}
               onBlur={handleBlur}
               onChange={handleChange}
             />
@@ -198,7 +203,7 @@ function PromoCodeForm({ pathToPromoCodesPage, addPromoCodeHandler, data }) {
             <div className={styles.dataPickerContainer}>
               <DatePicker
                 disabled={!dateFrom}
-                disabledDate={(date) => isBefore(date, new Date(dateFrom))}
+                disabledDate={disabledDatePicker}
                 placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}

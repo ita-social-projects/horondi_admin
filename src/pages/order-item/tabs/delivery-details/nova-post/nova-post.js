@@ -21,6 +21,7 @@ import {
   handleCityNovaPost,
   handleWarehousesNovaPost
 } from '../../../../../utils/handle-orders-page';
+import { getOptionSelected } from '../../../../../utils/handle-delivery';
 
 const NovaPost = ({ setFieldValue, values, inputOptions }) => {
   const { materialUiConstants } = config;
@@ -61,6 +62,18 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
         )
       : [];
 
+  const handleChangeCity = useCallback(
+    (_event, value) =>
+      handleCityNovaPost(value, setSelectedCity, setWarehouse, setFieldValue),
+    [setFieldValue]
+  );
+
+  const handleChangeCourierOffice = useCallback(
+    (_event, value) =>
+      handleWarehousesNovaPost(value, setFieldValue, setWarehouse),
+    [setFieldValue]
+  );
+
   return (
     <div>
       <h3 className={styles.novaPostTitle}>{deliveryTitles.novaPost}</h3>
@@ -78,20 +91,11 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               getPostCities(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneCity}
-            onChange={(_event, value) =>
-              handleCityNovaPost(
-                value,
-                setSelectedCity,
-                setWarehouse,
-                setFieldValue
-              )
-            }
+            onChange={handleChangeCity}
             options={cities}
             inputValue={cityFocus ? inputValue : values.city}
             getOptionLabel={(option) => option?.description || null}
-            getOptionSelected={(option, value) =>
-              option.cityId === value.cityId
-            }
+            getOptionSelected={getOptionSelected}
             className={styles.dataInput}
             data-testid='cityNovaPost'
             renderInput={(params) => (
@@ -130,9 +134,7 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
               setWarehouse(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneDepartment}
-            onChange={(_event, value) =>
-              handleWarehousesNovaPost(value, setFieldValue, setWarehouse)
-            }
+            onChange={handleChangeCourierOffice}
             onFocus={() => setDepartmentFocus(true)}
             onBlur={(e) => {
               setDepartmentFocus(false);
@@ -141,10 +143,8 @@ const NovaPost = ({ setFieldValue, values, inputOptions }) => {
             disabled={!selectedCity}
             options={availableWarehouses}
             inputValue={departmentFocus ? wareHouse : values.courierOffice}
-            getOptionLabel={(option) => option?.description || null}
-            getOptionSelected={(option, value) =>
-              option.courierOfficeId === value.courierOfficeId
-            }
+            getOptionLabel={(option) => option?.description || ''}
+            getOptionSelected={getOptionSelected}
             className={styles.dataInput}
             renderInput={(params) => (
               <TextField

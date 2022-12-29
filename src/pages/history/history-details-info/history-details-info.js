@@ -37,22 +37,22 @@ const HistoryDetailsInfo = ({ recordItem, darkMode }) => {
   ];
 
   const itemInfo = [
-    { title: historyTitles.action, data: historyEvents.historyAction[action] },
+    {
+      title: historyTitles.action,
+      data: historyEvents.historyAction[action]
+    },
     {
       title: historyTitles.itemType,
       data: historyEvents.historyName[historyName]
     },
-    {
-      title: historyTitles.itemName,
-      data: subject.name
-    }
+    { title: historyTitles.itemName, data: subject.name }
   ];
 
   const createHeadInfo = (info, title) => (
     <Grid item xs>
       <h3 className={styles.userInfoTitle}>{title}</h3>
-      {info.map(({ title, data }, idx) => (
-        <div className={styles.userInfoData} key={title + idx}>
+      {info.map(({ title, data }) => (
+        <div className={styles.userInfoData} key={title}>
           <p className={styles.userInfoItem}>{title}</p>
           <p className={styles.userInfoItem}>{data}</p>
         </div>

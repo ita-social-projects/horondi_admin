@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -23,6 +23,7 @@ import {
   handleWorldWideCity,
   handleWorldWideCountry
 } from '../../../../../utils/handle-orders-page';
+import { getOptionSelected } from '../../../../../utils/handle-delivery';
 
 const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
   const styles = useStyles();
@@ -102,6 +103,27 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
     }
   }, [values.stateOrProvince, values.worldWideCountry]);
 
+  const handleChangeCountry = useCallback(
+    (_, value) => {
+      handleWorldWideCountry(value, setFieldValue);
+    },
+    [setFieldValue]
+  );
+
+  const handleChangeStateOrProvince = useCallback(
+    (_, value) => {
+      handleStateOrProvince(value, setFieldValue);
+    },
+    [setFieldValue]
+  );
+
+  const handleChangeCity = useCallback(
+    (_, value) => {
+      handleWorldWideCity(value, setFieldValue);
+    },
+    [setFieldValue]
+  );
+
   return (
     <div className={styles.worldwide}>
       <h3 className={styles.addressTitle}>{deliveryTitles.worldWide}</h3>
@@ -164,14 +186,12 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
           id={worldWide.worldWideCountry}
           className={styles.addressInput}
           options={countryOptions}
-          getOptionSelected={(option, value) => option.iso3 === value.iso3}
+          getOptionSelected={getOptionSelected}
           value={values.worldWideCountry}
           inputValue={countryInputState}
           data-testid='worldWideCountry'
           onInputChange={(_, value) => setCountryInput(value)}
-          onChange={(_, value) => {
-            handleWorldWideCountry(value, setFieldValue);
-          }}
+          onChange={handleChangeCountry}
           onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
@@ -196,13 +216,11 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
           options={statesOptions}
           value={values.stateOrProvince}
           inputValue={stateOrProvinceInput}
-          getOptionSelected={(option, value) => option.iso3 === value.iso3}
+          getOptionSelected={getOptionSelected}
           onInputChange={(_, value) => setStateOrProvinceInput(value)}
           disabled={!values.worldWideCountry}
           data-testid='stateOrProvince'
-          onChange={(_, value) => {
-            handleStateOrProvince(value, setFieldValue);
-          }}
+          onChange={handleChangeStateOrProvince}
           onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
@@ -235,10 +253,8 @@ const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
           }}
           disabled={!values.stateOrProvince}
           data-testid='worldWideCity'
-          getOptionSelected={(option, value) => option.msg === value.msg}
-          onChange={(_, value) => {
-            handleWorldWideCity(value, setFieldValue);
-          }}
+          getOptionSelected={getOptionSelected}
+          onChange={handleChangeCity}
           onBlur={handleBlur}
           renderInput={(params) => (
             <TextField

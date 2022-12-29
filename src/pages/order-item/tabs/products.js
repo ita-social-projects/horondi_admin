@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { MenuItem, TableCell } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
@@ -97,11 +97,12 @@ const Products = ({ data, setFieldValue, inputOptions }) => {
     setSelectedItem(null);
   };
 
-  const expandMoreHandler = (index) => {
+  const expandMoreHandler = useCallback((index) => {
     setOpenExpandMore((prevState) =>
       prevState.map((element, idx) => (index === idx ? !element : element))
     );
-  };
+  }, []);
+
   const setSizeItems = (sizes) =>
     sizes &&
     sizes.length &&
