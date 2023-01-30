@@ -14,31 +14,34 @@ const ConstructorListBasePrice = ({
   handleChange,
   basePriceToAdd,
   setBasePriceToAdd,
-  expanded
+  expanded,
+  error
 }) => {
   const styles = useStyles();
 
+  const basePrice = 'basePrice';
+
   const priceHandleChange = (event) => {
     const { value } = event.target;
-    setBasePriceToAdd(Number(value));
+    setBasePriceToAdd(`${basePrice}`, Number(value));
   };
 
   return (
     <Accordion
-      expanded={expanded === 'basePrice'}
-      onChange={handleChange('basePrice')}
+      expanded={expanded === basePrice}
+      onChange={handleChange(basePrice)}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls='basePricebh-content'
-        id='basePricebh-header'
+        aria-controls={`${basePrice}bh-content`}
+        id={`${basePrice}bh-header`}
       >
         <Typography className={styles.heading}>Базова ціна</Typography>
-        <Typography className={styles.secondaryHeading} />
+        <Typography className={styles.secondaryHeading}>{error}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <TextField
-          data-testid='basePrice'
+          data-testid={basePrice}
           variant='outlined'
           className={`${styles.textField}`}
           label='Базова ціна (USD)'
@@ -52,17 +55,16 @@ const ConstructorListBasePrice = ({
 };
 
 ConstructorListBasePrice.propTypes = {
-  expanded: PropTypes.string,
-  handleChange: PropTypes.func,
-  setBasePriceToAdd: PropTypes.func,
-  basePriceToAdd: PropTypes.number
+  expanded: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setBasePriceToAdd: PropTypes.func.isRequired,
+  basePriceToAdd: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  error: PropTypes.string
 };
 
 ConstructorListBasePrice.defaultProps = {
-  basePriceToAdd: 0,
-  setBasePriceToAdd: '',
-  expanded: '',
-  handleChange: () => null
+  basePriceToAdd: '',
+  error: ''
 };
 
 export default ConstructorListBasePrice;

@@ -46,7 +46,7 @@ const TableContainerCollapsableRow = ({
   shouldValidate,
   answer,
   question,
-  collapsable = false,
+  collapsable,
   ...rest
 }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;

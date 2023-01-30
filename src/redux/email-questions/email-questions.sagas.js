@@ -57,10 +57,7 @@ export function* handleEmailQuestionsLoad({ payload }) {
 export function* handlePendingEmailQuestionsCount() {
   try {
     const count = yield call(getPendingEmailQuestionsCount);
-
-    if (count) {
-      yield put(setEmailQuestionsPendingCount(count));
-    }
+    yield put(setEmailQuestionsPendingCount(count));
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -127,7 +124,7 @@ export function* handleAnswerEmailQuestion({ payload }) {
         )
       );
 
-      yield call(handleReloadingPendingQuestionsCount, emailQuestions);
+      yield call(handlePendingEmailQuestionsCount);
 
       yield put(setEmailQuestionLoading(false));
       yield put(push(routes.pathToEmailQuestions));
@@ -152,6 +149,8 @@ export function* handleEmailQuestionsDelete({ payload }) {
           )
         )
       );
+
+      yield call(handlePendingEmailQuestionsCount);
       yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
       yield put(updatePagination());
       yield put(setEmailQuestionLoading(false));
@@ -159,11 +158,6 @@ export function* handleEmailQuestionsDelete({ payload }) {
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
-}
-
-export function* handleReloadingPendingQuestionsCount(list) {
-  const count = list.filter((item) => item.status === 'PENDING').length;
-  yield put(setEmailQuestionsPendingCount(count - 1));
 }
 
 export function* handleGettingQuestionFromStore() {

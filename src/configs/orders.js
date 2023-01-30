@@ -59,8 +59,6 @@ const orders = {
   },
 
   dialogTitle: 'Замовлення',
-  dialogContent:
-    'Зміна статусу "Замовлення створено" чи "Замовлення підтверджено" на інші унеможливить подальше редагування деталей замовлення. Ви дійсно хочете продовжити?',
   buttonTitle: 'Продовжити',
   productLabels: {
     product: 'Продукти',
@@ -106,6 +104,7 @@ const orders = {
       expired: 'Завершений',
       planned: 'Запланований'
     },
+    error: 'Промокод або сертифікат не знайдено',
     deletePromo: 'Ви впевнені, що хочете видалити цeй промокод?',
     namePromo: 'Назва промокоду',
     createPromo: 'Створи Промокод:',
@@ -115,13 +114,24 @@ const orders = {
       validTo: 'Термін до'
     },
     discount: {
-      title: 'Розмір знижки у процентах:',
+      title: 'Розмір знижки у відсотках:',
       label: 'Розмір знижки'
     },
     categories: {
       title: 'Застосувати до:',
       checkboxes: [{ label: 'Зроби сам', value: 'constructor' }]
     }
+  },
+  size: {
+    deleted: 'Розмір видалено'
+  },
+  discount: {
+    tittle: 'Iнформація про знижку:',
+    promoCode: 'Промокод:',
+    certificate: 'Сертифікат:',
+    code: 'Код:',
+    discount: 'Pозмір знижки:',
+    categories: 'Категорія:'
   }
 };
 

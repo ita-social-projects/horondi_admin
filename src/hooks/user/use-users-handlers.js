@@ -9,6 +9,14 @@ export const useUsersHandler = (id) => {
     user: Users.user
   }));
 
+  const setAddressString = (address) => {
+    const { street, buildingNumber, appartment } = address;
+    return (
+      (street || buildingNumber || appartment) &&
+      `${street || '-'}, ${buildingNumber || '-'}/${appartment || '-'}`
+    );
+  };
+
   const [images, setImages] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -32,10 +40,7 @@ export const useUsersHandler = (id) => {
       setLastName(user.lastName || '');
       setCountry(user.address && user.address.country);
       setCity(user.address && user.address.city);
-      setAdress(
-        user.address &&
-          `${user.address.street}, ${user.address.buildingNumber}/${user.address.appartment}`
-      );
+      setAdress(setAddressString(user.address || {}));
       setPostCode(user.address && user.address.zipcode);
       setBan(user.banned);
       setConfirmed(user.confirmed);

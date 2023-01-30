@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { useStyles } from '../constructor-details/constructor-details.styles';
 import ConstructorModelForm from '../../../components/forms/constructor-form/constructor-model-form';
 import { getConstructor } from '../../../redux/constructor/constructor.actions';
+import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
+import LoadingBar from '../../../components/loading-bar';
 
 const ConstructorEdit = ({ match }) => {
   const { id } = match.params;
@@ -17,9 +19,15 @@ const ConstructorEdit = ({ match }) => {
     dispatch(getConstructor(id));
   }, [dispatch, id]);
 
+  const { constructor } = useSelector(constructorSelector);
+
+  if (!constructor) {
+    return <LoadingBar />;
+  }
+
   return (
     <div className={styles.detailsContainer}>
-      <ConstructorModelForm id={id} isEdit />
+      <ConstructorModelForm constructor={constructor} id={id} isEdit />
     </div>
   );
 };

@@ -24,6 +24,7 @@ const useSuccessSnackbar = () => {
     onClickHandler,
     dialogContent,
     dialogTitle,
+    confirmTitle,
     showCancelButton = true,
     validationData = null
   ) => {
@@ -35,9 +36,7 @@ const useSuccessSnackbar = () => {
           <ul className={`${styles.list} ${navMenuStyles.drawerPaper}`}>
             {validationData.map((item) => (
               <li key={item.itemId} onClick={() => dispatch(closeDialog())}>
-                <Link to={`/products/${item.itemId}`}>
-                  {item.itemName.value}
-                </Link>
+                <Link to={`/products/${item.itemId}`}>{item.itemName}</Link>
               </li>
             ))}
           </ul>
@@ -56,7 +55,8 @@ const useSuccessSnackbar = () => {
         dialogTitle,
         dialogContent: content,
         showCancelButton,
-        onClickHandler
+        onClickHandler,
+        confirmTitle
       })
     );
   };

@@ -18,13 +18,13 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
 
   useEffect(() => {
     dispatch(getUsers({}));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (userId) {
       dispatch(getUser(userId));
     }
-  }, [id]);
+  }, [id, userId, dispatch]);
 
   const regUsers = useSelector(({ Users }) => ({
     list: Users.list,
@@ -32,7 +32,7 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
     loading: Users.userLoading
   }));
 
-  const onUserChange = (e, user) => {
+  const onUserChange = (_e, user) => {
     setFieldValue(inputName.userId, user?._id);
     setId(user?._id);
   };

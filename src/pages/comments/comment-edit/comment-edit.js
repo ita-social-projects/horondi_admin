@@ -39,7 +39,7 @@ const CommentEdit = ({ match }) => {
       dispatch(clearComment());
       dispatch(setCurrentPage(currentPageForComments));
     },
-    []
+    [dispatch, currentPageForComments]
   );
   useEffect(() => {
     dispatch(
@@ -64,7 +64,17 @@ const CommentEdit = ({ match }) => {
         }
       })
     );
-  }, [dispatch, id]);
+  }, [
+    dispatch,
+    id,
+    currentPage,
+    replyFilters.dateFrom,
+    replyFilters.dateTo,
+    replyFilters.search,
+    replyFilters.show,
+    replySort,
+    rowsPerPage
+  ]);
 
   useEffect(() => {
     dispatch(
@@ -86,7 +96,7 @@ const CommentEdit = ({ match }) => {
         sort: replySort
       })
     );
-  }, [rowsPerPage, currentPage, replyFilters, replySort]);
+  }, [rowsPerPage, currentPage, replyFilters, replySort, dispatch, id]);
 
   if (loading) {
     return <LoadingBar />;

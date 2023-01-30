@@ -11,6 +11,13 @@ export const getAllStraps = async (limit, skip, filter) => {
             value
           }
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -27,6 +34,8 @@ export const getAllStraps = async (limit, skip, filter) => {
           }
           available
           absolutePrice
+          relativePrice
+          optionType
         }
         count
       }
@@ -50,6 +59,13 @@ export const createStrap = async (payload) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -66,6 +82,7 @@ export const createStrap = async (payload) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         ... on Error {
           message
@@ -112,6 +129,13 @@ export const getStrapById = async (id) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
               name {
@@ -128,6 +152,7 @@ export const getStrapById = async (id) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         ... on Error {
           statusCode
@@ -142,7 +167,7 @@ export const getStrapById = async (id) => {
   return result?.data?.getStrapById;
 };
 
-export const updateStrap = async (id, strap, image) => {
+export const updateStrap = async (payload) => {
   const query = `
     mutation($id: ID!, $strap: StrapInput!, $image: Upload) {
       updateStrap(id: $id, strap: $strap, image: $image) {
@@ -154,8 +179,19 @@ export const updateStrap = async (id, strap, image) => {
           }
           optionType
           features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             color {
               _id
+              name {
+                lang
+                value
+              }
             }
           }
           images {
@@ -166,6 +202,7 @@ export const updateStrap = async (id, strap, image) => {
           }
           available
           absolutePrice
+          relativePrice
         }
         ... on Error {
           message
@@ -174,7 +211,7 @@ export const updateStrap = async (id, strap, image) => {
       }
     }
   `;
-  const result = await setItems(query, { id, strap, image });
+  const result = await setItems(query, payload);
 
   return result?.data?.updateStrap;
 };

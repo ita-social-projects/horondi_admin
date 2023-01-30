@@ -159,12 +159,13 @@ export function* handleAdminRegister({ payload }) {
 
     if (admin) {
       yield put(newRegisteredAdmin(true));
-      yield put(setAdminCreationLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
       yield put(newRegisteredAdmin(false));
     }
   } catch (err) {
     yield call(handleUsersError, err);
+  } finally {
+    yield put(setAdminCreationLoading(false));
   }
 }
 

@@ -40,10 +40,17 @@ export const useStyles = makeStyles((theme) => ({
       color: colors.indigo[400]
     }
   },
+  notNested: {
+    paddingInline: theme.spacing(2)
+  },
   nested: {
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(2)
   },
   sliderTab: {
     paddingLeft: theme.spacing(8)
+  },
+  badgeRight: {
+    right: theme.spacing(1.5)
   }
 }));

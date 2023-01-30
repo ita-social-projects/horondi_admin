@@ -114,7 +114,7 @@ const mockInputBack = {
 const mockBacksLoadPayload = {
   limit: 1,
   skip: 0,
-  filters: {
+  filter: {
     name: '',
     model: [],
     available: [],

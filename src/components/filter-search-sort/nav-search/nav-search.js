@@ -33,8 +33,9 @@ const NavSearch = ({
           onChange={setSearch}
           onKeyPress={submitSearch}
         />
-        <Tooltip title={searchLabel} placement='bottom'>
+        <Tooltip title={searchLabel()} placement='bottom'>
           <IconButton
+            data-testid='search'
             className={styles.iconButton}
             aria-label='search'
             onClick={activateSearch}

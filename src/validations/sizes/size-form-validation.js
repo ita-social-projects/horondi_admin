@@ -13,7 +13,6 @@ const { ERROR_MESSAGE, PRICE_ERROR } = config.commonErrorMessages;
 
 export const formSchema = Yup.object().shape({
   name: Yup.string().required(ERROR_MESSAGE),
-  modelId: Yup.string().required(ERROR_MESSAGE),
   heightInCm: Yup.number()
     .typeError(NO_NUMBER_TYPE_MESSAGE)
     .min(1, MIN_LENGTH_MESSAGE)

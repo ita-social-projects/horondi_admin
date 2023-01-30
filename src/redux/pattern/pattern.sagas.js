@@ -78,10 +78,11 @@ export function* handlePatternDelete({ payload }) {
     yield call(deletePattern, payload);
     yield put(removePatternFromStore(payload));
     yield put(updatePagination());
-    yield put(setPatternLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handlePatternError, error);
+  } finally {
+    yield put(setPatternLoading(false));
   }
 }
 

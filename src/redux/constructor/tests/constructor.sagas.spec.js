@@ -7,6 +7,7 @@ import Constructor from '../constructor.reducer';
 import {
   handleConstructorLoad,
   handleConstructorsLoad,
+  handleConstructorPartsLoad,
   handleConstructorAdd,
   handleConstructorUpdate,
   handleConstructorDelete
@@ -32,6 +33,7 @@ import {
 import {
   getConstructorById,
   getAllConstructors,
+  getAllConstructorParts,
   deleteConstructor,
   updateConstructorById,
   createConstructor
@@ -105,6 +107,29 @@ describe('Test Constructor sagas', () => {
       .then((result) => {
         expect(countAnalysis(result)).toHaveLength(4);
       });
+    done();
+  });
+
+  it('should get all Constructor parts', async (done) => {
+    expectSaga(handleConstructorPartsLoad)
+      .withReducer(combineReducers({ Constructor }), {
+        Constructor: mockConstructorsState
+      })
+      .put(setConstructorLoading(true))
+      .provide([[call(getAllConstructorParts), mockConstructors]])
+      .put(setItemsCount(mockConstructors.count))
+      .put(setConstructors(mockConstructors.items))
+      .hasFinalState({
+        Constructor: {
+          ...mockConstructorsState,
+          list: mockConstructors.items
+        }
+      })
+      .run()
+      .then((result) => {
+        expect(countAnalysis(result)).toHaveLength(4);
+      });
+
     done();
   });
 

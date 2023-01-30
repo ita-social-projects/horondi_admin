@@ -30,10 +30,40 @@ export const getAllCertificates = gql`
           isUsed
           isActivated
           isExpired
+          inProgress
           dateStart
           dateEnd
+          dateOfUsing
         }
         count
+      }
+    }
+  }
+`;
+
+export const getCertificateById = gql`
+  query ($id: ID!) {
+    getCertificateById(id: $id) {
+      ... on Certificate {
+        name
+        value
+      }
+      ... on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+
+export const getCertificateByParams = gql`
+  query ($params: CertificateInput!) {
+    getCertificateByParams(params: $params) {
+      __typename
+      ... on Certificate {
+        _id
+        name
+        value
       }
     }
   }

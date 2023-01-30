@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import {
   Accordion,
@@ -18,7 +18,6 @@ import TableContainerGenerator from '../../../../containers/table-container-gene
 const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const {
     selector,
     getItems,
@@ -26,13 +25,10 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
     optionToAdd,
     label,
     optionName,
-    isRestrictions
+    error
   } = option;
-
   const tableTitles = config.tableHeadRowTitles.constructorElementList;
-
   const { items, currentPage, rowsPerPage, filter } = useSelector(selector);
-
   useEffect(() => {
     dispatch(
       getItems({
@@ -45,20 +41,31 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
         filter
       })
     );
-  }, [dispatch, currentPage, rowsPerPage, filter]);
+  }, [dispatch, currentPage, rowsPerPage, filter, getItems]);
 
   const checkboxChangeHandler = (e, id) => {
     e.stopPropagation();
 
     const possibleItems = optionToAdd.find((item) => item === id);
+
     if (possibleItems) {
-      setOptionToAdd(optionToAdd.filter((item) => item !== id));
+      setOptionToAdd(
+        `${optionName}`,
+        optionToAdd.filter((item) => item !== id)
+      );
     } else {
-      setOptionToAdd([...optionToAdd, id]);
+      setOptionToAdd(`${optionName}`, [...optionToAdd, id]);
     }
   };
 
-  const elementItems = map(items, (item) => (
+  const getItemPrice = useCallback(
+    (item) => item.absolutePrice ?? `${item.relativePrice}%`,
+    []
+  );
+
+  const availableItems = items?.filter((item) => item.available);
+
+  const elementItems = map(availableItems, (item) => (
     <TableContainerRow
       image={
         item.images.thumbnail
@@ -68,7 +75,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
       key={item._id}
       id={item._id}
       name={item.name[0].value}
-      additionalPrice={item.absolutePrice}
+      additionalPrice={getItemPrice(item)}
       available={item.available ? 'Так' : 'Ні'}
       showEdit={false}
       showDelete={false}
@@ -77,25 +84,6 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
       checkboxChangeHandler={checkboxChangeHandler}
     />
   ));
-
-  if (isRestrictions) {
-    return (
-      <Accordion
-        expanded={expanded === optionName}
-        onChange={handleChange(optionName)}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls={`${optionName}bh-content`}
-          id={`${optionName}bh-header`}
-        >
-          <Typography className={classes.heading}>{label}</Typography>
-          <Typography className={classes.secondaryHeading} />
-        </AccordionSummary>
-        <AccordionDetails />
-      </Accordion>
-    );
-  }
 
   return (
     <Accordion
@@ -108,7 +96,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
         id={`${optionName}bh-header`}
       >
         <Typography className={classes.heading}>{label}</Typography>
-        <Typography className={classes.secondaryHeading} />
+        <Typography className={classes.secondaryHeading}>{error}</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.column}>
         {elementItems.length ? (
@@ -134,7 +122,8 @@ ConstructorListAccordion.propTypes = {
     optionToAdd: PropTypes.arrayOf(PropTypes.string),
     label: PropTypes.string,
     optionName: PropTypes.string,
-    isRestrictions: PropTypes.bool
+    isRestrictions: PropTypes.bool,
+    error: PropTypes.string
   }),
   expanded: PropTypes.string,
   handleChange: PropTypes.func
@@ -145,7 +134,8 @@ ConstructorListAccordion.defaultProps = {
   option: {
     optionToAdd: [],
     label: '',
-    optionName: ''
+    optionName: '',
+    error: ''
   },
   handleChange: ''
 };

@@ -4,7 +4,7 @@ import { setExchangeRate } from './currencies.actions';
 
 import { getAllCurrencies } from './currencies.operations';
 
-export function* handleCurrenciesLoad({ payload }) {
+export function* handleCurrenciesLoad() {
   try {
     const currencies = yield call(getAllCurrencies);
 

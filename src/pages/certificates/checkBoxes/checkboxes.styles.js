@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   quantity: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -11,7 +11,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   H5: {
     border: '1px solid gray',
-    padding: '5px 12px',
+    padding: '5px',
+    textAlign: 'center',
     borderRadius: 5,
     width: 35
   },

@@ -3,11 +3,11 @@ import { Grid, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useStyles } from './info-item.styles';
 
-const InfoItem = ({ label, id, data, key }) => {
+const InfoItem = ({ label, id, data }) => {
   const styles = useStyles();
 
   return (
-    <Grid item key={key}>
+    <Grid item key={id}>
       <Grid container spacing={1} className={styles.container}>
         <div>
           <Typography className={styles.detailTitle} variant='h6'>
@@ -33,8 +33,11 @@ const InfoItem = ({ label, id, data, key }) => {
 InfoItem.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  data: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired
+  data: PropTypes.string
+};
+
+InfoItem.defaultProps = {
+  data: ''
 };
 
 export default InfoItem;

@@ -34,8 +34,8 @@ export const getAllBacks = async (limit, skip, filter) => {
           large
         }
         absolutePrice
+        relativePrice
         available
-        customizable
       }
     }
   }
@@ -81,8 +81,9 @@ export const getBackById = async (id) => {
             }
           }
           available
-          customizable
           absolutePrice
+          relativePrice
+          optionType
           images {
             thumbnail
           }
@@ -184,8 +185,8 @@ export const updateBack = async (payload) => {
             }
           }
           absolutePrice
+          relativePrice
           available
-          customizable
         }
         ... on Error {
           message

@@ -10,21 +10,19 @@ const titles = {
     mainTitleAdd: 'Додати Про Нас'
   },
   historyTitles: {
+    tableTitles: ['Поле', 'До', 'Після '],
     mainTitle: 'Останні зміни',
-    detailsTitle: 'Деталі зміни',
     detailsTitleNumber: (number) => `Деталі зміни № ${number}`,
     userInfo: 'Інформація про користувача',
+    itemsInfo: "Інформація про об'єкт",
     id: 'Ідентифікатор:',
     email: 'Електронна пошта:',
     name: `Ім'я:`,
     role: 'Роль:',
     changesTitle: 'Інформація про зміни',
-    subject: 'Об’єкт дії',
-    before: 'До зміни',
-    after: 'Після зміни',
-    noChanges: 'N/A',
-    from: 'Від',
-    to: 'До'
+    itemName: 'Назва:',
+    itemType: 'Тип:',
+    action: 'Дія:'
   },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'
@@ -35,14 +33,14 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH',
     modelTitle: 'Модель'
   },
-  backTitles: {
-    mainPageTitle: 'Інформація про спинки',
-    createPageTitle: 'Створити спинку',
-    convertationTitle: 'Відповідна ціна в UAH'
-  },
-  bottomTitles: {
-    mainPageTitle: 'Інформація про низи',
-    createPageTitle: 'Створити низ'
+  constructorMainPageTitles: {
+    back: 'Інформація про спинки',
+    bottom: 'Інформація про низи',
+    closure: 'Інформація про защіпки',
+    basic: 'Інформація про основи',
+    strap: 'Інформація про ремінці',
+    pocket: 'Інформація про кишені',
+    position: 'Інформація про розміщення'
   },
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
@@ -100,7 +98,8 @@ const titles = {
   },
   businessPageTitles: {
     mainPageTitle: 'Інформація про бізнес сторінки',
-    addBusinessPageTitle: 'Додати нову бізнес сторінку'
+    addBusinessPageTitle: 'Додати нову бізнес сторінку',
+    editBusinessPageTitle: 'Редагувати бізнес сторінку'
   },
   questionsAnswersTitles: {
     mainQuestionsAnswersTitle: 'Питання та відповіді',
@@ -131,8 +130,6 @@ const titles = {
   homePageSliderTitle: {
     mainPageTitle: 'Слайди на головній сторінці',
     slideOrderTitle: 'Порядок слайдів',
-    discoverMoreTitle: 'Дізнатись більше',
-    discoverMoreSymbol: '→',
     slideTitle: 'Заголовок слайду не вибрано',
     slideDescription: 'Опис слайду не вибрано',
     preview: 'Попередній перегляд'
@@ -147,29 +144,11 @@ const titles = {
   promoPageTitles: {
     mainPageTitle: 'Інформація про промокоди'
   },
-  pocketsTitles: {
-    mainPageTitle: 'Інформація про кишені'
-  },
-  positionTitles: {
-    mainPageTitle: 'Інформація про розміщення'
-  },
   constructorListPageTitles: {
     mainPageTitle: 'Список конструкторів'
   },
   constructorModelTitles: {
     mainPageTitle: 'Опції конструктора'
-  },
-  closuresTitles: {
-    mainPageTitle: 'Інформація про защіпки',
-    convertationTitle: 'Відповідна ціна в UAH'
-  },
-  basicsTitles: {
-    mainPageTitle: 'Інформація про основи',
-    convertationTitle: 'Відповідна ціна в UAH'
-  },
-  strapsTitles: {
-    mainPageTitle: 'Інформація про ремінці',
-    convertationTitle: 'Відповідна ціна в UAH'
   },
   certificatesTitles: {
     mainPageTitle: 'Створити Подарунковий Сертифікат:',
@@ -187,6 +166,11 @@ const titles = {
     mainPageTitle: 'Інформація про сертифікати',
     deleteCertificateTitle: 'Видалити сертифікат',
     updateCertificateTitle: 'Змінити статус сертифікату'
+  },
+  registerUserTitles: {
+    role: 'Роль',
+    email: 'Пошта',
+    code: 'Код'
   }
 };
 

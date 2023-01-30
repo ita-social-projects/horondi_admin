@@ -18,8 +18,8 @@ export const getAllClosures = async (limit, skip, filter) => {
           }
           optionType
           absolutePrice
+          relativePrice
           available
-          customizable
         }
         count
       }
@@ -32,10 +32,10 @@ export const getAllClosures = async (limit, skip, filter) => {
 
 export const createClosures = async (payload) => {
   const query = `
-          mutation($closure: ClosureInput!, $upload: Upload!) {
-              addClosure(closure: $closure, images: $upload) {
+          mutation($closure: ClosureInput!, $image: Upload!) {
+              addClosure(closure: $closure, images: $image) {
                   ... on Closure {
-                       _id
+                      _id
                   }
                   ... on Error {
                       message
@@ -89,6 +89,7 @@ export const getClosureById = async (id) => {
             thumbnail
           }
           absolutePrice
+          relativePrice
         }
         ... on Error {
           statusCode
@@ -103,7 +104,7 @@ export const getClosureById = async (id) => {
   return result?.data?.getClosureById;
 };
 
-export const updateClosure = async ({ id, closure, upload: image }) => {
+export const updateClosure = async (payload) => {
   const query = `
     mutation updateClosure(
       $id: ID!
@@ -121,7 +122,7 @@ export const updateClosure = async ({ id, closure, upload: image }) => {
       }
     }
   `;
-  const result = await setItems(query, { id, closure, image });
+  const result = await setItems(query, payload);
 
   return result?.data?.updateClosure;
 };

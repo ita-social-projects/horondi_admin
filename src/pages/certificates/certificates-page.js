@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
@@ -21,33 +22,34 @@ const { NO_CERTIFICATES_MESSAGE } = config.messages;
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
   const certificates = useCertificates();
+  const { adminId } = useSelector(({ Auth }) => ({ adminId: Auth.adminId }));
 
   const getDate = (item) =>
-    item.isUsed || item.isExpired
-      ? '-'
-      : `${certificates.transformDate(
-          item.dateStart
-        )} - ${certificates.transformDate(item.dateEnd)}`;
+    `${certificates.transformDate(
+      item.dateStart
+    )} - ${certificates.transformDate(item.dateEnd)}`;
+
+  const dateOfUsing = (item) =>
+    item.dateOfUsing ? `${certificates.transformDate(item.dateOfUsing)}` : '-';
 
   const certificateItems = certificates.items.map((certificate) => (
     <TableContainerRow
       key={certificate._id}
       number={certificate.name}
-      admin={<Certificate name={certificates.setUser(certificate.admin)} />}
-      price={`${certificate.value} грн`}
-      status={
-        <Status
-          status={certificates.checkStatus(
-            certificate.isActivated,
-            certificate.isUsed,
-            certificate.isExpired
-          )}
+      admin={
+        <Certificate
+          value={certificate.value}
+          name={certificates.setUser(certificate.admin)}
         />
       }
+      price={`${certificate.value} грн`}
+      status={<Status status={certificates.checkStatus(certificate)} />}
       date={getDate(certificate)}
+      dateOfUsing={dateOfUsing(certificate)}
       deleteHandler={() => {
-        certificates.openDeleteModal(certificate._id);
+        certificates.openDeleteModal(certificate._id, adminId);
       }}
+      disabled={!certificate.isActivated && !certificate.inProgress}
       editHandler={() => {
         certificates.openUpdateModal(certificate.name);
       }}

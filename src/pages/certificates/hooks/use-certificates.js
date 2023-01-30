@@ -4,7 +4,7 @@ import { getAllCertificates } from '../operations/certificate.queries';
 import { setItemsCount } from '../../../redux/table/table.actions';
 import {
   deleteCertificateById,
-  updateCertificateByName
+  updateCertificateStatus
 } from '../operations/certificate.mutation';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import {
@@ -14,22 +14,18 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../../configs';
+import { statusCertificates } from '../../../consts/certificate-status';
 import useCertificateFilters from '../../../hooks/filters/use-certificate-filters';
+import { certificateErrorMessages } from '../../../configs/error-modal-messages';
 
 const DELETE_CERTIFICATE_TITLE =
   config.titles.certificatesPageTitles.deleteCertificateTitle;
 const UPDATE_CERTIFICATE_TITLE =
   config.titles.certificatesPageTitles.updateCertificateTitle;
-const {
-  ACTIVE_STATUS,
-  USED_STATUS,
-  EXPIRED_STATUS,
-  PENDING_STATUS,
-  SUCCESS_UPDATE_STATUS,
-  SUCCESS_DELETE_STATUS
-} = config.statuses;
+const { SUCCESS_UPDATE_STATUS, SUCCESS_DELETE_STATUS } = config.statuses;
 const { DELETE_CERTIFICATE_MESSAGE, UPDATE_CERTIFICATE_MESSAGE } =
   config.messages;
+const { ERROR_BOUNDARY_STATUS } = config.errorStatuses;
 
 const transformDate = (date) => {
   const exactDate = new Date(date);
@@ -40,17 +36,16 @@ const transformDate = (date) => {
   });
 };
 
-const checkStatus = (active, used, expired) => {
-  if (active) {
-    return ACTIVE_STATUS;
-  }
-  if (used) {
-    return USED_STATUS;
-  }
-  if (expired) {
-    return EXPIRED_STATUS;
-  }
-  return PENDING_STATUS;
+const checkStatus = (certificate) => {
+  let certificateStatus = null;
+
+  statusCertificates.forEach((status) => {
+    if (certificate[status.value]) {
+      certificateStatus = status.label;
+    }
+  });
+
+  return certificateStatus;
 };
 
 const setUser = (usersInitials) =>
@@ -62,7 +57,7 @@ const useCertificates = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const [deleteCertificate] = useMutation(deleteCertificateById);
-  const [updateCertificate] = useMutation(updateCertificateByName);
+  const [updateCertificate] = useMutation(updateCertificateStatus);
   const certificatesFilters = useCertificateFilters();
   const { sortOptions, searchOptions, filterByMultipleOptions } =
     certificatesFilters;
@@ -106,11 +101,12 @@ const useCertificates = () => {
     dispatch(setSnackBarStatus(true));
   };
 
-  const updateCertificateHandler = async (name) => {
+  const updateCertificateHandler = async (params, statusUpdate) => {
     try {
       const { data } = await updateCertificate({
         variables: {
-          name
+          params,
+          statusUpdate
         }
       });
       if (data.updateCertificate.statusCode) {
@@ -127,17 +123,18 @@ const useCertificates = () => {
 
   const openUpdateModal = (name) => {
     openSuccessSnackbar(
-      () => updateCertificateHandler(name),
+      () => updateCertificateHandler({ name }, 'USED'),
       UPDATE_CERTIFICATE_MESSAGE,
       UPDATE_CERTIFICATE_TITLE
     );
   };
 
-  const deleteCertificateHandler = async (id) => {
+  const deleteCertificateHandler = async (id, adminId) => {
     try {
       const { data } = await deleteCertificate({
         variables: {
-          id
+          id,
+          adminId
         }
       });
       if (data.deleteCertificate.statusCode) {
@@ -146,15 +143,17 @@ const useCertificates = () => {
       await certificatesRefetch();
       successSnackbarHandler(SUCCESS_DELETE_STATUS);
     } catch (e) {
-      errorSnackbarHandler(e.message);
+      errorSnackbarHandler(
+        certificateErrorMessages[e.message] || ERROR_BOUNDARY_STATUS
+      );
     } finally {
       dispatch(closeDialog());
     }
   };
 
-  const openDeleteModal = (id) => {
+  const openDeleteModal = (id, adminId) => {
     openSuccessSnackbar(
-      () => deleteCertificateHandler(id),
+      () => deleteCertificateHandler(id, adminId),
       DELETE_CERTIFICATE_MESSAGE,
       DELETE_CERTIFICATE_TITLE
     );

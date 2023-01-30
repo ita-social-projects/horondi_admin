@@ -1,7 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { TableRow, TableCell, Avatar, Checkbox } from '@material-ui/core';
+import {
+  TableRow,
+  TableCell,
+  Avatar,
+  Checkbox,
+  IconButton
+} from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import PropTypes from 'prop-types';
 
@@ -23,10 +31,14 @@ const TableContainerRow = ({
   showEdit,
   showDelete,
   showCheckbox,
+  showExpandMore,
   deleteHandler,
   clickHandler,
   checkBoxValue,
   checkboxChangeHandler,
+  expandMoreHandler,
+  openExpandMore,
+  disabled,
   ...rest
 }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
@@ -35,9 +47,9 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-  const tableCells = Object.keys(properties).map((property) => (
-    <TableCell key={property} data-cy='table-cell'>
-      {properties[property]}
+  const tableCells = Object.entries(properties).map(([key, value]) => (
+    <TableCell key={key} data-cy='table-cell'>
+      {value || '-'}
     </TableCell>
   ));
 
@@ -71,7 +83,7 @@ const TableContainerRow = ({
       {tableCells}
       {text && (
         <TableCell>
-          <p className={classes.text}>{text}</p>
+          <div className={classes.text}>{text}</div>
         </TableCell>
       )}
       {!showAvatar && image && (
@@ -80,7 +92,7 @@ const TableContainerRow = ({
         </TableCell>
       )}
 
-      {(showEdit || showDelete) && (
+      {(showEdit || showDelete || showExpandMore) && (
         <TableCell className={classes.smallCell}>
           {showEdit && (
             <CustomizedEditIcon
@@ -88,14 +100,25 @@ const TableContainerRow = ({
               size={iconSize}
               onClickHandler={editHandler}
               data-cy='edit-btn'
+              disabled={disabled}
             />
           )}
+
           {showDelete && (
             <CustomizedDeleteIcon
               testId={`del_btn${id}`}
               size={iconSize}
               onClickHandler={deleteHandler}
             />
+          )}
+          {showExpandMore && (
+            <IconButton onClick={expandMoreHandler}>
+              {openExpandMore ? (
+                <KeyboardArrowUpIcon fontSize={iconSize} />
+              ) : (
+                <KeyboardArrowDownIcon fontSize={iconSize} />
+              )}
+            </IconButton>
           )}
         </TableCell>
       )}
@@ -104,10 +127,11 @@ const TableContainerRow = ({
 };
 
 TableContainerRow.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
+  expandMoreHandler: PropTypes.func,
   clickHandler: PropTypes.func,
   checkboxChangeHandler: PropTypes.func,
   id: PropTypes.string,
@@ -115,14 +139,18 @@ TableContainerRow.propTypes = {
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool,
-  showCheckbox: PropTypes.bool
+  showExpandMore: PropTypes.bool,
+  showCheckbox: PropTypes.bool,
+  disabled: PropTypes.bool,
+  openExpandMore: PropTypes.bool
 };
 
 TableContainerRow.defaultProps = {
   id: '',
-  text: '',
-  image: '',
+  text: null,
+  image: null,
   deleteHandler: noop,
+  expandMoreHandler: noop,
   editHandler: noop,
   clickHandler: noop,
   checkboxChangeHandler: noop,
@@ -130,7 +158,10 @@ TableContainerRow.defaultProps = {
   showAvatar: true,
   showEdit: true,
   showDelete: true,
-  showCheckbox: false
+  showExpandMore: false,
+  showCheckbox: false,
+  disabled: false,
+  openExpandMore: false
 };
 
 export default TableContainerRow;

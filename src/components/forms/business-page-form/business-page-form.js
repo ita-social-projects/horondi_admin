@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, TextField, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
@@ -12,11 +12,6 @@ import { SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 
 import {
-  setCodeHandler,
-  uaSetTitleHandler,
-  uaSetTextHandler,
-  enSetTitleHandler,
-  enSetTextHandler,
   businessPageDispatchHandler,
   indexFinder
 } from '../../../utils/business-page-form';
@@ -31,7 +26,13 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
+
+const pageNames = {
+  'payment-and-shipping': 'про оплату і доставку',
+  'privacy-policy': 'умови',
+  'user-agreement': 'угода користувача',
+  terms: 'правила користування сайтом'
+};
 
 const BusinessPageForm = ({ editMode, codePath }) => {
   const dispatch = useDispatch();
@@ -46,7 +47,6 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     labels: { businessPageLabel },
     languages,
     businessPageErrorMessages: {
-      ENTER_CODE_ERROR_MESSAGE,
       ENTER_TITLE_ERROR_MESSAGE,
       ENTER_TEXT_ERROR_MESSAGE,
       MIN_TEXT_LENGTH_MESSAGE
@@ -61,16 +61,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
   const {
     createBusinessPage,
     createBusinessTextTranslationFields,
-    uaSetText,
-    enSetText,
-    uaSetTitle,
-    enSetTitle,
-    uaText,
-    enText,
-    enTitle,
-    uaTitle,
-    code,
-    setCode,
+
     files,
     setFiles
   } = useBusinessHandlers();
@@ -79,29 +70,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     codePath && dispatch(getBusinessPageByCode(codePath));
   }, [dispatch, codePath]);
 
-  useEffect(() => {
-    const isEditingReady = businessPage && editMode;
-
-    setCode(setCodeHandler(isEditingReady, businessPage));
-    uaSetTitle(uaSetTitleHandler(isEditingReady, businessPage));
-    uaSetText(uaSetTextHandler(isEditingReady, businessPage));
-    enSetTitle(enSetTitleHandler(isEditingReady, businessPage));
-    enSetText(enSetTextHandler(isEditingReady, businessPage));
-  }, [
-    code,
-    setCode,
-    editMode,
-    businessPage,
-    uaSetText,
-    uaSetTitle,
-    enSetText,
-    enSetTitle
-  ]);
-
   const formSchema = Yup.object().shape({
-    code: Yup.string()
-      .matches(config.formRegExp.pageCode, ENTER_CODE_ERROR_MESSAGE)
-      .required(ENTER_CODE_ERROR_MESSAGE),
     uaTitle: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .matches(config.formRegExp.uaNameCreation, EN_NAME_MESSAGE)
@@ -119,6 +88,17 @@ const BusinessPageForm = ({ editMode, codePath }) => {
       .required(ENTER_TEXT_ERROR_MESSAGE)
   });
 
+  const initial = useMemo(
+    () => ({
+      code: businessPage ? businessPage.code : '',
+      uaTitle: businessPage ? businessPage.translations.ua.title : '',
+      enTitle: businessPage ? businessPage.translations.en.title : '',
+      uaText: businessPage ? businessPage.translations.ua.text : '',
+      enText: businessPage ? businessPage.translations.en.text : ''
+    }),
+    [businessPage]
+  );
+
   const {
     values,
     errors,
@@ -126,16 +106,13 @@ const BusinessPageForm = ({ editMode, codePath }) => {
     handleSubmit,
     handleBlur,
     handleChange,
-    setFieldValue
+    setFieldValue,
+    dirty,
+    isValid
   } = useFormik({
-    initialValues: {
-      code,
-      uaTitle,
-      enTitle,
-      uaText,
-      enText
-    },
+    initialValues: initial,
     validationSchema: formSchema,
+    enableReinitialize: true,
     onSubmit: async () => {
       const uniqueFiles = files.filter((file, i) => {
         const { name, size } = file;
@@ -170,17 +147,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
       );
     }
   });
-
-  const changed = useChangedValuesChecker(values, errors);
-  const unblock = useUnsavedChangesHandler(values);
-
-  useMemo(() => {
-    values.code = code;
-    values.uaTitle = uaTitle;
-    values.enTitle = enTitle;
-    values.uaText = uaText;
-    values.enText = enText;
-  }, [code, uaTitle, enTitle, uaText, enText]);
+  const unblock = useUnsavedChangesHandler(dirty);
 
   if (loading) {
     return <LoadingBar />;
@@ -220,7 +187,7 @@ const BusinessPageForm = ({ editMode, codePath }) => {
                 enTitle: values.enTitle
               }}
               errors={errors}
-              {...(businessPage?._id ? { disabled: !changed } : {})}
+              disabled={!dirty || !isValid}
             />
           </Grid>
         </Grid>
@@ -231,31 +198,11 @@ const BusinessPageForm = ({ editMode, codePath }) => {
           className={common.materialTitle}
           data-cy='add-header'
         >
-          {config.titles.businessPageTitles.addBusinessPageTitle}
+          {`Редагувати ${pageNames[codePath]}`}
         </Typography>
       </div>
 
       <form onSubmit={(e) => eventPreventHandler(e)}>
-        <Grid item xs={12}>
-          <Paper className={classes.businessPageForm}>
-            <TextField
-              id='code'
-              className={classes.textField}
-              variant='outlined'
-              label='Код сторінки'
-              value={values.code}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.code && !!errors.code}
-              data-cy='page-code'
-            />
-          </Paper>
-          {touched.code && errors.code && (
-            <div data-cy='code-error' className={classes.errorMessage}>
-              {errors.code}
-            </div>
-          )}
-        </Grid>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
@@ -266,13 +213,11 @@ const BusinessPageForm = ({ editMode, codePath }) => {
 
 BusinessPageForm.propTypes = {
   editMode: PropTypes.bool,
-  id: PropTypes.string,
   codePath: PropTypes.string
 };
 
 BusinessPageForm.defaultProps = {
   editMode: false,
-  id: null,
   codePath: null
 };
 

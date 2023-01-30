@@ -1,15 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { formStyles } from '../../../../configs/styles';
 
-export const useStyles = makeStyles((theme) => ({
-  heading: {
-    fontSize: theme.typography
-  },
-  secondaryHeading: {
-    fontSize: theme.typography,
-    color: theme.palette.text.secondary
-  },
-  column: {
-    display: 'flex',
-    flexDirection: 'column'
-  }
-}));
+export const useStyles = makeStyles((theme) => {
+  const { inputError } = formStyles(theme);
+  return {
+    heading: {
+      fontSize: theme.typography,
+      marginRight: '10px'
+    },
+    secondaryHeading: {
+      fontSize: theme.typography,
+      ...inputError
+    },
+    column: {
+      display: 'flex',
+      flexDirection: 'column'
+    }
+  };
+});

@@ -2,11 +2,20 @@ export const materialMessages = {
   YES: 'Так',
   NO: 'Ні',
   purpose: {
-    MAIN: 'Основний',
-    BOTTOM: 'Низ',
-    INNER: 'Внутрішній',
+    BASIC: 'Основи',
+    BOTTOM: 'Низи',
+    INNER: 'Внутрішні',
     PATTERN: 'Гобелен',
-    CLOSURE: 'Замочок',
-    BACK: 'Спинка'
+    STRAP: 'Ремінці',
+    BACK: 'Спинки',
+    POCKET: 'Кишені'
   }
+};
+
+export const materialFromConstructor = {
+  HEADER: 'Складові конструктора:',
+  POCKET: 'Кишеня',
+  PATTERN: 'Гобелен',
+  BASIC: 'Основа',
+  BOTTOM: 'Низ'
 };

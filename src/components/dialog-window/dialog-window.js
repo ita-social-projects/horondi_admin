@@ -16,14 +16,15 @@ import DeleteButton from '../buttons/delete-button';
 import { basicSelector } from '../../redux/dialog-window/dialog-window.reducer';
 
 const { DELETE_TITLE } = config.buttonTitles;
-const { NO_BUTTON, YES_BUTTON } = config.buttonTitles;
+const { NO_BUTTON, YES_BUTTON, UNDERSTAND } = config.buttonTitles;
 
 const DialogWindow = ({
   isOpen,
   dialogTitle,
   dialogContent,
   showCancelButton,
-  onClickHandler
+  onClickHandler,
+  confirmTitle
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -33,7 +34,12 @@ const DialogWindow = ({
   };
 
   return (
-    <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
+    <Dialog
+      data-testid='dialog-window'
+      id='dialog-window'
+      onClose={handleClose}
+      open={isOpen}
+    >
       <DialogTitle className={styles.dialogTitle}>{dialogTitle}</DialogTitle>
       <DialogContent dividers>
         <div>{dialogContent}</div>
@@ -43,12 +49,15 @@ const DialogWindow = ({
           <>
             <StandardButton
               className={styles.yesButton}
-              data-cy='dialog-cancel'
+              data-testid='dialog-confirm'
               variant='outlined'
               title={YES_BUTTON}
               onClickHandler={onClickHandler}
             />
-            <DeleteButton data-cy='dialog-confirm' onClickHandler={handleClose}>
+            <DeleteButton
+              data-testid='dialog-cancel'
+              onClickHandler={handleClose}
+            >
               {NO_BUTTON}
             </DeleteButton>
           </>
@@ -56,8 +65,8 @@ const DialogWindow = ({
           <StandardButton
             data-cy='dialog-confirm'
             variant='contained'
-            title={dialogTitle}
-            onClickHandler={onClickHandler}
+            title={confirmTitle ? UNDERSTAND : dialogTitle}
+            onClickHandler={handleClose || onClickHandler}
           />
         )}
       </DialogActions>
@@ -72,6 +81,7 @@ DialogWindow.propTypes = {
   dialogTitle: PropTypes.string,
   dialogContent: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   showCancelButton: PropTypes.bool,
+  confirmTitle: PropTypes.bool,
   onClickHandler: PropTypes.func
 };
 
@@ -80,6 +90,7 @@ DialogWindow.defaultProps = {
   dialogTitle: DELETE_TITLE,
   dialogContent: '',
   showCancelButton: true,
+  confirmTitle: false,
   onClickHandler: noop
 };
 

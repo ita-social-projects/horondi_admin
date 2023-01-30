@@ -3,7 +3,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TableContainerGenerator from '../containers/table-container-generator';
 import { config } from '../configs';
-import order from '../configs/orders';
 import { newOrder, submitStatus, inputName, POST_OFFICE_NUMBER } from './order';
 import { initialValues } from './order.values';
 import { addOrder, updateOrder } from '../redux/orders/orders.actions';
@@ -21,8 +20,6 @@ export const handleOrdersPage = (orders, itemsCount, orderItems, style) =>
     <p className={style}>{config.titles.orderTitles.ORDER_NOT_FOUND}</p>
   );
 
-const { dialogContent, buttonTitle } = order;
-
 export const handleOrderSubmition = (
   dispatch,
   resetForm,
@@ -34,19 +31,13 @@ export const handleOrderSubmition = (
     newOrder(data).status !== initialValues.status &&
     !submitStatus.includes(newOrder(data).status)
   ) {
-    const updateOrderSnackbar = () => {
-      dispatch(closeDialog());
-      if (id) {
-        dispatch(updateOrder(newOrder(data), id));
-      } else {
-        dispatch(addOrder(newOrder(data)));
-        resetForm({ values: initialValues });
-      }
-    };
-
-    setTimeout(() => {
-      openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
-    }, 0);
+    dispatch(closeDialog());
+    if (id) {
+      dispatch(updateOrder(newOrder(data), id));
+    } else {
+      dispatch(addOrder(newOrder(data)));
+      resetForm({ values: initialValues });
+    }
   } else if (id) {
     dispatch(updateOrder(newOrder(data), id));
   } else {
@@ -57,6 +48,42 @@ export const handleOrderSubmition = (
 
 export const handleCircularProgress = (loading) =>
   loading && <CircularProgress size={20} />;
+
+export const handleCityNovaPost = (
+  value,
+  setSelectedCity,
+  setWarehouse,
+  setFieldValue
+) => {
+  if (value) {
+    setSelectedCity(value.description);
+    setFieldValue(inputName.novaPost.city, value.description);
+    setFieldValue(inputName.novaPost.cityId, value.cityID);
+  } else {
+    setSelectedCity('');
+    setWarehouse('');
+    setFieldValue(inputName.novaPost.city, '');
+    setFieldValue(inputName.novaPost.cityId, '');
+  }
+  setFieldValue(inputName.novaPost.courierOffice, '');
+  setFieldValue(inputName.novaPost.courierOfficeId, '');
+};
+
+export const handleWarehousesNovaPost = (
+  value,
+  setFieldValue,
+  setWarehouse
+) => {
+  if (value) {
+    setFieldValue(inputName.novaPost.courierOffice, value.description);
+    setFieldValue(inputName.novaPost.courierOfficeId, String(value.number));
+    setWarehouse(value.description);
+  } else {
+    setFieldValue(inputName.novaPost.courierOffice, '');
+    setFieldValue(inputName.novaPost.courierOfficeId, '');
+    setWarehouse('');
+  }
+};
 
 export const handleRegion = (
   value,
@@ -69,17 +96,18 @@ export const handleRegion = (
   if (value) {
     setFieldValue(inputName.ukrPost.region, value.REGION_UA);
     setFieldValue(inputName.ukrPost.regionId, value.REGION_ID);
-    setFieldValue(inputName.ukrPost.district, '');
-    setFieldValue(inputName.ukrPost.city, '');
-    setFieldValue(inputName.ukrPost.courierOffice, '');
-    setFieldValue(inputName.ukrPost.districtId, '');
-    setFieldValue(inputName.ukrPost.cityId, '');
   } else {
     setRegion('');
     setDistrict('');
     setCity('');
     setPostOffice('');
     setFieldValue(inputName.ukrPost.region, '');
+    setFieldValue(inputName.ukrPost.district, '');
+    setFieldValue(inputName.ukrPost.city, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
+    setFieldValue(inputName.ukrPost.courierOffice, '');
+    setFieldValue(inputName.ukrPost.districtId, '');
+    setFieldValue(inputName.ukrPost.regionId, '');
   }
 };
 
@@ -92,13 +120,14 @@ export const handleDistrict = (
   if (value) {
     setFieldValue(inputName.ukrPost.district, value.DISTRICT_UA);
     setFieldValue(inputName.ukrPost.districtId, value.DISTRICT_ID);
-    setFieldValue(inputName.ukrPost.city, '');
-    setFieldValue(inputName.ukrPost.courierOffice, '');
-    setFieldValue(inputName.ukrPost.cityId, '');
   } else {
     setCity('');
     setPostOffice('');
     setFieldValue(inputName.ukrPost.district, '');
+    setFieldValue(inputName.ukrPost.districtId, '');
+    setFieldValue(inputName.ukrPost.city, '');
+    setFieldValue(inputName.ukrPost.courierOffice, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
   }
 };
 
@@ -106,10 +135,11 @@ export const handleCity = (value, setFieldValue, setPostOffice) => {
   if (value) {
     setFieldValue(inputName.ukrPost.city, value.CITY_UA);
     setFieldValue(inputName.ukrPost.cityId, value.CITY_ID);
-    setFieldValue(inputName.ukrPost.courierOffice, '');
   } else {
     setPostOffice('');
     setFieldValue(inputName.ukrPost.city, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
+    setFieldValue(inputName.ukrPost.courierOffice, '');
   }
 };
 
@@ -130,3 +160,37 @@ export const handlePostOffice = (value, setPostOffice, setFieldValue) => {
 
 export const handleInputValue = (isFocused, focusedValue, bluredValue) =>
   isFocused ? focusedValue : bluredValue;
+
+export const handleWorldWideCountry = (value, setFieldValue) => {
+  if (value) {
+    setFieldValue(inputName.worldWide.worldWideCountry, value);
+  } else {
+    setFieldValue(inputName.worldWide.worldWideCountry, '');
+    setFieldValue(inputName.worldWide.stateOrProvince, '');
+    setFieldValue(inputName.worldWide.stateOrProvince, '');
+    setFieldValue(inputName.worldWide.worldWideCity, '');
+    setFieldValue(inputName.worldWide.worldWideStreet, '');
+    setFieldValue(inputName.worldWide.cityCode, '');
+  }
+};
+
+export const handleStateOrProvince = (value, setFieldValue) => {
+  if (value) {
+    setFieldValue(inputName.worldWide.stateOrProvince, value);
+  } else {
+    setFieldValue(inputName.worldWide.stateOrProvince, '');
+    setFieldValue(inputName.worldWide.worldWideCity, '');
+    setFieldValue(inputName.worldWide.worldWideStreet, '');
+    setFieldValue(inputName.worldWide.cityCode, '');
+  }
+};
+
+export const handleWorldWideCity = (value, setFieldValue) => {
+  if (value) {
+    setFieldValue(inputName.worldWide.worldWideCity, value);
+  } else {
+    setFieldValue(inputName.worldWide.worldWideCity, '');
+    setFieldValue(inputName.worldWide.worldWideStreet, '');
+    setFieldValue(inputName.worldWide.cityCode, '');
+  }
+};

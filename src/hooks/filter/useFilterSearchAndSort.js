@@ -9,7 +9,7 @@ export const useSort = (options, handler) => {
         handler(result);
       }
     },
-    [options]
+    [options, handler]
   );
   return { optionHandler: setOptionHandler };
 };
@@ -22,7 +22,7 @@ export const useFilter = (options, handler) => {
         handler(_value);
       }
     },
-    [options]
+    [handler]
   );
 
   const filterInputToRender = (selectedValues, valueToRender) =>

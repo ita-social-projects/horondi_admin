@@ -9,12 +9,10 @@ import { useStyles } from './slide.styles';
 
 const Slide = ({ slide, index }) => {
   const styles = useStyles();
-  const { discoverMoreTitle, discoverMoreSymbol } =
-    config.titles.homePageSliderTitle;
   const { IMG_URL } = config;
   return (
     <Draggable
-      style={(_isDragging, draggableStyle) => ({
+      style={(_isdragging, draggableStyle) => ({
         ...draggableStyle,
         position: 'static'
       })}
@@ -27,7 +25,7 @@ const Slide = ({ slide, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           innerRef={provided.innerRef}
-          isDragging={snapshot.isDragging}
+          isdragging={snapshot.isDragging.toString()}
         >
           <Paper elevation={20} className={styles.dndItem} key={slide._id}>
             <Avatar
@@ -43,11 +41,6 @@ const Slide = ({ slide, index }) => {
                 <h3>{slide.title[0].value}</h3>
                 <p>{slide.description[0].value}</p>
               </div>
-              <p className={styles.discoverMore}>
-                {' '}
-                {discoverMoreTitle}
-                <span>{discoverMoreSymbol}</span>
-              </p>
             </div>
           </Paper>
         </Container>

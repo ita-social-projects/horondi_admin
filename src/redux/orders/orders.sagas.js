@@ -37,6 +37,7 @@ import {
   setOrderError,
   setOrderLoading,
   setOrder,
+  getOrder,
   removeOrderFromStore,
   setNovaPoshtaCities,
   setNovaPoshtaWarehouse,
@@ -68,7 +69,7 @@ export function* handleOrderUpdate({ payload }) {
       throw new Error(order.errors[0].message);
     }
 
-    yield put(setOrder(order?.data?.updateOrder));
+    yield put(getOrder(payload.id));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
     yield call(handleErrorSnackbar, e.message);
@@ -198,6 +199,7 @@ export function* handleNovaPoshtaCities({ payload }) {
 export function* handleNovaPoshtaWarehouse({ payload }) {
   try {
     yield put(setDeliveryLoading(true));
+    yield put(setNovaPoshtaWarehouse([]));
 
     const warehouses = yield call(getNovaPoshtaWarehouses, payload);
 

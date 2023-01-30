@@ -18,7 +18,7 @@ const PaginationController = () => {
       <Pagination
         count={Math.ceil(itemsCount / rowsPerPage)}
         page={currentPage + 1}
-        onChange={(e, page) => {
+        onChange={(_e, page) => {
           dispatch(setCurrentPage(page - 1));
         }}
       />

@@ -10,12 +10,11 @@ import {
 } from '@material-ui/core';
 import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
+import productContainersTypes from '../../propTypes/product-containers';
 
-import { productsTranslations } from '../../configs/product-translations';
 import { config, formConstants } from '../../configs';
 
 const { selectsLabels } = config.labels.product;
-const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
 const { formTypeSelect, isRequired, notRequired } = formConstants;
 
 const ProductSpeciesContainer = ({
@@ -126,7 +125,7 @@ const ProductSpeciesContainer = ({
               <Select
                 name={name}
                 error={touched[name] && !!errors[name]}
-                value={values[name] || []}
+                value={values[name] || ''}
                 onChange={handleSelectChange}
                 onBlur={handleBlur}
                 multiple={multiple}
@@ -157,31 +156,20 @@ const ProductSpeciesContainer = ({
 };
 
 ProductSpeciesContainer.propTypes = {
-  patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-  closures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  patterns: PropTypes.arrayOf(PropTypes.object),
+  categories: PropTypes.arrayOf(PropTypes.object),
+  closures: PropTypes.arrayOf(PropTypes.object),
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
-  values: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.array,
-      PropTypes.object
-    ])
-  ).isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func,
   setSizes: PropTypes.func.isRequired,
-  sizes: PropTypes.arrayOf(PropTypes.object).isRequired
+  sizes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ...productContainersTypes
 };
 
 ProductSpeciesContainer.defaultProps = {
+  patterns: [],
+  categories: [],
+  closures: [],
   toggleFieldsChanged: noop
 };
 

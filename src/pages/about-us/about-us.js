@@ -27,6 +27,7 @@ import {
 } from '../../utils/about-us-helper';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
+import noImage from '../../assets/images/no-image.png';
 
 const { aboutUsHeaderTitles, aboutUsFooterTitles, aboutUsTitles } =
   config.tableHeadRowTitles;
@@ -92,11 +93,12 @@ const AboutUs = () => {
   const editTitleHandler = () => history.push(pathToAboutUsTitleEdit);
   const editSectionHandler = (id) =>
     history.push(pathToAboutUsSectionEdit.replace(':id', id));
+
   const deleteSectionHandler = (id) => {
     const removeSection = async () => {
       dispatch(closeDialog());
       const imgNames = getImageNamesFromSection(businessPage, id);
-      deleteImg({ variables: { fileNames: imgNames } });
+      imgNames && deleteImg({ variables: { fileNames: imgNames } });
 
       const updatedBusinessPage = getBusinessPageWithoutSection(
         businessPage,
@@ -113,87 +115,101 @@ const AboutUs = () => {
   };
   const editFooterImgHandler = () => history.push(pathToAboutUsFooterImgEdit);
 
-  const titleItem = businessPage
-    ? [
-        <TableContainerRow
-          showAvatar={false}
-          key={uaTranslations.title}
-          title={uaTranslations.title}
-          showDelete={false}
-          editHandler={editTitleHandler}
-        />
-      ]
-    : [];
+  if (
+    getBusinessTextLoading ||
+    updateBusinessTextLoading ||
+    isRefetching ||
+    !businessPage
+  ) {
+    return <LoadingBar />;
+  }
 
-  const sectionItems = businessPage
-    ? uaTranslations.sections.map(({ id, title, text }, idx) => (
+  if (businessPage) {
+    const titleItem = [
+      <TableContainerRow
+        showAvatar={false}
+        key={uaTranslations.title}
+        showDelete={false}
+        editHandler={editTitleHandler}
+        title={uaTranslations.title}
+      />
+    ];
+    const footerItem = [
+      <TableContainerRow
+        showAvatar={false}
+        key={businessPage.footerImg.name}
+        showDelete={false}
+        editHandler={editFooterImgHandler}
+        image={businessPage.footerImg.src}
+      />
+    ];
+
+    const sectionItems = uaTranslations.sections.map(
+      ({ id, title, text }, idx) => (
         <TableContainerRow
           showAvatar={false}
           key={id}
           title={title}
           text={ReactHtmlParser(text)}
-          image={businessPage.sectionsImgs[idx].src}
+          image={businessPage.sectionsImgs[idx].src || noImage}
           editHandler={() => editSectionHandler(id)}
           deleteHandler={() => deleteSectionHandler(id)}
         />
-      ))
-    : [];
+      )
+    );
 
-  const footerItem = businessPage
-    ? [
-        <TableContainerRow
-          showAvatar={false}
-          key={businessPage.footerImg.name}
-          image={businessPage.footerImg.src}
-          showDelete={false}
-          editHandler={editFooterImgHandler}
-        />
-      ]
-    : [];
+    const tables = [
+      {
+        id: 'AboutUsHeaderTable',
+        className: styles.header,
+        tableTitles: aboutUsHeaderTitles,
+        tableItems: titleItem
+      },
+      {
+        id: 'AboutUsTable',
+        className: styles.items,
+        tableTitles: aboutUsTitles,
+        tableItems: sectionItems
+      },
+      {
+        id: 'AboutUsFooterTable',
+        className: styles.footer,
+        tableTitles: aboutUsFooterTitles,
+        tableItems: footerItem
+      }
+    ];
 
-  if (getBusinessTextLoading || updateBusinessTextLoading || isRefetching) {
-    return <LoadingBar />;
-  }
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.adminHeader}>
-        <Typography
-          variant={materialUiConstants.typographyVariantH1}
-          className={styles.materialTitle}
-        >
-          {config.titles.aboutUsTitles.mainTitle}
-        </Typography>
-        <Button
-          id='about-us-add'
-          component={Link}
-          to={pathToAboutUsAddSection}
-          variant={materialUiConstants.outlined}
-          color={materialUiConstants.primary}
-        >
-          {ADD_ABOUT_US_SECTION}
-        </Button>
+    return (
+      <div className={styles.container}>
+        <div className={styles.adminHeader}>
+          <Typography
+            variant={materialUiConstants.typographyVariantH1}
+            className={styles.materialTitle}
+          >
+            {config.titles.aboutUsTitles.mainTitle}
+          </Typography>
+          <Button
+            id='about-us-add'
+            component={Link}
+            to={pathToAboutUsAddSection}
+            variant={materialUiConstants.outlined}
+            color={materialUiConstants.primary}
+          >
+            {ADD_ABOUT_US_SECTION}
+          </Button>
+        </div>
+        {tables.map((table) => (
+          <TableContainerGenerator
+            key={table.id}
+            id={table.id}
+            className={table.className}
+            tableTitles={table.tableTitles}
+            tableItems={table.tableItems || []}
+          />
+        ))}
       </div>
-      <TableContainerGenerator
-        className={styles.header}
-        id='AboutUsHeaderTable'
-        tableTitles={aboutUsHeaderTitles}
-        tableItems={titleItem}
-      />
-      <TableContainerGenerator
-        className={styles.items}
-        id='AboutUsTable'
-        tableTitles={aboutUsTitles}
-        tableItems={sectionItems}
-      />
-      <TableContainerGenerator
-        className={styles.footer}
-        id='AboutUsFooterTable'
-        tableTitles={aboutUsFooterTitles}
-        tableItems={footerItem}
-      />
-    </div>
-  );
+    );
+  }
 };
 
 export default AboutUs;

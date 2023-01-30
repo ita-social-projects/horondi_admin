@@ -120,6 +120,8 @@ const useProductValidation = (
 
   const {
     values,
+    dirty,
+    isValid,
     errors,
     touched,
     handleSubmit,
@@ -144,6 +146,8 @@ const useProductValidation = (
     shouldValidate,
     setShouldValidate,
     values,
+    dirty,
+    isValid,
     errors,
     touched,
     handleSubmit,

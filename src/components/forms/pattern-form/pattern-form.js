@@ -48,6 +48,9 @@ const {
   additionalPriceType
 } = config.labels.pattern;
 const { materialUiConstants } = config;
+const { constructorItemsKeys } = config;
+const puprose = constructorItemsKeys.pattern.toUpperCase();
+
 const map = require('lodash/map');
 
 const {
@@ -79,7 +82,6 @@ const { pathToPatterns } = config.routes;
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { materialsByPurpose, loading } = useSelector(materialSelector);
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
   const { list } = useSelector(modelSelectorWithPagination);
   const {
@@ -95,10 +97,13 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   } = usePatternHandlers();
 
   useEffect(() => {
-    dispatch(getMaterialsByPurpose());
+    dispatch(getMaterialsByPurpose([puprose]));
     dispatch(getModels());
     dispatch(getCurrencies());
-  }, []);
+  }, [dispatch]);
+
+  const { materialsByPurpose, loading } = useSelector(materialSelector);
+  const materials = materialsByPurpose?.pattern || [];
 
   useEffect(() => {
     patternUseEffectHandler(
@@ -107,7 +112,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       setConstructorImg,
       imagePrefix
     );
-  }, [dispatch, pattern]);
+  }, [dispatch, pattern, setPatternImage, setConstructorImg]);
 
   const patternValidationSchema = Yup.object().shape({
     sizes: Yup.array().notRequired(),
@@ -346,7 +351,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 >
-                  {materialsByPurpose.map(({ _id, name }) => (
+                  {materials.map(({ _id, name }) => (
                     <MenuItem key={_id} value={_id}>
                       {name[0].value}
                     </MenuItem>

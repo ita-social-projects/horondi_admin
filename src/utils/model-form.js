@@ -6,7 +6,7 @@ export const useFormikInitialValues = (model, category, fn, isEdit) => ({
   enDescription: model.description[1].value || '',
   priority: model.priority || 1,
   category: category || '',
-  sizes: fn(isEdit) || [],
+  sizes: fn(isEdit),
   show: model.show || false,
   availableForConstructor: model.availableForConstructor || false
 });

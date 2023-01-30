@@ -9,10 +9,7 @@ import {
   clearHistoryFilters,
   setHistoryFilter
 } from '../../../redux/history/history.actions';
-import {
-  historyEventFilterObj,
-  roleFilterObject
-} from '../../../utils/history';
+import { historyEventFilterObj } from '../../../utils/history';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
 import { historyEvents } from '../../../consts/history-events';
 
@@ -28,27 +25,19 @@ function Filters() {
         setFilterValue={setHistoryFilter}
         filters={filters}
       />
-
+      <ComponentFilterMultiplePicker
+        setFilterValue={setHistoryFilter}
+        selectorFunc={(selector) => ({ historyName: selector })}
+        value={filters.historyName}
+        options={nameOptions}
+        label={buttonTitles.HISTORY_TYPE}
+      />
       <ComponentFilterMultiplePicker
         setFilterValue={setHistoryFilter}
         selectorFunc={(selector) => ({ action: selector })}
         value={filters.action}
         options={actionOptions}
         label={buttonTitles.HISTORY_ACTION}
-      />
-      <ComponentFilterMultiplePicker
-        setFilterValue={setHistoryFilter}
-        selectorFunc={(selector) => ({ historyName: selector })}
-        value={filters.historyName}
-        options={nameOptions}
-        label={buttonTitles.HISTORY_NAME}
-      />
-      <ComponentFilterMultiplePicker
-        setFilterValue={setHistoryFilter}
-        selectorFunc={(selector) => ({ role: selector })}
-        value={filters.role}
-        options={roleFilterObject}
-        label={buttonTitles.USER_ROLE_TITLE}
       />
       <ComponentFilterSearch
         setFilterValue={setHistoryFilter}

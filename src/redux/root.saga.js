@@ -10,7 +10,6 @@ import categorySaga from './categories/categories.sagas';
 import usersSaga from './users/users.saga';
 import currenciesSaga from './currencies/currencies.saga';
 import commentsSaga from './comments/comments.sagas';
-import sizesSaga from './sizes/sizes.sagas';
 import contactsSaga from './contact/contact.sagas';
 import ordersSaga from './orders/orders.sagas';
 import modelSaga from './model/model.sagas';
@@ -46,7 +45,6 @@ export function* rootSaga() {
     productsSaga(),
     contactsSaga(),
     commentsSaga(),
-    sizesSaga(),
     homePageSaga(),
     emailQuestionSaga(),
     statsSaga(),

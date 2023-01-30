@@ -30,7 +30,6 @@ export const useUnsavedChangesHandler = (values) => {
       unblock.current = history.block((location) => {
         const moveAction = () => {
           dispatch(closeDialog());
-
           if (unblock.current) {
             unblock.current();
             history.push(location.pathname);
@@ -46,11 +45,10 @@ export const useUnsavedChangesHandler = (values) => {
         return false;
       });
     }
-
     return () => {
       if (unblock.current) unblock.current();
     };
-  }, [history, isFieldsChanged]);
+  }, [history, isFieldsChanged, dispatch]);
 
   return unblock.current;
 };

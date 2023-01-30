@@ -1,22 +1,15 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   detailsContainer: {
-    width: '100%',
-    margin: theme.spacing(1),
     padding: 15,
     '@media (max-width: 450px)': {
-      padding: 0,
-      margin: 0
+      padding: 0
     }
   },
   userInputPanel: {
-    width: '90%',
     display: 'flex',
-    flexDirection: 'column',
-    '@media (max-width: 450px)': {
-      width: '100%'
-    }
+    flexDirection: 'column'
   },
   formControl: {
     margin: '15px 25px',
@@ -37,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
   sendButton: {
     margin: '15px 25px',
     '@media (max-width: 450px)': {
-      margin: '0 0 25px'
+      margin: '10px 0 25px'
     }
   }
 }));

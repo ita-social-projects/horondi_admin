@@ -63,7 +63,9 @@ export const newsErrors = {
 
 export const patternTranlations = {
   PATTERN_NOT_FOUND: 'Гобелен не знайдено!',
-  PATTERN_ALREADY_EXIST: 'Такий гобелен вже існує!'
+  PATTERN_ALREADY_EXIST: 'Такий гобелен вже існує!',
+  PATTERN_IS_IN_PRODUCT:
+    'Неможливо видалити, цей патерн застосований до продукту'
 };
 
 export const homePageEditErrors = {
@@ -90,14 +92,15 @@ export const materialTranslations = {
 
 export const productsErrors = {
   PRODUCT_NOT_FOUND: 'Продуктів не знайдено',
-  PRODUCT_ALREADY_EXIST: 'Такий продукт вже існує!'
+  PRODUCT_ALREADY_EXIST: 'Такий продукт вже існує!',
+  PRODUCT_NOT_EXIST: 'Продукт видалено'
 };
 
 export const userTranslations = {
   USER_IS_BLOCKED: 'Користувача заблоковано',
   WRONG_CREDENTIALS: 'Неправильний логін або пароль',
-  INVALID_PERMISSIONS: 'Неправильний логін або пароль',
-  USER_NOT_FOUND: 'Неправильний логін або пароль'
+  INVALID_PERMISSIONS: 'Недостатньо прав для доступу',
+  USER_NOT_FOUND: 'Користувача не знайдено'
 };
 
 export const errorStatuses = {
@@ -111,4 +114,10 @@ export const usersErrors = {
 
 export const adminsErrors = {
   ADMIN_NOT_FOUND: 'Адміністратора не знайдено'
+};
+export const certificateErrorMessages = {
+  CERTIFICATE_IS_ACTIVE: 'Неможливо видалити активний сертифікат'
+};
+export const promoCodeErrorMessages = {
+  THERE_IS_PROMOCODE_WITH_THIS_NAME: 'Промокод з такою назвою вже існує'
 };

@@ -4,23 +4,19 @@ import { Grid, Typography } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import * as Yup from 'yup';
 
-import useQuestionsAnswersHandlers from '../../../utils/use-questions-answers-handlers';
+import createQuestionsAnswers from '../../../utils/use-questions-answers-handlers';
 import { useStyles } from '../business-page-form/business-page-form.styles';
 import { SaveButton, BackButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 
-import {
-  uaSetQuestionsHandler,
-  uaSetAnswersHandler,
-  enSetQuestionsHandler,
-  enSetAnswersHandler,
-  questionsAnswersDispatchHandler
-} from '../../../utils/questions-answers-form';
+import { questionsAnswersDispatchHandler } from '../../../utils/questions-answers-form';
 
 import {
   addQuestionsAnswers,
   getQuestionsAnswersById,
+  setCurrentQuestionsAnswers,
   updateQuestionsAnswers
 } from '../../../redux/questions-answers/questions-answers.actions';
 
@@ -28,7 +24,6 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const FormQNA = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -41,42 +36,33 @@ const FormQNA = ({ id, editMode }) => {
   const common = useCommonStyles();
   const {
     labels: { questionaAnswersLabel },
-    languages
+    languages,
+    commonErrorMessages: { ERROR_MESSAGE, MIN_LENGTH_MESSAGE }
   } = config;
 
   const { pathToBusinessPages } = config.routes;
 
-  const {
-    createQuestionsAnswers,
-    uaSetAnswer,
-    enSetAnswer,
-    uaSetQuestion,
-    enSetQuestion,
-    uaAnswer,
-    enAnswer,
-    enQuestion,
-    uaQuestion
-  } = useQuestionsAnswersHandlers();
-
   useEffect(() => {
     id && dispatch(getQuestionsAnswersById(id));
+    return () => dispatch(setCurrentQuestionsAnswers(null));
   }, [dispatch, id]);
 
-  useEffect(() => {
-    const isEditingReady = !!questionsAnswers;
+  const formSchema = Yup.object().shape({
+    uaQuestion: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
+    enQuestion: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
+    uaAnswer: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
+    enAnswer: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE)
+  });
 
-    uaSetQuestion(uaSetQuestionsHandler(isEditingReady, questionsAnswers));
-    uaSetAnswer(uaSetAnswersHandler(isEditingReady, questionsAnswers));
-    enSetQuestion(enSetQuestionsHandler(isEditingReady, questionsAnswers));
-    enSetAnswer(enSetAnswersHandler(isEditingReady, questionsAnswers));
-  }, [
-    editMode,
-    questionsAnswers,
-    uaSetAnswer,
-    uaSetQuestion,
-    enSetAnswer,
-    enSetQuestion
-  ]);
+  const initial = useMemo(
+    () => ({
+      uaQuestion: questionsAnswers ? questionsAnswers.question[0].value : '',
+      enQuestion: questionsAnswers ? questionsAnswers.question[1].value : '',
+      uaAnswer: questionsAnswers ? questionsAnswers.answer[0].value : '',
+      enAnswer: questionsAnswers ? questionsAnswers.answer[1].value : ''
+    }),
+    [questionsAnswers]
+  );
 
   const {
     values,
@@ -85,14 +71,13 @@ const FormQNA = ({ id, editMode }) => {
     handleSubmit,
     handleBlur,
     handleChange,
-    setFieldValue
+    setFieldValue,
+    dirty,
+    isValid
   } = useFormik({
-    initialValues: {
-      uaQuestion,
-      enQuestion,
-      uaAnswer,
-      enAnswer
-    },
+    enableReinitialize: true,
+    initialValues: initial,
+    validationSchema: formSchema,
     onSubmit: async (data) => {
       const page = createQuestionsAnswers({
         ...data
@@ -108,15 +93,7 @@ const FormQNA = ({ id, editMode }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
-
-  useMemo(() => {
-    values.uaQuestion = uaQuestion;
-    values.enQuestion = enQuestion;
-    values.uaAnswer = uaAnswer;
-    values.enAnswer = enAnswer;
-  }, [uaQuestion, enQuestion, uaAnswer, enAnswer]);
 
   if (loading) {
     return <LoadingBar />;
@@ -151,9 +128,12 @@ const FormQNA = ({ id, editMode }) => {
               data-cy='save-btn'
               onClickHandler={handleSubmit}
               unblockFunction={unblock}
-              values={{}}
+              values={{
+                uaQuestion: values.uaQuestion,
+                enQuestion: values.enQuestion
+              }}
               errors={errors}
-              {...(id ? { disabled: !changed } : {})}
+              disabled={!dirty || !isValid}
             />
           </Grid>
         </Grid>
@@ -169,7 +149,7 @@ const FormQNA = ({ id, editMode }) => {
       </div>
 
       <form onSubmit={(e) => eventPreventHandler(e)}>
-        {languages.map((lang) => (
+        {languages.map((lang, i) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
       </form>

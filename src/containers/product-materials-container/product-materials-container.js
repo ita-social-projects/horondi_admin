@@ -8,6 +8,7 @@ import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './product-materials-container.styles';
 import { config } from '../../configs';
 import { handleMenuItem } from '../../utils/handle-menu-item';
+import productContainersTypes from '../../propTypes/product-containers';
 
 const { materialLabels } = config.labels.product;
 
@@ -81,7 +82,7 @@ const ProductMaterialsContainer = ({
   ];
   return (
     <form onSubmit={handleSubmit} className={sharedStyles.container}>
-      <Grid container spacing={1} xs={12} justify='flex-start'>
+      <Grid container spacing={1} justify='flex-start'>
         {materialLabels.map(({ label, name, required }, idx) => (
           <FormControl className={styles.formControl} key={label}>
             <InputLabel htmlFor={label}>{`${label}${
@@ -90,7 +91,7 @@ const ProductMaterialsContainer = ({
             <Select
               name={name}
               error={touched[name] && !!errors[name]}
-              value={values[name]}
+              value={options[idx].length ? values[name] : ''}
               onChange={handleSelectChange}
               onBlur={handleBlur}
               disabled={!options[idx] || !options[idx].length}
@@ -111,22 +112,8 @@ ProductMaterialsContainer.propTypes = {
   bottomColors: PropTypes.arrayOf(PropTypes.object).isRequired,
   mainMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   mainColors: PropTypes.arrayOf(PropTypes.object).isRequired,
-  values: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.array,
-      PropTypes.object
-    ])
-  ).isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
-  toggleFieldsChanged: PropTypes.func
+  toggleFieldsChanged: PropTypes.func,
+  ...productContainersTypes
 };
 
 ProductMaterialsContainer.defaultProps = {

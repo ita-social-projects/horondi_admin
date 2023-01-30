@@ -1,18 +1,27 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-
-import PositionForm from '../../../components/forms/position-form/position-form';
+import ConstructorFormContainer from '../../../containers/constructor-form-container/constructor-form-container';
+import {
+  getPosition,
+  updatePosition
+} from '../../../redux/position/position.actions';
 import { useCommonStyles } from '../../common.styles';
 import { positionsSelector } from '../../../redux/selectors/position.selectors';
 import LoadingBar from '../../../components/loading-bar';
-import { getPosition } from '../../../redux/position/position.actions';
+import { config } from '../../../configs';
 
 const PositionEdit = ({ match }) => {
-  const dispatch = useDispatch();
-  const commonStyles = useCommonStyles();
-  const { loading, position } = useSelector(positionsSelector);
   const { id } = match.params;
+
+  const common = useCommonStyles();
+  const dispatch = useDispatch();
+  const { position, loading } = useSelector(positionsSelector);
+
+  const { pathToPosition } = config.routes;
+  const { constructorItemsKeys } = config;
+  const partItemKey = constructorItemsKeys.position;
 
   useEffect(() => {
     dispatch(getPosition(id));
@@ -23,22 +32,29 @@ const PositionEdit = ({ match }) => {
   }
 
   return (
-    <div className={commonStyles.container}>
-      {position !== null ? (
-        <PositionForm id={id} edit position={position} />
+    <div className={common.detailsContainer}>
+      {position ? (
+        <ConstructorFormContainer
+          id={id}
+          edit
+          part={position}
+          partItemKey={partItemKey}
+          pathBack={pathToPosition}
+          dispatchAction={updatePosition}
+          withoutImg
+          withoutPrice
+        />
       ) : null}
     </div>
   );
 };
 
 PositionEdit.propTypes = {
-  id: PropTypes.string,
-  match: PropTypes.objectOf(PropTypes.object)
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
-PositionEdit.defaultProps = {
-  id: '',
-  match: {}
-};
-
-export default PositionEdit;
+export default withRouter(PositionEdit);

@@ -4,10 +4,6 @@ export const useStyles = makeStyles(() => ({
   formControl: {
     width: '100%'
   },
-  error: {
-    color: '#e60000',
-    marginTop: 15
-  },
   ukrPostTitle: {
     fontWeight: 400,
     fontSize: 18,
@@ -18,6 +14,6 @@ export const useStyles = makeStyles(() => ({
   },
   selectorInfo: {
     width: '100%',
-    marginBottom: 15
+    marginBottom: 5
   }
 }));

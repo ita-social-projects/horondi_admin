@@ -8,7 +8,8 @@ import {
   constructorMenuCategories,
   certificatesMenuCategories,
   promoMenuCategories,
-  materialMenuCategories
+  materialMenuCategories,
+  allCategories
 } from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
@@ -64,7 +65,8 @@ import {
   strapsErrorMessages,
   userErrorMessages,
   promoCodeErrorMessages,
-  aboutUsPageErrorMessages
+  aboutUsPageErrorMessages,
+  materialAboutErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -81,6 +83,7 @@ import {
   inputNames
 } from './news-form-helpers';
 import { imageUploadSlideInputsId } from './home-page-slide-helpers';
+import certificate from './certificate';
 
 export const config = {
   fetchPolicy: 'no-cache',
@@ -177,6 +180,19 @@ export const config = {
     UNAVAILABLE_TEXT: 'Недоступна'
   },
 
+  constructorModelForm: {
+    constructorKeys: [
+      'backs',
+      'basics',
+      'bottoms',
+      'closures',
+      'patterns',
+      'pockets',
+      'straps'
+    ],
+    constructorLabels: labels.constructorLabels
+  },
+
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
   product: {
@@ -223,6 +239,7 @@ export const config = {
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  imagePreviewId: 'imagePreviewContainerId',
   initialLanguageValues: [
     {
       lang: 'ua',
@@ -256,11 +273,22 @@ export const config = {
       counts: []
     }
   },
+  constructorItemsKeys: {
+    bottom: 'bottom',
+    basic: 'basic',
+    back: 'back',
+    strap: 'strap',
+    closure: 'closure',
+    pocket: 'pocket',
+    pattern: 'pattern',
+    position: 'position'
+  },
   UAH: 'грн',
   maxItemsPerPage: 10,
   buttonTitles,
   detailTitles,
   messages,
+  allCategories,
   menuCategories,
   materialMenuCategories,
   clientMenuCategories,
@@ -332,6 +360,8 @@ export const config = {
   userTranslations,
   errorStatuses,
   userErrorMessages,
+  materialAboutErrorMessages,
+  certificate,
   RESET: 'reset'
 };
 export const inputTypes = {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import map from 'lodash/map';
-import { upperFirst, noop } from 'lodash';
+import { upperFirst, noop, map } from 'lodash';
 import { useStyles } from './language-panel.styles';
 import Editor from '../../editor';
 
@@ -63,7 +62,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               values[inputName] = value;
             };
             return (
-              <>
+              <React.Fragment key={`${lang}-${input.name}`}>
                 <Editor
                   value={values[inputName]}
                   placeholder={input.label[lang]}
@@ -76,7 +75,6 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   data-cy={`${lang}-${input.name}`}
                   label={lang}
                   id={`${lang}-${input.name}`}
-                  key={lang}
                 />
                 {touched[`${lang}-${input.name}`] && errors[inputName] && (
                   <div
@@ -86,7 +84,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                     {errors[inputName]}
                   </div>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </Paper>
@@ -109,7 +107,9 @@ LanguagePanel.propTypes = {
         PropTypes.object
       ])
     ),
-    touched: PropTypes.objectOf(PropTypes.string),
+    touched: PropTypes.objectOf(
+      PropTypes.oneOfType([PropTypes.bool, PropTypes.array, PropTypes.object])
+    ).isRequired,
     errors: PropTypes.objectOf(PropTypes.string),
     inputs: PropTypes.arrayOf(
       PropTypes.shape({
@@ -124,7 +124,7 @@ LanguagePanel.propTypes = {
     ),
     handleChange: PropTypes.func,
     handleBlur: PropTypes.func,
-    setFieldValue: PropTypes.func.isRequired
+    setFieldValue: PropTypes.func
   })
 };
 

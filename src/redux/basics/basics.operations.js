@@ -18,7 +18,9 @@ export const getAllBasics = async (limit, skip, filter) => {
 								thumbnail
 							}
 							absolutePrice
+              relativePrice
 							available
+              optionType
               features {
                 material {
                   _id
@@ -105,7 +107,7 @@ export const deleteBasic = async (id) => {
   return result?.data?.deleteBasic;
 };
 
-export const updateBasic = async (id, basic, image) => {
+export const updateBasic = async (payload) => {
   const query = `
     mutation($id: ID!, $basic: BasicsInput!, $image: Upload) {
       updateBasic(id: $id, basic: $basic, image: $image) {
@@ -120,7 +122,7 @@ export const updateBasic = async (id, basic, image) => {
     }
   `;
 
-  const result = await setItems(query, { id, basic, image });
+  const result = await setItems(query, payload);
   return result?.data?.updateBasic;
 };
 
@@ -141,7 +143,9 @@ export const getBasicById = async (id) => {
 						thumbnail
           }
           absolutePrice
+          relativePrice
           available
+          optionType
           features {
             material {
               _id

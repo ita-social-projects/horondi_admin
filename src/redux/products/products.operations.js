@@ -113,6 +113,7 @@ const getAllProducts = async (
               }
               basePrice
               model {
+					_id
                 name {
                   value
                 }
@@ -147,6 +148,13 @@ const getAllProducts = async (
                   value
                 }
               }
+            sizes {
+              size {
+                _id
+                name
+              }
+              price
+            }
               isHotItem
             }
             count
@@ -267,8 +275,8 @@ const getProductDetails = async () => {
             }
           }
         }
-        getMaterialsByPurpose(purposes: [MAIN, BOTTOM, INNER, BACK]) {
-          main {
+        getMaterialsByPurpose(purposes: [BASIC, INNER, BOTTOM, BACK]) {
+          basic {
             _id
             name {
               value

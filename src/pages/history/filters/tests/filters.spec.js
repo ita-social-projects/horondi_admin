@@ -19,13 +19,13 @@ useSelector.mockImplementation(() => mockStore);
 describe('Filter component tests', () => {
   it('Should render Filter component', () => {
     const component = shallow(<Filters />);
-    expect(component.find(ComponentFilterMultiplePicker)).toHaveLength(3);
+    expect(component.find(ComponentFilterMultiplePicker)).toHaveLength(2);
   });
   it('Should call function inside action component', () => {
     const funcCallback = () => {};
     const component = shallow(<Filters />);
     const actionPicker = component.find(ComponentFilterMultiplePicker).at(0);
     actionPicker.prop('selectorFunc')(funcCallback);
-    expect(actionPicker.props().options[0].value).toBe('ADD_EVENT');
+    expect(actionPicker.props().options[0].value).toBe('CATEGORY_EVENT');
   });
 });

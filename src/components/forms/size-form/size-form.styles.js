@@ -64,9 +64,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: '100%',
-    padding: '20px',
     marginTop: 0,
-    marginLeft: '20px',
     '@media (max-width: 600px)': {
       paddingTop: '13px'
     },
@@ -78,8 +76,7 @@ export const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     position: 'relative',
     width: '100%',
-    height: 60,
-    marginTop: 51
+    height: 60
   },
   sizeTitle: {
     marginBottom: '10px',
@@ -91,7 +88,6 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   fixedButtons: {
-    position: 'fixed',
     height: 60,
     zIndex: 1001,
     backgroundColor: theme.palette.bodyColor

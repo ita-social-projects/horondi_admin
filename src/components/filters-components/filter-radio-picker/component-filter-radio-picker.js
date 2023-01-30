@@ -15,7 +15,7 @@ const ComponentFilterRadioPicker = ({
 }) => {
   const dispatch = useDispatch();
 
-  const setSortFilter = ({ key, type, value: sortValue }) => {
+  const setSortFilter = ({ _key, _type, value: sortValue }) => {
     dispatch(setCurrentPage(0));
     dispatch(setFilterValue(selectorFunc(value)));
     dispatch(actionSetLabel(sortValue));

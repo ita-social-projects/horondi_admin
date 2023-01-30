@@ -3,7 +3,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
+import { debounce } from 'lodash';
 
 import { config } from '../../../../../configs';
 import { useStyles } from './nova-post.styles';
@@ -13,8 +13,16 @@ import {
   getNovaPoshtaWarehouse
 } from '../../../../../redux/orders/orders.actions';
 import { inputName, POSTOMAT, postPropTypes } from '../../../../../utils/order';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
+import {
+  handleCityNovaPost,
+  handleWarehousesNovaPost
+} from '../../../../../utils/handle-orders-page';
 
-const NovaPost = ({ setFieldValue, values }) => {
+const NovaPost = ({ setFieldValue, values, inputOptions }) => {
   const { materialUiConstants } = config;
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = configs;
   const dispatch = useDispatch();
@@ -26,6 +34,8 @@ const NovaPost = ({ setFieldValue, values }) => {
     warehouses: Orders.warehouses
   }));
 
+  const { handleBlur, touched, errors } = inputOptions;
+
   const [inputValue, setInputValue] = useState('');
   const [selectedCity, setSelectedCity] = useState(values.city);
   const [wareHouse, setWarehouse] = useState('');
@@ -33,7 +43,7 @@ const NovaPost = ({ setFieldValue, values }) => {
   const [departmentFocus, setDepartmentFocus] = useState(false);
 
   const getPostCities = useCallback(
-    _.debounce((value) => {
+    debounce((value) => {
       dispatch(getNovaPoshtaCities(value));
     }, 500),
     [dispatch, getNovaPoshtaCities]
@@ -44,39 +54,60 @@ const NovaPost = ({ setFieldValue, values }) => {
     }
   }, [dispatch, selectedCity]);
 
+  const availableWarehouses =
+    warehouses && warehouses.length
+      ? warehouses.filter(
+          (warehouseItem) => !warehouseItem.description.includes(POSTOMAT)
+        )
+      : [];
+
   return (
     <div>
       <h3 className={styles.novaPostTitle}>{deliveryTitles.novaPost}</h3>
       <div className={styles.novaPostData}>
         <div className={styles.selectorInfo}>
           <Autocomplete
+            id={inputName.novaPost.city}
             onFocus={() => setCityFocus(true)}
-            onBlur={() => setCityFocus(false)}
-            onInputChange={(e, value) => {
+            onBlur={(e) => {
+              setCityFocus(false);
+              handleBlur(e);
+            }}
+            onInputChange={(_e, value) => {
               setInputValue(value);
               getPostCities(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneCity}
-            onChange={(event, value) => {
-              if (value) {
-                setSelectedCity(value.description);
-                setFieldValue(inputName.novaPost.city, value.description);
-                setFieldValue(inputName.novaPost.courierOffice, '');
-              } else {
-                setSelectedCity('');
-                setWarehouse('');
-                setFieldValue(inputName.novaPost.city, '');
-              }
-            }}
+            onChange={(_event, value) =>
+              handleCityNovaPost(
+                value,
+                setSelectedCity,
+                setWarehouse,
+                setFieldValue
+              )
+            }
             options={cities}
             inputValue={cityFocus ? inputValue : values.city}
             getOptionLabel={(option) => option?.description || null}
+            getOptionSelected={(option, value) =>
+              option.cityId === value.cityId
+            }
             className={styles.dataInput}
+            data-testid='cityNovaPost'
             renderInput={(params) => (
               <TextField
                 {...params}
                 label={deliveryLabels.city}
                 variant={materialUiConstants.outlined}
+                error={isFieldError(inputName.novaPost.city, errors, touched)}
+                helperText={
+                  isFieldError(inputName.novaPost.city, errors, touched)
+                    ? getError(inputName.novaPost.city, errors)
+                    : ' '
+                }
+                FormHelperTextProps={{
+                  'data-testid': `${inputName.novaPost.city}`
+                }}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -94,36 +125,51 @@ const NovaPost = ({ setFieldValue, values }) => {
       <div className={styles.novaPostData}>
         <div className={styles.selectorInfo}>
           <Autocomplete
-            onInputChange={(event, value) => {
+            id={inputName.novaPost.courierOffice}
+            onInputChange={(_event, value) => {
               setWarehouse(value);
             }}
             noOptionsText={deliveryAdditionalInfo.noOneDepartment}
-            onChange={(event, value) => {
-              if (value) {
-                setFieldValue(
-                  inputName.novaPost.courierOffice,
-                  value.description
-                );
-              } else {
-                setFieldValue(inputName.novaPost.courierOffice, '');
-                setWarehouse('');
-              }
-            }}
+            onChange={(_event, value) =>
+              handleWarehousesNovaPost(value, setFieldValue, setWarehouse)
+            }
             onFocus={() => setDepartmentFocus(true)}
-            onBlur={() => setDepartmentFocus(false)}
+            onBlur={(e) => {
+              setDepartmentFocus(false);
+              handleBlur(e);
+            }}
             disabled={!selectedCity}
-            options={_.filter(
-              warehouses,
-              (warehouseItem) => !warehouseItem.description.includes(POSTOMAT)
-            )}
+            options={availableWarehouses}
             inputValue={departmentFocus ? wareHouse : values.courierOffice}
-            getOptionLabel={(option) => option?.description}
+            getOptionLabel={(option) => option?.description || null}
+            getOptionSelected={(option, value) =>
+              option.courierOfficeId === value.courierOfficeId
+            }
             className={styles.dataInput}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label={deliveryLabels.department}
                 variant={materialUiConstants.outlined}
+                error={
+                  isFieldError(
+                    inputName.novaPost.courierOffice,
+                    errors,
+                    touched
+                  ) && !!inputValue
+                }
+                helperText={
+                  isFieldError(
+                    inputName.novaPost.courierOffice,
+                    errors,
+                    touched
+                  ) && !!inputValue
+                    ? getError(inputName.novaPost.courierOffice, errors)
+                    : ' '
+                }
+                FormHelperTextProps={{
+                  'data-testid': `${inputName.novaPost.courierOffice}`
+                }}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (

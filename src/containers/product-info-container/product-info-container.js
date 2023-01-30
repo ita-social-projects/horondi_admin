@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
 import { useStyles } from './product-info-container.styles';
 
 import { config } from '../../configs';
 import LanguagePanel from '../../components/forms/language-panel';
+import productContainersTypes from '../../propTypes/product-containers';
 
 const {
   labels: {
@@ -47,21 +47,7 @@ const ProductInfoContainer = ({
 };
 
 ProductInfoContainer.propTypes = {
-  values: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.array,
-      PropTypes.object
-    ])
-  ).isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func,
-  setFieldValue: PropTypes.func
+  ...productContainersTypes
 };
 
 ProductInfoContainer.defaultProps = {

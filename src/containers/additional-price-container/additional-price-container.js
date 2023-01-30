@@ -36,6 +36,7 @@ const AdditionalPriceContainer = ({
   useEffect(() => {
     dispatch(getCurrencies());
   }, [dispatch]);
+
   return (
     <Paper className={styles.additionalPricePaper}>
       <Box>
@@ -65,7 +66,7 @@ const AdditionalPriceContainer = ({
         </FormControl>
       )}
       <TextField
-        data-cy='additionalPrice'
+        data-testid='additionalPrice'
         className={`
                   ${styles.textField}
                   ${styles.additionalPrice} 
@@ -103,16 +104,19 @@ AdditionalPriceContainer.propTypes = {
   values: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.number,
       PropTypes.bool,
-      PropTypes.array,
-      PropTypes.object
+      PropTypes.number,
+      PropTypes.array
     ])
   ).isRequired,
-  labels: PropTypes.objectOf(PropTypes.string).isRequired,
+  labels: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object])
+  ).isRequired,
   radio: PropTypes.bool,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  touched: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.bool, PropTypes.array])
+  ).isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 };

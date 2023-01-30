@@ -11,7 +11,7 @@ export const MenuProps = {
   }
 };
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   container: {
     width: 160
   }

@@ -5,7 +5,6 @@ import HistoryIcon from '@material-ui/icons/History';
 import StyleIcon from '@material-ui/icons/Style';
 import FilterIcon from '@material-ui/icons/Filter';
 import HomeIcon from '@material-ui/icons/Home';
-import LineWeight from '@material-ui/icons/LineWeight';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import HelpIcon from '@material-ui/icons/Help';
@@ -54,7 +53,6 @@ export const catalogMenuCategories = [
   ['Категорії', routes.pathToCategories, CategoryIcon],
   ['Моделі', routes.pathToModels, StyleIcon],
   ['Продукти', routes.pathToProducts, LocalMallIcon],
-  ['Розміри', routes.pathToSizes, LineWeight],
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Гобелени', routes.pathToPatterns, GradientIcon]
 ];
@@ -101,4 +99,15 @@ export const certificatesMenuCategories = [
     routes.pathToAboutCertificate,
     AccountCircleIcon
   ]
+];
+
+export const allCategories = [
+  ...menuCategories,
+  ...materialMenuCategories,
+  ...clientMenuCategories,
+  ...catalogMenuCategories,
+  ...promoMenuCategories,
+  ...staticPagesCategories,
+  ...constructorMenuCategories,
+  ...certificatesMenuCategories
 ];

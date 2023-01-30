@@ -8,7 +8,11 @@ import RemoveIcon from '@material-ui/icons/Remove';
 
 import { config } from '../../../../configs';
 import { useStyles } from './edit-product-form.styles';
-import { editProductFormPropTypes, inputName } from '../../../../utils/order';
+import {
+  calculateItemsPriceWithDiscount,
+  editProductFormPropTypes,
+  inputName
+} from '../../../../utils/order';
 import { getProduct } from '../../../../redux/products/products.actions';
 import configs from '../../../../configs/orders';
 
@@ -18,7 +22,9 @@ const EditProductForm = ({
   selectedItem,
   setFieldValue,
   setSizeItems,
-  items
+  itemsPriceWithDiscount,
+  items,
+  promoCode
 }) => {
   const { materialUiConstants } = config;
   const { productLabels } = configs;
@@ -35,13 +41,14 @@ const EditProductForm = ({
     }
   }, [selectedItem]);
 
-  const { sizes } = useSelector(({ Products }) => ({
-    sizes: Products.selectedProduct.sizes
+  const { sizes, category } = useSelector(({ Products }) => ({
+    sizes: Products.selectedProduct.sizes,
+    category: Products.selectedProduct.category
   }));
 
   useEffect(() => {
     selectedItem && dispatch(getProduct(selectedItem.product._id));
-  }, [selectedItem]);
+  }, [selectedItem, dispatch]);
 
   const selectHandler = (e) => {
     setSize({
@@ -56,17 +63,30 @@ const EditProductForm = ({
 
   const confirmHandler = () => {
     const index = items.findIndex(
-      (item) => item.product._id === selectedItem.product._id
+      (item) =>
+        item.product._id === selectedItem.product._id &&
+        item.options.size._id === selectedItem.options.size._id
     );
     const newValue = { ...items[index], ...items[index].options };
     newValue.options.size._id = size._id;
     newValue.options.size.price = size.price;
     newValue.options.size.name = size.name;
     newValue.quantity = quantity;
-    setFieldValue(inputName.itemsName, [
+    setFieldValue(inputName.items, [
       ...items.slice(0, index),
       newValue,
       ...items.slice(index + 1)
+    ]);
+    setFieldValue(inputName.itemsPriceWithDiscount, [
+      ...itemsPriceWithDiscount.slice(0, index),
+      calculateItemsPriceWithDiscount(
+        promoCode,
+        quantity,
+        category,
+        size.price,
+        selectedItem.isFromConstructor && 'constructor'
+      ),
+      ...itemsPriceWithDiscount.slice(index + 1)
     ]);
     onCloseHandler();
   };
@@ -79,13 +99,17 @@ const EditProductForm = ({
         <div className={classes.quantity}>
           {productLabels.quantity}
           <Button
+            data-testid='decrement'
             onClick={() => setQuantity((prev) => prev - 1)}
             disabled={quantity <= 1}
           >
             <RemoveIcon />
           </Button>
-          <h3>{quantity}</h3>
-          <Button onClick={() => setQuantity((prev) => prev + 1)}>
+          <h3 data-testid='quantity'>{quantity}</h3>
+          <Button
+            data-testid='increment'
+            onClick={() => setQuantity((prev) => prev + 1)}
+          >
             <AddIcon />
           </Button>
         </div>
@@ -97,6 +121,7 @@ const EditProductForm = ({
         </div>
         <br />
         <Button
+          data-testid='save-btn'
           variant={materialUiConstants.contained}
           color={materialUiConstants.primary}
           disabled={
@@ -114,7 +139,8 @@ const EditProductForm = ({
 
 EditProductForm.defaultProps = {
   items: [],
-  selectedItem: {}
+  selectedItem: {},
+  promoCode: {}
 };
 
 EditProductForm.propTypes = editProductFormPropTypes;

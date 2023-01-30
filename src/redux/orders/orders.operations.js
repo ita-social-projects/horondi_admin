@@ -49,6 +49,11 @@ export const getOrderById = (id) => {
 							description {
 								lang
 								value
+							}
+							pattern {
+								name {
+									value
+								}
 							}  
 						}
 						model {
@@ -96,6 +101,10 @@ export const getOrderById = (id) => {
 						isFromConstructor
 						fixedPrice
 					}
+					itemsPriceWithDiscount
+					promoCodeId
+					certificateId
+					itemsDiscount
 					paymentMethod
 					paymentStatus
 					isPaid
@@ -166,6 +175,7 @@ export const updateOrder = (order, id) => {
 						options {
 							size {
 								_id
+								name
 							}
 							sidePocket
 						}
@@ -175,6 +185,9 @@ export const updateOrder = (order, id) => {
 					paymentMethod
 					paymentStatus
 					isPaid
+					itemsPriceWithDiscount
+					promoCodeId
+					itemsDiscount
 				}
 				...on Error {
 					statusCode
@@ -328,6 +341,7 @@ export const getNovaPoshtaCities = async (city) => {
       query($city: String) {
         getNovaPoshtaCities(city: $city) {
           description
+		  cityID
         }
       }
     `;
@@ -340,11 +354,12 @@ export const getNovaPoshtaWarehouses = async (city) => {
       query($city: String) {
         getNovaPoshtaWarehouses(city: $city) {
           description
+		  number
         }
       }
     `;
 
-  const result = await getItems(query, city);
+  const result = await getItems(query, { city });
 
   return result?.data?.getNovaPoshtaWarehouses;
 };

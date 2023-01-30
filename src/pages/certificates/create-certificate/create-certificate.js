@@ -78,12 +78,12 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && check) {
+    if (date && check && email) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [isInvalid, checkBoxes, email]);
+  }, [date, checkBoxes, email]);
 
   const disabledDate = (pickedDate) => {
     const yesterday = new Date();
@@ -103,7 +103,7 @@ const CreateCertificate = () => {
           newArr.push({
             name: 'HOR###',
             value: certificate.value,
-            dateStart: dateResetHours(date),
+            dateStart: date,
             dateEnd: expireDate
           });
         }
@@ -129,25 +129,10 @@ const CreateCertificate = () => {
   };
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (email.length > 1) {
-        email.match(formRegExp.email)
-          ? setIsInvalid(false)
-          : setIsInvalid(true);
-      }
-    }, [500]);
-
-    return () => {
-      clearTimeout(timerId);
-    };
+    if (email.length > 1) {
+      email.match(formRegExp.email) ? setIsInvalid(false) : setIsInvalid(true);
+    }
   }, [email]);
-
-  const dateResetHours = (dateArg) => {
-    const dateObj = dateArg ? new Date(dateArg) : new Date();
-    dateObj.setHours(0, 0, 0, 0);
-
-    return dateObj;
-  };
 
   const expireDate = date ? new Date(date) : new Date();
   expireDate.setFullYear(expireDate.getFullYear() + 1);
@@ -169,7 +154,7 @@ const CreateCertificate = () => {
   };
 
   if (date) {
-    const dateStart = { dateStart: dateResetHours(date) };
+    const dateStart = { dateStart: date };
     Object.assign(variables, dateStart);
   }
 
@@ -227,6 +212,7 @@ const CreateCertificate = () => {
               size='lg'
               format='D/MM/YYYY'
               value={date}
+              data-testid='datePicker'
               disabledDate={disabledDate}
               onChange={(newValue) => {
                 setDate(newValue);

@@ -109,7 +109,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          setcartLink({ lat: data[0].lat, lon: data[0].lon });
+          setcartLink({ lat: data[0]?.lat, lon: data[0]?.lon });
         })
         .catch((err) => console.error(err));
     }, 1000);
@@ -210,8 +210,8 @@ ContactsForm.propTypes = {
     enAddress: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     cartLink: PropTypes.shape({
-      lat: PropTypes.string.isRequired,
-      lon: PropTypes.string.isRequired
+      lat: PropTypes.string,
+      lon: PropTypes.string
     })
   })
 };

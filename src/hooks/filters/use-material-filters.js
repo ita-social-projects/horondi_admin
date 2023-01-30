@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
 import { availableEnum } from '../../configs/sizes-enum';
-import { sizeAvailableObj } from '../../utils/size-helpers';
+import { sizeAvailableObj } from '../../utils/size';
 import {
   clearMaterialFilters,
   setMaterialFilter

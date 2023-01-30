@@ -54,7 +54,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         imgUrl: `${imagePrefix}${slide.images.large}`
       });
     }
-  }, [dispatch, slide]);
+  }, [dispatch, slide, setUploadImage]);
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -212,7 +212,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             )}
           </Paper>
         </Grid>
-        {languages.map((lang, index) => (
+        {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
       </form>

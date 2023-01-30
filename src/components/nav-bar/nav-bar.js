@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
@@ -24,6 +24,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import routes from '../../configs/routes';
 
 import { dateRangePickerCustomStyles } from '../filter-search-sort/filter-by-date/filter-by-date.styles';
+import { passThemeStatus } from '../../utils/passThemeStatus';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
@@ -39,6 +40,8 @@ const NavBar = () => {
     darkMode: Theme.darkMode,
     sideMenuStatus: Theme.sideMenuStatus
   }));
+
+  passThemeStatus(darkMode);
 
   const { isAuth } = useSelector(({ Auth }) => ({
     isAuth: Auth.isAuth
@@ -74,18 +77,18 @@ const NavBar = () => {
 
   const sheet = document.createElement('style');
 
-  const changeDateRangePickerStyles = () => {
+  const changeDateRangePickerStyles = useCallback(() => {
     if (darkMode) {
       sheet.innerHTML = dateRangePickerCustomStyles.darkCSS;
     } else {
       sheet.innerHTML = dateRangePickerCustomStyles.lightCSS;
     }
-  };
+  }, [darkMode, sheet.innerHTML]);
   document.body.appendChild(sheet);
 
   useEffect(() => {
     changeDateRangePickerStyles();
-  }, [darkMode]);
+  }, [darkMode, changeDateRangePickerStyles]);
 
   return (
     <AppBar className={classes.appBar}>

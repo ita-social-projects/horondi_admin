@@ -43,26 +43,64 @@ const messages = {
   REMOVE_CONSTRUCTOR_MESSAGE: 'Ви впевнені, що хочете видалити цей елемент?',
   NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
   REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
-  BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
-  BOTTOM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
-  DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
-  NO_POCKET_MESSAGE: 'Кишені відсутні',
-  DELETE_STRAP_MESSAGE: 'Ви впевнені, що хочете видалити цей ремінець?',
-  NO_STRAPS_MESSAGE: 'Ремінці відсутні',
-  DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
-  NO_POSITION_MESSAGE: 'Позиції відсутні',
-  NO_BACKS_MESSAGE: 'Cпинки відсутні',
-  NO_BOTTOMS_MESSAGE: 'Низи відсутні',
+  constructorPageMessages: {
+    bottom: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
+      NO_ITEMS_MESSAGE: 'Низи відсутні'
+    },
+    back: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
+      NO_ITEMS_MESSAGE: 'Cпинки відсутні'
+    },
+    pocket: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
+      NO_ITEMS_MESSAGE: 'Кишені відсутні'
+    },
+    strap: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей ремінець?',
+      NO_ITEMS_MESSAGE: 'Ремінці відсутні'
+    },
+    position: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
+      NO_ITEMS_MESSAGE: 'Розміщення відсутні'
+    },
+    closure: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю защіпку?',
+      NO_ITEMS_MESSAGE: 'Защіпки відсутні'
+    },
+    basic: {
+      ITEM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
+      NO_ITEMS_MESSAGE: 'Основи відсутні'
+    },
+    IS_IN_CONSTRUCTOR_MESSAGE(modelsName) {
+      return `Цей елемент є частиною конструктора(ів): ${modelsName}.
+      Для видалення, спершу приберіть цей елемент
+      з обраних у відповідних конструкторах.`;
+    }
+  },
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
   DELETE_CONSTRUCTOR_MESSAGE:
     'Ви впевнені, що хочете видалити цей конструктор?',
-  DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
-  NO_CLOSURE_MESSAGE: 'Замочки відсутні',
-  DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
   NO_CERTIFICATES_MESSAGE: 'Сертифікати відсутні',
   DELETE_CERTIFICATE_MESSAGE: 'Ви впевнені, що хочете видалити цей сертифікат?',
   UPDATE_CERTIFICATE_MESSAGE:
     'Ви впевнені, що хочете відмітити цей сертифікат як використаний?',
-  NO_BASICS_MESSAGE: 'Основи відсутні'
+  NO_BASICS_MESSAGE: 'Основи відсутні',
+  PRODUCTS_DELETE_WITH_MODEL_MESSAGE: (
+    numberOfProducts,
+    numberOfConstructors
+  ) =>
+    `Буде видалено ${numberOfProducts ? `${numberOfProducts} продуктів` : ''} ${
+      numberOfProducts && numberOfConstructors ? 'і' : ''
+    } ${numberOfConstructors ? 'конструктор' : ''} цієї моделі`,
+  DELETE_SIZE_CONFIRMATION_MESSAGE:
+    'Ви впевнені що хочете видалити цей розмір?',
+  DELETED_SIZE_MESSAGE: 'Розмір успішно видалено',
+  DELETE_SIZE_ERROR: (productsWithLastSize, productsToDeleteMessage) =>
+    `Це останній розмір для ${productsWithLastSize.length} продуктів: ${productsToDeleteMessage}. Замініть його або видаліть продукти`,
+  SEND_CONFIRMATION_CODE:
+    'Для запрошення суперадміна необхідно ввести код, який буде надіслано Вам на пошту',
+  INVITE_ADMIN_TITLE: 'Запросити cпецкористувача ?',
+  INVITE_ADMIN_MESSAGE: (email) => `Надіслати запрошення ${email} ?`
 };
 export default messages;

@@ -77,7 +77,7 @@ const OrdersPage = () => {
 
   useEffect(() => {
     dispatch(getUsers({}));
-  }, []);
+  }, [dispatch]);
 
   const regUser = useSelector(({ Users }) => ({
     list: Users.list,

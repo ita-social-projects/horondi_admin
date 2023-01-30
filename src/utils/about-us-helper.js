@@ -49,6 +49,9 @@ export const getInitialValuesForFooterImgEdit = (businessPage) => ({
 
 export const getImageNamesFromSection = (businessPage, id) => {
   const imgSrc = getImgFromBusinessPageSection(businessPage, id).src;
+  if (!imgSrc) {
+    return;
+  }
   const imgName = imgSrc.match(imgNameRegex)[2];
   return Object.values(imgSizes).map((imgSize) => `${imgSize}_${imgName}`);
 };
@@ -116,36 +119,42 @@ export const getBusinessPageWithNewSection = (
   const uaSection = {
     id,
     title: values.uaTitle,
-    text: values.uaText,
-    img: { name: filename }
+    text: values.uaText
   };
   const enSection = {
     id,
     title: values.enTitle,
-    text: values.enText,
-    img: { name: filename }
+    text: values.enText
   };
-  businessPageCopy.sections[0].value = [
-    ...businessPage.sections[0].value,
+
+  businessPageCopy.translations.ua.sections = [
+    ...businessPage.translations.ua.sections,
     uaSection
   ];
-  businessPageCopy.sections[1].value = [
-    ...businessPage.sections[1].value,
+  businessPageCopy.translations.en.sections = [
+    ...businessPage.translations.en.sections,
     enSection
+  ];
+  businessPageCopy.sectionsImgs = [
+    ...businessPage.sectionsImgs,
+    { id, name: filename || '' }
   ];
   return businessPageCopy;
 };
 
 export const getBusinessPageWithoutSection = (businessPage, sectionId) => {
   const businessPageCopy = _.cloneDeep(businessPage);
-  businessPageCopy.sections[0].value =
-    businessPageCopy.sections[0].value.filter(
+  businessPageCopy.translations.ua.sections =
+    businessPageCopy.translations.ua.sections.filter(
       (section) => section.id !== sectionId
     );
-  businessPageCopy.sections[1].value =
-    businessPageCopy.sections[1].value.filter(
+  businessPageCopy.translations.en.sections =
+    businessPageCopy.translations.en.sections.filter(
       (section) => section.id !== sectionId
     );
+  businessPageCopy.sectionsImgs = [
+    ...businessPageCopy.sectionsImgs.filter((image) => image.id !== sectionId)
+  ];
   return businessPageCopy;
 };
 

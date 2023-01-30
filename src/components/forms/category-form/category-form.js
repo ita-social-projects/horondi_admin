@@ -70,19 +70,21 @@ const CategoryForm = ({ category, id, edit }) => {
     handleBlur,
     touched,
     errors,
-    setFieldValue
+    setFieldValue,
+    dirty,
+    isValid
   } = useFormik({
     validationSchema: categoryValidationSchema,
     initialValues: getCategoryInitialValues(edit, IMG_URL, category),
     onSubmit: (data) => {
       const newCategory = createCategory(data);
       const uploadCondition = upload instanceof File;
-      onSubmitCategoryHandler(edit, dispatch, updateCategory, {
+      const submitCategoryArgs = id
+        ? [edit, dispatch, updateCategory]
+        : [uploadCondition, dispatch, addCategory];
+
+      onSubmitCategoryHandler(...submitCategoryArgs, {
         id,
-        category: newCategory,
-        upload
-      });
-      onSubmitCategoryHandler(uploadCondition, dispatch, addCategory, {
         category: newCategory,
         upload
       });
@@ -142,6 +144,7 @@ const CategoryForm = ({ category, id, edit }) => {
                   enName: values.enName,
                   code: values.code
                 }}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

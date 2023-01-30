@@ -16,7 +16,7 @@ const ErrorPage = () => {
   }));
   useEffect(() => {
     if (!errorMessage) {
-      dispatch(push('/'));
+      dispatch(push('/error'));
     }
   }, [dispatch, errorMessage]);
 
@@ -29,7 +29,7 @@ const ErrorPage = () => {
           ? ERROR_BOUNDARY_STATUS
           : ERROR_PAGE_STATUS}
       </h2>
-      <Link to='/' onClick={() => window.location.reload()}>
+      <Link to='/'>
         <Button variant='contained'>На головну</Button>
       </Link>
     </div>

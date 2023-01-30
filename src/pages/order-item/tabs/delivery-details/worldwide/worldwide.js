@@ -4,7 +4,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField
+  TextField,
+  FormHelperText
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { messengers } from './const';
@@ -13,9 +14,20 @@ import { config } from '../../../../../configs';
 import configs from '../../../../../configs/orders';
 import { inputName, worldWidePropTypes } from '../../../../../utils/order';
 import WorldwideService from '../../../../../services/worldwide-delivery.service';
+import {
+  isFieldError,
+  getError
+} from '../../../../../utils/form-error-validation';
+import {
+  handleStateOrProvince,
+  handleWorldWideCity,
+  handleWorldWideCountry
+} from '../../../../../utils/handle-orders-page';
 
-const Worldwide = ({ values, handleChange, setFieldValue }) => {
+const Worldwide = ({ values, handleChange, setFieldValue, inputOptions }) => {
   const styles = useStyles();
+
+  const { handleBlur, touched, errors } = inputOptions;
 
   const { deliveryTitles, deliveryLabels } = configs;
   const { materialUiConstants, RESET } = config;
@@ -70,7 +82,14 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
       setStatesOptions([]);
       setCitiesOptions([]);
     }
-  }, [values.worldWideCountry]);
+  }, [
+    setFieldValue,
+    worldWide.cityCode,
+    worldWide.stateOrProvince,
+    worldWide.worldWideCity,
+    worldWide.worldWideStreet,
+    values.worldWideCountry
+  ]);
 
   useEffect(() => {
     if (values.stateOrProvince) {
@@ -81,7 +100,7 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
     } else {
       setCitiesOptions([]);
     }
-  }, [values.stateOrProvince]);
+  }, [values.stateOrProvince, values.worldWideCountry]);
 
   return (
     <div className={styles.worldwide}>
@@ -90,16 +109,21 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
         <FormControl
           className={styles.formControl}
           variant={materialUiConstants.outlined}
+          error={isFieldError(worldWide.messenger, errors, touched)}
         >
           <InputLabel variant={materialUiConstants.outlined}>
             {deliveryLabels.messenger}
           </InputLabel>
           <Select
+            id={worldWide.messenger}
             className={styles.paymentSelect}
             label={deliveryLabels.messenger}
             value={values.messenger}
             name={worldWide.messenger}
             onChange={handleChange}
+            onBlur={handleBlur}
+            data-testid='select'
+            error={isFieldError(worldWide.messenger, errors, touched)}
           >
             {messengers.map((messenger) => (
               <MenuItem key={messenger} value={messenger}>
@@ -107,93 +131,183 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
               </MenuItem>
             ))}
           </Select>
+          <FormHelperText>
+            {isFieldError(worldWide.messenger, errors, touched)
+              ? getError(worldWide.messenger, errors)
+              : ' '}
+          </FormHelperText>
         </FormControl>
         <FormControl>
           <TextField
+            id={worldWide.messengerPhone}
             className={styles.formControl}
             label={deliveryLabels.messengerPhone}
             variant={materialUiConstants.outlined}
             value={values.messengerPhone}
             name={worldWide.messengerPhone}
             onChange={handleChange}
+            onBlur={handleBlur}
+            error={isFieldError(worldWide.messengerPhone, errors, touched)}
+            helperText={
+              isFieldError(worldWide.messengerPhone, errors, touched)
+                ? getError(worldWide.messengerPhone, errors)
+                : ' '
+            }
+            FormHelperTextProps={{
+              'data-testid': `${worldWide.messengerPhone}`
+            }}
           />
         </FormControl>
       </div>
       <div className={styles.addressWrapper}>
         <Autocomplete
+          id={worldWide.worldWideCountry}
           className={styles.addressInput}
           options={countryOptions}
+          getOptionSelected={(option, value) => option.iso3 === value.iso3}
           value={values.worldWideCountry}
           inputValue={countryInputState}
           data-testid='worldWideCountry'
           onInputChange={(_, value) => setCountryInput(value)}
-          onChange={(_, value) =>
-            setFieldValue(worldWide.worldWideCountry, value || '')
-          }
+          onChange={(_, value) => {
+            handleWorldWideCountry(value, setFieldValue);
+          }}
+          onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.country}
+              error={isFieldError(worldWide.worldWideCountry, errors, touched)}
               variant={materialUiConstants.outlined}
+              helperText={
+                isFieldError(worldWide.worldWideCountry, errors, touched)
+                  ? getError(worldWide.worldWideCountry, errors)
+                  : ' '
+              }
+              FormHelperTextProps={{
+                'data-testid': `${worldWide.worldWideCountry}`
+              }}
             />
           )}
         />
         <Autocomplete
+          id={worldWide.stateOrProvince}
           className={styles.addressInput}
           options={statesOptions}
           value={values.stateOrProvince}
           inputValue={stateOrProvinceInput}
+          getOptionSelected={(option, value) => option.iso3 === value.iso3}
           onInputChange={(_, value) => setStateOrProvinceInput(value)}
           disabled={!values.worldWideCountry}
           data-testid='stateOrProvince'
-          onChange={(_, value) =>
-            setFieldValue(worldWide.stateOrProvince, value || '')
-          }
+          onChange={(_, value) => {
+            handleStateOrProvince(value, setFieldValue);
+          }}
+          onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
               {...params}
               label={deliveryLabels.stateOrProvince}
               variant={materialUiConstants.outlined}
+              error={
+                isFieldError(worldWide.stateOrProvince, errors, touched) &&
+                !!countryInputState
+              }
+              helperText={
+                isFieldError(worldWide.stateOrProvince, errors, touched) &&
+                !!countryInputState
+                  ? getError(worldWide.stateOrProvince, errors)
+                  : ' '
+              }
+              FormHelperTextProps={{
+                'data-testid': `${worldWide.stateOrProvince}`
+              }}
             />
           )}
         />
         <Autocomplete
+          id={worldWide.worldWideCity}
           className={styles.addressInput}
           options={citiesOptions}
           inputValue={values.worldWideCity}
           onInputChange={(_, value, reason) => {
             handleCityInputChange(value, reason);
           }}
-          disabled={!values.worldWideCountry}
+          disabled={!values.stateOrProvince}
           data-testid='worldWideCity'
-          onChange={(_, value) =>
-            setFieldValue(worldWide.worldWideCity, value || '')
-          }
+          getOptionSelected={(option, value) => option.msg === value.msg}
+          onChange={(_, value) => {
+            handleWorldWideCity(value, setFieldValue);
+          }}
+          onBlur={handleBlur}
           renderInput={(params) => (
             <TextField
               {...params}
+              error={
+                isFieldError(worldWide.worldWideCity, errors, touched) &&
+                !!stateOrProvinceInput
+              }
               label={deliveryLabels.city}
               variant={materialUiConstants.outlined}
+              helperText={
+                isFieldError(worldWide.worldWideCity, errors, touched) &&
+                !!stateOrProvinceInput
+                  ? getError(worldWide.worldWideCity, errors)
+                  : ' '
+              }
+              FormHelperTextProps={{
+                'data-testid': `${worldWide.worldWideCity}`
+              }}
             />
           )}
         />
         <TextField
+          id={worldWide.worldWideStreet}
           className={styles.addressInput}
           label={deliveryLabels.street}
           variant={materialUiConstants.outlined}
           value={values.worldWideStreet}
           name={worldWide.worldWideStreet}
           onChange={handleChange}
+          onBlur={handleBlur}
+          error={
+            isFieldError(worldWide.worldWideStreet, errors, touched) &&
+            !!values.worldWideCity
+          }
           disabled={!values.worldWideCity}
+          helperText={
+            isFieldError(worldWide.worldWideStreet, errors, touched) &&
+            !!values.worldWideCity
+              ? getError(worldWide.worldWideStreet, errors)
+              : ' '
+          }
+          FormHelperTextProps={{
+            'data-testid': `${worldWide.worldWideStreet}`
+          }}
         />
         <TextField
+          id={worldWide.cityCode}
           className={`${styles.addressInput} ${styles.addressInputCode}`}
           label={deliveryLabels.cityCode}
           variant={materialUiConstants.outlined}
           value={values.cityCode}
           name={worldWide.cityCode}
           onChange={handleChange}
+          onBlur={handleBlur}
+          error={
+            isFieldError(worldWide.cityCode, errors, touched) &&
+            !!values.worldWideStreet
+          }
           disabled={!values.worldWideStreet}
+          helperText={
+            isFieldError(worldWide.cityCode, errors, touched) &&
+            !!values.worldWideStreet
+              ? getError(worldWide.cityCode, errors)
+              : ' '
+          }
+          FormHelperTextProps={{
+            'data-testid': `${worldWide.cityCode}`
+          }}
         />
       </div>
     </div>

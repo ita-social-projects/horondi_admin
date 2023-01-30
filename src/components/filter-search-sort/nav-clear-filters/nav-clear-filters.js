@@ -16,7 +16,11 @@ const NavClearFilters = ({ clearOptions: { clearAllFilters } }) => {
   };
   return (
     <Box ml={1}>
-      <Button className={styles.clearButton} onClick={handleClearFilters}>
+      <Button
+        className={styles.clearButton}
+        onClick={handleClearFilters}
+        data-testid='clear-filters'
+      >
         {CLEAR_FILTERS}
       </Button>
     </Box>
@@ -24,9 +28,7 @@ const NavClearFilters = ({ clearOptions: { clearAllFilters } }) => {
 };
 
 NavClearFilters.propTypes = {
-  clearOptions: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  ),
+  clearOptions: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   clearAllFilters: PropTypes.func
 };
 NavClearFilters.defaultProps = {

@@ -38,9 +38,11 @@ export const commonErrorMessages = {
   MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
   MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   MAX_LENGTH_MESSAGE_300: 'Не більше 300 символів',
+  MAX_LENGTH_MESSAGE_500: 'Не більше 500 символів',
   ERROR_MESSAGE: 'Поле не може бути порожнім',
   UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
   EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  NAME_MESSAGE: 'Поле може містити тільки англійські та українські літери',
   ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
@@ -48,9 +50,11 @@ export const promoCodeErrorMessages = {
   LENGTH_CODE: 'Поле має містити від 2 до 30 символів',
   STYLE_CODE: 'Поле має містити англійські літери або цифри',
   ERROR_MESSAGE: 'Поле має бути заповнене',
-  LENGTH_DISCOUNT: 'Поле має містити максимально 2 цифри',
   POSITIVE_DISCOUNT: 'Тільки більше нуля',
-  MULTIPLE_DISCOUNT: 'Число має бути кратним п’яти'
+  INTEGER_DISCOUNT: 'Тільки ціле число',
+  MAX_VALUE_DISCOUNT: 'Не більше 90',
+  DATEFROM_SMALLER_THAN_DATETO:
+    'Дата початку дії має бути менша дати закінчення'
 };
 
 export const patternErrorMessages = {
@@ -91,7 +95,10 @@ export const basicsErrorMessages = {
 };
 
 export const constructorErrorMessages = {
-  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
+  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора',
+  PRICE_REQUIRED: "Ціна є обов'язковим полем",
+  ITEMS_REQUIRED: 'Додайте принаймі один елемент зі списку',
+  NOT_NULL: 'Ціна не може бути нульовою'
 };
 
 export const strapsErrorMessages = {
@@ -167,6 +174,11 @@ export const materialErrorMessages = {
   NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис матеріалу українською`
 };
 
+export const materialAboutErrorMessages = {
+  NO_STRING_TYPE_MESSAGE: 'Повинно містити букви, цифри та спецсимволи',
+  REQUIRED_IMG_MESSAGE: 'Додайте фото для матеріалу'
+};
+
 export const sizeErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 1см`,
@@ -175,7 +187,8 @@ export const sizeErrorMessages = {
   MAX_WEIGHT_MESSAGE_SIZE: `Не більше 5 кг`,
   MIN_WEIGHT_MESSAGE_SIZE: `Не менше 0.1 кг`,
   NO_NUMBER_TYPE_MESSAGE: `Повинно містити число`,
-  NO_STRING_TYPE_MESSAGE: `Повинно містити букви`
+  NO_STRING_TYPE_MESSAGE: `Повинно містити букви`,
+  NO_SIZES_PROVIDED: `Потрібно додати хоча б один розмір`
 };
 
 export const colorErrorMessages = {

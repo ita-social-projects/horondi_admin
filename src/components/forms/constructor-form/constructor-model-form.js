@@ -1,188 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
+import { useFormik } from 'formik';
+
 import { useStyles } from './constructor-model-form.styles.js';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
-import { getCategories } from '../../../redux/categories/categories.actions';
-import { getSizes } from '../../../redux/sizes/sizes.actions';
 import ConstructorListAccordion from './constructor-list-accordion';
-import { getBottoms } from '../../../redux/bottom/bottom.actions.js';
-import { getAllBasics } from '../../../redux/basics/basics.actions.js';
-import { getPatterns } from '../../../redux/pattern/pattern.actions.js';
-import { getBacks } from '../../../redux/back/back.actions.js';
-import { getAllStraps } from '../../../redux/straps/straps.actions.js';
-import { getAllClosures } from '../../../redux/closures/closures.actions.js';
-import { bottomSelectorWithPagination } from '../../../redux/selectors/bottom.selectors.js';
-import { basicsSelectorWithPagination } from '../../../redux/selectors/basics.selectors.js';
-import { patternSelectorWithPagination } from '../../../redux/selectors/pattern.selectors.js';
-import { backSelectorWithPagination } from '../../../redux/selectors/back.selectors.js';
-import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
-import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
+import ConstructorListBasePrice from './constructor-list-base-price/constructor-list-base-price.js';
+
+import {
+  getInitialValues,
+  getDefaultConstructor,
+  getConstructorOptions,
+  validationSchema
+} from '../../../utils/constructor-model-form.js';
+
 import {
   addConstructor,
   updateConstructor
 } from '../../../redux/constructor/constructor.actions.js';
-import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
-import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
-import ConstructorListBasePrice from './constructor-list-base-price/constructor-list-base-price.js';
-import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
 const { pathToConstructorList } = config.routes;
 const pageTitle = config.titles.constructorModelTitles.mainPageTitle;
 
-const ConstructorModelForm = ({ model, id, isEdit }) => {
+const ConstructorModelForm = ({ constructor, model, id, isEdit }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState('');
 
-  const { constructor } = useSelector(constructorSelector);
-
-  const { createConstructor } = useConstructorHandlers();
-
-  const handleChange = (panel) => (event, isExpanded) => {
+  const handleExpanded = (panel) => (_event, isExpanded) => {
     setExpanded(isExpanded ? panel : '');
   };
 
-  useEffect(() => {
-    dispatch(getSizes({ limit: null }));
+  const initialValues = useMemo(
+    () =>
+      isEdit ? getInitialValues(constructor) : getDefaultConstructor(model),
+    [constructor, isEdit, model]
+  );
 
-    dispatch(getCategories({}));
-  }, [dispatch]);
-
-  const [basicsToAdd, setBasicsToAdd] = useState([]);
-  const [bottomsToAdd, setBottomsToAdd] = useState([]);
-  const [patternsToAdd, setPatternsToAdd] = useState([]);
-  const [backsToAdd, setBacksToAdd] = useState([]);
-  const [strapsToAdd, setStrapsToAdd] = useState([]);
-  const [closuresToAdd, setClosuresToAdd] = useState([]);
-  const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
-  const [basePriceToAdd, setBasePriceToAdd] = useState(0);
-
-  const onSaveHandler = () => {
-    const itemsToSave = {
-      model: isEdit ? constructor?.model : model,
-      basicsToAdd,
-      bottomsToAdd,
-      patternsToAdd,
-      backsToAdd,
-      strapsToAdd,
-      closuresToAdd,
-      restrictionsToAdd,
-      basePriceToAdd
-    };
-    const constructorToAdd = createConstructor(itemsToSave);
-
-    if (!isEdit) {
-      dispatch(addConstructor({ constructor: constructorToAdd }));
-      return;
+  const { values, handleSubmit, setFieldValue, errors } = useFormik({
+    validationSchema,
+    initialValues,
+    onSubmit: () => {
+      if (!isEdit) {
+        dispatch(addConstructor({ constructor: values }));
+        return;
+      }
+      dispatch(updateConstructor({ id, constructor: values }));
     }
-    dispatch(updateConstructor({ id, constructor: constructorToAdd }));
-  };
+  });
 
-  const values = {
-    basicsToAdd,
-    bottomsToAdd,
-    patternsToAdd,
-    backsToAdd,
-    strapsToAdd,
-    closuresToAdd,
-    restrictionsToAdd,
-    basePriceToAdd
-  };
-  const mapElement = (element) => element?.map((item) => item._id);
-
-  useEffect(() => {
-    setBasicsToAdd(isEdit ? mapElement(constructor?.basics) : []);
-    setBottomsToAdd(isEdit ? mapElement(constructor?.bottoms) : []);
-    setPatternsToAdd(isEdit ? mapElement(constructor?.patterns) : []);
-    setBacksToAdd(isEdit ? mapElement(constructor?.backs) : []);
-    setStrapsToAdd(isEdit ? mapElement(constructor?.straps) : []);
-    setClosuresToAdd(isEdit ? mapElement(constructor?.closures) : []);
-    setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
-    setBasePriceToAdd(isEdit ? constructor?.basePrice : 0);
-  }, [constructor, isEdit]);
-
-  const constructorOptions = [
-    {
-      optionName: 'basic',
-      label: 'Основи',
-      getItems: getAllBasics,
-      selector: basicsSelectorWithPagination,
-      optionToAdd: basicsToAdd,
-      setOptionToAdd: setBasicsToAdd
-    },
-    {
-      optionName: 'bottom',
-      label: 'Низи',
-      getItems: getBottoms,
-      selector: bottomSelectorWithPagination,
-      optionToAdd: bottomsToAdd,
-      setOptionToAdd: setBottomsToAdd
-    },
-    {
-      optionName: 'pattern',
-      label: 'Гобелени',
-      getItems: getPatterns,
-      selector: patternSelectorWithPagination,
-      optionToAdd: patternsToAdd,
-      setOptionToAdd: setPatternsToAdd
-    },
-    {
-      optionName: 'back',
-      label: 'Спинки',
-      getItems: getBacks,
-      selector: backSelectorWithPagination,
-      optionToAdd: backsToAdd,
-      setOptionToAdd: setBacksToAdd
-    },
-    {
-      optionName: 'strap',
-      label: 'Ремінці',
-      getItems: getAllStraps,
-      selector: strapsSelectorWithPagination,
-      optionToAdd: strapsToAdd,
-      setOptionToAdd: setStrapsToAdd
-    },
-    {
-      optionName: 'closure',
-      label: 'Защіпки',
-      getItems: getAllClosures,
-      selector: closuresSelectorWithPagination,
-      optionToAdd: closuresToAdd,
-      setOptionToAdd: setClosuresToAdd
-    }
-  ];
+  const constructorOptions = getConstructorOptions(
+    values,
+    setFieldValue,
+    errors
+  );
 
   const constructorAccordions = constructorOptions.map((option, index) => (
     <ConstructorListAccordion
       isEdit={isEdit}
       option={option}
       key={index}
-      handleChange={handleChange}
+      handleChange={handleExpanded}
       expanded={expanded}
+      errors={errors}
     />
   ));
 
-  const pocketAccordion = (
-    <ConstructorListPockets
-      setRestrictionsToAdd={setRestrictionsToAdd}
-      restrictionsToAdd={restrictionsToAdd}
-      handleChange={handleChange}
-      expanded={expanded}
-    />
-  );
-
   const basePriceAccordion = (
     <ConstructorListBasePrice
-      handleChange={handleChange}
+      handleChange={handleExpanded}
       expanded={expanded}
-      basePriceToAdd={basePriceToAdd}
-      setBasePriceToAdd={setBasePriceToAdd}
+      basePriceToAdd={values.basePrice}
+      setBasePriceToAdd={setFieldValue}
+      error={errors.basePrice}
     />
   );
 
@@ -195,12 +91,12 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
           </Grid>
           <Grid item>
             <SaveButton
-              onClickHandler={onSaveHandler}
+              onClickHandler={handleSubmit}
               className={classes.constructorButton}
               data-cy={materialUiConstants.save}
               type={materialUiConstants.types.submit}
               values={values}
-              errors={{}}
+              errors={errors}
               title={MODEL_SAVE_TITLE}
             />
           </Grid>
@@ -212,7 +108,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
         </Typography>
         <div className={classes.root}>
           {constructorAccordions}
-          {pocketAccordion}
           {basePriceAccordion}
         </div>
       </div>
@@ -220,60 +115,17 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   );
 };
 
-const valueShape = PropTypes.shape({
-  value: PropTypes.string
-});
-
 ConstructorModelForm.propTypes = {
-  isEdit: PropTypes.bool,
-  model: PropTypes.shape({
-    name: PropTypes.arrayOf(valueShape),
-    _id: PropTypes.string,
-    description: PropTypes.arrayOf(valueShape),
-    show: PropTypes.bool,
-    priority: PropTypes.number,
-    availableForConstructor: PropTypes.bool,
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
-    sizes: PropTypes.arrayOf(valueShape),
-    category: PropTypes.shape({
-      _id: PropTypes.string,
-      images: PropTypes.shape({
-        thumbnail: PropTypes.string
-      }),
-      name: PropTypes.arrayOf(valueShape),
-      code: PropTypes.string
-    }),
-    basePrice: PropTypes.number
-  }),
-  id: PropTypes.string
+  constructor: PropTypes.shape({}),
+  model: PropTypes.shape({}),
+  id: PropTypes.string.isRequired,
+  isEdit: PropTypes.bool
 };
 
 ConstructorModelForm.defaultProps = {
-  id: '',
-  model: {
-    _id: '',
-    name: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
-    description: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
-    images: {
-      thumbnail: ''
-    }
-  },
+  constructor: {},
+  model: {},
   isEdit: false
 };
+
 export default ConstructorModelForm;

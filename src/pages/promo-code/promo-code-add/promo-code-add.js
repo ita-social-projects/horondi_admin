@@ -5,10 +5,13 @@ import { useHistory } from 'react-router-dom';
 
 import { config } from '../../../configs';
 import { addPromoCodes } from '../operations/promo-code.mutation';
-import { showSuccessSnackbar } from '../../../redux/snackbar/snackbar.actions';
+import {
+  showErrorSnackbar,
+  showSuccessSnackbar
+} from '../../../redux/snackbar/snackbar.actions';
 import { getFromLocalStorage } from '../../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../../consts/local-storage';
-import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
+import { promoCodeErrorMessages } from '../../../configs/error-modal-messages';
 
 import PromoCodeForm from '../promo-code-form/promo-code-form';
 
@@ -18,29 +21,31 @@ const PromoCodeAdd = () => {
 
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
-
-  const onCompletedHandler = () => {
-    dispatch(showSuccessSnackbar('Успішно додано'));
-  };
+  const { SUCCESS_ADD_STATUS } = config.statuses;
+  const { ERROR_BOUNDARY_STATUS } = config.errorStatuses;
 
   const [addPromoCodeHandler] = useMutation(addPromoCodes, {
-    onCompleted: onCompletedHandler,
+    onCompleted: () => {
+      dispatch(showSuccessSnackbar(SUCCESS_ADD_STATUS));
+      history.push(pathToPromoCodesPage);
+    },
     context: {
       headers: {
         token
       }
+    },
+    onError: (err) => {
+      dispatch(
+        showErrorSnackbar(
+          `${promoCodeErrorMessages[err.message] || ERROR_BOUNDARY_STATUS}`
+        )
+      );
     }
   });
 
-  const goToPromoPage = () => {
-    history.push(pathToPromoCodesPage);
-  };
-
   return (
     <PromoCodeForm
-      promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
-      goToPromoPage={goToPromoPage}
       addPromoCodeHandler={addPromoCodeHandler}
     />
   );
